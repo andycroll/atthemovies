@@ -1,0 +1,11 @@
+defaults: &defaults
+  adapter: postgresql
+  encoding: unicode
+
+development:
+  <<: *defaults
+  database: moviesuk_development
+
+test:
+  <<: *defaults
+  database: moviesuk_test
