@@ -12,6 +12,7 @@ gem 'jquery-rails'
 gem 'turbolinks'
 
 gem 'jbuilder', '~> 1.2'
+gem 'delayed_job_active_record'
 
 group :development, :test do
   gem 'dotenv-rails'
