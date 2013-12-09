@@ -13,6 +13,7 @@ gem 'turbolinks'
 
 gem 'jbuilder', '~> 1.2'
 gem 'delayed_job_active_record'
+gem 'stringex'
 
 group :development, :test do
   gem 'dotenv-rails'
@@ -25,4 +26,5 @@ end
 
 group :test do
   gem 'factory_girl_rails'
+  gem 'faker'
 end
