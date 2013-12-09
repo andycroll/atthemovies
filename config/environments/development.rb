@@ -26,4 +26,7 @@ Moviesuk::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+
+  # using sprokets_better_errors
+  config.assets.raise_production_errors = true
 end
