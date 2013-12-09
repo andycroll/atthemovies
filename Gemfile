@@ -15,8 +15,13 @@ gem 'jbuilder', '~> 1.2'
 
 group :development, :test do
   gem 'dotenv-rails'
+  gem 'rspec-rails', '~> 3.0.0.beta'
 end
 
 group :doc do
   gem 'sdoc', require: false
+end
+
+group :test do
+  gem 'factory_girl_rails'
 end
