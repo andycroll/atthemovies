@@ -11,8 +11,9 @@ gem 'sprockets_better_errors'
 gem 'jquery-rails'
 gem 'turbolinks'
 
-gem 'jbuilder', '~> 1.2'
 gem 'delayed_job_active_record'
+gem 'geocoder'
+gem 'jbuilder', '~> 1.2'
 gem 'stringex'
 
 group :development, :test do

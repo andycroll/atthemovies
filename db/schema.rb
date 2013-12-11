@@ -11,10 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131209212517) do
+ActiveRecord::Schema.define(version: 20131209221845) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "cinemas", force: true do |t|
+    t.string   "name"
+    t.string   "url"
+    t.decimal  "latitude",         precision: 9, scale: 6
+    t.decimal  "longitude",        precision: 9, scale: 6
+    t.string   "street_address"
+    t.string   "extended_address"
+    t.string   "locality"
+    t.string   "postal_code"
+    t.string   "region"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false

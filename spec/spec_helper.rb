@@ -7,6 +7,8 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
+Faker::Config.locale = :'en-gb'
+
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
 
