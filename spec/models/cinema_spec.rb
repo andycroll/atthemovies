@@ -1,6 +1,15 @@
 require 'spec_helper'
 
 describe Cinema do
+  describe 'acts_as_url' do
+    let(:cinema) { build(:cinema) }
+
+    before { cinema.save! }
+
+    specify { cinema.url.should_not be_nil }
+    specify { cinema.url.should eq(cinema.name.to_url) }
+  end
+
   describe 'geocode_by' do
     let(:cinema) { build(:cinema) }
 
