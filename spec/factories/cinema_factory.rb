@@ -5,5 +5,7 @@ FactoryGirl.define do
     locality         { Faker::Address.city }
     region           { Faker::Address.state }
     postal_code      { Faker::Address.postcode }
+    country          { 'United Kingdom' }
+    country_code     { 'UK' }
   end
 end
