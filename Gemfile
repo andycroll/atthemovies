@@ -12,6 +12,7 @@ gem 'jquery-rails'
 gem 'turbolinks'
 
 gem 'delayed_job_active_record'
+gem 'foundation-rails'
 gem 'geocoder'
 gem 'jbuilder', '~> 1.2'
 gem 'stringex'
