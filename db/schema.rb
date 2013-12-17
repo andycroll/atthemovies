@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131209221845) do
+ActiveRecord::Schema.define(version: 20131217202141) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,8 +19,8 @@ ActiveRecord::Schema.define(version: 20131209221845) do
   create_table "cinemas", force: true do |t|
     t.string   "name"
     t.string   "url"
-    t.decimal  "latitude",         precision: 9, scale: 6
-    t.decimal  "longitude",        precision: 9, scale: 6
+    t.decimal  "latitude",                   precision: 9, scale: 6
+    t.decimal  "longitude",                  precision: 9, scale: 6
     t.string   "street_address"
     t.string   "extended_address"
     t.string   "locality"
@@ -28,6 +28,8 @@ ActiveRecord::Schema.define(version: 20131209221845) do
     t.string   "region"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "country"
+    t.string   "country_code",     limit: 3
   end
 
   create_table "delayed_jobs", force: true do |t|
