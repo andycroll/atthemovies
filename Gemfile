@@ -17,6 +17,10 @@ gem 'geocoder'
 gem 'jbuilder', '~> 1.2'
 gem 'stringex'
 
+group :development do
+  gem 'rails_db_info'
+end
+
 group :development, :test do
   gem 'dotenv-rails'
   gem 'rspec-rails', '~> 3.0.0.beta'
