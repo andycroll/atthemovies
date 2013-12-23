@@ -11,6 +11,7 @@ gem 'sprockets_better_errors'
 gem 'jquery-rails'
 gem 'turbolinks'
 
+gem 'cineworld_uk'
 gem 'delayed_job_active_record'
 gem 'foundation-rails'
 gem 'geocoder'
