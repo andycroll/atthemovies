@@ -1,1 +1,1 @@
-json.(@cinema, :name, :brand, :latitude, :longitude)
+json.(@cinema, :name, :latitude, :longitude)

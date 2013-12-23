@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe CinemasController do
+  render_views
+
   describe 'routes' do
     specify {
       expect( get: '/cinemas/odeon-brighton' ).to route_to(
@@ -20,18 +22,36 @@ describe CinemasController do
   end
 
   describe '#GET show' do
-    def get_show
+    let!(:cinema) { create :cinema }
+
+    def get_show(params={})
       get :show, { id: id }.merge(params)
     end
 
-    describe 'JSON' do
-      let(:params) { { format: 'json' } }
-
+    describe 'HTML' do
       describe 'successful' do
-        let(:cinema) { create :cinema }
         let(:id) { cinema.url }
         before { get_show }
+
         it { should respond_with :success }
+        specify { expect(assigns(:cinema)).to be_present }
+        it { should render_template 'show' }
+      end
+    end
+
+    describe 'JSON' do
+      describe 'successful' do
+        let(:id) { cinema.url }
+        before { get_show({ format: 'json' }) }
+
+        it { should respond_with :success }
+        specify { expect(assigns(:cinema)).to be_present }
+        it 'should include correct keys' do
+          JSON.parse(response.body).keys.should include(
+            'name',
+            'latitude', 'longitude'
+          )
+        end
       end
     end
   end
