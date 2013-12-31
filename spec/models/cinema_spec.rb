@@ -59,4 +59,27 @@ describe Cinema do
       it { should include(cinema.postal_code) }
     end
   end
+
+  describe '#update_address(address)' do
+    let(:cinema) { build(:cinema) }
+
+    subject { cinema.update_address(address_hash) }
+
+    context 'passed address hash' do
+      let(:address_hash) {
+        {
+          street_address: '123 New Street',
+          postal_code: 'BN1 6JD'
+        }
+      }
+
+      it 'updates passed address details' do
+        expect { subject }.to change(cinema, :street_address)
+      end
+      it 'persists the cinema' do
+        subject
+        expect(cinema).to be_persisted
+      end
+    end
+  end
 end

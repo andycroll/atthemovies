@@ -4,13 +4,6 @@ class CinemaImporterJob < Struct.new(:name, :brand, :address)
       name: name,
       brand: brand
     )
-    cinema.update_attributes(
-      street_address:   address[:street_address],
-      extended_address: address[:extended_address],
-      locality:         address[:locality],
-      region:           address[:region],
-      postal_code:      address[:postal_code],
-      country:          address[:country]
-    )
+    cinema.update_address(address)
   end
 end

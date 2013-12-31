@@ -10,4 +10,14 @@ class Cinema < ActiveRecord::Base
     return nil unless street_address && locality
     "#{street_address}, #{locality} #{postal_code}"
   end
+
+  # Updates address fields for a cinema
+  # @param [Hash]
+  # @return [Boolean] the updated object
+  def update_address(address)
+    %w(street_address extended_address locality region postal_code country).map(&:to_sym).each do |attr|
+      send(:"#{attr}=", address[attr]) if address[attr]
+    end
+    save
+  end
 end
