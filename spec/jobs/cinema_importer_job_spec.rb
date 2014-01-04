@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 describe CinemaImporterJob do
-  let(:job) { CinemaImporterJob.new(attributes[:name], attributes[:brand], attributes[:address]) }
+  let(:job) { CinemaImporterJob.new(attributes[:name], attributes[:brand], attributes[:brand_id], attributes[:address]) }
 
   describe '#perform' do
     let(:attributes) {
       {
-        name: 'Odeon Brighton', brand: 'Odeon',
+        name: 'Odeon Brighton', brand: 'Odeon', brand_id: 'brand-id',
         address: {
           street_address: 'Kingswest',
           locality: 'Brighton',
@@ -30,7 +30,7 @@ describe CinemaImporterJob do
     end
 
     context 'cinema exists' do
-      before { create :cinema, name: 'Odeon Brighton', brand: 'Odeon' }
+      before { Cinema.create name: 'Odeon Brighton', brand: 'Odeon', brand_id: 'brand-id' }
 
       it 'does not create a new cinema' do
         expect { job.perform }.not_to change(Cinema, :count)
