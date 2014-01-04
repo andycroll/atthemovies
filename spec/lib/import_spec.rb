@@ -18,7 +18,7 @@ describe 'rake app' do
 
         it 'imports using the service object' do
           expect(CineworldImporter).to receive(:new).and_return(importer)
-          expect(importer).to receive(:import)
+          expect(importer).to receive(:import_cinemas)
           rake['import:cinemas:cineworld'].invoke
         end
       end

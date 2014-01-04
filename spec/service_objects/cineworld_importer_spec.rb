@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe CineworldImporter do
-  describe '#import' do
+  describe '#import_cinemas' do
     let(:cinema_1) { instance_double('CineworldUk::Cinema') }
     let(:cinema_2) { instance_double('CineworldUk::Cinema') }
     let(:cinemas)  { [cinema_1, cinema_2] }
