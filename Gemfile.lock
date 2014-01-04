@@ -30,7 +30,7 @@ GEM
     arel (5.0.0)
     atomic (1.1.14)
     builder (3.2.2)
-    cineworld_uk (1.0.0)
+    cineworld_uk (1.0.2)
       httparty
       nokogiri
       tzinfo
@@ -162,6 +162,7 @@ GEM
     tzinfo (1.1.0)
       thread_safe (~> 0.1)
     tzinfo-data (1.2013.9)
+      tzinfo (>= 1.0.0)
     uglifier (2.3.2)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
