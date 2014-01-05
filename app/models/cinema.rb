@@ -1,4 +1,6 @@
 class Cinema < ActiveRecord::Base
+  has_many :screenings
+
   acts_as_url :name
 
   geocoded_by :address_str

@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe Cinema do
+  describe 'associations' do
+    it { should have_many :screenings }
+  end
+
   describe 'acts_as_url' do
     let(:cinema) { build(:cinema) }
 
