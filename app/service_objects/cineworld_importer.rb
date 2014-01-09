@@ -9,7 +9,7 @@ class CineworldImporter
   def import_screenings(cinema_id)
     cinema = Cinema.find(cinema_id)
 
-    cineworld_cinema = CineworldUk::Cinema.find(cinema.brand_id)
+    cineworld_cinema = CineworldUk::Cinema.find(cinema.brand_identifier.to_s)
     cineworld_cinema.screenings.each do |s|
       Delayed::Job.enqueue ScreeningImporterJob.new(cinema.id, s.film_name, s.when, s.variant)
     end

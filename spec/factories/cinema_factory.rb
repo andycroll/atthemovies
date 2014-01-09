@@ -1,8 +1,7 @@
 FactoryGirl.define do
   factory :cinema do
-    name     { brand + " #{locality || Faker::Address.city}" }
-    brand    { %w(Cineworld Odeon Vue).sample }
-    brand_id { rand(1..100) }
+    name  { "#{Faker::Address.city} Cinema" }
+    brand { 'Independent' }
 
     trait :with_address do
       street_address   { Faker::Address.street_address }
@@ -14,7 +13,15 @@ FactoryGirl.define do
     end
 
     trait :cineworld do
-      brand 'Cineworld'
+      brand            'Cineworld'
+      name             { "Cineworld #{locality || Faker::Address.city}" }
+      brand_identifier { rand(1..100) }
+    end
+
+    trait :odeon do
+      brand            'Odeon'
+      name             { "Odeon #{locality || Faker::Address.city}" }
+      brand_identifier { name.downcase.gsub(/\s/,'-') }
     end
   end
 end

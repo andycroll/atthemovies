@@ -33,7 +33,7 @@ describe CineworldImporter do
     let(:cineworld_cinema)   { instance_double('CineworldUk::Cinema') }
     let(:cineworld_brand_id) { 3 }
 
-    let!(:cinema) { create(:cinema, :cineworld, brand_id: cineworld_brand_id) }
+    let!(:cinema) { create(:cinema, :cineworld, brand_identifier: cineworld_brand_id) }
 
     let(:screening_1) { instance_double('CineworldUk::Screening') }
     let(:screening_2) { instance_double('CineworldUk::Screening') }
