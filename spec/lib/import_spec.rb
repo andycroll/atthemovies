@@ -23,5 +23,17 @@ describe 'rake app' do
         end
       end
     end
+
+    describe 'screenings' do
+      describe 'cineworld' do
+        let(:importer) { instance_double('CineworldImporter') }
+
+        it 'imports using the service object' do
+          expect(CineworldImporter).to receive(:new).and_return(importer)
+          expect(importer).to receive(:import_screenings)
+          rake['import:screenings:cineworld'].invoke
+        end
+      end
+    end
   end
 end
