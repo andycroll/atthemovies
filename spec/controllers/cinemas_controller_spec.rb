@@ -5,6 +5,12 @@ describe CinemasController do
 
   describe 'routes' do
     specify {
+      expect( get: '/cinemas' ).to route_to(
+        controller: 'cinemas',
+        action: 'index'
+      )
+    }
+    specify {
       expect( get: '/cinemas/odeon-brighton' ).to route_to(
         controller: 'cinemas',
         action: 'show',
@@ -19,6 +25,24 @@ describe CinemasController do
         format: 'json'
       )
     }
+  end
+
+  describe '#GET index' do
+    let!(:cinemas) { create :cinema }
+
+    def get_index(params={})
+      get :index, {}.merge(params)
+    end
+
+    describe 'HTML' do
+      describe 'successful' do
+        before { get_index }
+
+        it { should respond_with :success }
+        specify { expect(assigns(:cinemas)).to be_present }
+        it { should render_template 'index' }
+      end
+    end
   end
 
   describe '#GET show' do

@@ -1,0 +1,4 @@
+<h1>Uk Cinemas</h1>
+<% @cinemas.each do |cinema| %>
+  <p><%= link_to cinema.name, cinema_path(cinema) %></p>
+<% end %>
