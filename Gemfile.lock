@@ -37,7 +37,7 @@ GEM
     arel (5.0.0)
     atomic (1.1.14)
     builder (3.2.2)
-    cineworld_uk (1.0.2)
+    cineworld_uk (1.0.3)
       httparty
       nokogiri
       tzinfo

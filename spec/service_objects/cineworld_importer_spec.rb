@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe CineworldImporter do
+  let(:importer) { CineworldImporter.new }
+
   describe '#import_cinemas' do
     let(:cinema_1) { instance_double('CineworldUk::Cinema') }
     let(:cinema_2) { instance_double('CineworldUk::Cinema') }
@@ -9,12 +11,12 @@ describe CineworldImporter do
     before do
       expect(CineworldUk::Cinema).to receive(:all).and_return(cinemas)
 
-      expect(cinema_1).to receive(:name).and_return('Cineworld Brighton')
+      expect(cinema_1).to receive(:full_name).and_return('Cineworld Brighton')
       expect(cinema_1).to receive(:brand).and_return('Cineworld')
       expect(cinema_1).to receive(:id).and_return(3)
       expect(cinema_1).to receive(:address).and_return({})
 
-      expect(cinema_2).to receive(:name).and_return('Cineworld Wolverhapton')
+      expect(cinema_2).to receive(:full_name).and_return('Cineworld Wolverhapton')
       expect(cinema_2).to receive(:brand).and_return('Cineworld')
       expect(cinema_2).to receive(:id).and_return(69)
       expect(cinema_2).to receive(:address).and_return({})
@@ -24,17 +26,15 @@ describe CineworldImporter do
     end
 
     it 'creates a bunch of import jobs for cinemas' do
-      CineworldImporter.new.import_cinemas
+      importer.import_cinemas
       expect(Delayed::Job.count).to eq(2)
     end
   end
 
-  describe '#import_screenings_for_cinema(cinema)' do
+  describe '#import_screenings' do
     let!(:cineworld_1) { create :cinema, :cineworld }
     let!(:cineworld_2) { create :cinema, :cineworld }
     let!(:odeon_1)     { create :cinema, :odeon }
-
-    let(:importer) { CineworldImporter.new }
 
     it 'imports screenings for each cineworld cinema' do
       expect(importer).to receive(:import_screenings_for_cinema).with(cineworld_1)
@@ -89,7 +89,7 @@ describe CineworldImporter do
     end
 
     it 'creates a bunch of import jobs for screenings' do
-      CineworldImporter.new.import_screenings_for_cinema(cinema)
+      importer.import_screenings_for_cinema(cinema)
       expect(Delayed::Job.count).to eq(4)
     end
   end
