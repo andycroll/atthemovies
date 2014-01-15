@@ -34,6 +34,15 @@ describe Cinema do
     end
   end
 
+  describe '#to_param' do
+    subject { cinema.to_param }
+
+    let!(:cinema) { build(:cinema, url: 'will-be-name-if-saved') }
+
+    it { should be_a(String) }
+    it { should eq(cinema.url) }
+  end
+
   describe '#address_str' do
     subject { cinema.address_str }
 

@@ -13,6 +13,12 @@ class Cinema < ActiveRecord::Base
     "#{street_address}, #{locality} #{postal_code}"
   end
 
+  # use url for routing
+  # @return [String]
+  def to_param
+    url
+  end
+
   # Updates address fields for a cinema
   # @param [Hash]
   # @return [Boolean] the updated object
