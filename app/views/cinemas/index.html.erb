@@ -1,4 +1,18 @@
-<h1>Uk Cinemas</h1>
-<% @cinemas.each do |cinema| %>
-  <p><%= link_to cinema.name, cinema_path(cinema) %></p>
-<% end %>
+<header class="row">
+  <ul class="breadcrumbs">
+    <li><a href="/">Movies UK</a></li>
+    <li class="current">Cinemas</li>
+  </ul>
+
+  <div class="columns">
+    <h1>Uk Cinemas</h1>
+  </div>
+</header>
+
+<div class="row">
+  <% @cinemas.each do |cinema| %>
+    <div class="medium-6 large-4 columns">
+      <p><%= link_to cinema.name, cinema_path(cinema) %></p>
+    </div>
+  <% end %>
+</div>

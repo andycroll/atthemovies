@@ -1,1 +1,21 @@
-<h1><%= @cinema.name %> <small><%= @cinema.locality %></small></h1>
+<header class="row">
+  <ul class="breadcrumbs">
+    <li><a href="/">Movies UK</a></li>
+    <li><a href="/cinemas">Cinemas</a></li>
+    <li class="current"><%= link_to @cinema.name, cinema_path(@cinema) %></li>
+  </ul>
+
+  <div class="columns">
+    <h1><%= @cinema.name %></h1>
+  </div>
+</header>
+
+<div class="row">
+  <div class="medium-6 large-4 columns">
+    <p>
+      <%= @cinema.street_address %><br />
+      <%= @cinema.locality %><br />
+      <%= @cinema.postal_code %>
+    </p>
+  </div>
+</div>
