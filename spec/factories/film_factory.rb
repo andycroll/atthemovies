@@ -1,5 +1,5 @@
 FactoryGirl.define do
   factory :film do
-    name  { Faker::Address.words }
+    name  { Faker::Lorem.sentence }
   end
 end
