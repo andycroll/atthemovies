@@ -17,6 +17,7 @@ gem 'foundation-rails'
 gem 'geocoder'
 gem 'jbuilder', '~> 1.2'
 gem 'stringex'
+gem 'themoviedb'
 
 group :development do
   gem 'rails_db_info'
