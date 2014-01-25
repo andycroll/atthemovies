@@ -21,8 +21,8 @@ describe CineworldImporter do
       expect(cinema_2).to receive(:id).and_return(69)
       expect(cinema_2).to receive(:address).and_return({})
 
-      expect(CinemaImporterJob).to receive(:new).with('Cineworld Brighton', 'Cineworld', 3, {}).and_call_original
-      expect(CinemaImporterJob).to receive(:new).with('Cineworld Wolverhapton', 'Cineworld', 69, {}).and_call_original
+      expect(CinemaImporterJob).to receive(:enqueue).with(name: 'Cineworld Brighton', brand: 'Cineworld', brand_identifier: 3, address: {}).and_call_original
+      expect(CinemaImporterJob).to receive(:enqueue).with(name: 'Cineworld Wolverhapton', brand: 'Cineworld', brand_identifier: 69, address: {}).and_call_original
     end
 
     it 'creates a bunch of import jobs for cinemas' do
@@ -78,10 +78,10 @@ describe CineworldImporter do
       expect(screening_4).to receive(:when).and_return(4.hours.from_now.utc)
       expect(screening_4).to receive(:variant).and_return('3D')
 
-      expect(ScreeningImporterJob).to receive(:new).with(cinema.id, 'Iron Man 3', 1.hour.from_now.utc, '2D').and_call_original
-      expect(ScreeningImporterJob).to receive(:new).with(cinema.id, 'Iron Man 3', 2.hours.from_now.utc, '3D kids').and_call_original
-      expect(ScreeningImporterJob).to receive(:new).with(cinema.id, 'Avengers', 3.hours.from_now.utc, '3D silver').and_call_original
-      expect(ScreeningImporterJob).to receive(:new).with(cinema.id, 'Iron Man 3', 4.hours.from_now.utc, '3D').and_call_original
+      expect(ScreeningImporterJob).to receive(:enqueue).with(cinema_id: cinema.id, film_name: 'Iron Man 3', showing_at: 1.hour.from_now.utc, variant: '2D').and_call_original
+      expect(ScreeningImporterJob).to receive(:enqueue).with(cinema_id: cinema.id, film_name: 'Iron Man 3', showing_at: 2.hours.from_now.utc, variant: '3D kids').and_call_original
+      expect(ScreeningImporterJob).to receive(:enqueue).with(cinema_id: cinema.id, film_name: 'Avengers', showing_at: 3.hours.from_now.utc, variant: '3D silver').and_call_original
+      expect(ScreeningImporterJob).to receive(:enqueue).with(cinema_id: cinema.id, film_name: 'Iron Man 3', showing_at: 4.hours.from_now.utc, variant: '3D').and_call_original
     end
 
     after do

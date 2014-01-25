@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe ScreeningImporterJob do
-  let(:job) { ScreeningImporterJob.new(attributes[:cinema_id], attributes[:film_name], attributes[:showing_at], attributes[:variant]) }
+  let(:job) { ScreeningImporterJob.new(attributes) }
   let!(:cinema) { create(:cinema) }
 
   describe '#perform' do

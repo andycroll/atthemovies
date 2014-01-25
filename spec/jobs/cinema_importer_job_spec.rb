@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe CinemaImporterJob do
-  let(:job) { CinemaImporterJob.new(attributes[:name], attributes[:brand], attributes[:brand_identifier], attributes[:address]) }
+  let(:job) { CinemaImporterJob.new(attributes) }
 
   describe '#perform' do
     context 'cineworld example' do

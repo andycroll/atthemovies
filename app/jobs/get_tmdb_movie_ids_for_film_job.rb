@@ -1,15 +1,22 @@
-class GetTmdbMovieIdsForFilmJob < Struct.new(:film_id)
+class GetTmdbMovieIdsForFilmJob < Job
 
-  attr_accessor :film
+  attr_reader :film_id
+
+  def initialize(args)
+    @film_id = args[:film_id]
+  end
 
   def perform
-    @film = Film.find(film_id)
     film.set_possibles(possible_tmdb_ids)
   end
 
   private
 
+  def film
+    @film ||= Film.find(film_id)
+  end
+
   def possible_tmdb_ids
-    Tmdb::Movie.find(@film.name).map { |movie| movie.id }
+    Tmdb::Movie.find(film.name).map { |movie| movie.id }
   end
 end

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe GetTmdbMovieIdsForFilmJob do
-  let(:job)  { GetTmdbMovieIdsForFilmJob.new(film.id) }
+  let(:job)  { GetTmdbMovieIdsForFilmJob.new(film_id: film.id) }
   let(:film) { create :film }
 
   describe '#perform' do
