@@ -1,0 +1,38 @@
+require 'spec_helper'
+
+describe FilmHydratorJob do
+  let(:job)        { FilmHydratorJob.new(film_id: film.id) }
+  let(:tmdb_movie) { instance_double(TmdbMovie) }
+
+  describe '#perform' do
+    before do
+      expect(Film).to receive(:find).with(film.id).and_return(film)
+    end
+
+    context 'with film with tmdb id' do
+      let(:film) { object_double(Film.new, id: 1, tmdb_identifier: 2345) }
+
+      before do
+        expect(TmdbMovie).to receive(:new).with(film.tmdb_identifier).and_return(tmdb_movie)
+      end
+
+      it 'changes the film data' do
+        expect(film).to receive(:hydrate).with(tmdb_movie)
+        job.perform
+      end
+    end
+
+    context 'with film with blank tmdb id' do
+      let(:film) { object_double(Film.new, id: 1, tmdb_identifier: nil) }
+
+      before do
+        expect(TmdbMovie).to_not receive(:new)
+      end
+
+      it 'does not change the film' do
+        expect(film).to_not receive(:hydrate)
+        job.perform
+      end
+    end
+  end
+end

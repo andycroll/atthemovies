@@ -22,9 +22,24 @@ class TmdbMovie
     tmdb_detail.imdb_id
   end
 
+  # @return <String>
+  def overview
+    tmdb_detail.overview
+  end
+
   # @return <TmdbPoster>
   def poster
     TmdbPoster.new(file_path: tmdb_detail.poster_path)
+  end
+
+  # @return <Integer>
+  def runtime
+    tmdb_detail.runtime
+  end
+
+  # @return <String>
+  def tagline
+    tmdb_detail.tagline
   end
 
   private

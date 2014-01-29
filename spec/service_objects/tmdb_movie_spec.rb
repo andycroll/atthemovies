@@ -74,6 +74,20 @@ describe TmdbMovie do
     it { should eq('tt1263670') }
   end
 
+  describe '#overview' do
+    subject(:overview) { TmdbMovie.new(tmdb_id).overview }
+
+    let(:tmdb_id)       { 25196 }
+    let(:detail_result) { instance_double(Tmdb::Movie, id: tmdb_id, overview: 'overview') }
+
+    before do
+      expect(Tmdb::Movie).to receive(:detail).and_return(detail_result)
+    end
+
+    it { should be_a(String) }
+    it { should eq('overview') }
+  end
+
   describe '#poster' do
     subject(:poster) { TmdbMovie.new(tmdb_id).poster }
 
@@ -89,5 +103,33 @@ describe TmdbMovie do
     it 'creates a poster object using the TMDB data ' do
       expect(poster).to eq(tmdb_poster)
     end
+  end
+
+  describe '#runtime' do
+    subject(:runtime) { TmdbMovie.new(tmdb_id).runtime }
+
+    let(:tmdb_id)       { 25196 }
+    let(:detail_result) { instance_double(Tmdb::Movie, id: tmdb_id, runtime: 106) }
+
+    before do
+      expect(Tmdb::Movie).to receive(:detail).and_return(detail_result)
+    end
+
+    it { should be_a(Integer) }
+    it { should eq(106) }
+  end
+
+  describe '#tagline' do
+    subject(:tagline) { TmdbMovie.new(tmdb_id).tagline }
+
+    let(:tmdb_id)       { 25196 }
+    let(:detail_result) { instance_double(Tmdb::Movie, id: tmdb_id, tagline: 'tagline') }
+
+    before do
+      expect(Tmdb::Movie).to receive(:detail).and_return(detail_result)
+    end
+
+    it { should be_a(String) }
+    it { should eq('tagline') }
   end
 end
