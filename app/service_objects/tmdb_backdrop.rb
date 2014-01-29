@@ -1,0 +1,2 @@
+class TmdbBackdrop < TmdbImage
+end
