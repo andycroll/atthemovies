@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe GetTmdbMovieIdsForFilmJob do
   let(:job)  { GetTmdbMovieIdsForFilmJob.new(film_id: film.id) }
-  let(:film) { create :film }
+  let(:film) { build(:film, id: 1, name: 'Batman') }
 
   describe '#perform' do
     before { expect(Film).to receive(:find).and_return(film) }
