@@ -15,6 +15,7 @@ gem 'cineworld_uk'
 gem 'delayed_job_active_record'
 gem 'foundation-rails'
 gem 'geocoder'
+gem 'httparty'
 gem 'jbuilder', '~> 1.2'
 gem 'stringex'
 gem 'themoviedb'
@@ -37,4 +38,5 @@ group :test do
   gem 'faker'
   gem 'shoulda-matchers', github: 'Piersonally/shoulda-matchers'
   gem 'timecop'
+  gem 'webmock'
 end
