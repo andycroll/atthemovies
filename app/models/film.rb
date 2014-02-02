@@ -1,6 +1,11 @@
 class Film < ActiveRecord::Base
   validates :name, presence: true
 
+  acts_as_url :name
+
+  mount_uploader :backdrop, BackdropUploader
+  mount_uploader :poster, PosterUploader
+
   def hydrate(tmdb_movie)
     update_attributes( imdb_identifier: tmdb_movie.imdb_number.to_s,
                        overview: tmdb_movie.overview,
@@ -10,5 +15,11 @@ class Film < ActiveRecord::Base
 
   def set_possibles(array)
     update_attributes(tmdb_possibles: array)
+  end
+
+  # use url for routing
+  # @return [String]
+  def to_param
+    url
   end
 end

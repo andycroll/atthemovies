@@ -5,6 +5,20 @@ describe Film do
     it { should validate_presence_of :name }
   end
 
+  describe 'acts_as_url' do
+    let(:film) { build(:film) }
+
+    before do
+      expect(film.url).to be_nil
+      film.save!
+    end
+
+    it 'sets the url of the film' do
+      expect(film.url).to_not be_nil
+      expect(film.url).to eq(film.name.to_url)
+    end
+  end
+
   describe '#hydrate(tmdb_movie)' do
     subject(:hydrate) { film.hydrate(tmdb_movie) }
 
@@ -39,5 +53,14 @@ describe Film do
     it 'sets the tmdb_possibles array (converts to strings)' do
       expect(film.reload.tmdb_possibles).to eq(args.map(&:to_s))
     end
+  end
+
+  describe '#to_param' do
+    subject { film.to_param }
+
+    let!(:film) { build(:film, url: 'will-be-name-if-saved') }
+
+    it { should be_a(String) }
+    it { should eq(film.url) }
   end
 end
