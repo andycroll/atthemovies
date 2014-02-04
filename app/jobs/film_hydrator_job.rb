@@ -7,7 +7,10 @@ class FilmHydratorJob < Job
   end
 
   def perform
-    film.hydrate(tmdb_movie) if tmdb_identifier.present?
+    if tmdb_identifier.present?
+      film.hydrate(tmdb_movie)
+      film.set_poster_source(tmdb_poster_uri)
+    end
   end
 
   private
@@ -18,6 +21,10 @@ class FilmHydratorJob < Job
 
   def tmdb_identifier
     film.tmdb_identifier
+  end
+
+  def tmdb_poster_uri
+    tmdb_movie.poster.uri
   end
 
   def tmdb_movie

@@ -17,9 +17,20 @@ class Film < ActiveRecord::Base
     update_attributes(tmdb_possibles: array)
   end
 
+  def set_poster_source(uri)
+    update_attributes(poster_source_uri: uri.to_s)
+    store_poster
+  end
+
   # use url for routing
   # @return [String]
   def to_param
     url
+  end
+
+  private
+
+  def store_poster
+    FilmPosterStorerJob.enqueue(film_id: self.id)
   end
 end

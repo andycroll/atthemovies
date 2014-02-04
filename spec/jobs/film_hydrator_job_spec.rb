@@ -1,15 +1,16 @@
 require 'spec_helper'
 
 describe FilmHydratorJob do
-  let(:job)        { FilmHydratorJob.new(film_id: film.id) }
-  let(:tmdb_movie) { instance_double(TmdbMovie) }
+  let(:job)         { FilmHydratorJob.new(film_id: film.id) }
+  let(:tmdb_movie)  { instance_double(TmdbMovie, poster: tmdb_poster) }
+  let(:tmdb_poster) { instance_double(TmdbPoster, uri: URI(Faker::Internet.url)) }
 
   describe '#perform' do
     before do
       expect(Film).to receive(:find).with(film.id).and_return(film)
     end
 
-    context 'with film with tmdb id' do
+    context 'with film with tmdb id and no data' do
       let(:film) { object_double(Film.new, id: 1, tmdb_identifier: 2345) }
 
       before do
@@ -18,6 +19,7 @@ describe FilmHydratorJob do
 
       it 'changes the film data' do
         expect(film).to receive(:hydrate).with(tmdb_movie)
+        expect(film).to receive(:set_poster_source).with(tmdb_poster.uri)
         job.perform
       end
     end
@@ -31,6 +33,7 @@ describe FilmHydratorJob do
 
       it 'does not change the film' do
         expect(film).to_not receive(:hydrate)
+        expect(film).to_not receive(:set_poster_source)
         job.perform
       end
     end
