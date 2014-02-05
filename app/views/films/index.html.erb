@@ -1,0 +1,18 @@
+<header class="row">
+  <ul class="breadcrumbs">
+    <li><a href="/">Movies UK</a></li>
+    <li class="current">Films</li>
+  </ul>
+
+  <div class="columns">
+    <h1>Films</h1>
+  </div>
+</header>
+
+<div class="row">
+  <% @films.each do |film| %>
+    <div class="medium-6 large-4 columns">
+      <p><%= link_to film.name, film %></p>
+    </div>
+  <% end %>
+</div>
