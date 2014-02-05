@@ -13,6 +13,11 @@ class Film < ActiveRecord::Base
                        tagline: tmdb_movie.tagline)
   end
 
+  def set_backdrop_source(uri)
+    update_attributes(backdrop_source_uri: uri.to_s)
+    store_backdrop
+  end
+
   def set_possibles(array)
     update_attributes(tmdb_possibles: array)
   end
@@ -29,6 +34,10 @@ class Film < ActiveRecord::Base
   end
 
   private
+
+  def store_backdrop
+    FilmBackdropStorerJob.enqueue(film_id: self.id)
+  end
 
   def store_poster
     FilmPosterStorerJob.enqueue(film_id: self.id)

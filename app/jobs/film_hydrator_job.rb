@@ -9,6 +9,7 @@ class FilmHydratorJob < Job
   def perform
     if tmdb_identifier.present?
       film.hydrate(tmdb_movie)
+      film.set_backdrop_source(tmdb_backdrop_uri)
       film.set_poster_source(tmdb_poster_uri)
     end
   end
@@ -17,6 +18,10 @@ class FilmHydratorJob < Job
 
   def film
     @film ||= Film.find(film_id)
+  end
+
+  def tmdb_backdrop_uri
+    tmdb_movie.backdrop.uri
   end
 
   def tmdb_identifier

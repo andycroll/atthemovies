@@ -1,9 +1,10 @@
 require 'spec_helper'
 
 describe FilmHydratorJob do
-  let(:job)         { FilmHydratorJob.new(film_id: film.id) }
-  let(:tmdb_movie)  { instance_double(TmdbMovie, poster: tmdb_poster) }
-  let(:tmdb_poster) { instance_double(TmdbPoster, uri: URI(Faker::Internet.url)) }
+  let(:job)           { FilmHydratorJob.new(film_id: film.id) }
+  let(:tmdb_movie)    { instance_double(TmdbMovie, poster: tmdb_poster, backdrop: tmdb_backdrop) }
+  let(:tmdb_poster)   { instance_double(TmdbPoster, uri: URI(Faker::Internet.url)) }
+  let(:tmdb_backdrop) { instance_double(TmdbBackdrop, uri: URI(Faker::Internet.url)) }
 
   describe '#perform' do
     before do
@@ -19,6 +20,7 @@ describe FilmHydratorJob do
 
       it 'changes the film data' do
         expect(film).to receive(:hydrate).with(tmdb_movie)
+        expect(film).to receive(:set_backdrop_source).with(tmdb_backdrop.uri)
         expect(film).to receive(:set_poster_source).with(tmdb_poster.uri)
         job.perform
       end
@@ -33,6 +35,7 @@ describe FilmHydratorJob do
 
       it 'does not change the film' do
         expect(film).to_not receive(:hydrate)
+        expect(film).to_not receive(:set_backdrop_source)
         expect(film).to_not receive(:set_poster_source)
         job.perform
       end
