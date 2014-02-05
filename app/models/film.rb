@@ -6,6 +6,8 @@ class Film < ActiveRecord::Base
   mount_uploader :backdrop, BackdropUploader
   mount_uploader :poster, PosterUploader
 
+  scope :whats_on, ->{ where("screenings_count > 0").order("screenings_count DESC") }
+
   def hydrate(tmdb_movie)
     update_attributes( imdb_identifier: tmdb_movie.imdb_number.to_s,
                        overview: tmdb_movie.overview,

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140202221606) do
+ActiveRecord::Schema.define(version: 20140204222801) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 20140202221606) do
     t.text     "poster"
     t.text     "backdrop"
     t.string   "url"
+    t.integer  "screenings_count"
   end
 
   create_table "screenings", force: true do |t|

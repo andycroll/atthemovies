@@ -1,6 +1,6 @@
 class Screening < ActiveRecord::Base
   belongs_to :cinema
-  belongs_to :film
+  belongs_to :film, counter_cache: true
 
   validates :showing_at, :variant, presence: true
 

@@ -19,6 +19,25 @@ describe Film do
     end
   end
 
+  describe 'scope' do
+    describe '.whats_on' do
+      let!(:film_1) { create(:film) }
+      let!(:film_2) { create(:film) }
+      let!(:film_3) { create(:film) }
+      let!(:screening_1_1) { create(:screening, film: film_1) }
+      let!(:screening_2_1) { create(:screening, film: film_2) }
+      let!(:screening_2_2) { create(:screening, film: film_2) }
+
+      it 'only returns films with screenings' do
+        expect(Film.whats_on).not_to include(film_3)
+      end
+
+      it 'returns films in order of greatest number of screenings' do
+        expect(Film.whats_on).to eq([film_2, film_1])
+      end
+    end
+  end
+
   describe '#hydrate(tmdb_movie)' do
     subject(:hydrate) { film.hydrate(tmdb_movie) }
 
