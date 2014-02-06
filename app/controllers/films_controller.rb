@@ -6,6 +6,6 @@ class FilmsController < ApplicationController
   end
 
   def show
-    @film = Film.find_by(url: params[:id])
+    @film = Film.find(params[:id])
   end
 end

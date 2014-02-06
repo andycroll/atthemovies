@@ -122,6 +122,6 @@ describe Film do
     let!(:film) { build(:film, url: 'will-be-name-if-saved') }
 
     it { should be_a(String) }
-    it { should eq(film.url) }
+    it { should eq("#{film.id}-#{film.url}") }
   end
 end

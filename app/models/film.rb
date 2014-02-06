@@ -32,7 +32,7 @@ class Film < ActiveRecord::Base
   # use url for routing
   # @return [String]
   def to_param
-    url
+    "#{id}-#{url}"
   end
 
   private

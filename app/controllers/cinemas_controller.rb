@@ -6,6 +6,6 @@ class CinemasController < ApplicationController
   end
 
   def show
-    @cinema = Cinema.find_by(url: params[:id])
+    @cinema = Cinema.find(params[:id])
   end
 end

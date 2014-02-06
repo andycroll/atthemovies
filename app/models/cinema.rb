@@ -16,7 +16,7 @@ class Cinema < ActiveRecord::Base
   # use url for routing
   # @return [String]
   def to_param
-    url
+    "#{id}-#{url}"
   end
 
   # Updates address fields for a cinema

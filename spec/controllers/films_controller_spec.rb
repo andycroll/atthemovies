@@ -9,17 +9,17 @@ describe FilmsController do
       )
     }
     specify {
-      expect( get: '/films/the-dark-knight' ).to route_to(
+      expect( get: '/films/3-the-dark-knight' ).to route_to(
         controller: 'films',
         action: 'show',
-        id: 'the-dark-knight'
+        id: '3-the-dark-knight'
       )
     }
     specify {
-      expect( get: '/films/the-dark-knight.json' ).to route_to(
+      expect( get: '/films/3-the-dark-knight.json' ).to route_to(
         controller: 'films',
         action: 'show',
-        id: 'the-dark-knight',
+        id: '3-the-dark-knight',
         format: 'json'
       )
     }
@@ -50,12 +50,11 @@ describe FilmsController do
     let!(:film) { create :film }
 
     def get_show(params={})
-      get :show, { id: id }.merge(params)
+      get :show, { id: film.to_param }.merge(params)
     end
 
     describe 'HTML' do
       describe 'successful' do
-        let(:id) { film.url }
         before { get_show }
 
         it { should respond_with :success }
@@ -68,7 +67,6 @@ describe FilmsController do
       render_views
 
       describe 'successful' do
-        let(:id) { film.url }
         before { get_show({ format: 'json' }) }
 
         it { should respond_with :success }

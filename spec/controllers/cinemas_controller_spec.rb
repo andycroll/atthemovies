@@ -49,12 +49,11 @@ describe CinemasController do
     let!(:cinema) { create :cinema }
 
     def get_show(params={})
-      get :show, { id: id }.merge(params)
+      get :show, { id: cinema.to_param }.merge(params)
     end
 
     describe 'HTML' do
       describe 'successful' do
-        let(:id) { cinema.url }
         before { get_show }
 
         it { should respond_with :success }
@@ -65,7 +64,6 @@ describe CinemasController do
 
     describe 'JSON' do
       describe 'successful' do
-        let(:id) { cinema.url }
         before { get_show({ format: 'json' }) }
 
         it { should respond_with :success }

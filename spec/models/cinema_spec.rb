@@ -37,10 +37,10 @@ describe Cinema do
   describe '#to_param' do
     subject { cinema.to_param }
 
-    let!(:cinema) { build(:cinema, url: 'will-be-name-if-saved') }
+    let!(:cinema) { create(:cinema, url: 'will-be-name-if-saved') }
 
     it { should be_a(String) }
-    it { should eq(cinema.url) }
+    it { should eq("#{cinema.id}-#{cinema.url}") }
   end
 
   describe '#address_str' do
