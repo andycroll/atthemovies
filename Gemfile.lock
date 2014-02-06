@@ -83,9 +83,6 @@ GEM
       json (~> 1.8)
       multi_xml (>= 0.5.2)
     i18n (0.6.9)
-    jbuilder (1.5.3)
-      activesupport (>= 3.0.0)
-      multi_json (>= 1.2.0)
     jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
@@ -104,6 +101,8 @@ GEM
       mini_portile (~> 0.5.0)
     pg (0.17.0)
     polyglot (0.3.3)
+    rabl (0.9.3)
+      activesupport (>= 2.3.14)
     rack (1.5.2)
     rack-test (0.6.2)
       rack (>= 1.0)
@@ -203,10 +202,10 @@ DEPENDENCIES
   foundation-rails
   geocoder
   httparty
-  jbuilder (~> 1.2)
   jquery-rails
   mini_magick
   pg
+  rabl
   rails (= 4.1.0.beta1)
   rails_db_info
   rspec-rails (~> 3.0.0.beta)

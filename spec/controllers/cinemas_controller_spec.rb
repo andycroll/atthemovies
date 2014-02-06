@@ -67,12 +67,13 @@ describe CinemasController do
         before { get_show({ format: 'json' }) }
 
         it { should respond_with :success }
-        specify { expect(assigns(:cinema)).to be_present }
-        it 'should include correct keys' do
-          JSON.parse(response.body).keys.should include(
-            'name',
-            'latitude', 'longitude'
-          )
+        it 'should route cinemas key' do
+          JSON.parse(response.body).keys.should eq(['cinemas'])
+        end
+        it 'includes correct keys for the cinemas' do
+          JSON.parse(response.body)['cinemas'].each do |film|
+            expect(film.keys).to include('id', 'name', 'latitude', 'longitude')
+          end
         end
       end
     end

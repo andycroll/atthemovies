@@ -71,11 +71,13 @@ describe FilmsController do
 
         it { should respond_with :success }
         specify { expect(assigns(:film)).to be_present }
-        it 'should include correct keys' do
-          JSON.parse(response.body).keys.should include(
-            'name',
-            'poster', 'backdrop'
-          )
+        it 'should route films key' do
+          JSON.parse(response.body).keys.should eq(['films'])
+        end
+        it 'includes correct keys for the films' do
+          JSON.parse(response.body)['films'].each do |film|
+            expect(film.keys).to include('id', 'name')
+          end
         end
       end
     end
