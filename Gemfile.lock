@@ -99,6 +99,11 @@ GEM
     multi_xml (0.5.5)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
+    odeon_uk (1.1.4)
+      httparty
+      nokogiri
+      tzinfo
+      tzinfo-data
     pg (0.17.0)
     polyglot (0.3.3)
     rabl (0.9.3)
@@ -204,6 +209,7 @@ DEPENDENCIES
   httparty
   jquery-rails
   mini_magick
+  odeon_uk
   pg
   rabl
   rails (= 4.1.0.beta1)
