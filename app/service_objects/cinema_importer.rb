@@ -1,6 +1,14 @@
-class CineworldImporter
+class CinemaImporter
+
+  attr_reader :brand, :klass
+
+  def initialize(options)
+    @brand = options[:brand] || options[:klass].to_s
+    @klass = options[:klass]
+  end
+
   def import_cinemas
-    cinemas.each do |cinema|
+    remote_cinemas.each do |cinema|
       CinemaImporterJob.enqueue(
         name: cinema.full_name,
         brand: cinema.brand,
@@ -11,13 +19,13 @@ class CineworldImporter
   end
 
   def import_screenings
-    Cinema.where(brand: 'Cineworld').each do |cinema|
+    brand_cinemas.each do |cinema|
       import_screenings_for_cinema(cinema)
     end
   end
 
   def import_screenings_for_cinema(cinema)
-    cineworld_cinema(cinema.brand_identifier).screenings.each do |s|
+    remote_cinema(cinema.brand_identifier).screenings.each do |s|
       ScreeningImporterJob.enqueue(
         cinema_id: cinema.id,
         film_name: s.film_name,
@@ -29,11 +37,15 @@ class CineworldImporter
 
   private
 
-  def cinemas
-    CineworldUk::Cinema.all
+  def brand_cinemas
+    Cinema.where(brand: brand)
   end
 
-  def cineworld_cinema(brand_identifier)
-    CineworldUk::Cinema.find(brand_identifier.to_s)
+  def remote_cinemas
+    klass.all
+  end
+
+  def remote_cinema(brand_identifier)
+    klass.find(brand_identifier.to_s)
   end
 end

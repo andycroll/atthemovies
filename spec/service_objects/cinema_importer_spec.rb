@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe CineworldImporter do
-  let(:importer) { CineworldImporter.new }
+describe CinemaImporter do
+  let(:importer) { CinemaImporter.new(klass: CineworldUk::Cinema, brand: 'Cineworld') }
 
   describe '#import_cinemas' do
     let(:cinema_1) { instance_double('CineworldUk::Cinema') }

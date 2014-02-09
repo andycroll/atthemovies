@@ -12,12 +12,14 @@ describe 'rake app' do
   end
 
   describe 'import' do
+    let(:importer) { instance_double('CinemaImporter') }
+
     describe 'cinemas' do
       describe 'cineworld' do
-        let(:importer) { instance_double('CineworldImporter') }
-
         it 'imports using the service object' do
-          expect(CineworldImporter).to receive(:new).and_return(importer)
+          expect(CinemaImporter).to receive(:new).
+            with(klass: CineworldUk::Cinema, brand: 'Cineworld').
+            and_return(importer)
           expect(importer).to receive(:import_cinemas)
           rake['import:cinemas:cineworld'].invoke
         end
@@ -26,10 +28,10 @@ describe 'rake app' do
 
     describe 'screenings' do
       describe 'cineworld' do
-        let(:importer) { instance_double('CineworldImporter') }
-
         it 'imports using the service object' do
-          expect(CineworldImporter).to receive(:new).and_return(importer)
+          expect(CinemaImporter).to receive(:new).
+            with(klass: CineworldUk::Cinema, brand: 'Cineworld').
+            and_return(importer)
           expect(importer).to receive(:import_screenings)
           rake['import:screenings:cineworld'].invoke
         end
