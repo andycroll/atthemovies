@@ -99,7 +99,7 @@ GEM
     multi_xml (0.5.5)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
-    odeon_uk (1.1.4)
+    odeon_uk (1.1.5)
       httparty
       nokogiri
       tzinfo
