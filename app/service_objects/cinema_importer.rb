@@ -3,7 +3,7 @@ class CinemaImporter
   attr_reader :brand, :klass
 
   def initialize(options)
-    @brand = options[:brand] || options[:klass].to_s
+    @brand = options[:brand] || options[:klass].to_s.gsub('::Cinema','').gsub(/Uk\z/,'')
     @klass = options[:klass]
   end
 
