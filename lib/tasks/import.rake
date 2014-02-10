@@ -9,6 +9,11 @@ namespace :import do
     task :odeon => :environment do
       CinemaImporter.new(klass: OdeonUk::Cinema).import_cinemas
     end
+
+    desc 'Import Picturehouse Cinemas'
+    task :picturehouse => :environment do
+      CinemaImporter.new(klass: PicturehouseUk::Cinema).import_cinemas
+    end
   end
 
   namespace :screenings do
@@ -20,6 +25,11 @@ namespace :import do
     desc 'Import Odeon Screenings'
     task :odeon => :environment do
       CinemaImporter.new(klass: OdeonUk::Cinema).import_screenings
+    end
+
+    desc 'Import Picturehouse Screenings'
+    task :picturehouse => :environment do
+      CinemaImporter.new(klass: PicturehouseUk::Cinema).import_screenings
     end
   end
 end

@@ -32,6 +32,15 @@ describe 'rake app' do
           rake['import:cinemas:odeon'].invoke
         end
       end
+
+      describe 'picturehouse' do
+        it 'imports using the service object' do
+          expect(CinemaImporter).to receive(:new).
+            with(klass: PicturehouseUk::Cinema).and_return(importer)
+          expect(importer).to receive(:import_cinemas)
+          rake['import:cinemas:picturehouse'].invoke
+        end
+      end
     end
 
     describe 'screenings' do
@@ -50,6 +59,15 @@ describe 'rake app' do
             with(klass: OdeonUk::Cinema).and_return(importer)
           expect(importer).to receive(:import_screenings)
           rake['import:screenings:odeon'].invoke
+        end
+      end
+
+      describe 'picturehouse' do
+        it 'imports using the service object' do
+          expect(CinemaImporter).to receive(:new).
+            with(klass: PicturehouseUk::Cinema).and_return(importer)
+          expect(importer).to receive(:import_screenings)
+          rake['import:screenings:picturehouse'].invoke
         end
       end
     end

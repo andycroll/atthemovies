@@ -105,6 +105,11 @@ GEM
       tzinfo
       tzinfo-data
     pg (0.17.0)
+    picturehouse_uk (1.0.2)
+      httparty
+      nokogiri
+      tzinfo
+      tzinfo-data
     polyglot (0.3.3)
     rabl (0.9.3)
       activesupport (>= 2.3.14)
@@ -211,6 +216,7 @@ DEPENDENCIES
   mini_magick
   odeon_uk
   pg
+  picturehouse_uk
   rabl
   rails (= 4.1.0.beta1)
   rails_db_info
