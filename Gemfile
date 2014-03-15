@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+ruby '2.1.1'
 gem 'rails', '4.1.0.beta1'
 gem 'pg'
 
@@ -40,7 +41,8 @@ end
 group :test do
   gem 'factory_girl_rails'
   gem 'faker'
-  gem 'shoulda-matchers', github: 'Piersonally/shoulda-matchers'
+  gem 'minitest' # gets rid of error in shoulda matchers
+  gem 'shoulda-matchers' #, github: 'Piersonally/shoulda-matchers'
   gem 'timecop'
   gem 'webmock'
 end
