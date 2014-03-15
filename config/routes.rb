@@ -3,4 +3,6 @@ Moviesuk::Application.routes.draw do
     resources :screenings, only: [:index]
   end
   resources :films, only: [:index, :show]
+
+  root 'pages#home'
 end
