@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe CinemaImporter do
   let(:importer) { CinemaImporter.new(klass: CineworldUk::Cinema) }

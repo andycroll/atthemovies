@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe GetTmdbMovieIdsForFilmJob do
   let(:job)  { GetTmdbMovieIdsForFilmJob.new(film_id: film.id) }

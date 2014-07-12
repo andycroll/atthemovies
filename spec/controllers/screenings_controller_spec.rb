@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe ScreeningsController do
   render_views
@@ -74,8 +74,8 @@ describe ScreeningsController do
           end
         end
 
-        it 'should route screenings key' do
-          JSON.parse(response.body).keys.should eq(['screenings'])
+        it 'has root key of screenings' do
+          expect(JSON.parse(response.body).keys).to eq(['screenings'])
         end
 
         it 'includes correct keys for the screenings' do

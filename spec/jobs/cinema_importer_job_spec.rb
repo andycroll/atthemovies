@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe CinemaImporterJob do
   let(:job) { CinemaImporterJob.new(attributes) }

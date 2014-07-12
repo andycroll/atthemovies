@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe CinemasController do
   render_views
@@ -67,8 +67,8 @@ describe CinemasController do
         before { get_show({ format: 'json' }) }
 
         it { should respond_with :success }
-        it 'should route cinemas key' do
-          JSON.parse(response.body).keys.should eq(['cinemas'])
+        it 'has root key of cinemas' do
+          expect(JSON.parse(response.body).keys).to eq(['cinemas'])
         end
         it 'includes correct keys for the cinemas' do
           JSON.parse(response.body)['cinemas'].each do |film|

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe FilmsController do
   describe 'routes' do
@@ -70,10 +70,15 @@ describe FilmsController do
         before { get_show({ format: 'json' }) }
 
         it { should respond_with :success }
-        specify { expect(assigns(:film)).to be_present }
-        it 'should route films key' do
-          JSON.parse(response.body).keys.should eq(['films'])
+
+        it 'assigns film for the view' do
+          expect(assigns(:film)).to be_present
         end
+
+        it 'has root key of films' do
+          expect(JSON.parse(response.body).keys).to eq(['films'])
+        end
+
         it 'includes correct keys for the films' do
           JSON.parse(response.body)['films'].each do |film|
             expect(film.keys).to include('id', 'name')

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Cinema do
   describe 'associations' do
@@ -10,8 +10,8 @@ describe Cinema do
 
     before { cinema.save! }
 
-    specify { cinema.url.should_not be_nil }
-    specify { cinema.url.should eq(cinema.name.to_url) }
+    specify { expect(cinema.url).not_to be_nil }
+    specify { expect(cinema.url).to eq(cinema.name.to_url) }
   end
 
   describe 'geocode_by' do
@@ -20,8 +20,8 @@ describe Cinema do
 
       before { cinema.save! }
 
-      specify { cinema.latitude.should be_nil }
-      specify { cinema.longitude.should be_nil }
+      specify { expect(cinema.latitude).to be_nil }
+      specify { expect(cinema.longitude).to be_nil }
     end
 
     context 'with address' do
@@ -29,8 +29,8 @@ describe Cinema do
 
       before { cinema.save! }
 
-      specify { cinema.latitude.should_not be_nil }
-      specify { cinema.longitude.should_not be_nil }
+      specify { expect(cinema.latitude).not_to be_nil }
+      specify { expect(cinema.longitude).not_to be_nil }
     end
   end
 
@@ -39,8 +39,8 @@ describe Cinema do
 
     let!(:cinema) { create(:cinema, url: 'will-be-name-if-saved') }
 
-    it { should be_a(String) }
-    it { should eq("#{cinema.id}-#{cinema.url}") }
+    it { is_expected.to be_a(String) }
+    it { is_expected.to eq("#{cinema.id}-#{cinema.url}") }
   end
 
   describe '#address_str' do
@@ -48,28 +48,28 @@ describe Cinema do
 
     context 'missing all address parts' do
       let(:cinema) { build(:cinema) }
-      it { should be_nil }
+      it { is_expected.to be_nil }
     end
 
     context 'missing address parts' do
       let(:cinema) { build(:cinema, postal_code: 'BN1 6JD') }
-      it { should be_nil }
+      it { is_expected.to be_nil }
     end
 
     context 'only missing post code' do
       let(:cinema) { build(:cinema, street_address: '4 Eastwoods', locality: 'Brighton') }
-      it { should be_a(String) }
-      it { should include(cinema.street_address) }
-      it { should include(cinema.locality) }
+      it { is_expected.to be_a(String) }
+      it { is_expected.to include(cinema.street_address) }
+      it { is_expected.to include(cinema.locality) }
     end
 
     context 'with address' do
       let(:cinema) { build(:cinema, :with_address) }
 
-      it { should be_a(String) }
-      it { should include(cinema.street_address) }
-      it { should include(cinema.locality) }
-      it { should include(cinema.postal_code) }
+      it { is_expected.to be_a(String) }
+      it { is_expected.to include(cinema.street_address) }
+      it { is_expected.to include(cinema.locality) }
+      it { is_expected.to include(cinema.postal_code) }
     end
   end
 

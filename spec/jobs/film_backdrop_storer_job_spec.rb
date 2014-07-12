@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe FilmBackdropStorerJob do
   let(:job)  { FilmBackdropStorerJob.new(film_id: film.id) }

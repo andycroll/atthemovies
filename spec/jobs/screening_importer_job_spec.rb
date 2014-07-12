@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe ScreeningImporterJob do
   let(:job) { ScreeningImporterJob.new(attributes) }

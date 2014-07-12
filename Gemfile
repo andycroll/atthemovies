@@ -1,13 +1,11 @@
 source 'https://rubygems.org'
 
 ruby '2.1.2'
-gem 'rails', '4.1.0.beta1'
+gem 'rails', '4.1.4'
 gem 'pg'
 
-gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
-gem 'sprockets_better_errors'
 
 gem 'jquery-rails'
 gem 'turbolinks'
@@ -31,7 +29,7 @@ end
 
 group :development, :test do
   gem 'dotenv-rails'
-  gem 'rspec-rails', '~> 3.0.0.beta'
+  gem 'rspec-rails'
 end
 
 group :doc do
@@ -41,8 +39,7 @@ end
 group :test do
   gem 'factory_girl_rails'
   gem 'faker'
-  gem 'minitest' # gets rid of error in shoulda matchers
-  gem 'shoulda-matchers' #, github: 'Piersonally/shoulda-matchers'
+  gem 'shoulda-matchers'
   gem 'timecop'
   gem 'webmock'
 end

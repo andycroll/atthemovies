@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe FilmHydratorJob do
   let(:job)           { FilmHydratorJob.new(film_id: film.id) }
