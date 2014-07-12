@@ -11,6 +11,21 @@ describe Screening do
     it { should validate_presence_of :variant }
   end
 
+  describe 'scopes' do
+    describe '.past' do
+      subject(:past) { Screening.past }
+
+      it 'returns past screenings' do
+        screening = create(:screening)
+        past_screening_1 = create(:screening, showing_at: 2.days.ago )
+        past_screening_2 = create(:screening, showing_at: 4.days.ago )
+
+        expect(past).to include(past_screening_1, past_screening_2)
+        expect(past).not_to include(screening)
+      end
+    end
+  end
+
   describe '#set_variant' do
     let(:screening) { create :screening }
     subject { screening.set_variant('my text') }

@@ -4,6 +4,8 @@ class Screening < ActiveRecord::Base
 
   validates :showing_at, :variant, presence: true
 
+  scope :past, -> { where('showing_at < ?', Time.current) }
+
   def set_variant(variant)
     update_attributes(variant: variant, updated_at: Time.current)
   end
