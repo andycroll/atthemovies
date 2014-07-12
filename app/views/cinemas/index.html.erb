@@ -1,17 +1,18 @@
-<header class="row">
-  <ul class="breadcrumbs">
-    <li><a href="/">Movies UK</a></li>
-    <li class="current">Cinemas</li>
-  </ul>
+<% content_for(:title) do -%>
+  Cinemas
+<% end -%>
 
-  <div class="columns">
-    <h1>Uk Cinemas</h1>
-  </div>
-</header>
+<% content_for :breadcrumbs do -%>
+  <li class="active">Cinemas</li>
+<% end -%>
+
+<% content_for(:page_header) do -%>
+  Cinemas
+<% end -%>
 
 <div class="row">
   <% @cinemas.each do |cinema| %>
-    <div class="medium-6 large-4 columns">
+    <div class="col-sm-6">
       <p><%= link_to cinema.name, cinema_path(cinema) %></p>
     </div>
   <% end %>

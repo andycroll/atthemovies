@@ -1,27 +1,24 @@
-<header class="row">
-  <ul class="breadcrumbs">
-    <li><a href="/">Movies UK</a></li>
-    <li><a href="/cinemas">Cinemas</a></li>
-    <li class="current"><%= link_to @cinema.name, @cinema %></li>
-  </ul>
+<% content_for(:title) do -%>
+  <%= @cinema.name %> &bull; Cinemas
+<% end -%>
 
-  <div class="columns">
-    <h1><%= @cinema.name %></h1>
-  </div>
-</header>
+<% content_for :breadcrumbs do -%>
+  <li><%= link_to 'Cinemas', cinemas_path %></li>
+  <li><%= link_to @cinema.name, @cinema %></li>
+  <li class="active">Screenings</li>
+<% end -%>
+
+<% content_for(:page_header) do -%>
+  <%= @cinema.name %>
+<% end -%>
 
 <div class="row">
-  <div class="columns">
+  <div class="col-sm-12">
+    <h3><%= link_to 'Screenings', cinema_screenings_path(@cinema) %></h3>
     <p>
       <%= @cinema.street_address %>,
       <%= @cinema.locality %>
       <%= @cinema.postal_code %>
     </p>
-  </div>
-</div>
-
-<div class="row">
-  <div class="columns">
-    <h3><%= link_to 'Screenings', cinema_screenings_path(@cinema) %></h3>
   </div>
 </div>

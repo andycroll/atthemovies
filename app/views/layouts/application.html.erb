@@ -4,35 +4,34 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title><%= content_for?(:title) ? yield(:title) : 'Movies' %></title>
+    <title><%= content_for?(:title) ? yield(:title) : 'At The Movies' %></title>
 
-    <%= stylesheet_link_tag :application, 'data-turbolinks-track' => true %>
-    <%= javascript_include_tag 'vendor/modernizr', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag '//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/darkly/bootstrap.min.css', 'data-turbolinks-track' => true %>
   </head>
 
   <body>
-<!--
-    <nav class="top-bar" data-topbar>
-      <ul class="title-area">
-        <li class="name">
-          <h1><a href="#">Movies UK</a></h1>
-        </li>
-        <li class="toggle-topbar menu-icon"><a href="#">Menu</a></li>
-      </ul>
+    <ol class="breadcrumb" style="margin-bottom:0">
+      <li><a href="/">Movies UK</a></li>
+      <%= yield(:breadcrumbs) %>
+    </ol>
 
-      <section class="top-bar-section">
-        <ul class="right">
-          <li><a href="#">About</a></li>
-        </ul>
+    <div class="container-fluid">
 
-        <ul class="left">
-          <li><a href="#">The iOS App</a></li>
-        </ul>
-      </section>
-    </nav>
- -->
-    <%= yield %>
+      <header>
+        <h1><%= yield(:page_header) %></h1>
+      </header>
+
+      <%= yield %>
+
+      <div class="panel panel-default">
+        <div class="panel-body">
+          Coming 2014
+          <!-- <a href="#" class="btn btn-danger" disabled>App Store</a> -->
+        </div>
+      </div>
+    </div>
 
     <%= javascript_include_tag :application %>
   </body>
