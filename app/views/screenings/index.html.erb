@@ -17,7 +17,7 @@
 <div class="row">
   <% @screenings.each do |screening| -%>
     <div class="col-sm-3">
-      <p><%= screening.film.name %> <small><%= screening.showing_at %></small></p>
+      <p><%= screening.film.name %> <small><%= local_time(screening.showing_at) %></small></p>
     </div>
   <% end -%>
 </div>
