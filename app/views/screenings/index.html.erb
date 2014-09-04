@@ -7,17 +7,27 @@
 <% content_for :breadcrumbs do -%>
   <li><%= link_to 'Cinemas', cinemas_path %></li>
   <li><%= link_to @cinema.name, @cinema %></li>
-  <li class="active"><%= link_to 'Screenings', cinema_screenings_path(@cinema) %></li>
+  <li class="active">Screenings</li>
 <% end -%>
 
 <% content_for(:page_header) do -%>
   <%= title %>
 <% end -%>
 
-<div class="row">
-  <% @screenings.each do |screening| -%>
-    <div class="col-sm-3">
-      <p><%= screening.film.name %> <small><%= local_time(screening.showing_at) %></small></p>
+<% @screenings.dates.each do |date| -%>
+  <div class="row">
+    <hr />
+
+    <div class="col-sm-12">
+      <h4><%= local_time(date, '%A %B %e') %></h4>
     </div>
-  <% end -%>
-</div>
+    <% @screenings.on(date).each do |screening| -%>
+      <div class="col-sm-3">
+        <p>
+          <%= screening.film.name %><br />
+          <small><%= local_time(screening.showing_at, '%H:%M') %></small>
+        </p>
+      </div>
+    <% end -%>
+  </div>
+<% end -%>

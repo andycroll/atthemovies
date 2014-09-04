@@ -4,8 +4,7 @@
 
 <% content_for :breadcrumbs do -%>
   <li><%= link_to 'Cinemas', cinemas_path %></li>
-  <li><%= link_to @cinema.name, @cinema %></li>
-  <li class="active">Screenings</li>
+  <li class="active"><%= @cinema.name %></li>
 <% end -%>
 
 <% content_for(:page_header) do -%>

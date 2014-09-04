@@ -4,33 +4,33 @@ describe CinemasController do
   render_views
 
   describe 'routes' do
-    specify {
-      expect( get: '/cinemas' ).to route_to(
+    specify do
+      expect(get: '/cinemas').to route_to(
         controller: 'cinemas',
         action: 'index'
       )
-    }
-    specify {
-      expect( get: '/cinemas/odeon-brighton' ).to route_to(
+    end
+    specify do
+      expect(get: '/cinemas/odeon-brighton').to route_to(
         controller: 'cinemas',
         action: 'show',
         id: 'odeon-brighton'
       )
-    }
-    specify {
-      expect( get: '/cinemas/odeon-brighton.json' ).to route_to(
+    end
+    specify do
+      expect(get: '/cinemas/odeon-brighton.json').to route_to(
         controller: 'cinemas',
         action: 'show',
         id: 'odeon-brighton',
         format: 'json'
       )
-    }
+    end
   end
 
   describe '#GET index' do
     let!(:cinemas) { create :cinema }
 
-    def get_index(params={})
+    def get_index(params = {})
       get :index, {}.merge(params)
     end
 
@@ -48,7 +48,7 @@ describe CinemasController do
   describe '#GET show' do
     let!(:cinema) { create :cinema }
 
-    def get_show(params={})
+    def get_show(params = {})
       get :show, { id: cinema.to_param }.merge(params)
     end
 
@@ -64,7 +64,7 @@ describe CinemasController do
 
     describe 'JSON' do
       describe 'successful' do
-        before { get_show({ format: 'json' }) }
+        before { get_show(format: 'json') }
 
         it { should respond_with :success }
         it 'has root key of cinemas' do

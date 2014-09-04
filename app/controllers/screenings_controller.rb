@@ -4,7 +4,7 @@ class ScreeningsController < ApplicationController
   before_filter :assign_cinema
 
   def index
-    @screenings = @cinema.screenings
+    @screenings = ScreeningGrouper.new(@cinema.screenings)
   end
 
   private
