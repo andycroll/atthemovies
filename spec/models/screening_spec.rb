@@ -12,6 +12,19 @@ describe Screening do
   end
 
   describe 'scopes' do
+    describe 'default' do
+      subject { Screening.all }
+
+      it 'returns screenings in ascending time order' do
+        screening_1 = create(:screening, showing_at: 3.days.from_now )
+        screening_2 = create(:screening, showing_at: 2.days.from_now )
+
+        expect(subject).to include(screening_2, screening_1)
+        expect(subject.first).to eq(screening_2)
+        expect(subject.last).to eq(screening_1)
+      end
+    end
+
     describe '.past' do
       subject(:past) { Screening.past }
 

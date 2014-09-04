@@ -4,6 +4,7 @@ class Screening < ActiveRecord::Base
 
   validates :showing_at, :variant, presence: true
 
+  default_scope { order('showing_at ASC') }
   scope :past, -> { where('showing_at < ?', Time.current) }
 
   def set_variant(variant)
