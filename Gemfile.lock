@@ -34,7 +34,7 @@ GEM
       activesupport (>= 3.2.0)
       json (>= 1.7)
       mime-types (>= 1.16)
-    cineworld_uk (2.0.2)
+    cineworld_uk (2.0.4)
       nokogiri
       tzinfo
       tzinfo-data
