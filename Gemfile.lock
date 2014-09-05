@@ -34,8 +34,7 @@ GEM
       activesupport (>= 3.2.0)
       json (>= 1.7)
       mime-types (>= 1.16)
-    cineworld_uk (1.0.5)
-      httparty
+    cineworld_uk (2.0.2)
       nokogiri
       tzinfo
       tzinfo-data
@@ -171,7 +170,7 @@ GEM
       coffee-rails
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    tzinfo-data (1.2014.5)
+    tzinfo-data (1.2014.7)
       tzinfo (>= 1.0.0)
     uglifier (2.5.1)
       execjs (>= 0.3.0)
