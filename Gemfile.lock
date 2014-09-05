@@ -45,10 +45,10 @@ GEM
     coffee-script (2.3.0)
       coffee-script-source
       execjs
-    coffee-script-source (1.7.1)
-    delayed_job (4.0.2)
+    coffee-script-source (1.8.0)
+    delayed_job (4.0.3)
       activesupport (>= 3.0, < 4.2)
-    delayed_job_active_record (4.0.1)
+    delayed_job_active_record (4.0.2)
       activerecord (>= 3.0, < 4.2)
       delayed_job (>= 3.0, < 4.1)
     diff-lcs (1.2.5)
@@ -64,9 +64,10 @@ GEM
     factory_girl_rails (4.4.1)
       factory_girl (~> 4.4.0)
       railties (>= 3.0.0)
-    faker (1.4.1)
+    faker (1.4.3)
       i18n (~> 0.5)
-    geocoder (1.2.3)
+    geocoder (1.2.4)
+    hashugar (0.0.6)
     hike (1.2.3)
     httparty (0.13.1)
       json (~> 1.8)
@@ -79,13 +80,13 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.25.1)
-    mini_magick (3.7.0)
+    mini_magick (3.8.0)
       subexec (~> 0.2.1)
     mini_portile (0.6.0)
     minitest (5.4.1)
     multi_json (1.10.1)
     multi_xml (0.5.5)
-    nokogiri (1.6.2.1)
+    nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)
     odeon_uk (1.1.5)
       httparty
@@ -99,7 +100,7 @@ GEM
       tzinfo
       tzinfo-data
     polyglot (0.3.5)
-    rabl (0.10.1)
+    rabl (0.11.0)
       activesupport (>= 2.3.14)
     rack (1.5.2)
     rack-test (0.6.2)
@@ -143,7 +144,7 @@ GEM
     sdoc (0.4.0)
       json (~> 1.8)
       rdoc (~> 4.0, < 5.0)
-    shoulda-matchers (2.6.1)
+    shoulda-matchers (2.7.0)
       activesupport (>= 3.0.0)
     sprockets (2.12.1)
       hike (~> 1.2)
@@ -156,7 +157,8 @@ GEM
       sprockets (~> 2.8)
     stringex (2.5.2)
     subexec (0.2.3)
-    themoviedb (0.0.22)
+    themoviedb (0.0.24)
+      hashugar
       httparty
     thor (0.19.1)
     thread_safe (0.3.4)
@@ -165,7 +167,7 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    turbolinks (2.2.2)
+    turbolinks (2.3.0)
       coffee-rails
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
