@@ -8,8 +8,16 @@ class ScreeningGrouper
     @dates ||= @screenings.map { |s| s.showing_at.to_date }.uniq
   end
 
+  def length
+    @screenings.length
+  end
+
   def on(date)
     screenings_by_date[date.to_date]
+  end
+
+  def screenings
+    @screenings
   end
 
   private
