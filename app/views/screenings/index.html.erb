@@ -12,22 +12,26 @@
 
 <% content_for(:page_header) do -%>
   <%= title %>
+  <hr />
 <% end -%>
 
 <% @screenings.dates.each do |date| -%>
+  <h2><%= local_time(date, '%A %B %e') %></h2>
   <div class="row">
-    <hr />
-
-    <div class="col-sm-12">
-      <h4><%= local_time(date, '%A %B %e') %></h4>
-    </div>
     <% @screenings.on(date).each do |screening| -%>
-      <div class="col-sm-3">
-        <p>
-          <%= screening.film.name %><br />
-          <small><%= local_time(screening.showing_at, '%H:%M') %></small>
-        </p>
+    <div class="col-sm-4 col-md-3">
+      <div class="media">
+        <div class="pull-left" style="width: 80px; margin-right: 20px;">
+          <%= image_tag screening.film.poster_url, alt: screening.film.name, class: 'media-object img-responsive' %>
+        </div>
+        <div class="media-body">
+          <h4 class="media-heading">
+            <small><%= local_time(screening.showing_at, '%H:%M') %></small><br />
+            <%= screening.film.name %>
+          </h4>
+        </div>
       </div>
+    </div>
     <% end -%>
   </div>
 <% end -%>
