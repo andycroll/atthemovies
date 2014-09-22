@@ -3,6 +3,7 @@ FactoryGirl.define do
     film
     cinema
     showing_at { 2.days.from_now }
-    variant { ['2D', '3D', 'IMAX'].sample }
+    dimension  { %w(2d 3d).sample }
+    variant    { ['', 'D-BOX', 'IMAX'].sample }
   end
 end

@@ -5,14 +5,15 @@ describe ScreeningImporterJob do
   let!(:cinema) { create(:cinema) }
 
   describe '#perform' do
-    let(:attributes) {
+    let(:attributes) do
       {
         cinema_id:  cinema.id,
         film_name:  'Iron Man 3',
         showing_at: Time.utc(2014, 10, 1, 19, 0),
-        variant:    '2D'
+        dimension:  '2d',
+        variant:    ''
       }
-    }
+    end
 
     context 'film and screening do not exist' do
       it 'creates a new screening' do
@@ -22,6 +23,7 @@ describe ScreeningImporterJob do
         expect(screening.film).to eq(Film.last)
         expect(screening.cinema).to eq(cinema)
         expect(screening.showing_at).to eq(attributes[:showing_at])
+        expect(screening.dimension).to eq(attributes[:dimension])
         expect(screening.variant).to eq(attributes[:variant])
       end
 
@@ -44,6 +46,7 @@ describe ScreeningImporterJob do
           expect(screening.film).to eq(film)
           expect(screening.cinema).to eq(cinema)
           expect(screening.showing_at).to eq(attributes[:showing_at])
+          expect(screening.dimension).to eq(attributes[:dimension])
           expect(screening.variant).to eq(attributes[:variant])
         end
 
@@ -53,15 +56,24 @@ describe ScreeningImporterJob do
       end
 
       context 'screening exists at time' do
-        let!(:screening) { create(:screening, cinema: cinema, film: film, showing_at: attributes[:showing_at]) }
+        let!(:screening) do
+          create(
+            :screening,
+            cinema:     cinema,
+            film:       film,
+            dimension:  attributes[:dimension],
+            showing_at: attributes[:showing_at]
+          )
+        end
 
         it 'does not create a new screening' do
           expect { job.perform }.not_to change(Screening, :count)
         end
 
-        it 'updates timestamps' do
+        it 'updates timestamp' do
+          expect(screening.updated_at).not_to eq(Time.current)
+
           Timecop.freeze(1.day.from_now) do
-            expect(screening.updated_at).not_to eq(Time.current)
             job.perform
             expect(screening.reload.updated_at).to eq(Time.current)
           end
