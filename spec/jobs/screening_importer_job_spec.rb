@@ -22,7 +22,7 @@ describe ScreeningImporterJob do
         screening = Screening.last
         expect(screening.film).to eq(Film.last)
         expect(screening.cinema).to eq(cinema)
-        expect(screening.showing_at).to eq(attributes[:showing_at])
+        expect(screening.showing_at).to be_eq_to_time(attributes[:showing_at])
         expect(screening.dimension).to eq(attributes[:dimension])
         expect(screening.variant).to eq(attributes[:variant])
       end
@@ -45,7 +45,7 @@ describe ScreeningImporterJob do
           screening = Screening.last
           expect(screening.film).to eq(film)
           expect(screening.cinema).to eq(cinema)
-          expect(screening.showing_at).to eq(attributes[:showing_at])
+          expect(screening.showing_at).to be_eq_to_time(attributes[:showing_at])
           expect(screening.dimension).to eq(attributes[:dimension])
           expect(screening.variant).to eq(attributes[:variant])
         end
@@ -63,7 +63,8 @@ describe ScreeningImporterJob do
             film:       film,
             dimension:  attributes[:dimension],
             showing_at: attributes[:showing_at],
-            updated_at: 2.days.ago
+            variant:    'baby',
+            updated_at: 1.day.ago
           )
         end
 
@@ -73,8 +74,8 @@ describe ScreeningImporterJob do
 
         it 'updates timestamp' do
           original = screening.updated_at
-          Timecop.freeze(1.day.from_now) { job.perform }
-          expect(screening.reload.updated_at).not_to eq(original)
+          job.perform
+          expect(screening.reload.updated_at).not_to be_eq_to_time(original)
         end
 
         it 'sets variant' do
