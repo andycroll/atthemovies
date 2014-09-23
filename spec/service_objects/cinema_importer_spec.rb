@@ -67,19 +67,19 @@ describe CinemaImporter do
       expect(odeon_cinema).to receive(:screenings).and_return([screening_1, screening_2, screening_3, screening_4])
 
       expect(screening_1).to receive(:film_name).and_return('Iron Man 3')
-      expect(screening_1).to receive(:when).and_return(1.hour.from_now.utc)
+      expect(screening_1).to receive(:showing_at).and_return(1.hour.from_now.utc)
       expect(screening_1).to receive(:variant).and_return('2D')
 
       expect(screening_2).to receive(:film_name).and_return('Iron Man 3')
-      expect(screening_2).to receive(:when).and_return(2.hours.from_now.utc)
+      expect(screening_2).to receive(:showing_at).and_return(2.hours.from_now.utc)
       expect(screening_2).to receive(:variant).and_return('3D kids')
 
       expect(screening_3).to receive(:film_name).and_return('Avengers')
-      expect(screening_3).to receive(:when).and_return(3.hours.from_now.utc)
+      expect(screening_3).to receive(:showing_at).and_return(3.hours.from_now.utc)
       expect(screening_3).to receive(:variant).and_return('3D silver')
 
       expect(screening_4).to receive(:film_name).and_return('Iron Man 3')
-      expect(screening_4).to receive(:when).and_return(4.hours.from_now.utc)
+      expect(screening_4).to receive(:showing_at).and_return(4.hours.from_now.utc)
       expect(screening_4).to receive(:variant).and_return('3D')
 
       expect(ScreeningImporterJob).to receive(:enqueue).with(cinema_id: cinema.id, film_name: 'Iron Man 3', showing_at: 1.hour.from_now.utc, variant: '2D').and_call_original

@@ -29,7 +29,7 @@ class CinemaImporter
       ScreeningImporterJob.enqueue(
         cinema_id: cinema.id,
         film_name: s.film_name,
-        showing_at: brand == 'Cineworld' ? s.showing_at : s.when,
+        showing_at: brand == 'Picturehouse' ? s.when : s.showing_at,
         variant: s.variant
       )
     end

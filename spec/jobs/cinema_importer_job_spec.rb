@@ -81,5 +81,43 @@ describe CinemaImporterJob do
         end
       end
     end
+
+    context 'picturehouse example' do
+      let(:attributes) do
+        {
+          name: 'Duke of Yorks', brand: 'Picturehouse', brand_identifier: 'doy',
+          address: {
+            street_address: 'The Street',
+            locality: 'Brighton',
+            region: 'East Sussex',
+            postal_code: 'BN2 1HD',
+            country: 'United Kingdom'
+          }
+        }
+      end
+
+      context 'cinema exists' do
+        before do
+          create(:cinema,
+                 name: 'Duke of Yorks',
+                 brand: 'Picturehouse',
+                 brand_identifier: 'doy')
+        end
+
+        it 'does not create a new cinema' do
+          expect { job.perform }.not_to change(Cinema, :count)
+        end
+
+        it 'updates with specified address' do
+          job.perform
+
+          cinema = Cinema.last
+          expect(cinema.street_address).to eq('The Street')
+          expect(cinema.locality).to eq('Brighton')
+          expect(cinema.postal_code).to eq('BN2 1HD')
+          expect(cinema.country).to eq('United Kingdom')
+        end
+      end
+    end
   end
 end

@@ -9,7 +9,7 @@ describe ScreeningImporterJob do
       {
         cinema_id:  cinema.id,
         film_name:  'Iron Man 3',
-        showing_at: Time.utc(2014, 10, 1, 19, 0),
+        showing_at: 100.hours.from_now,
         dimension:  '2d',
         variant:    ''
       }
@@ -62,7 +62,8 @@ describe ScreeningImporterJob do
             cinema:     cinema,
             film:       film,
             dimension:  attributes[:dimension],
-            showing_at: attributes[:showing_at]
+            showing_at: attributes[:showing_at],
+            updated_at: 2.days.ago
           )
         end
 
@@ -71,12 +72,9 @@ describe ScreeningImporterJob do
         end
 
         it 'updates timestamp' do
-          expect(screening.updated_at).not_to eq(Time.current)
-
-          Timecop.freeze(1.day.from_now) do
-            job.perform
-            expect(screening.reload.updated_at).to eq(Time.current)
-          end
+          original = screening.updated_at
+          Timecop.freeze(1.day.from_now) { job.perform }
+          expect(screening.reload.updated_at).not_to eq(original)
         end
 
         it 'sets variant' do
