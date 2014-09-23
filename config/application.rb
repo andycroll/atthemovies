@@ -10,5 +10,6 @@ module Moviesuk
   class Application < Rails::Application
     config.assets.precompile += %w( vendor/modernizr )
     config.i18n.enforce_available_locales = true
+    config.time_zone = 'Europe/London'
   end
 end
