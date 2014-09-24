@@ -76,6 +76,10 @@ GEM
     kgio (2.9.2)
     local_time (1.0.0)
       coffee-rails
+    lograge (0.3.0)
+      actionpack (>= 3)
+      activesupport (>= 3)
+      railties (>= 3)
     mail (2.6.1)
       mime-types (>= 1.16, < 3)
     mime-types (2.3)
@@ -191,6 +195,7 @@ DEPENDENCIES
   geocoder
   httparty
   local_time
+  lograge
   mini_magick
   newrelic_rpm
   odeon_uk
