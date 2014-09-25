@@ -15,15 +15,13 @@ class FilmPosterStorerJob < Job
 
   private
 
-  # @note from https://github.com/carrierwaveuploader/carrierwave#removing-uploaded-files
   def remove_poster
-    film.remove_poster!
+    # film.remove_poster!
     film.save
   end
 
-  # @note from https://github.com/carrierwaveuploader/carrierwave#uploading-files-from-a-remote-location
   def store_new_poster
-    film.remote_poster_url = film.poster_source_uri
+    # film.remote_poster_url = film.poster_source_uri
     film.save
   end
 

@@ -15,15 +15,13 @@ class FilmBackdropStorerJob < Job
 
   private
 
-  # @note from https://github.com/carrierwaveuploader/carrierwave#removing-uploaded-files
   def remove_backdrop
-    film.remove_backdrop!
+    # film.remove_backdrop!
     film.save
   end
 
-  # @note from https://github.com/carrierwaveuploader/carrierwave#uploading-files-from-a-remote-location
   def store_new_backdrop
-    film.remote_backdrop_url = film.backdrop_source_uri
+    # film.remote_backdrop_url = film.backdrop_source_uri
     film.save
   end
 

@@ -10,7 +10,6 @@ gem 'coffee-rails', '~> 4'
 gem 'turbolinks'
 gem 'local_time'
 
-gem 'carrierwave'
 gem 'cineworld_uk'
 gem 'delayed_job_active_record'
 gem 'geocoder'

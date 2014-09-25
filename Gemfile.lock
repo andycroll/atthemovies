@@ -29,11 +29,6 @@ GEM
       tzinfo (~> 1.1)
     arel (5.0.1.20140414130214)
     builder (3.2.2)
-    carrierwave (0.10.0)
-      activemodel (>= 3.2.0)
-      activesupport (>= 3.2.0)
-      json (>= 1.7)
-      mime-types (>= 1.16)
     cineworld_uk (2.0.4)
       nokogiri
       tzinfo
@@ -185,7 +180,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  carrierwave
   cineworld_uk
   coffee-rails (~> 4)
   delayed_job_active_record

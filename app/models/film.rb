@@ -3,9 +3,6 @@ class Film < ActiveRecord::Base
 
   acts_as_url :name
 
-  mount_uploader :backdrop, BackdropUploader
-  mount_uploader :poster, PosterUploader
-
   scope :whats_on, ->{ where("screenings_count > 0").order("screenings_count DESC") }
 
   def hydrate(tmdb_movie)
