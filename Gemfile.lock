@@ -29,7 +29,7 @@ GEM
       tzinfo (~> 1.1)
     arel (5.0.1.20140414130214)
     builder (3.2.2)
-    cineworld_uk (2.0.4)
+    cineworld_uk (2.0.5)
       nokogiri
       tzinfo
       tzinfo-data
@@ -167,7 +167,7 @@ GEM
       coffee-rails
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    tzinfo-data (1.2014.7)
+    tzinfo-data (1.2014.8)
       tzinfo (>= 1.0.0)
     uglifier (2.5.1)
       execjs (>= 0.3.0)
