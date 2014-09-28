@@ -63,6 +63,7 @@ GEM
     geocoder (1.2.5)
     hashugar (0.0.6)
     hike (1.2.3)
+    hirefire-resource (0.3.4)
     httparty (0.13.1)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
@@ -187,6 +188,7 @@ DEPENDENCIES
   factory_girl_rails
   faker
   geocoder
+  hirefire-resource
   httparty
   local_time
   lograge
