@@ -20,6 +20,7 @@ class CinemaImporter
 
   def import_screenings
     brand_cinemas.each do |cinema|
+      puts "Importing #{cinema.name}"
       import_screenings_for_cinema(cinema)
     end
   end
