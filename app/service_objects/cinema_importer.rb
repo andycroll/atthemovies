@@ -29,6 +29,7 @@ class CinemaImporter
     remote_cinema(cinema.brand_identifier).screenings.each do |s|
       ScreeningImporterJob.enqueue(
         cinema_id:  cinema.id,
+        dimension:  s.dimension,
         film_name:  s.film_name,
         showing_at: brand == 'Picturehouse' ? s.when : s.showing_at,
         variant:    s.variant.is_a?(Array) ? s.variant * ' ' : s.variant
