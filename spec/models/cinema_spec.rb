@@ -73,6 +73,16 @@ describe Cinema do
     end
   end
 
+  describe '.closest_to(lat, lng)' do # provided by geocoder gem
+    let!(:cinema_1) { create(:cinema, latitude: 51.5, longitude: -0.5) }
+    let!(:cinema_2) { create(:cinema, latitude: 52.5, longitude: -1.5) }
+    let!(:cinema_3) { create(:cinema, latitude: 52.5, longitude: -0.5) }
+
+    subject(:closest_to) { Cinema.closest_to(50, 0) }
+
+    it { is_expected.to eq([cinema_1, cinema_3, cinema_2]) }
+  end
+
   describe '#update_address(address)' do
     let(:cinema) { build(:cinema) }
 

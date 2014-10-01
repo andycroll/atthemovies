@@ -6,6 +6,12 @@ class Cinema < ActiveRecord::Base
   geocoded_by :address_str
   after_validation :geocode, if: :address_str
 
+  # Sort cinemas by nearest to a passed lat, lng
+  # @return [ActiveRecord::Relation<Cinema>]
+  def self.closest_to(lat, lng)
+    near([lat, lng], 1_000)
+  end
+
   # A simple string version of the cinema address
   # @return [String]
   def address_str
