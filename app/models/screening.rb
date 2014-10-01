@@ -8,7 +8,7 @@ class Screening < ActiveRecord::Base
   before_save :variant_downcase!
 
   scope :ordered, -> { order(showing_at: :asc) }
-  scope :past,    -> { where(screenings[:showing_at].lt(Time.current)) }
+  scope :past,    -> { where(Screening.arel_table[:showing_at].lt(Time.current)) }
 
   def update_variant!(variant)
     update_attributes(variant: variant)
