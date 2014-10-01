@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 describe Film do
+  describe 'associations' do
+    it { is_expected.to have_many :screenings }
+  end
+
   describe 'validations' do
     it { should validate_presence_of :name }
   end
