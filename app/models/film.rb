@@ -5,13 +5,15 @@ class Film < ActiveRecord::Base
 
   acts_as_url :name
 
-  scope :whats_on, ->{ where("screenings_count > 0").order("screenings_count DESC") }
+  scope :whats_on, lambda do
+    where('screenings_count > 0').order('screenings_count DESC')
+  end
 
   def hydrate(tmdb_movie)
-    update_attributes( imdb_identifier: tmdb_movie.imdb_number.to_s,
-                       overview: tmdb_movie.overview,
-                       runtime: tmdb_movie.runtime,
-                       tagline: tmdb_movie.tagline)
+    update_attributes(imdb_identifier: tmdb_movie.imdb_number.to_s,
+                      overview: tmdb_movie.overview,
+                      runtime: tmdb_movie.runtime,
+                      tagline: tmdb_movie.tagline)
   end
 
   def set_backdrop_source(uri)
@@ -37,10 +39,10 @@ class Film < ActiveRecord::Base
   private
 
   def store_backdrop
-    FilmBackdropStorerJob.enqueue(film_id: self.id)
+    FilmBackdropStorerJob.enqueue(film_id: id)
   end
 
   def store_poster
-    FilmPosterStorerJob.enqueue(film_id: self.id)
+    FilmPosterStorerJob.enqueue(film_id: id)
   end
 end
