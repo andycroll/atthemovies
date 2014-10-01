@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140905230254) do
+ActiveRecord::Schema.define(version: 20141001220818) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,8 @@ ActiveRecord::Schema.define(version: 20140905230254) do
     t.string   "brand"
     t.string   "brand_identifier"
   end
+
+  add_index "cinemas", ["latitude", "longitude"], name: "index_cinemas_on_latitude_and_longitude", using: :btree
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
