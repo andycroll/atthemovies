@@ -1,5 +1,5 @@
 class Cinema < ActiveRecord::Base
-  has_many :screenings
+  has_many :screenings, -> { ordered }
 
   acts_as_url :name
 

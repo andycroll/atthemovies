@@ -28,8 +28,8 @@ describe Screening do
   end
 
   describe 'scopes' do
-    describe 'default' do
-      subject { Screening.all }
+    describe '.ordered' do
+      subject { Screening.ordered }
 
       it 'returns screenings in ascending time order' do
         screening_1 = create(:screening, showing_at: 3.days.from_now)
