@@ -6,7 +6,7 @@ describe Film do
   end
 
   describe 'validations' do
-    it { should validate_presence_of :name }
+    it { is_expected.to validate_presence_of :name }
   end
 
   describe 'acts_as_url' do
@@ -125,7 +125,7 @@ describe Film do
 
     let!(:film) { build(:film, url: 'will-be-name-if-saved') }
 
-    it { should be_a(String) }
-    it { should eq("#{film.id}-#{film.url}") }
+    it { is_expected.to be_a(String) }
+    it { is_expected.to eq("#{film.id}-#{film.url}") }
   end
 end

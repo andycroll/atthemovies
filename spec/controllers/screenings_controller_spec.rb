@@ -36,7 +36,7 @@ describe ScreeningsController do
       describe 'successful' do
         before { do_request }
 
-        it { should respond_with :success }
+        it { is_expected.to respond_with :success }
 
         it 'assigns cinema' do
           expect(assigns(:cinema)).to eq(cinema)
@@ -54,7 +54,7 @@ describe ScreeningsController do
           end
         end
 
-        it { should render_template 'index' }
+        it { is_expected.to render_template 'index' }
       end
     end
 
@@ -62,7 +62,7 @@ describe ScreeningsController do
       describe 'successful' do
         before { do_request(format: 'json') }
 
-        it { should respond_with :success }
+        it { is_expected.to respond_with :success }
 
         it 'assigns screenings for the view' do
           expect(assigns(:screenings)).to be_present

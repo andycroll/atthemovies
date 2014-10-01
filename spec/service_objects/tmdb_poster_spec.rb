@@ -9,7 +9,7 @@ describe TmdbPoster do
       expect(Tmdb::Configuration).to receive(:new).and_return(config_double)
     end
 
-    it { should be_a(URI::HTTPS) }
-    it { should eq(URI.parse('https://image.tmdb.org/t/p/original/filenameforposter.jpg')) }
+    it { is_expected.to be_a(URI::HTTPS) }
+    it { is_expected.to eq(URI.parse('https://image.tmdb.org/t/p/original/filenameforposter.jpg')) }
   end
 end

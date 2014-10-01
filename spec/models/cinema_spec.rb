@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe Cinema do
   describe 'associations' do
-    it { should have_many :screenings }
+    it { is_expected.to have_many :screenings }
   end
 
   describe 'acts_as_url' do

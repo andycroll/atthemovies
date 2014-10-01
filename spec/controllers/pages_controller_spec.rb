@@ -21,8 +21,8 @@ describe PagesController do
           get_home
         end
 
-        it { should respond_with :success }
-        it { should render_template 'home' }
+        it { is_expected.to respond_with :success }
+        it { is_expected.to render_template 'home' }
       end
     end
   end

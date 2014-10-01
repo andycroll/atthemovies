@@ -38,9 +38,9 @@ describe CinemasController do
       describe 'successful' do
         before { get_index }
 
-        it { should respond_with :success }
+        it { is_expected.to respond_with :success }
         specify { expect(assigns(:cinemas)).to be_present }
-        it { should render_template 'index' }
+        it { is_expected.to render_template 'index' }
       end
     end
   end
@@ -56,9 +56,9 @@ describe CinemasController do
       describe 'successful' do
         before { get_show }
 
-        it { should respond_with :success }
+        it { is_expected.to respond_with :success }
         specify { expect(assigns(:cinema)).to be_present }
-        it { should render_template 'show' }
+        it { is_expected.to render_template 'show' }
       end
     end
 
@@ -66,7 +66,7 @@ describe CinemasController do
       describe 'successful' do
         before { get_show(format: 'json') }
 
-        it { should respond_with :success }
+        it { is_expected.to respond_with :success }
         it 'has root key of cinemas' do
           expect(JSON.parse(response.body).keys).to eq(['cinemas'])
         end

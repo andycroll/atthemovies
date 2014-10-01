@@ -39,9 +39,9 @@ describe FilmsController do
           get_index
         end
 
-        it { should respond_with :success }
+        it { is_expected.to respond_with :success }
         specify { expect(assigns(:films)).to be_present }
-        it { should render_template 'index' }
+        it { is_expected.to render_template 'index' }
       end
     end
   end
@@ -57,9 +57,9 @@ describe FilmsController do
       describe 'successful' do
         before { get_show }
 
-        it { should respond_with :success }
+        it { is_expected.to respond_with :success }
         specify { expect(assigns(:film)).to be_present }
-        it { should render_template 'show' }
+        it { is_expected.to render_template 'show' }
       end
     end
 
@@ -69,7 +69,7 @@ describe FilmsController do
       describe 'successful' do
         before { get_show({ format: 'json' }) }
 
-        it { should respond_with :success }
+        it { is_expected.to respond_with :success }
 
         it 'assigns film for the view' do
           expect(assigns(:film)).to be_present

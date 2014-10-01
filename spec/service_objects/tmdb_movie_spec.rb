@@ -70,8 +70,8 @@ describe TmdbMovie do
       expect(Tmdb::Movie).to receive(:detail).and_return(detail_result)
     end
 
-    it { should be_a(String) }
-    it { should eq('tt1263670') }
+    it { is_expected.to be_a(String) }
+    it { is_expected.to eq('tt1263670') }
   end
 
   describe '#overview' do
@@ -84,8 +84,8 @@ describe TmdbMovie do
       expect(Tmdb::Movie).to receive(:detail).and_return(detail_result)
     end
 
-    it { should be_a(String) }
-    it { should eq('overview') }
+    it { is_expected.to be_a(String) }
+    it { is_expected.to eq('overview') }
   end
 
   describe '#poster' do
@@ -115,8 +115,8 @@ describe TmdbMovie do
       expect(Tmdb::Movie).to receive(:detail).and_return(detail_result)
     end
 
-    it { should be_a(Integer) }
-    it { should eq(106) }
+    it { is_expected.to be_a(Integer) }
+    it { is_expected.to eq(106) }
   end
 
   describe '#tagline' do
@@ -129,7 +129,7 @@ describe TmdbMovie do
       expect(Tmdb::Movie).to receive(:detail).and_return(detail_result)
     end
 
-    it { should be_a(String) }
-    it { should eq('tagline') }
+    it { is_expected.to be_a(String) }
+    it { is_expected.to eq('tagline') }
   end
 end
