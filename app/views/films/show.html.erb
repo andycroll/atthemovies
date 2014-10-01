@@ -12,9 +12,9 @@
 <% end -%>
 
 <div class="row">
-  <% @films.each do |film| %>
+  <% @film.cinemas.each do |cinema| %>
     <div class="col-sm-6">
-      <p><%= link_to film.name, film %></p>
+      <p><%= link_to cinema.name, cinema %></p>
     </div>
   <% end %>
 </div>

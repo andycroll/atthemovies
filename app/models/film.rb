@@ -1,5 +1,6 @@
 class Film < ActiveRecord::Base
   has_many :screenings
+  has_many :cinemas, -> { distinct }, through: :screenings
 
   validates :name, presence: true
 
