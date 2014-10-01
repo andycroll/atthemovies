@@ -5,9 +5,9 @@ class Film < ActiveRecord::Base
 
   acts_as_url :name
 
-  scope :whats_on, lambda do
+  scope :whats_on, lambda {
     where('screenings_count > 0').order('screenings_count DESC')
-  end
+  }
 
   def hydrate(tmdb_movie)
     update_attributes(imdb_identifier: tmdb_movie.imdb_number.to_s,
