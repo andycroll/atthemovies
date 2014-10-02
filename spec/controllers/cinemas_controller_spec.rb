@@ -28,7 +28,9 @@ describe CinemasController do
   end
 
   describe '#GET index' do
-    let!(:cinemas) { create :cinema }
+    let!(:cinema_1) { create(:cinema, latitude: 51.5, longitude: -0.5) }
+    let!(:cinema_2) { create(:cinema, latitude: 52.5, longitude: -1.5) }
+    let!(:cinema_3) { create(:cinema, latitude: 52.5, longitude: -0.5) }
 
     def get_index(params = {})
       get :index, {}.merge(params)
@@ -41,6 +43,17 @@ describe CinemasController do
         it { is_expected.to respond_with :success }
         specify { expect(assigns(:cinemas)).to be_present }
         it { is_expected.to render_template 'index' }
+      end
+
+      describe 'with ?near=lat,lng' do
+        before { get_index(near: '50,0') }
+
+        it { is_expected.to respond_with :success }
+        specify { expect(assigns(:cinemas)).to be_present }
+        it { is_expected.to render_template 'index' }
+        it 'returns cinemas in order' do
+          expect(assigns(:cinemas)).to eq([cinema_1, cinema_3, cinema_2])
+        end
       end
     end
   end
