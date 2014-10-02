@@ -13,7 +13,7 @@
 <div class="row">
   <% @films.each do |film| %>
     <div class="col-sm-6">
-      <p><%= link_to film.name, film %> <small><%= film.screenings.count %></small></p>
+      <p><%= link_to film.name, film %> <small><%= film.screenings_count %></small></p>
     </div>
   <% end %>
 </div>
