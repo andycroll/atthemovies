@@ -7,7 +7,8 @@ class Film < ActiveRecord::Base
   acts_as_url :name
 
   scope :whats_on, lambda {
-    where('screenings_count > 0').order('screenings_count DESC')
+    where(Film.arel_table[:screenings_count].gt(0))
+    .order(screenings_count: :desc)
   }
 
   def hydrate(tmdb_movie)
