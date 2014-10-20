@@ -31,7 +31,7 @@ class CinemaImporter
         cinema_id:  cinema.id,
         dimension:  s.dimension,
         film_name:  s.film_name,
-        showing_at: brand == 'Picturehouse' ? s.when : s.showing_at,
+        showing_at: s.showing_at,
         variant:    s.variant.is_a?(Array) ? s.variant * ' ' : s.variant
       )
     end
