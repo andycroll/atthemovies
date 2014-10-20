@@ -29,7 +29,7 @@ GEM
       tzinfo (~> 1.1)
     arel (5.0.1.20140414130214)
     builder (3.2.2)
-    cineworld_uk (2.1.1)
+    cineworld_uk (2.1.2)
       nokogiri
       tzinfo
       tzinfo-data
