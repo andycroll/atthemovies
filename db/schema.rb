@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141001220818) do
+ActiveRecord::Schema.define(version: 20141102212443) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(version: 20141001220818) do
     t.text     "backdrop"
     t.string   "url"
     t.integer  "screenings_count"
+    t.text     "alternate_names",     default: [],              array: true
   end
 
   create_table "screenings", force: true do |t|
