@@ -6,6 +6,7 @@ class Film < ActiveRecord::Base
 
   acts_as_url :name
 
+  scope :similar_to, ->(name) { advanced_search(name: name.tr(' ', '|')) }
   scope :whats_on, lambda {
     where(Film.arel_table[:screenings_count].gt(0))
     .order(screenings_count: :desc)
