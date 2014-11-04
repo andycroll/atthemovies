@@ -5,6 +5,19 @@ describe Film do
     it { is_expected.to have_many :screenings }
   end
 
+  describe 'callbacks' do
+    describe 'before update' do
+      let!(:film) { create(:film, name: 'Alien') }
+
+      describe 'on change of name' do
+        it 'saves old name in alternate names' do
+          film.name = 'Aliens'
+          expect { film.save }.to change(film, :alternate_names).from([]).to(['Alien'])
+        end
+      end
+    end
+  end
+
   describe 'validations' do
     it { is_expected.to validate_presence_of :name }
   end

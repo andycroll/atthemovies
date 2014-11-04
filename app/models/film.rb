@@ -4,6 +4,8 @@ class Film < ActiveRecord::Base
 
   validates :name, presence: true
 
+  before_update :add_old_name_to_alternate_names, if: :name_change
+
   acts_as_url :name
 
   scope :similar_to, ->(name) { advanced_search(name: name.tr(' ', '|')) }
@@ -50,6 +52,10 @@ class Film < ActiveRecord::Base
   end
 
   private
+
+  def add_old_name_to_alternate_names
+    self.alternate_names = alternate_names + [name_was]
+  end
 
   def store_backdrop
     FilmBackdropStorerJob.enqueue(film_id: id)
