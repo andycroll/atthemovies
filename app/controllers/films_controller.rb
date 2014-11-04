@@ -22,7 +22,11 @@ class FilmsController < ApplicationController
   end
 
   def update
-    @film.add_alternate_name(params[:new_name])
+    if params[:alternate_name]
+      @film.add_alternate_name(params[:alternate_name])
+    else
+      @film.update!(film_attributes)
+    end
     redirect_to edit_film_path(@film)
   end
 
@@ -30,5 +34,9 @@ class FilmsController < ApplicationController
 
   def assign_film
     @film = Film.find(params[:id])
+  end
+
+  def film_attributes
+    params.require(:film).permit(:name, :overview, :running_time, :tagline)
   end
 end

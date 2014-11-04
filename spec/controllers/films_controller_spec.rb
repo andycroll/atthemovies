@@ -20,14 +20,6 @@ describe FilmsController do
       )
     end
     specify do
-      expect(put: '/films/3-the-dark-knight/merge?merge=4').to route_to(
-        controller: 'films',
-        action: 'merge',
-        id: '3-the-dark-knight',
-        merge: '4'
-      )
-    end
-    specify do
       expect(get: '/films/3-the-dark-knight.json').to route_to(
         controller: 'films',
         action: 'show',
@@ -39,6 +31,21 @@ describe FilmsController do
       expect(get: '/films/3-the-dark-knight/edit').to route_to(
         controller: 'films',
         action: 'edit',
+        id: '3-the-dark-knight'
+      )
+    end
+    specify do
+      expect(put: '/films/3-the-dark-knight/merge?merge=4').to route_to(
+        controller: 'films',
+        action: 'merge',
+        id: '3-the-dark-knight',
+        merge: '4'
+      )
+    end
+    specify do
+      expect(put: '/films/3-the-dark-knight').to route_to(
+        controller: 'films',
+        action: 'update',
         id: '3-the-dark-knight'
       )
     end
@@ -153,24 +160,42 @@ describe FilmsController do
   end
 
   describe 'PUT #update' do
-    let!(:film)          { create :film }
+    let!(:film) { create :film, name: 'Alien' }
 
     def do_request(params = {})
-      put :update, { id: film.to_param, new_name: 'Aliens' }.merge(params)
+      put :update, { id: film.to_param }.merge(params)
     end
 
     include_examples 'authenticated'
 
     context 'with authentication' do
-      before do
-        http_login
-        do_request
+      context 'with normal form submission' do
+        before do
+          http_login
+          do_request(film: attributes_for(:film))
+        end
+
+        it { is_expected.to respond_with(:redirect) }
+        it { is_expected.to redirect_to(edit_film_path(film)) }
+        it 'stores the old name of the film' do
+          expect(film.reload.alternate_names).to include('Alien')
+        end
+        it 'changes the film' do
+          expect(film.reload.name).not_to eq('Alien')
+        end
       end
 
-      it { is_expected.to respond_with(:redirect) }
-      it { is_expected.to redirect_to(edit_film_path(film)) }
-      it 'adds the passed name into the film' do
-        expect(film.reload.alternate_names).to include('Aliens')
+      context 'with :alternate_name param' do
+        before do
+          http_login
+          do_request(alternate_name: 'Aliens')
+        end
+
+        it { is_expected.to respond_with(:redirect) }
+        it { is_expected.to redirect_to(edit_film_path(film)) }
+        it 'adds the passed name into the film' do
+          expect(film.reload.alternate_names).to include('Aliens')
+        end
       end
     end
   end
