@@ -11,7 +11,7 @@ class Film < ActiveRecord::Base
   scope :similar_to, ->(name) { advanced_search(name: name.tr(' ', '|')) }
   scope :whats_on, lambda {
     where(Film.arel_table[:screenings_count].gt(0))
-    .order(screenings_count: :desc)
+      .order(screenings_count: :desc)
   }
 
   def self.alternately_named(name)
@@ -26,15 +26,15 @@ class Film < ActiveRecord::Base
     find_named(name) || create(name: name)
   end
 
+  def add_alternate_name(name)
+    update_attributes(alternate_names: self.alternate_names + [name])
+  end
+
   def hydrate(tmdb_movie)
     update_attributes(imdb_identifier: tmdb_movie.imdb_number.to_s,
                       overview: tmdb_movie.overview,
                       runtime: tmdb_movie.runtime,
                       tagline: tmdb_movie.tagline)
-  end
-
-  def add_alternate_name(name)
-    update_attributes(alternate_names: self.alternate_names + [name])
   end
 
   def merge(other_film)
