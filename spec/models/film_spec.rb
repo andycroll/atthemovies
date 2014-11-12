@@ -65,6 +65,48 @@ describe Film do
     end
   end
 
+  describe '.find_or_create_by_name(name)' do
+    subject(:find_or_create_by_name) do
+      described_class.find_or_create_by_name(name)
+    end
+
+    let(:name) { 'Alien' }
+
+    context 'no film of that name exists' do
+      it 'creates a new film' do
+        expect { find_or_create_by_name }.to change(Film, :count).from(0).to(1)
+      end
+      it 'returns a film' do
+        expect(find_or_create_by_name).to be_a(Film)
+      end
+      it 'returns a persisted film' do
+        expect(find_or_create_by_name).to be_persisted
+      end
+    end
+
+    context 'film of that name exists' do
+      let!(:film) { create(:film, name: 'Alien') }
+
+      it 'does not create a new film' do
+        expect { find_or_create_by_name }.not_to change(Film, :count)
+      end
+      it 'returns film' do
+        expect(find_or_create_by_name).to eq(film)
+      end
+    end
+
+    context 'film of that name (as an alternate) exists' do
+      let!(:film) { create(:film, alternate_names: ['Alien']) }
+
+      it 'creates a new film' do
+        expect { find_or_create_by_name }.not_to change(Film, :count)
+      end
+      it 'returns film' do
+        expect(find_or_create_by_name).to eq(film)
+      end
+    end
+  end
+
   describe '#add_alternate_name(name)' do
     subject(:add_alternate_name) { film.add_alternate_name(name) }
 

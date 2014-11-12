@@ -14,6 +14,18 @@ class Film < ActiveRecord::Base
     .order(screenings_count: :desc)
   }
 
+  def self.alternately_named(name)
+    where('alternate_names @> ?', "{#{name}}")
+  end
+
+  def self.find_named(name)
+    find_by(name: name) || alternately_named(name).first
+  end
+
+  def self.find_or_create_by_name(name)
+    find_named(name) || create(name: name)
+  end
+
   def hydrate(tmdb_movie)
     update_attributes(imdb_identifier: tmdb_movie.imdb_number.to_s,
                       overview: tmdb_movie.overview,
