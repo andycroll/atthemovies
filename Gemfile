@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 ruby '2.1.2'
-gem 'rails', '4.1.6'
+gem 'rails', '4.1.7'
 gem 'pg'
 
 gem 'uglifier'
@@ -19,6 +19,7 @@ gem 'odeon_uk'
 gem 'picturehouse_uk'
 gem 'rabl'
 gem 'stringex'
+gem 'textacular'
 gem 'themoviedb'
 
 group :development do

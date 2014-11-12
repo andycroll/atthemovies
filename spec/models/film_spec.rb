@@ -5,6 +5,19 @@ describe Film do
     it { is_expected.to have_many :screenings }
   end
 
+  describe 'callbacks' do
+    describe 'before update' do
+      let!(:film) { create(:film, name: 'Alien') }
+
+      describe 'on change of name' do
+        it 'saves old name in alternate names' do
+          film.name = 'Aliens'
+          expect { film.save }.to change(film, :alternate_names).from([]).to(['Alien'])
+        end
+      end
+    end
+  end
+
   describe 'validations' do
     it { is_expected.to validate_presence_of :name }
   end
@@ -24,6 +37,16 @@ describe Film do
   end
 
   describe 'scope' do
+    describe '.similar_to(name)' do
+      let!(:film_1) { create(:film, name: 'Aliens') }
+      let!(:film_2) { create(:film, name: 'Avengers: Age of Ultron') }
+      let!(:film_3) { create(:film, name: 'Alien 3') }
+
+      it 'returns films with similar names' do
+        expect(Film.similar_to('Alien Resurrection')).to eq([film_1, film_3])
+      end
+    end
+
     describe '.whats_on' do
       let!(:film_1) { create(:film) }
       let!(:film_2) { create(:film) }
@@ -39,6 +62,60 @@ describe Film do
       it 'returns films in order of greatest number of screenings' do
         expect(Film.whats_on).to eq([film_2, film_1])
       end
+    end
+  end
+
+  describe '.find_or_create_by_name(name)' do
+    subject(:find_or_create_by_name) do
+      described_class.find_or_create_by_name(name)
+    end
+
+    let(:name) { 'Alien' }
+
+    context 'no film of that name exists' do
+      it 'creates a new film' do
+        expect { find_or_create_by_name }.to change(Film, :count).from(0).to(1)
+      end
+      it 'returns a film' do
+        expect(find_or_create_by_name).to be_a(Film)
+      end
+      it 'returns a persisted film' do
+        expect(find_or_create_by_name).to be_persisted
+      end
+    end
+
+    context 'film of that name exists' do
+      let!(:film) { create(:film, name: 'Alien') }
+
+      it 'does not create a new film' do
+        expect { find_or_create_by_name }.not_to change(Film, :count)
+      end
+      it 'returns film' do
+        expect(find_or_create_by_name).to eq(film)
+      end
+    end
+
+    context 'film of that name (as an alternate) exists' do
+      let!(:film) { create(:film, alternate_names: ['Alien']) }
+
+      it 'creates a new film' do
+        expect { find_or_create_by_name }.not_to change(Film, :count)
+      end
+      it 'returns film' do
+        expect(find_or_create_by_name).to eq(film)
+      end
+    end
+  end
+
+  describe '#add_alternate_name(name)' do
+    subject(:add_alternate_name) { film.add_alternate_name(name) }
+
+    let!(:film) { create :film }
+    let(:name)  { 'Extra Name' }
+
+    it 'joins names into primary film' do
+      add_alternate_name
+      expect(film.reload.alternate_names).to include('Extra Name')
     end
   end
 
@@ -64,6 +141,27 @@ describe Film do
     end
     it 'sets tagline' do
       expect { hydrate }.to change(film, :tagline).to('tagline')
+    end
+  end
+
+  describe '#merge(merge_id)' do
+    subject(:merge) { film.merge(film_to_merge) }
+
+    let!(:film)               { create :film }
+    let!(:screening)          { create :screening, film: film }
+    let!(:film_to_merge)      { create :film, name: 'Alien' }
+    let!(:screening_to_merge) { create :screening, film: film_to_merge }
+
+    it 'merges film' do
+      expect { merge }.to change(Film, :count).from(2).to(1)
+    end
+    it 'assigns screenings to merged film' do
+      merge
+      expect(film.screenings).to include(screening_to_merge)
+    end
+    it 'joins names into primary film' do
+      merge
+      expect(film.reload.alternate_names).to include('Alien')
     end
   end
 
@@ -123,7 +221,7 @@ describe Film do
   describe '#to_param' do
     subject { film.to_param }
 
-    let!(:film) { build(:film, url: 'will-be-name-if-saved') }
+    let!(:film) { create(:film, url: 'will-be-name-if-saved') }
 
     it { is_expected.to be_a(String) }
     it { is_expected.to eq("#{film.id}-#{film.url}") }

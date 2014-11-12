@@ -35,7 +35,7 @@ describe ScreeningImporterJob do
       end
     end
 
-    context 'film exists' do
+    context 'film exists with name' do
       let!(:film) { create(:film, name: attributes[:film_name]) }
 
       context 'screening does not exist' do
@@ -81,6 +81,27 @@ describe ScreeningImporterJob do
         it 'sets variant' do
           job.perform
           expect(screening.reload.variant).to eq(attributes[:variant])
+        end
+      end
+    end
+
+    context 'film exists with alternate name' do
+      let!(:film) { create(:film, alternate_names: [attributes[:film_name]]) }
+
+      context 'screening does not exist' do
+        it 'creates a new screening' do
+          expect { job.perform }.to change(Screening, :count).from(0).to(1)
+
+          screening = Screening.last
+          expect(screening.film).to eq(film)
+          expect(screening.cinema).to eq(cinema)
+          expect(screening.showing_at).to be_eq_to_time(attributes[:showing_at])
+          expect(screening.dimension).to eq(attributes[:dimension])
+          expect(screening.variant).to eq(attributes[:variant])
+        end
+
+        it 'does not create a new film' do
+          expect { job.perform }.not_to change(Film, :count)
         end
       end
     end

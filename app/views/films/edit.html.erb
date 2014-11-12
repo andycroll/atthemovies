@@ -1,0 +1,82 @@
+<% content_for(:title) do -%>
+  Edit <%= @film.name %> &bull; Films
+<% end -%>
+
+<% content_for :breadcrumbs do -%>
+  <li><%= link_to 'Films', films_path %></li>
+  <li><%= link_to @film.name, @film %></li>
+  <li class="active">Edit</li>
+<% end -%>
+
+<% content_for(:page_header) do -%>
+  Edit <small><%= @film.name %></small>
+<% end -%>
+
+<div class="row">
+  <div class="col-sm-12">
+    <h2>Film Details</h2>
+  </div>
+  <%= form_for @film, method: :put do |f| -%>
+    <div class="col-sm-6">
+      <div class="form-group">
+        <%= f.label :name %>
+        <%= f.text_field :name, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :tagline %>
+        <%= f.text_field :tagline, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :overview %>
+        <%= f.text_area :overview, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :runtime %>
+        <%= f.text_field :runtime, class: 'form-control' %>
+      </div>
+      <%= button_tag 'Update Film', class: 'btn btn-primary' %>
+    </div>
+  <% end -%>
+
+  <div class="col-sm-6">
+    <h3>Alternate Names</h3>
+    <% @film.alternate_names.each do |name| -%>
+      <p><%= name %></p>
+    <% end -%>
+    <%= form_tag film_path(@film), method: :put, class: 'form-vertical', role: 'form' do -%>
+      <div class="form-group">
+        <%= label_tag :new_name, 'New Alternate Name' %>
+        <%= text_field_tag :new_name, '', class: 'form-control' %>
+      </div>
+      <%= button_tag 'Add to Alternate Names', class: 'btn btn-primary' %>
+    <% end -%>
+  </div>
+</div>
+
+<hr />
+
+<div class="row">
+  <div class="col-sm-12">
+    <h3>Merge with...</h3>
+  </div>
+
+  <div class="col-sm-6">
+    <% @similar_films.each do |film| -%>
+      <%= form_tag merge_film_path(@film, other_id: film.id), method: :put, class: 'form-inline', role: 'form' do -%>
+        <p>
+          Merge with '<%= film.name %>'
+          <%= button_tag 'Merge', class: 'btn btn-default btn-sm' %>
+        </p>
+      <% end -%>
+    <% end -%>
+  </div>
+
+  <div class="col-sm-6">
+    <%= form_tag merge_film_path(@film), method: :put, class: 'form-vertical', role: 'form' do -%>
+      <div class="form-group">
+        <%= text_field_tag :other_id, nil, class: 'form-control' %>
+      </div>
+      <%= button_tag 'Merge with ID', class: 'btn btn-primary' %>
+    <% end -%>
+  </div>
+</div>

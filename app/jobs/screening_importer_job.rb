@@ -20,7 +20,7 @@ class ScreeningImporterJob < Job
   end
 
   def film
-    Film.find_or_create_by(name: @film_name)
+    Film.find_or_create_by_name(@film_name)
   end
 
   def existing_or_new_screening
