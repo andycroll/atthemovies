@@ -221,7 +221,7 @@ describe Film do
   describe '#to_param' do
     subject { film.to_param }
 
-    let!(:film) { build(:film, url: 'will-be-name-if-saved') }
+    let!(:film) { create(:film, url: 'will-be-name-if-saved') }
 
     it { is_expected.to be_a(String) }
     it { is_expected.to eq("#{film.id}-#{film.url}") }
