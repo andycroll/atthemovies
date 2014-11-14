@@ -48,7 +48,7 @@ class Film < ActiveRecord::Base
     store_backdrop
   end
 
-  def set_possibles(array)
+  def update_possibles(array)
     update_attributes(tmdb_possibles: array)
   end
 

@@ -207,11 +207,11 @@ describe Film do
     end
   end
 
-  describe '#set_possibles(array)' do
+  describe '#update_possibles(array)' do
     let(:film) { build :film }
     let(:args) { [123, 322, 456] }
 
-    before { film.set_possibles(args) }
+    before { film.update_possibles(args) }
 
     it 'sets the tmdb_possibles array (converts to strings)' do
       expect(film.reload.tmdb_possibles).to eq(args.map(&:to_s))

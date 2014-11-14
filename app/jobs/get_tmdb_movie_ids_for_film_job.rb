@@ -7,7 +7,7 @@ class GetTmdbMovieIdsForFilmJob < Job
   end
 
   def perform
-    film.set_possibles(possible_tmdb_ids)
+    film.update_possibles(possible_tmdb_ids)
   end
 
   private
@@ -17,6 +17,6 @@ class GetTmdbMovieIdsForFilmJob < Job
   end
 
   def possible_tmdb_ids
-    Tmdb::Movie.find(film.name).map { |movie| movie.id }
+    Tmdb::Movie.find(film.name).map(&:id)
   end
 end

@@ -17,8 +17,11 @@ describe GetTmdbMovieIdsForFilmJob do
       end
 
       it 'queries themoviedb and sets films possibles' do
-        expect(Tmdb::Movie).to receive(:find).with(film.name).and_return(tmdb_response)
-        expect(film).to receive(:set_possibles).with([123,456,789]).and_return(true)
+        expect(Tmdb::Movie).to receive(:find)
+          .with(film.name).and_return(tmdb_response)
+        expect(film).to receive(:update_possibles)
+          .with([123, 456, 789]).and_return(true)
+
         job.perform
       end
     end
@@ -27,8 +30,11 @@ describe GetTmdbMovieIdsForFilmJob do
       let(:tmdb_response) { [instance_double(Tmdb::Movie, id: 123)] }
 
       it 'queries themoviedb and sets films possibles' do
-        expect(Tmdb::Movie).to receive(:find).with(film.name).and_return(tmdb_response)
-        expect(film).to receive(:set_possibles).with([123]).and_return(true)
+        expect(Tmdb::Movie).to receive(:find)
+          .with(film.name).and_return(tmdb_response)
+        expect(film).to receive(:update_possibles)
+          .with([123]).and_return(true)
+
         job.perform
       end
     end
