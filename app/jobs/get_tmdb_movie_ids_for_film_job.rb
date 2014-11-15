@@ -1,5 +1,4 @@
 class GetTmdbMovieIdsForFilmJob < Job
-
   attr_reader :film_id
 
   def initialize(args)

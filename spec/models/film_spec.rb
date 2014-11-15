@@ -37,6 +37,16 @@ describe Film do
   end
 
   describe 'scope' do
+    describe '.no_tmdb_details' do
+      let!(:film_1) { create(:film) }
+      let!(:film_2) { create(:film, tmdb_identifier: 45) }
+      let!(:film_3) { create(:film, tmdb_possibles: [1, 2, 3]) }
+
+      it 'only returns films with no tmdb information' do
+        expect(Film.no_tmdb_details).to eq([film_1])
+      end
+    end
+
     describe '.similar_to(name)' do
       let!(:film_1) { create(:film, name: 'Aliens') }
       let!(:film_2) { create(:film, name: 'Avengers: Age of Ultron') }
@@ -46,7 +56,7 @@ describe Film do
         expect(Film.similar_to('Alien Resurrection')).to eq([film_1, film_3])
       end
     end
-
+    
     describe '.whats_on' do
       let!(:film_1) { create(:film) }
       let!(:film_2) { create(:film) }

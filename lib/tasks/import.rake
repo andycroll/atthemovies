@@ -16,6 +16,13 @@ namespace :import do
     end
   end
 
+  namespace :films do
+    desc 'Import possible TMDB ids for movies'
+    task :get_ids => :environment do
+      MovieInformationImporter.new.get_ids
+    end
+  end
+
   namespace :screenings do
     desc 'Import Cineworld Screenings'
     task :cineworld => :environment do
