@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-describe FilmHydratorJob do
-  let(:job)           { FilmHydratorJob.new(film_id: film.id) }
+describe Film::HydratorJob do
+  let(:job)           { described_class.new(film_id: film.id) }
   let(:tmdb_movie)    { instance_double(TmdbMovie, poster: tmdb_poster, backdrop: tmdb_backdrop) }
   let(:tmdb_poster)   { instance_double(TmdbPoster, uri: URI(Faker::Internet.url)) }
   let(:tmdb_backdrop) { instance_double(TmdbBackdrop, uri: URI(Faker::Internet.url)) }

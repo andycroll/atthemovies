@@ -23,6 +23,11 @@ class TmdbMovie
   end
 
   # @return <String>
+  def title
+    tmdb_detail.title
+  end
+
+  # @return <String>
   def overview
     tmdb_detail.overview
   end
@@ -40,6 +45,11 @@ class TmdbMovie
   # @return <String>
   def tagline
     tmdb_detail.tagline
+  end
+
+  # @return <Integer>
+  def year
+    tmdb_detail.release_date[0..3]
   end
 
   private

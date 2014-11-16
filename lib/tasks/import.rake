@@ -21,6 +21,10 @@ namespace :import do
     task :get_ids => :environment do
       MovieInformationImporter.new.get_ids
     end
+
+    task :hydrate => :environment do
+      MovieInformationImporter.new.hydrate
+    end
   end
 
   namespace :screenings do

@@ -37,6 +37,16 @@ describe Film do
   end
 
   describe 'scope' do
+    describe '.no_information' do
+      let!(:film_1) { create(:film) }
+      let!(:film_2) { create(:film, overview: '') }
+      let!(:film_3) { create(:film, overview: Faker::Lorem.paragraph) }
+
+      it 'only returns films with no overview' do
+        expect(Film.no_information).to eq([film_1, film_2])
+      end
+    end
+
     describe '.no_tmdb_details' do
       let!(:film_1) { create(:film) }
       let!(:film_2) { create(:film, tmdb_identifier: 45) }
@@ -56,7 +66,7 @@ describe Film do
         expect(Film.similar_to('Alien Resurrection')).to eq([film_1, film_3])
       end
     end
-    
+
     describe '.whats_on' do
       let!(:film_1) { create(:film) }
       let!(:film_2) { create(:film) }

@@ -18,4 +18,22 @@ describe MovieInformationImporter do
       perform
     end
   end
+
+  describe '#hydrate' do
+    subject(:perform) { described_class.new.hydrate }
+
+    let(:film_1) { instance_double('Film', id: rand(999)) }
+    let(:film_2) { instance_double('Film', id: rand(999)) }
+
+    it 'creates jobs to find TMDB ids' do
+      expect(Film).to receive(:no_information).and_return([film_1, film_2])
+
+      expect(Film::HydratorJob).to receive(:enqueue)
+        .with(film_id: film_1.id)
+      expect(Film::HydratorJob).to receive(:enqueue)
+        .with(film_id: film_2.id)
+
+      perform
+    end
+  end
 end

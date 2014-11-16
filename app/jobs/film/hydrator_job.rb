@@ -1,5 +1,4 @@
-class FilmHydratorJob < Job
-
+class Film::HydratorJob < Job
   attr_reader :film_id
 
   def initialize(args)

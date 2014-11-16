@@ -12,6 +12,25 @@
   Edit <small><%= @film.name %></small>
 <% end -%>
 
+<% if !@film.tmdb_identifier && @film.overview.empty? && @film.tmdb_possibles %>
+  <div class="row">
+    <div class="col-sm-12">
+      <h2>Select Film</h2>
+    </div>
+
+    <% @film.tmdb_possibles.each do |tmdb_id| %>
+      <% movie = TmdbMovie.new(tmdb_id) %>
+      <div class="col-sm-6">
+        <%= form_for @film, method: :put do |f| -%>
+          <%= f.hidden_field :tmdb_identifier, value: tmdb_id %>
+          <%= button_tag tmdb_id, class: 'btn btn-primary btn-sm' %>
+          <p><%= link_to movie.title, "http://www.themoviedb.org/movie/#{tmdb_id}" %> <small><%= movie.year %></small></p>
+        <% end -%>
+      </div>
+    <% end -%>
+  </div>
+<% end -%>
+
 <div class="row">
   <div class="col-sm-12">
     <h2>Film Details</h2>
@@ -33,6 +52,17 @@
       <div class="form-group">
         <%= f.label :runtime %>
         <%= f.text_field :runtime, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :tmdb_identifier %>
+        <div class="input-group">
+          <%= f.text_field :tmdb_identifier, class: 'form-control' %>
+          <% if @film.tmdb_identifier %>
+            <span class="input-group-addon">
+              <%= link_to 'on TMDB', "http://www.themoviedb.org/movie/#{@film.tmdb_identifier}" %>
+            </span>
+          <% end -%>
+        </div>
       </div>
       <%= button_tag 'Update Film', class: 'btn btn-primary' %>
     </div>
