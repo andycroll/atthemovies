@@ -1,2 +1,0 @@
-class TmdbPoster < TmdbImage
-end

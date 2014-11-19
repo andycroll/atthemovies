@@ -144,7 +144,7 @@ describe Film do
 
     let(:film)       { build :film }
     let(:tmdb_movie) do
-      instance_double(TmdbMovie, imdb_number: 1234567,
+      instance_double(ExternalFilm, imdb_number: 1234567,
                                  overview: 'overview',
                                  runtime: 106,
                                  tagline: 'tagline')
@@ -201,7 +201,7 @@ describe Film do
     end
 
     it 'enqueues a job to store the film' do
-      expect(FilmBackdropStorerJob).to receive(:enqueue).with(film_id: film.id)
+      expect(Films::StoreBackdrop).to receive(:enqueue).with(film_id: film.id)
       set_backdrop_source
     end
   end
@@ -222,7 +222,7 @@ describe Film do
     end
 
     it 'enqueues a job to store the film' do
-      expect(FilmPosterStorerJob).to receive(:enqueue).with(film_id: film.id)
+      expect(Films::StorePoster).to receive(:enqueue).with(film_id: film.id)
       set_poster_source
     end
   end

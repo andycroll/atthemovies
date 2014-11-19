@@ -12,14 +12,14 @@
   Edit <small><%= @film.name %></small>
 <% end -%>
 
-<% if !@film.tmdb_identifier && @film.overview.empty? && @film.tmdb_possibles %>
+<% if !@film.tmdb_identifier && @film.overview? && @film.tmdb_possibles %>
   <div class="row">
     <div class="col-sm-12">
       <h2>Select Film</h2>
     </div>
 
     <% @film.tmdb_possibles.each do |tmdb_id| %>
-      <% movie = TmdbMovie.new(tmdb_id) %>
+      <% movie = ExternalFilm.new(tmdb_id) %>
       <div class="col-sm-6">
         <%= form_for @film, method: :put do |f| -%>
           <%= f.hidden_field :tmdb_identifier, value: tmdb_id %>

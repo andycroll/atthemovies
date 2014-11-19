@@ -1,2 +1,0 @@
-class TmdbBackdrop < TmdbImage
-end

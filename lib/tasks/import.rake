@@ -2,45 +2,45 @@ namespace :import do
   namespace :cinemas do
     desc 'Import Cineworld Cinemas'
     task :cineworld => :environment do
-      CinemaImporter.new(klass: CineworldUk::Cinema).import_cinemas
+      Import::Cinemas.new(klass: CineworldUk::Cinema).perform
     end
 
     desc 'Import Odeon Cinemas'
     task :odeon => :environment do
-      CinemaImporter.new(klass: OdeonUk::Cinema).import_cinemas
+      Import::Cinemas.new(klass: OdeonUk::Cinema).perform
     end
 
     desc 'Import Picturehouse Cinemas'
     task :picturehouse => :environment do
-      CinemaImporter.new(klass: PicturehouseUk::Cinema).import_cinemas
+      Import::Cinemas.new(klass: PicturehouseUk::Cinema).perform
     end
   end
 
   namespace :films do
     desc 'Import possible TMDB ids for movies'
-    task :get_ids => :environment do
-      MovieInformationImporter.new.get_ids
+    task :external_ids => :environment do
+      Import::ExternalFilmIds.new.perform
     end
 
-    task :hydrate => :environment do
-      MovieInformationImporter.new.hydrate
+    task :external_information => :environment do
+      Import::ExternalFilmInformation.new.perform
     end
   end
 
   namespace :screenings do
     desc 'Import Cineworld Screenings'
     task :cineworld => :environment do
-      CinemaImporter.new(klass: CineworldUk::Cinema).import_screenings
+      Import::Screenings.new(klass: CineworldUk::Cinema).perform
     end
 
     desc 'Import Odeon Screenings'
     task :odeon => :environment do
-      CinemaImporter.new(klass: OdeonUk::Cinema).import_screenings
+      Import::Screenings.new(klass: OdeonUk::Cinema).perform
     end
 
     desc 'Import Picturehouse Screenings'
     task :picturehouse => :environment do
-      CinemaImporter.new(klass: PicturehouseUk::Cinema).import_screenings
+      Import::Screenings.new(klass: PicturehouseUk::Cinema).perform
     end
   end
 end

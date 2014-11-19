@@ -12,33 +12,52 @@ describe 'rake app' do
   end
 
   describe 'import' do
-    let(:importer) { instance_double('CinemaImporter') }
+    let(:importer) { instance_double('Import::Cinemas') }
 
     describe 'cinemas' do
       describe 'cineworld' do
         it 'imports using the service object' do
-          expect(CinemaImporter).to receive(:new).
-            with(klass: CineworldUk::Cinema).and_return(importer)
-          expect(importer).to receive(:import_cinemas)
+          expect(Import::Cinemas).to receive(:new)
+            .with(klass: CineworldUk::Cinema).and_return(importer)
+          expect(importer).to receive(:perform)
           rake['import:cinemas:cineworld'].invoke
         end
       end
 
       describe 'odeon' do
         it 'imports using the service object' do
-          expect(CinemaImporter).to receive(:new).
-            with(klass: OdeonUk::Cinema).and_return(importer)
-          expect(importer).to receive(:import_cinemas)
+          expect(Import::Cinemas).to receive(:new)
+            .with(klass: OdeonUk::Cinema).and_return(importer)
+          expect(importer).to receive(:perform)
           rake['import:cinemas:odeon'].invoke
         end
       end
 
       describe 'picturehouse' do
         it 'imports using the service object' do
-          expect(CinemaImporter).to receive(:new).
-            with(klass: PicturehouseUk::Cinema).and_return(importer)
-          expect(importer).to receive(:import_cinemas)
+          expect(Import::Cinemas).to receive(:new)
+            .with(klass: PicturehouseUk::Cinema).and_return(importer)
+          expect(importer).to receive(:perform)
           rake['import:cinemas:picturehouse'].invoke
+        end
+      end
+    end
+
+    describe 'films' do
+      describe 'external_ids' do
+        it 'imports using the service object' do
+          expect(Import::ExternalFilmIds).to receive(:new).and_return(importer)
+          expect(importer).to receive(:perform)
+          rake['import:films:external_ids'].invoke
+        end
+      end
+
+      describe 'external_information' do
+        it 'imports using the service object' do
+          expect(Import::ExternalFilmInformation).to receive(:new)
+            .and_return(importer)
+          expect(importer).to receive(:perform)
+          rake['import:films:external_information'].invoke
         end
       end
     end
@@ -46,27 +65,27 @@ describe 'rake app' do
     describe 'screenings' do
       describe 'cineworld' do
         it 'imports using the service object' do
-          expect(CinemaImporter).to receive(:new).
-            with(klass: CineworldUk::Cinema).and_return(importer)
-          expect(importer).to receive(:import_screenings)
+          expect(Import::Screenings).to receive(:new)
+            .with(klass: CineworldUk::Cinema).and_return(importer)
+          expect(importer).to receive(:perform)
           rake['import:screenings:cineworld'].invoke
         end
       end
 
       describe 'odeon' do
         it 'imports using the service object' do
-          expect(CinemaImporter).to receive(:new).
-            with(klass: OdeonUk::Cinema).and_return(importer)
-          expect(importer).to receive(:import_screenings)
+          expect(Import::Screenings).to receive(:new)
+            .with(klass: OdeonUk::Cinema).and_return(importer)
+          expect(importer).to receive(:perform)
           rake['import:screenings:odeon'].invoke
         end
       end
 
       describe 'picturehouse' do
         it 'imports using the service object' do
-          expect(CinemaImporter).to receive(:new).
-            with(klass: PicturehouseUk::Cinema).and_return(importer)
-          expect(importer).to receive(:import_screenings)
+          expect(Import::Screenings).to receive(:new)
+            .with(klass: PicturehouseUk::Cinema).and_return(importer)
+          expect(importer).to receive(:perform)
           rake['import:screenings:picturehouse'].invoke
         end
       end

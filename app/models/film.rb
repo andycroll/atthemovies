@@ -79,10 +79,10 @@ class Film < ActiveRecord::Base
   end
 
   def store_backdrop
-    FilmBackdropStorerJob.enqueue(film_id: id)
+    Films::StoreBackdrop.enqueue(film_id: id)
   end
 
   def store_poster
-    FilmPosterStorerJob.enqueue(film_id: id)
+    Films::StorePoster.enqueue(film_id: id)
   end
 end
