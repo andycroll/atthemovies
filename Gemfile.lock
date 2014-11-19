@@ -81,7 +81,6 @@ GEM
     minitest (5.4.3)
     multi_json (1.10.1)
     multi_xml (0.5.5)
-    newrelic_rpm (3.9.7.266)
     nokogiri (1.6.4.1)
       mini_portile (~> 0.6.0)
     odeon_uk (2.0.2)
@@ -140,6 +139,8 @@ GEM
     rspec-support (3.1.2)
     shoulda-matchers (2.7.0)
       activesupport (>= 3.0.0)
+    skylight (0.4.3)
+      activesupport (>= 3.0.0)
     sprockets (2.12.3)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -187,7 +188,6 @@ DEPENDENCIES
   hirefire-resource
   local_time
   lograge
-  newrelic_rpm
   odeon_uk
   pg
   picturehouse_uk
@@ -197,6 +197,7 @@ DEPENDENCIES
   rails_db_info
   rspec-rails
   shoulda-matchers
+  skylight
   stringex
   textacular
   themoviedb
