@@ -58,7 +58,7 @@ GEM
       railties (>= 3.0.0)
     faker (1.4.3)
       i18n (~> 0.5)
-    geocoder (1.2.5)
+    geocoder (1.2.6)
     hashugar (0.0.6)
     hike (1.2.3)
     hirefire-resource (0.3.4)
@@ -77,15 +77,13 @@ GEM
     mail (2.6.1)
       mime-types (>= 1.16, < 3)
     mime-types (2.4.3)
-    mini_magick (3.8.1)
-      subexec (~> 0.2.1)
-    mini_portile (0.6.0)
-    minitest (5.4.2)
+    mini_portile (0.6.1)
+    minitest (5.4.3)
     multi_json (1.10.1)
     multi_xml (0.5.5)
-    newrelic_rpm (3.9.6.257)
-    nokogiri (1.6.3.1)
-      mini_portile (= 0.6.0)
+    newrelic_rpm (3.9.7.266)
+    nokogiri (1.6.4.1)
+      mini_portile (~> 0.6.0)
     odeon_uk (2.0.2)
       nokogiri
       tzinfo
@@ -95,7 +93,7 @@ GEM
       nokogiri
       tzinfo
       tzinfo-data
-    rabl (0.11.2)
+    rabl (0.11.4)
       activesupport (>= 2.3.14)
     rack (1.5.2)
     rack-test (0.6.2)
@@ -152,7 +150,6 @@ GEM
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
     stringex (2.5.2)
-    subexec (0.2.3)
     textacular (3.2.0)
       activerecord (>= 3.0, < 4.2)
     themoviedb (0.0.24)
@@ -166,7 +163,7 @@ GEM
       coffee-rails
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    tzinfo-data (1.2014.9)
+    tzinfo-data (1.2014.10)
       tzinfo (>= 1.0.0)
     uglifier (2.5.3)
       execjs (>= 0.3.0)
@@ -188,10 +185,8 @@ DEPENDENCIES
   faker
   geocoder
   hirefire-resource
-  httparty
   local_time
   lograge
-  mini_magick
   newrelic_rpm
   odeon_uk
   pg
