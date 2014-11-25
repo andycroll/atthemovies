@@ -106,14 +106,13 @@ describe FilmsController do
     context 'with authentication' do
       before do
         http_login
+        expect(Films::Merge).to receive(:enqueue)
+          .with(film_id: film.id, other_film_id: film_to_merge.id.to_s)
         do_request
       end
 
       it { is_expected.to respond_with(:redirect) }
       it { is_expected.to redirect_to(edit_film_path(film)) }
-      it 'merges the merge film into the path film' do
-        expect(Film.count).to eq(1)
-      end
     end
   end
 

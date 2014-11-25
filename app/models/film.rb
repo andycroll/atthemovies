@@ -46,12 +46,6 @@ class Film < ActiveRecord::Base
                       tagline: tmdb_movie.tagline)
   end
 
-  def merge(other_film)
-    other_film.screenings.each { |screening| self.screenings << screening }
-    add_alternate_name(other_film.name)
-    other_film.destroy
-  end
-
   def set_backdrop_source(uri)
     update_attributes(backdrop_source_uri: uri.to_s)
     store_backdrop
