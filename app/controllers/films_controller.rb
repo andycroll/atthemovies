@@ -13,8 +13,7 @@ class FilmsController < ApplicationController
   end
 
   def merge
-    other_film = Film.find(params[:other_id])
-    @film.merge(other_film)
+    Films::Merge.enqueue(film_id: @film.id, other_film_id: params[:other_id])
     redirect_to edit_film_path(@film)
   end
 

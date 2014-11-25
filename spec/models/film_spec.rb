@@ -164,27 +164,6 @@ describe Film do
     end
   end
 
-  describe '#merge(merge_id)' do
-    subject(:merge) { film.merge(film_to_merge) }
-
-    let!(:film)               { create :film }
-    let!(:screening)          { create :screening, film: film }
-    let!(:film_to_merge)      { create :film, name: 'Alien' }
-    let!(:screening_to_merge) { create :screening, film: film_to_merge }
-
-    it 'merges film' do
-      expect { merge }.to change(Film, :count).from(2).to(1)
-    end
-    it 'assigns screenings to merged film' do
-      merge
-      expect(film.screenings).to include(screening_to_merge)
-    end
-    it 'joins names into primary film' do
-      merge
-      expect(film.reload.alternate_names).to include('Alien')
-    end
-  end
-
   describe '#set_backdrop_source(uri)' do
     subject(:set_backdrop_source) { film.set_backdrop_source(uri) }
 
