@@ -41,9 +41,10 @@ class Film < ActiveRecord::Base
 
   def hydrate(tmdb_movie)
     update_attributes(imdb_identifier: tmdb_movie.imdb_number.to_s,
-                      overview: tmdb_movie.overview,
-                      runtime: tmdb_movie.runtime,
-                      tagline: tmdb_movie.tagline)
+                      overview:        tmdb_movie.overview,
+                      runtime:         tmdb_movie.runtime,
+                      tagline:         tmdb_movie.tagline,
+                      year:            tmdb_movie.year)
   end
 
   def set_backdrop_source(uri)

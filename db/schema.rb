@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141102212443) do
+ActiveRecord::Schema.define(version: 20141129104625) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,11 +53,11 @@ ActiveRecord::Schema.define(version: 20141102212443) do
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "films", force: true do |t|
-    t.string   "name",                             null: false
+    t.string   "name",                                       null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "tmdb_identifier"
-    t.string   "tmdb_possibles",      default: [],              array: true
+    t.string   "tmdb_possibles",                default: [],              array: true
     t.text     "backdrop_source_uri"
     t.text     "poster_source_uri"
     t.string   "imdb_identifier"
@@ -68,7 +68,8 @@ ActiveRecord::Schema.define(version: 20141102212443) do
     t.text     "backdrop"
     t.string   "url"
     t.integer  "screenings_count"
-    t.text     "alternate_names",     default: [],              array: true
+    t.text     "alternate_names",               default: [],              array: true
+    t.string   "year",                limit: 4
   end
 
   create_table "screenings", force: true do |t|
