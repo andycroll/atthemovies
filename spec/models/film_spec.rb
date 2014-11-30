@@ -145,9 +145,10 @@ describe Film do
     let(:film)       { build :film }
     let(:tmdb_movie) do
       instance_double(ExternalFilm, imdb_number: 1234567,
-                                 overview: 'overview',
-                                 runtime: 106,
-                                 tagline: 'tagline')
+                                    overview:    'overview',
+                                    runtime:     106,
+                                    tagline:     'tagline',
+                                    year:        '2000')
     end
 
     it 'sets imdb_identifier' do
@@ -161,6 +162,9 @@ describe Film do
     end
     it 'sets tagline' do
       expect { hydrate }.to change(film, :tagline).to('tagline')
+    end
+    it 'sets year' do
+      expect { hydrate }.to change(film, :year).to('2000')
     end
   end
 
