@@ -3,6 +3,7 @@ Moviesuk::Application.routes.draw do
     resources :screenings, only: [:index]
   end
   resources :films, only: [:edit, :index, :show, :update] do
+    get :triage, on: :collection
     put :merge, on: :member
   end
 

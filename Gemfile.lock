@@ -67,6 +67,11 @@ GEM
       multi_xml (>= 0.5.2)
     i18n (0.6.11)
     json (1.8.1)
+    kaminari (0.16.1)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
+    kaminari-rspec (0.16.1)
+      kaminari (~> 0.16)
     kgio (2.9.2)
     local_time (1.0.0)
       coffee-rails
@@ -186,6 +191,8 @@ DEPENDENCIES
   faker
   geocoder
   hirefire-resource
+  kaminari
+  kaminari-rspec
   local_time
   lograge
   odeon_uk

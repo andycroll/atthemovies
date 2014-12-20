@@ -4,6 +4,7 @@
 
 <% content_for :breadcrumbs do -%>
   <li><%= link_to 'Films', films_path %></li>
+  <li><%= link_to 'Triage', triage_films_path %></li>
   <li><%= link_to @film.name, @film %></li>
   <li class="active">Edit</li>
 <% end -%>
@@ -12,22 +13,25 @@
   Edit <small><%= @film.name %></small>
 <% end -%>
 
-<% if !@film.tmdb_identifier && @film.overview? && @film.tmdb_possibles %>
+<% if !@film.tmdb_identifier %>
   <div class="row">
     <div class="col-sm-12">
       <h2>Select Film</h2>
     </div>
 
-    <% @film.tmdb_possibles.each do |tmdb_id| %>
-      <% movie = ExternalFilm.new(tmdb_id) %>
-      <div class="col-sm-6">
-        <%= form_for @film, method: :put do |f| -%>
-          <%= f.hidden_field :tmdb_identifier, value: tmdb_id %>
-          <%= button_tag tmdb_id, class: 'btn btn-primary btn-sm' %>
-          <p><%= link_to movie.title, "http://www.themoviedb.org/movie/#{tmdb_id}" %> <small><%= movie.year %></small></p>
-        <% end -%>
-      </div>
-    <% end -%>
+    <div class="col-sm-12">
+      <% @film.tmdb_possibles.each do |tmdb_id| %>
+        <% movie = ExternalFilm.new(tmdb_id) %>
+        <div class="btn-group" role="group" aria-label="..." class="pull-left">
+          <%= form_for @film, method: :put do |f| -%>
+            <%= f.hidden_field :tmdb_identifier, value: tmdb_id %>
+            <%= button_tag tmdb_id, class: 'btn btn-primary btn-sm' %>
+            <span class="btn btn-sm" disabled="disabled"><%= movie.title %></span>
+            <%= link_to movie.year, "http://www.themoviedb.org/movie/#{tmdb_id}", class: 'btn btn-sm' %>
+          <% end -%>
+        </div>
+      <% end -%>
+    </div>
   </div>
 <% end -%>
 

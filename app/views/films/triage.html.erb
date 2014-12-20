@@ -1,0 +1,73 @@
+<% content_for(:title) do -%>
+  Films Triage
+<% end -%>
+
+<% content_for :breadcrumbs do -%>
+  <li><%= link_to 'Films', films_path %></li>
+  <li class="active">Triage</li>
+<% end -%>
+
+<% content_for(:page_header) do -%>
+  Films Triage
+<% end -%>
+
+<div class="row hidden-xs">
+  <div class="col-sm-3">
+    <p>Films</p>
+  </div>
+  <div class="col-sm-3">
+    <p>Merge</p>
+  </div>
+  <div class="col-sm-6">
+    <p>Choose Film</p>
+  </div>
+</div>
+
+<% @films.each do |film| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <h5>
+        <%= link_to film.name, edit_film_path(film) %> <small><%= film.id %></small>
+      </h5>
+    </div>
+    <div class="col-sm-3">
+      <%= form_tag merge_film_path(film), method: :put, class: 'form-horizontal', role: 'form' do -%>
+        <div class="form-group">
+          <div class="col-sm-9">
+            <%= select_tag :other_id, options_from_collection_for_select(Film.similar_to(film.name).select(:id, :name), :id, :name), class: 'form-control input-sm' %>
+          </div>
+          <div class="col-sm-3">
+            <%= button_tag 'Merge', class: 'btn btn-primary btn-sm' %>
+          </div>
+        </div>
+      <% end -%>
+    </div>
+    <div class="col-sm-6">
+      <% if film.tmdb_possibles.present? %>
+        <%= form_for film, method: :put, html: { class: 'form-horizontal', role: 'form' } do |f| -%>
+          <div class="form-group">
+            <div class="col-sm-9">
+              <%= f.select :tmdb_identifier, options_from_collection_for_select(film.tmdb_possibles.map { |n| ExternalFilm.new(n) }, :tmdb_id, :title_and_year), {}, class: 'form-control input-sm' %>
+            </div>
+            <div class="col-sm-3">
+              <%= button_tag 'Choose', class: 'btn btn-primary btn-sm' %>
+            </div>
+          </div>
+        <% end %>
+
+      <% else %>
+        <%= form_for film, method: :put, html: { class: 'form-horizontal', role: 'form' } do |f| -%>
+          <%= f.hidden_field :information_added, value: true %>
+          <%= button_tag 'Do not import information', class: 'btn btn-warning btn-sm' %>
+        <% end %>
+
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<div class="row">
+  <div class="col-sm-12">
+    <%= paginate @films %>
+  </div>
+</div>

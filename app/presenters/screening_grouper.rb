@@ -13,7 +13,7 @@ class ScreeningGrouper
   end
 
   def on(date)
-    screenings_by_date[date.to_date]
+    screenings_by_date[date.to_date] || []
   end
 
   def screenings

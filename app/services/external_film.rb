@@ -22,11 +22,6 @@ class ExternalFilm
   end
 
   # @return <String>
-  def title
-    tmdb_detail.title
-  end
-
-  # @return <String>
   def overview
     tmdb_detail.overview
   end
@@ -44,6 +39,16 @@ class ExternalFilm
   # @return <String>
   def tagline
     tmdb_detail.tagline
+  end
+
+  # @return <String>
+  def title
+    tmdb_detail.title
+  end
+
+  # @return <String>
+  def title_and_year
+    "#{title} (#{year})"
   end
 
   # @return <Integer>
