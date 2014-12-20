@@ -46,8 +46,8 @@ describe Film do
   describe 'scope' do
     describe '.no_information' do
       let!(:film_1) { create(:film) }
-      let!(:film_2) { create(:film, overview: '') }
-      let!(:film_3) { create(:film, overview: Faker::Lorem.paragraph) }
+      let!(:film_2) { create(:film, information_added: false) }
+      let!(:film_3) { create(:film, information_added: true) }
 
       it 'only returns films with no overview' do
         expect(Film.no_information).to eq([film_1, film_2])
