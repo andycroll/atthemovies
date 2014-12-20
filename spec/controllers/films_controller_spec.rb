@@ -13,6 +13,12 @@ describe FilmsController do
       )
     end
     specify do
+      expect(get: '/films/triage').to route_to(
+        controller: 'films',
+        action: 'triage'
+      )
+    end
+    specify do
       expect(get: '/films/3-the-dark-knight').to route_to(
         controller: 'films',
         action: 'show',
@@ -158,10 +164,32 @@ describe FilmsController do
     end
   end
 
+  describe 'GET #triage' do
+    let(:films) { [build(:film)] }
+
+    def do_request(params = {})
+      get :triage, {}.merge(params)
+    end
+
+    describe 'HTML' do
+      describe 'successful' do
+        before do
+          expect(Film).to receive_message_chain(:no_information, :page).and_return(stub_pagination(films))
+          do_request
+        end
+
+        it { is_expected.to respond_with :success }
+        specify { expect(assigns(:films)).to be_present }
+        it { is_expected.to render_template 'triage' }
+      end
+    end
+  end
+
   describe 'PUT #update' do
     let!(:film) { create :film, name: 'Alien' }
 
     def do_request(params = {})
+      request.env["HTTP_REFERER"] = 'back'
       put :update, { id: film.to_param }.merge(params)
     end
 
@@ -175,7 +203,7 @@ describe FilmsController do
         end
 
         it { is_expected.to respond_with(:redirect) }
-        it { is_expected.to redirect_to(edit_film_path(film)) }
+        it { is_expected.to redirect_to('back') }
         it 'stores the old name of the film' do
           expect(film.reload.alternate_names).to include('Alien')
         end
@@ -191,7 +219,7 @@ describe FilmsController do
         end
 
         it { is_expected.to respond_with(:redirect) }
-        it { is_expected.to redirect_to(edit_film_path(film)) }
+        it { is_expected.to redirect_to('back') }
         it 'adds the passed name into the film' do
           expect(film.reload.alternate_names).to include('Aliens')
         end

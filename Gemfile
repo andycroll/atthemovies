@@ -13,6 +13,7 @@ gem 'local_time'
 gem 'cineworld_uk'
 gem 'delayed_job_active_record'
 gem 'geocoder'
+gem 'kaminari'
 gem 'odeon_uk'
 gem 'picturehouse_uk'
 gem 'rabl'
@@ -32,6 +33,7 @@ end
 group :test do
   gem 'factory_girl_rails'
   gem 'faker'
+  gem 'kaminari-rspec', require: 'kaminari_rspec'
   gem 'shoulda-matchers'
   gem 'timecop'
 end

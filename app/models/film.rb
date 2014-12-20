@@ -5,23 +5,9 @@ class Film < ActiveRecord::Base
   validates :name, presence: true
 
   before_update :add_old_name_to_alternate_names, if: :name_change
+  before_update :information_added_positive, if: :tmdb_identifier?
 
   acts_as_url :name
-
-  def self.no_information
-    where(overview: [nil, ''])
-  end
-
-  def self.no_tmdb_details
-    where(tmdb_identifier: nil).where("tmdb_possibles = '{}'")
-  end
-
-  scope :similar_to, ->(name) { advanced_search(name: name.tr(' ', '|')) }
-
-  def self.whats_on
-    where(Film.arel_table[:screenings_count].gt(0))
-      .order(screenings_count: :desc)
-  end
 
   def self.alternately_named(name)
     where('alternate_names @> ?', "{#{name}}")
@@ -33,6 +19,25 @@ class Film < ActiveRecord::Base
 
   def self.find_or_create_by_name(name)
     find_named(name) || create(name: name)
+  end
+
+  def self.no_information
+    where(information_added: false)
+  end
+
+  def self.no_tmdb_details
+    no_tmdb_id.where("tmdb_possibles = '{}'")
+  end
+
+  def self.no_tmdb_id
+    where(tmdb_identifier: nil)
+  end
+
+  scope :similar_to, ->(name) { advanced_search(name: name.tr(' ', '|')) }
+
+  def self.whats_on
+    where(Film.arel_table[:screenings_count].gt(0))
+      .order(screenings_count: :desc)
   end
 
   def add_alternate_name(name)
@@ -71,6 +76,10 @@ class Film < ActiveRecord::Base
 
   def add_old_name_to_alternate_names
     self.alternate_names = alternate_names + [name_was]
+  end
+
+  def information_added_positive
+    self.information_added = true
   end
 
   def store_backdrop

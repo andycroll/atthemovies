@@ -2,7 +2,7 @@ class FilmsController < ApplicationController
   respond_to :json, :html
 
   before_filter :http_basic_auth, only: [:edit, :merge, :update]
-  before_filter :assign_film, except: :index
+  before_filter :assign_film, except: [:index, :triage]
 
   def edit
     @similar_films = Film.similar_to(@film.name) - [@film]
@@ -20,13 +20,17 @@ class FilmsController < ApplicationController
   def show
   end
 
+  def triage
+    @films = Film.no_information.page(params[:page])
+  end
+
   def update
     if params[:alternate_name]
       @film.add_alternate_name(params[:alternate_name])
     else
       @film.update!(film_attributes)
     end
-    redirect_to edit_film_path(@film)
+    redirect_to :back
   end
 
   private

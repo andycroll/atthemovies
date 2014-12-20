@@ -9,6 +9,13 @@ describe Film do
     describe 'before update' do
       let!(:film) { create(:film, name: 'Alien') }
 
+      describe 'on addition ot a tmdb_identifier' do
+        it 'sets information_added to be true' do
+          film.tmdb_identifier = '12345'
+          expect { film.save }.to change(film, :information_added).from(false).to(true)
+        end
+      end
+
       describe 'on change of name' do
         it 'saves old name in alternate names' do
           film.name = 'Aliens'
