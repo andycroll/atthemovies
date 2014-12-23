@@ -212,6 +212,19 @@ describe FilmsController do
         end
       end
 
+      context 'with :add_information param to true' do
+        before do
+          http_login
+          do_request(film: { information_added: true })
+        end
+
+        it { is_expected.to respond_with(:redirect) }
+        it { is_expected.to redirect_to('back') }
+        it 'adds the passed name into the film' do
+          expect(film.reload.information_added).to eq(true)
+        end
+      end
+
       context 'with :alternate_name param' do
         before do
           http_login

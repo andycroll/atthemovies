@@ -28,7 +28,7 @@ class FilmsController < ApplicationController
     if params[:alternate_name]
       @film.add_alternate_name(params[:alternate_name])
     else
-      @film.update!(film_attributes)
+      @film.update_attributes(film_attributes)
     end
     redirect_to :back
   end
@@ -40,6 +40,6 @@ class FilmsController < ApplicationController
   end
 
   def film_attributes
-    params.require(:film).permit(:name, :overview, :running_time, :tagline, :tmdb_identifier)
+    params.require(:film).permit(:information_added, :name, :overview, :running_time, :tagline, :tmdb_identifier)
   end
 end
