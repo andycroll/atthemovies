@@ -41,10 +41,10 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.8.0)
-    delayed_job (4.0.4)
-      activesupport (>= 3.0, < 4.2)
-    delayed_job_active_record (4.0.2)
-      activerecord (>= 3.0, < 4.2)
+    delayed_job (4.0.6)
+      activesupport (>= 3.0, < 5.0)
+    delayed_job_active_record (4.0.3)
+      activerecord (>= 3.0, < 5.0)
       delayed_job (>= 3.0, < 4.1)
     diff-lcs (1.2.5)
     dotenv (1.0.2)
