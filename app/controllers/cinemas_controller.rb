@@ -1,6 +1,4 @@
 class CinemasController < ApplicationController
-  respond_to :json, :html
-
   def index
     if near(params)
       @cinemas = Cinema.closest_to(latitude(params), longitude(params))

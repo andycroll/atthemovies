@@ -1,6 +1,4 @@
 class FilmsController < ApplicationController
-  respond_to :json, :html
-
   before_filter :http_basic_auth, only: [:edit, :merge, :update]
   before_filter :assign_film, except: [:index, :triage]
 
