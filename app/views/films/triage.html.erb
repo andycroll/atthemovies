@@ -27,7 +27,7 @@
   <div class="row">
     <div class="col-sm-3">
       <h5>
-        <%= link_to film.name, edit_film_path(film) %> <small><%= film.id %></small>
+        <%= link_to film.name, edit_film_path(film), title: film.id %>
       </h5>
     </div>
     <div class="col-sm-3">

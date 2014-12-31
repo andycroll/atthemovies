@@ -227,13 +227,4 @@ describe Film do
       expect(film.reload.tmdb_possibles).to eq(args.map(&:to_s))
     end
   end
-
-  describe '#to_param' do
-    subject { film.to_param }
-
-    let!(:film) { create(:film, url: 'will-be-name-if-saved') }
-
-    it { is_expected.to be_a(String) }
-    it { is_expected.to eq("#{film.id}-#{film.url}") }
-  end
 end

@@ -8,6 +8,6 @@ class ScreeningsController < ApplicationController
   private
 
   def assign_cinema
-    @cinema = Cinema.find(params[:cinema_id])
+    @cinema = Cinema.find_by_url(params[:cinema_id])
   end
 end
