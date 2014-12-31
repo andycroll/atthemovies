@@ -10,6 +10,7 @@ module Atthemovies
   class Application < Rails::Application
     config.assets.precompile += %w( vendor/modernizr )
     config.i18n.enforce_available_locales = true
+    config.active_job.queue_adapter = :sidekiq
     config.time_zone = 'Europe/London'
   end
 end
