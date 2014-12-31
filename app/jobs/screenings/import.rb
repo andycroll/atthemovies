@@ -1,35 +1,31 @@
 module Screenings
   # creates screenings asynchonously from passed data
-  class Import < Job
-    def initialize(args)
-      @cinema_id  = args[:cinema_id]
-      @dimension  = args[:dimension]
-      @film_name  = args[:film_name]
-      @showing_at = args[:showing_at]
-      @variant    = args[:variant]
-    end
+  class Import < ActiveJob::Base
+    def perform(args)
+      @args = args
 
-    def perform
-      @variant *= ' ' if @variant.is_a?(Array)
-      existing_or_new_screening.update_variant!(@variant)
+      @cinema     = Cinema.find(args[:cinema_id])
+      @film       = Film.find_or_create_by_name(args[:film_name])
+
+      existing_or_new_screening.update_variant!(variant)
     end
 
     private
 
-    def cinema
-      Cinema.find(@cinema_id)
-    end
-
-    def film
-      Film.find_or_create_by_name(@film_name)
-    end
-
     def existing_or_new_screening
-      cinema.screenings.find_or_initialize_by(
-        film:       film,
-        dimension:  @dimension,
-        showing_at: @showing_at
+      @cinema.screenings.find_or_initialize_by(
+        film:       @film,
+        dimension:  @args[:dimension],
+        showing_at: @args[:showing_at]
       )
+    end
+
+    def variant
+      if @args[:variant].is_a?(Array)
+        @args[:variant] * ' '
+      else
+        @args[:variant]
+      end
     end
   end
 end

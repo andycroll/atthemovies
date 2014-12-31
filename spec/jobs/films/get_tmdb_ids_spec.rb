@@ -1,11 +1,14 @@
 require 'rails_helper'
 
 describe Films::GetTmdbIds do
-  let(:get_tmdb_ids) { described_class.new(film_id: film.id) }
-  let(:film)         { build(:film, id: 1, name: 'Batman') }
+  let(:get_tmdb_ids) { described_class.new.perform(film) }
+  let(:film)         { create(:film, id: 1, name: 'Batman') }
 
   describe '#perform' do
-    before { expect(Film).to receive(:find).and_return(film) }
+    before do
+      expect(Tmdb::Movie).to receive(:find).
+        with(film.name).and_return(tmdb_response)
+    end
 
     context 'multiple results' do
       let(:tmdb_response) do
@@ -17,12 +20,10 @@ describe Films::GetTmdbIds do
       end
 
       it 'queries themoviedb and sets films possibles' do
-        expect(Tmdb::Movie).to receive(:find)
-          .with(film.name).and_return(tmdb_response)
         expect(film).to receive(:update_possibles)
           .with([123, 456, 789]).and_return(true)
 
-        get_tmdb_ids.perform
+        get_tmdb_ids
       end
     end
 
@@ -30,12 +31,10 @@ describe Films::GetTmdbIds do
       let(:tmdb_response) { [instance_double(Tmdb::Movie, id: 123)] }
 
       it 'queries themoviedb and sets films possibles' do
-        expect(Tmdb::Movie).to receive(:find)
-          .with(film.name).and_return(tmdb_response)
         expect(film).to receive(:update_possibles)
           .with([123]).and_return(true)
 
-        get_tmdb_ids.perform
+        get_tmdb_ids
       end
     end
   end

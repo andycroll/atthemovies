@@ -16,11 +16,11 @@ module Import
 
     def perform_for(cinema)
       remote_cinema(cinema.brand_identifier).screenings.each do |s|
-        ::Screenings::Import.enqueue(
+        ::Screenings::Import.perform_later(
           cinema_id:  cinema.id,
           dimension:  s.dimension,
           film_name:  s.film_name,
-          showing_at: s.showing_at,
+          showing_at: s.showing_at.to_s,
           variant:    s.variant.is_a?(Array) ? s.variant * ' ' : s.variant
         )
       end

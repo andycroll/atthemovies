@@ -9,7 +9,7 @@ module Import
 
     def perform
       remote_cinemas.each do |cinema|
-        ::Cinemas::Import.enqueue(
+        ::Cinemas::Import.perform_later(
           name: cinema.full_name,
           brand: cinema.brand,
           brand_identifier: cinema.id,

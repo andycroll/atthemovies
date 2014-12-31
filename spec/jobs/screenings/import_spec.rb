@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Screenings::Import do
-  let(:job) { described_class.new(attributes) }
+  let(:job) { described_class.new.perform(attributes) }
   let!(:cinema) { create(:cinema) }
 
   describe '#perform' do
@@ -17,7 +17,7 @@ describe Screenings::Import do
 
     context 'film and screening do not exist' do
       it 'creates a new screening' do
-        expect { job.perform }.to change(Screening, :count).from(0).to(1)
+        expect { job }.to change(Screening, :count).from(0).to(1)
 
         screening = Screening.last
         expect(screening.film).to eq(Film.last)
@@ -28,7 +28,7 @@ describe Screenings::Import do
       end
 
       it 'creates a new film' do
-        expect { job.perform }.to change(Film, :count).from(0).to(1)
+        expect { job }.to change(Film, :count).from(0).to(1)
 
         film = Film.last
         expect(film.name).to eq(attributes[:film_name])
@@ -40,7 +40,7 @@ describe Screenings::Import do
 
       context 'screening does not exist' do
         it 'creates a new screening' do
-          expect { job.perform }.to change(Screening, :count).from(0).to(1)
+          expect { job }.to change(Screening, :count).from(0).to(1)
 
           screening = Screening.last
           expect(screening.film).to eq(film)
@@ -51,7 +51,7 @@ describe Screenings::Import do
         end
 
         it 'does not create a new film' do
-          expect { job.perform }.not_to change(Film, :count)
+          expect { job }.not_to change(Film, :count)
         end
       end
 
@@ -69,17 +69,17 @@ describe Screenings::Import do
         end
 
         it 'does not create a new screening' do
-          expect { job.perform }.not_to change(Screening, :count)
+          expect { job }.not_to change(Screening, :count)
         end
 
         it 'updates timestamp' do
           original = screening.updated_at
-          job.perform
+          job
           expect(screening.reload.updated_at).not_to be_eq_to_time(original)
         end
 
         it 'sets variant' do
-          job.perform
+          job
           expect(screening.reload.variant).to eq(attributes[:variant])
         end
       end
@@ -90,7 +90,7 @@ describe Screenings::Import do
 
       context 'screening does not exist' do
         it 'creates a new screening' do
-          expect { job.perform }.to change(Screening, :count).from(0).to(1)
+          expect { job }.to change(Screening, :count).from(0).to(1)
 
           screening = Screening.last
           expect(screening.film).to eq(film)
@@ -101,7 +101,7 @@ describe Screenings::Import do
         end
 
         it 'does not create a new film' do
-          expect { job.perform }.not_to change(Film, :count)
+          expect { job }.not_to change(Film, :count)
         end
       end
     end
