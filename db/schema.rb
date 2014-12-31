@@ -11,76 +11,77 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141203213032) do
+ActiveRecord::Schema.define(version: 20141231154242) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
-  create_table "cinemas", force: true do |t|
-    t.string   "name"
-    t.string   "url"
-    t.decimal  "latitude",                   precision: 9, scale: 6
-    t.decimal  "longitude",                  precision: 9, scale: 6
-    t.string   "street_address"
-    t.string   "extended_address"
-    t.string   "locality"
-    t.string   "postal_code"
-    t.string   "region"
+  create_table "cinemas", force: :cascade do |t|
+    t.string   "name",             limit: 255
+    t.string   "url",              limit: 255
+    t.decimal  "latitude",                     precision: 9, scale: 6
+    t.decimal  "longitude",                    precision: 9, scale: 6
+    t.string   "street_address",   limit: 255
+    t.string   "extended_address", limit: 255
+    t.string   "locality",         limit: 255
+    t.string   "postal_code",      limit: 255
+    t.string   "region",           limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "country"
+    t.string   "country",          limit: 255
     t.string   "country_code",     limit: 3
-    t.string   "brand"
-    t.string   "brand_identifier"
+    t.string   "brand",            limit: 255
+    t.string   "brand_identifier", limit: 255
   end
 
   add_index "cinemas", ["latitude", "longitude"], name: "index_cinemas_on_latitude_and_longitude", using: :btree
 
-  create_table "delayed_jobs", force: true do |t|
-    t.integer  "priority",   default: 0, null: false
-    t.integer  "attempts",   default: 0, null: false
-    t.text     "handler",                null: false
+  create_table "delayed_jobs", force: :cascade do |t|
+    t.integer  "priority",               default: 0, null: false
+    t.integer  "attempts",               default: 0, null: false
+    t.text     "handler",                            null: false
     t.text     "last_error"
     t.datetime "run_at"
     t.datetime "locked_at"
     t.datetime "failed_at"
-    t.string   "locked_by"
-    t.string   "queue"
+    t.string   "locked_by",  limit: 255
+    t.string   "queue",      limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
-  create_table "films", force: true do |t|
-    t.string   "name",                                          null: false
+  create_table "films", force: :cascade do |t|
+    t.string   "name",                limit: 255,                 null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "tmdb_identifier"
-    t.string   "tmdb_possibles",                default: [],                 array: true
+    t.string   "tmdb_possibles",                  default: [],                 array: true
     t.text     "backdrop_source_uri"
     t.text     "poster_source_uri"
-    t.string   "imdb_identifier"
+    t.string   "imdb_identifier",     limit: 255
     t.text     "overview"
     t.integer  "runtime"
     t.text     "tagline"
     t.text     "poster"
     t.text     "backdrop"
-    t.string   "url"
+    t.string   "url",                 limit: 255
     t.integer  "screenings_count"
-    t.text     "alternate_names",               default: [],                 array: true
+    t.text     "alternate_names",                 default: [],                 array: true
     t.string   "year",                limit: 4
-    t.boolean  "information_added",             default: false
+    t.boolean  "information_added",               default: false
   end
 
-  create_table "screenings", force: true do |t|
+  create_table "screenings", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.integer  "film_id",    null: false
     t.integer  "cinema_id",  null: false
+    t.string   "dimension",  null: false
     t.string   "variant",    null: false
     t.datetime "showing_at", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "dimension"
   end
 
   add_index "screenings", ["cinema_id"], name: "index_screenings_on_cinema_id", using: :btree

@@ -19,7 +19,7 @@
   <h2><%= local_time(date, '%A %B %e') %></h2>
   <div class="row">
     <% @screenings.on(date).each do |screening| -%>
-    <div class="col-sm-4 col-md-3">
+    <div class="col-sm-4 col-md-3" data-screening-id="<%= screening.id %>">
       <div class="media">
         <div class="pull-left" style="width: 80px; margin-right: 20px;">
           <%= image_tag screening.film.poster_source_uri, alt: screening.film.name, class: 'media-object img-responsive' %>
