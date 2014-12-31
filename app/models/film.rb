@@ -66,12 +66,6 @@ class Film < ActiveRecord::Base
     store_poster
   end
 
-  # use url for routing
-  # @return [String]
-  def to_param
-    "#{id}-#{url}"
-  end
-
   private
 
   def add_old_name_to_alternate_names

@@ -140,8 +140,6 @@ describe FilmsController do
     end
 
     describe 'JSON' do
-      render_views
-
       describe 'successful' do
         before { do_request(format: 'json') }
 
@@ -165,7 +163,8 @@ describe FilmsController do
   end
 
   describe 'GET #triage' do
-    let(:films) { [build(:film)] }
+    let!(:film_1) { create :film }
+    let!(:film_2) { create :film }
 
     def do_request(params = {})
       get :triage, {}.merge(params)
@@ -173,10 +172,7 @@ describe FilmsController do
 
     describe 'HTML' do
       describe 'successful' do
-        before do
-          expect(Film).to receive_message_chain(:no_information, :page).and_return(stub_pagination(films))
-          do_request
-        end
+        before { do_request }
 
         it { is_expected.to respond_with :success }
         specify { expect(assigns(:films)).to be_present }

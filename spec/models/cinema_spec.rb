@@ -40,7 +40,7 @@ describe Cinema do
     let!(:cinema) { create(:cinema, url: 'will-be-name-if-saved') }
 
     it { is_expected.to be_a(String) }
-    it { is_expected.to eq("#{cinema.id}-#{cinema.url}") }
+    it { is_expected.to eq(cinema.url) }
   end
 
   describe '#address_str' do

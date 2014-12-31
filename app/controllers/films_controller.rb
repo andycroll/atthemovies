@@ -19,7 +19,7 @@ class FilmsController < ApplicationController
   end
 
   def triage
-    @films = Film.no_information.page(params[:page])
+    @films = Film.no_information.order(:name).page(params[:page])
   end
 
   def update

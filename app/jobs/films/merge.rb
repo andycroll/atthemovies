@@ -14,7 +14,7 @@ module Films
     private
 
     def add_merged_film_name_to_film
-      film.add_alternate_name(other_film.name)
+      film.add_alternate_name(other_film.name) unless film.name == other_film.name
     end
 
     def migrate_screenings
