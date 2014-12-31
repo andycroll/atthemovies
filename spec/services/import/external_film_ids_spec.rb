@@ -10,10 +10,8 @@ describe Import::ExternalFilmIds do
     it 'creates jobs to find TMDB ids' do
       expect(Film).to receive(:no_tmdb_details).and_return([film_1, film_2])
 
-      expect(Films::GetTmdbIds).to receive(:enqueue)
-        .with(film_id: film_1.id)
-      expect(Films::GetTmdbIds).to receive(:enqueue)
-        .with(film_id: film_2.id)
+      expect(Films::GetTmdbIds).to receive(:perform_later).with(film_1)
+      expect(Films::GetTmdbIds).to receive(:perform_later).with(film_2)
 
       perform
     end

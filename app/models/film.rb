@@ -83,10 +83,10 @@ class Film < ActiveRecord::Base
   end
 
   def store_backdrop
-    Films::StoreBackdrop.enqueue(film_id: id)
+    Films::StoreBackdrop.perform_later(self)
   end
 
   def store_poster
-    Films::StorePoster.enqueue(film_id: id)
+    Films::StorePoster.perform_later(self)
   end
 end

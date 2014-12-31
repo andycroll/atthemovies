@@ -112,8 +112,8 @@ describe FilmsController do
     context 'with authentication' do
       before do
         http_login
-        expect(Films::Merge).to receive(:enqueue)
-          .with(film_id: film.id, other_film_id: film_to_merge.id.to_s)
+        expect(Films::Merge).to receive(:perform_later)
+          .with(film, film_to_merge)
         do_request
       end
 

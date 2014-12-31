@@ -191,7 +191,7 @@ describe Film do
     end
 
     it 'enqueues a job to store the film' do
-      expect(Films::StoreBackdrop).to receive(:enqueue).with(film_id: film.id)
+      expect(Films::StoreBackdrop).to receive(:perform_later).with(film)
       set_backdrop_source
     end
   end
@@ -212,7 +212,7 @@ describe Film do
     end
 
     it 'enqueues a job to store the film' do
-      expect(Films::StorePoster).to receive(:enqueue).with(film_id: film.id)
+      expect(Films::StorePoster).to receive(:perform_later).with(film)
       set_poster_source
     end
   end

@@ -1,16 +1,13 @@
 module Cinemas
-  class Import < Job
-
+  class Import < ActiveJob::Base
     attr_reader :address, :brand, :brand_identifier, :name
 
-    def initialize(args)
-      @address = args[:address]
-      @brand = args[:brand]
+    def perform(args)
+      @address          = args[:address]
+      @brand            = args[:brand]
       @brand_identifier = args[:brand_identifier].to_s
-      @name = args[:name]
-    end
+      @name             = args[:name]
 
-    def perform
       existing_or_new_cinema.update_address(address)
     end
 

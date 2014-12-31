@@ -1,6 +1,4 @@
 class ScreeningsController < ApplicationController
-  respond_to :json, :html
-
   before_filter :assign_cinema
 
   def index

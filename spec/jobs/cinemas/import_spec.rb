@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Cinemas::Import do
-  let(:job) { described_class.new(attributes) }
+  let(:job) { described_class.new.perform(attributes) }
 
   describe '#perform' do
     context 'cineworld example' do
@@ -22,11 +22,11 @@ describe Cinemas::Import do
         before { create(:cinema, name: 'Cineworld Brighton', brand: 'Cineworld', brand_identifier: '3') }
 
         it 'does not create a new cinema' do
-          expect { job.perform }.not_to change(Cinema, :count)
+          expect { job }.not_to change(Cinema, :count)
         end
 
         it 'updates with specified address' do
-          job.perform
+          job
 
           cinema = Cinema.last
           expect(cinema.street_address).to eq('Kingswest')
@@ -53,7 +53,7 @@ describe Cinemas::Import do
 
       context 'cinema does not exist' do
         it 'creates a new cinema with specified address' do
-          expect { job.perform }.to change(Cinema, :count).from(0).to(1)
+          expect { job }.to change(Cinema, :count).from(0).to(1)
 
           cinema = Cinema.last
           expect(cinema.street_address).to eq('Kingswest')
@@ -67,11 +67,11 @@ describe Cinemas::Import do
         before { create :cinema, name: 'Odeon Brighton', brand: 'Odeon', brand_identifier: 'brand-id' }
 
         it 'does not create a new cinema' do
-          expect { job.perform }.not_to change(Cinema, :count)
+          expect { job }.not_to change(Cinema, :count)
         end
 
         it 'updates with specified address' do
-          job.perform
+          job
 
           cinema = Cinema.last
           expect(cinema.street_address).to eq('Kingswest')
@@ -105,11 +105,11 @@ describe Cinemas::Import do
         end
 
         it 'does not create a new cinema' do
-          expect { job.perform }.not_to change(Cinema, :count)
+          expect { job }.not_to change(Cinema, :count)
         end
 
         it 'updates with specified address' do
-          job.perform
+          job
 
           cinema = Cinema.last
           expect(cinema.street_address).to eq('The Street')

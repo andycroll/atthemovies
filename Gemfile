@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 ruby '2.1.5'
-gem 'rails', '4.1.8'
+gem 'rails', '4.2.0'
 gem 'pg'
 
 gem 'uglifier'
@@ -11,18 +11,19 @@ gem 'turbolinks'
 gem 'local_time'
 
 gem 'cineworld_uk'
-gem 'delayed_job_active_record'
 gem 'geocoder'
 gem 'kaminari'
 gem 'odeon_uk'
 gem 'picturehouse_uk'
 gem 'rabl'
+gem 'sidekiq'
 gem 'stringex'
 gem 'textacular'
 gem 'themoviedb'
 
 group :development do
   gem 'rails_db_info'
+  gem 'foreman'
 end
 
 group :development, :test do

@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Moviesuk::Application.load_tasks
+Atthemovies::Application.load_tasks

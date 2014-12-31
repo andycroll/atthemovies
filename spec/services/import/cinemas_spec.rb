@@ -21,13 +21,13 @@ describe Import::Cinemas do
       expect(cinema_2).to receive(:id).and_return(69)
       expect(cinema_2).to receive(:address).and_return({})
 
-      expect(Cinemas::Import).to receive(:enqueue).with(name: 'Cineworld Brighton', brand: 'Cineworld', brand_identifier: 3, address: {}).and_call_original
-      expect(Cinemas::Import).to receive(:enqueue).with(name: 'Cineworld Wolverhapton', brand: 'Cineworld', brand_identifier: 69, address: {}).and_call_original
     end
 
     it 'creates a bunch of import jobs for cinemas' do
+      expect(Cinemas::Import).to receive(:perform_later).with(name: 'Cineworld Brighton', brand: 'Cineworld', brand_identifier: 3, address: {}).and_call_original
+      expect(Cinemas::Import).to receive(:perform_later).with(name: 'Cineworld Wolverhapton', brand: 'Cineworld', brand_identifier: 69, address: {}).and_call_original
+
       importer.perform
-      expect(Delayed::Job.count).to eq(2)
     end
   end
 end

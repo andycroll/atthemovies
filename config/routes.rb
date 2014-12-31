@@ -1,4 +1,4 @@
-Moviesuk::Application.routes.draw do
+Atthemovies::Application.routes.draw do
   resources :cinemas, only: [:index, :show] do
     resources :screenings, only: [:index]
   end

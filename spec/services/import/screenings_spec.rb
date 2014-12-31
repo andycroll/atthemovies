@@ -55,35 +55,6 @@ describe Import::Screenings do
       expect(screening_4).to receive(:film_name).and_return('Iron Man 3')
       expect(screening_4).to receive(:showing_at).and_return(4.hours.from_now.utc)
       expect(screening_4).to receive(:variant).and_return('').twice
-
-      expect(Screenings::Import).to receive(:enqueue).with(
-        cinema_id: cinema.id,
-        dimension: '2d',
-        film_name: 'Iron Man 3',
-        showing_at: 1.hour.from_now.utc,
-        variant: ''
-      ).and_call_original
-      expect(Screenings::Import).to receive(:enqueue).with(
-        cinema_id: cinema.id,
-        dimension: '2d',
-        film_name: 'Iron Man 3',
-        showing_at: 2.hours.from_now.utc,
-        variant: 'kids baby'
-      ).and_call_original
-      expect(Screenings::Import).to receive(:enqueue).with(
-        cinema_id: cinema.id,
-        dimension: '2d',
-        film_name: 'Avengers',
-        showing_at: 3.hours.from_now.utc,
-        variant: 'silver'
-      ).and_call_original
-      expect(Screenings::Import).to receive(:enqueue).with(
-        cinema_id: cinema.id,
-        dimension: '3d',
-        film_name: 'Iron Man 3',
-        showing_at: 4.hours.from_now.utc,
-        variant: ''
-      ).and_call_original
     end
 
     after do
@@ -91,8 +62,36 @@ describe Import::Screenings do
     end
 
     it 'creates a bunch of import jobs for screenings' do
+      expect(Screenings::Import).to receive(:perform_later).with(
+        cinema_id: cinema.id,
+        dimension: '2d',
+        film_name: 'Iron Man 3',
+        showing_at: 1.hour.from_now.utc.to_s,
+        variant: ''
+      ).and_call_original
+      expect(Screenings::Import).to receive(:perform_later).with(
+        cinema_id: cinema.id,
+        dimension: '2d',
+        film_name: 'Iron Man 3',
+        showing_at: 2.hours.from_now.utc.to_s,
+        variant: 'kids baby'
+      ).and_call_original
+      expect(Screenings::Import).to receive(:perform_later).with(
+        cinema_id: cinema.id,
+        dimension: '2d',
+        film_name: 'Avengers',
+        showing_at: 3.hours.from_now.utc.to_s,
+        variant: 'silver'
+      ).and_call_original
+      expect(Screenings::Import).to receive(:perform_later).with(
+        cinema_id: cinema.id,
+        dimension: '3d',
+        film_name: 'Iron Man 3',
+        showing_at: 4.hours.from_now.utc.to_s,
+        variant: ''
+      ).and_call_original
+
       importer.perform_for(cinema)
-      expect(Delayed::Job.count).to eq(4)
     end
   end
 
@@ -134,35 +133,6 @@ describe Import::Screenings do
       expect(screening_4).to receive(:film_name).and_return('Iron Man 3')
       expect(screening_4).to receive(:showing_at).and_return(4.hours.from_now.utc)
       expect(screening_4).to receive(:variant).and_return('').twice
-
-      expect(Screenings::Import).to receive(:enqueue).with(
-        cinema_id: cinema.id,
-        dimension: '2d',
-        film_name: 'Iron Man 3',
-        showing_at: 1.hour.from_now.utc,
-        variant: ''
-      ).and_call_original
-      expect(Screenings::Import).to receive(:enqueue).with(
-        cinema_id: cinema.id,
-        dimension: '2d',
-        film_name: 'Iron Man 3',
-        showing_at: 2.hours.from_now.utc,
-        variant: 'kids baby'
-      ).and_call_original
-      expect(Screenings::Import).to receive(:enqueue).with(
-        cinema_id: cinema.id,
-        dimension: '2d',
-        film_name: 'Avengers',
-        showing_at: 3.hours.from_now.utc,
-        variant: 'silver'
-      ).and_call_original
-      expect(Screenings::Import).to receive(:enqueue).with(
-        cinema_id: cinema.id,
-        dimension: '3d',
-        film_name: 'Iron Man 3',
-        showing_at: 4.hours.from_now.utc,
-        variant: ''
-      ).and_call_original
     end
 
     after do
@@ -170,8 +140,36 @@ describe Import::Screenings do
     end
 
     it 'creates a bunch of import jobs for screenings' do
+      expect(Screenings::Import).to receive(:perform_later).with(
+        cinema_id: cinema.id,
+        dimension: '2d',
+        film_name: 'Iron Man 3',
+        showing_at: 1.hour.from_now.utc.to_s,
+        variant: ''
+      ).and_call_original
+      expect(Screenings::Import).to receive(:perform_later).with(
+        cinema_id: cinema.id,
+        dimension: '2d',
+        film_name: 'Iron Man 3',
+        showing_at: 2.hours.from_now.utc.to_s,
+        variant: 'kids baby'
+      ).and_call_original
+      expect(Screenings::Import).to receive(:perform_later).with(
+        cinema_id: cinema.id,
+        dimension: '2d',
+        film_name: 'Avengers',
+        showing_at: 3.hours.from_now.utc.to_s,
+        variant: 'silver'
+      ).and_call_original
+      expect(Screenings::Import).to receive(:perform_later).with(
+        cinema_id: cinema.id,
+        dimension: '3d',
+        film_name: 'Iron Man 3',
+        showing_at: 4.hours.from_now.utc.to_s,
+        variant: ''
+      ).and_call_original
+
       importer.perform_for(cinema)
-      expect(Delayed::Job.count).to eq(4)
     end
   end
 end
