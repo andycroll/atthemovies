@@ -6,7 +6,7 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env)
 
-module Moviesuk
+module Atthemovies
   class Application < Rails::Application
     config.assets.precompile += %w( vendor/modernizr )
     config.i18n.enforce_available_locales = true
