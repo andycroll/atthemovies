@@ -1,5 +1,5 @@
 HireFire::Resource.configure do |config|
   config.dyno(:worker) do
-    HireFire::Macro::Delayed::Job.queue(mapper: :active_record)
+    HireFire::Macro::Sidekiq.queue
   end
 end if Rails.env.production?
