@@ -6,17 +6,28 @@ describe Films::GetTmdbIds do
 
   describe '#perform' do
     before do
-      expect(Tmdb::Movie).to receive(:find).
+      expect(ExternalFilm).to receive(:find).
         with(film.name).and_return(tmdb_response)
     end
 
     context 'multiple results' do
+      let(:tmdb_movie_1) do
+        instance_double(ExternalFilm,
+                        tmdb_id:        123,
+                        title_and_year: 'One (2011)')
+      end
+      let(:tmdb_movie_2) do
+        instance_double(ExternalFilm,
+                        tmdb_id:        456,
+                        title_and_year: 'Two (2012)')
+      end
+      let(:tmdb_movie_3) do
+        instance_double(ExternalFilm,
+                        tmdb_id:        789,
+                        title_and_year: 'Three (2013)')
+      end
       let(:tmdb_response) do
-        [
-          instance_double(Tmdb::Movie, id: 123),
-          instance_double(Tmdb::Movie, id: 456),
-          instance_double(Tmdb::Movie, id: 789)
-        ]
+        [tmdb_movie_1, tmdb_movie_2, tmdb_movie_3]
       end
 
       it 'queries themoviedb and sets films possibles' do
@@ -28,11 +39,16 @@ describe Films::GetTmdbIds do
     end
 
     context 'single result' do
-      let(:tmdb_response) { [instance_double(Tmdb::Movie, id: 123)] }
+      let(:tmdb_response) do
+        [
+          instance_double(ExternalFilm,
+                          tmdb_id:        123,
+                          title_and_year: 'One (2011)')
+        ]
+      end
 
       it 'queries themoviedb and sets films possibles' do
-        expect(film).to receive(:update_possibles)
-          .with([123]).and_return(true)
+        expect(film).to receive(:update_possibles).with([123]).and_return(true)
 
         get_tmdb_ids
       end
