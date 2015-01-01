@@ -33,7 +33,7 @@ class Film < ActiveRecord::Base
     where(tmdb_identifier: nil)
   end
 
-  scope :similar_to, ->(name) { advanced_search(name: name.gsub(/[^0-9A-Za-z ]/, '').tr(' ', '|')) }
+  scope :similar_to, ->(name) { advanced_search(name: name.gsub(/[^0-9A-Za-z ]/, '').gsub(/\s+/, '|')) }
 
   def self.whats_on
     where(Film.arel_table[:screenings_count].gt(0))
