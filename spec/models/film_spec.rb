@@ -70,7 +70,9 @@ describe Film do
       let!(:film_3) { create(:film, name: 'Alien 3') }
 
       it 'returns films with similar names' do
-        expect(Film.similar_to('Alien Resurrection')).to eq([film_1, film_3])
+        expect(Film.similar_to('Alien Resurrection')).to include(film_1)
+        expect(Film.similar_to('Alien Resurrection')).not_to include(film_2)
+        expect(Film.similar_to('Alien Resurrection')).to include(film_3)
       end
     end
 
