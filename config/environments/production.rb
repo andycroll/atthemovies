@@ -87,4 +87,6 @@ Atthemovies::Application.configure do
   config.log_formatter = ::Logger::Formatter.new
 
   config.lograge.enabled = true
+
+  config.skylight.probes = %w(net_http redis)
 end
