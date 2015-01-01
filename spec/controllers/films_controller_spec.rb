@@ -104,6 +104,7 @@ describe FilmsController do
     let!(:film_to_merge) { create :film }
 
     def do_request(params = {})
+      request.env["HTTP_REFERER"] = 'back'
       put :merge, { id: film.to_param, other_id: film_to_merge.id }.merge(params)
     end
 
@@ -118,7 +119,7 @@ describe FilmsController do
       end
 
       it { is_expected.to respond_with(:redirect) }
-      it { is_expected.to redirect_to(edit_film_path(film)) }
+      it { is_expected.to redirect_to('back') }
     end
   end
 

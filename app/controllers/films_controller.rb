@@ -12,7 +12,7 @@ class FilmsController < ApplicationController
 
   def merge
     Films::Merge.perform_later(@film, Film.find(params[:other_id]))
-    redirect_to edit_film_path(@film)
+    redirect_to :back
   end
 
   def show
