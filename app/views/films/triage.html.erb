@@ -24,7 +24,8 @@
 </div>
 
 <% @films.each do |film| %>
-  <% cache ['triage-row', film] do %>
+  <% other_films = Film.similar_to(film.name).where('id != ?', film.id).select(:id, :name) -%>
+  <% cache ['triage-row', film, other_films] do %>
     <div class="row">
       <div class="col-sm-3">
         <h5>
@@ -35,7 +36,6 @@
         <%= form_tag merge_film_path(film), method: :put, class: 'form-horizontal', role: 'form' do -%>
           <div class="form-group">
             <div class="col-sm-9">
-              <% other_films = Film.similar_to(film.name).where('id != ?', film.id).select(:id, :name) -%>
               <%= select_tag :other_id, options_from_collection_for_select(other_films, :id, :name), class: 'form-control input-sm' if other_films.present? %>
             </div>
             <div class="col-sm-3">
