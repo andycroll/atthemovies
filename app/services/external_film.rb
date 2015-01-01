@@ -48,7 +48,9 @@ class ExternalFilm
 
   # @return <String>
   def title_and_year
-    "#{title} (#{year})"
+    Rails.cache.fetch("tmdb_title_and_year_#{tmdb_id}") do
+      "#{title} (#{year})"
+    end
   end
 
   # @return <Integer>
