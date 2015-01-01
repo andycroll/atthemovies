@@ -111,7 +111,7 @@ GEM
       tzinfo
       tzinfo-data
     pg (0.17.1)
-    picturehouse_uk (2.0.3)
+    picturehouse_uk (2.0.4)
       nokogiri
       tzinfo
       tzinfo-data
