@@ -44,6 +44,7 @@ group :production do
   gem 'dalli'
   gem 'hirefire-resource'
   gem 'lograge'
+  gem 'opbeat'
   gem 'rails_12factor'
   gem 'skylight'
   gem 'unicorn'
