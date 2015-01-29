@@ -88,5 +88,5 @@ Atthemovies::Application.configure do
 
   config.lograge.enabled = true
 
-  config.skylight.probes = %w(net_http redis)
+  # config.skylight.probes = %w(net_http redis)
 end

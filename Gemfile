@@ -51,6 +51,6 @@ group :production do
   gem 'lograge'
   # gem 'opbeat'
   gem 'rails_12factor'
-  gem 'skylight'
+  # gem 'skylight'
   gem 'unicorn'
 end
