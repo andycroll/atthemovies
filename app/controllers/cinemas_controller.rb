@@ -1,7 +1,7 @@
 class CinemasController < ApplicationController
   def index
-    if near(params)
-      @cinemas = Cinema.closest_to(latitude(params), longitude(params))
+    if near_params
+      @cinemas = Cinema.closest_to(latitude_param, longitude_param)
     else
       @cinemas = Cinema.all
     end
@@ -13,15 +13,15 @@ class CinemasController < ApplicationController
 
   private
 
-  def latitude(params)
-    near(params).fetch(0, nil)
+  def latitude_param
+    near_params.fetch(0, nil)
   end
 
-  def longitude(params)
-    near(params).fetch(1, nil)
+  def longitude_param
+    near_params.fetch(1, nil)
   end
 
-  def near(params)
+  def near_params
     params[:near].present? ? params[:near].split(',').map(&:to_f) : nil
   end
 end

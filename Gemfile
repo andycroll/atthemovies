@@ -6,6 +6,7 @@ gem 'pg'
 
 gem 'uglifier'
 gem 'coffee-rails', '~> 4'
+gem 'sass-rails', '~> 5.0'
 
 gem 'turbolinks'
 gem 'local_time'
@@ -20,6 +21,10 @@ gem 'sidekiq'
 gem 'stringex'
 gem 'textacular'
 gem 'themoviedb'
+
+source 'https://rails-assets.org' do
+  gem 'rails-assets-zepto'
+end
 
 group :development do
   gem 'rails_db_info'
