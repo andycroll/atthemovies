@@ -47,7 +47,7 @@ end
 
 group :production do
   gem 'dalli'
-  gem 'hirefire-resource'
+  # gem 'hirefire-resource'
   gem 'lograge'
   gem 'opbeat'
   gem 'rails_12factor'
