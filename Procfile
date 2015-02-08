@@ -1,2 +1,2 @@
-web: bundle exec unicorn -p $PORT -c ./config/unicorn.rb --no-default-middleware
-worker: bundle exec sidekiq
+web: bundle exec puma -C config/puma.rb
+worker: bundle exec sidekiq -C config/sidekiq.yml
