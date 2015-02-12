@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.1.5'
+ruby '2.2.0'
 gem 'rails', '4.2.0'
 gem 'pg'
 
@@ -18,7 +18,7 @@ gem 'odeon_uk'
 gem 'picturehouse_uk'
 gem 'rabl'
 gem 'rack-timeout'
-gem 'sidekiq', github: 'mperham/sidekiq', ref: '216cfc7ae7'
+gem 'sidekiq'
 gem 'stringex'
 gem 'textacular'
 gem 'themoviedb'
