@@ -8,7 +8,7 @@ class CinemasController < ApplicationController
   end
 
   def show
-    @cinema = Cinema.find_by_url(params[:id])
+    @cinema = Cinema.find_by_url!(params[:id])
   end
 
   private

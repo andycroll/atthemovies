@@ -1,13 +1,6 @@
 class ScreeningsController < ApplicationController
-  before_filter :assign_cinema
-
   def index
+    @cinema = Cinema.find_by_url!(params[:cinema_id])
     @screenings = ScreeningGrouper.new(@cinema.screenings.includes(:film))
-  end
-
-  private
-
-  def assign_cinema
-    @cinema = Cinema.find_by_url(params[:cinema_id])
   end
 end
