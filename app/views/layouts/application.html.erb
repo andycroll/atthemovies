@@ -25,7 +25,7 @@
     <meta name="msapplication-TileImage" content="/mstile-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
-    <title><%= content_for?(:title) ? yield(:title) : 'At The Movies' %></title>
+    <title><%= content_for?(:title) ? yield(:title) : 'At The Movies' %><%= ' • DEVELOPMENT' if Rails.env.development? %></title>
 
     <%= csrf_meta_tags %>
 
