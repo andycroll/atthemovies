@@ -34,7 +34,7 @@ class FilmsController < ApplicationController
   private
 
   def assign_film
-    @film = Film.find(params[:id])
+    @film = Film.find_by_url!(params[:id])
   end
 
   def film_attributes

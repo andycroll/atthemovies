@@ -66,6 +66,10 @@ class Film < ActiveRecord::Base
     store_poster
   end
 
+  def to_param
+    url
+  end
+
   private
 
   def add_old_name_to_alternate_names
