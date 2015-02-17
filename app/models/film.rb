@@ -14,7 +14,7 @@ class Film < ActiveRecord::Base
   end
 
   def self.find_named(name)
-    find_by(name: name) || alternately_named(name).first
+    find_by(url: name.to_url) || alternately_named(name).first
   end
 
   def self.find_or_create_by_name(name)

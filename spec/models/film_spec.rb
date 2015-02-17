@@ -50,7 +50,7 @@ describe Film do
       let!(:film_3) { create(:film, information_added: true) }
 
       it 'only returns films with no overview' do
-        expect(Film.no_information).to eq([film_1, film_2])
+        expect(Film.no_information.to_a).to eq([film_1, film_2])
       end
     end
 
@@ -117,6 +117,17 @@ describe Film do
       let!(:film) { create(:film, name: 'Alien') }
 
       it 'does not create a new film' do
+        expect { find_or_create_by_name }.not_to change(Film, :count)
+      end
+      it 'returns film' do
+        expect(find_or_create_by_name).to eq(film)
+      end
+    end
+
+    context 'film of that name (as slug) exists' do
+      let!(:film) { create(:film, name: 'alien') }
+
+      it 'creates a new film' do
         expect { find_or_create_by_name }.not_to change(Film, :count)
       end
       it 'returns film' do
