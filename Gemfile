@@ -48,7 +48,6 @@ end
 
 group :production do
   gem 'dalli'
-  gem 'hirefire-resource'
   gem 'lograge'
   gem 'opbeat'
   gem 'puma'
