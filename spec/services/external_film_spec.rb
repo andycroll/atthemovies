@@ -6,7 +6,7 @@ describe ExternalFilm do
 
     context 'single result' do
       let(:name)        { 'Crazy Heart' }
-      let(:find_result) { [instance_double(Tmdb::Movie, id: 25196)] }
+      let(:find_result) { [{ 'id' => 25196 }] }
 
       before do
         expect(Tmdb::Movie).to receive(:find).and_return(find_result)
@@ -25,7 +25,7 @@ describe ExternalFilm do
 
     context 'multiple results' do
       let(:name)        { 'The Dark Knight' }
-      let(:find_result) { [instance_double(Tmdb::Movie, id: 155), instance_double(Tmdb::Movie, id: 72003)] }
+      let(:find_result) { [{ 'id' => 155 }, { 'id' => 72003 }] }
 
       before do
         expect(Tmdb::Movie).to receive(:find).and_return(find_result)
@@ -47,12 +47,12 @@ describe ExternalFilm do
     subject(:backdrop) { described_class.new(tmdb_id).backdrop }
 
     let(:tmdb_id)       { 25196 }
-    let(:detail_result) { instance_double(Tmdb::Movie, id: tmdb_id, backdrop_path: '/tUyhwp36YykNKpqpEfauCavuDbK.jpg') }
+    let(:detail_result) { { 'id' => tmdb_id, 'backdrop_path' => '/tUyhwp36YykNKpqpEfauCavuDbK.jpg' } }
     let(:tmdb_backdrop) { instance_double(ExternalFilm::Backdrop) }
 
     before do
       expect(Tmdb::Movie).to receive(:detail).and_return(detail_result)
-      expect(ExternalFilm::Backdrop).to receive(:new).with(file_path: detail_result.backdrop_path).and_return(tmdb_backdrop)
+      expect(ExternalFilm::Backdrop).to receive(:new).with(file_path: detail_result['backdrop_path']).and_return(tmdb_backdrop)
     end
 
     it 'creates a backdrop object using the TMDB data' do
@@ -64,7 +64,7 @@ describe ExternalFilm do
     subject(:imdb_number) { described_class.new(tmdb_id).imdb_number }
 
     let(:tmdb_id)       { 25196 }
-    let(:detail_result) { instance_double(Tmdb::Movie, id: tmdb_id, imdb_id: 'tt1263670') }
+    let(:detail_result) { { 'id' => tmdb_id, 'imdb_id' => 'tt1263670' } }
 
     before do
       expect(Tmdb::Movie).to receive(:detail).and_return(detail_result)
@@ -78,7 +78,7 @@ describe ExternalFilm do
     subject(:overview) { described_class.new(tmdb_id).overview }
 
     let(:tmdb_id)       { 25196 }
-    let(:detail_result) { instance_double(Tmdb::Movie, id: tmdb_id, overview: 'overview') }
+    let(:detail_result) { { 'id' => tmdb_id, 'overview' => 'overview' } }
 
     before do
       expect(Tmdb::Movie).to receive(:detail).and_return(detail_result)
@@ -92,7 +92,7 @@ describe ExternalFilm do
     subject(:poster) { described_class.new(tmdb_id).poster }
 
     let(:tmdb_id)       { 25196 }
-    let(:detail_result) { instance_double(Tmdb::Movie, id: tmdb_id, poster_path: "/tUyhwp36YykNKpqpEfauCavuDbK.jpg") }
+    let(:detail_result) { { 'id' => tmdb_id, 'poster_path' => '/tUyhwp36YykNKpqpEfauCavuDbK.jpg' } }
     let(:tmdb_poster)   { instance_double(ExternalFilm::Poster) }
 
     before do
@@ -109,7 +109,7 @@ describe ExternalFilm do
     subject(:runtime) { described_class.new(tmdb_id).runtime }
 
     let(:tmdb_id)       { 25196 }
-    let(:detail_result) { instance_double(Tmdb::Movie, id: tmdb_id, runtime: 106) }
+    let(:detail_result) { { 'id' => tmdb_id, 'runtime' => 106 } }
 
     before do
       expect(Tmdb::Movie).to receive(:detail).and_return(detail_result)
@@ -123,7 +123,7 @@ describe ExternalFilm do
     subject(:tagline) { described_class.new(tmdb_id).tagline }
 
     let(:tmdb_id)       { 25196 }
-    let(:detail_result) { instance_double(Tmdb::Movie, id: tmdb_id, tagline: 'tagline') }
+    let(:detail_result) { { 'id' => tmdb_id, 'tagline' => 'tagline' } }
 
     before do
       expect(Tmdb::Movie).to receive(:detail).and_return(detail_result)
