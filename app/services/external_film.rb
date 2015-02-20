@@ -8,7 +8,7 @@ class ExternalFilm
   # @param name Name of the film
   # @return [Array<ExternalFilm>]
   def self.find(name)
-    tmdb_find(name).map { |movie| new(movie['id']) }
+    tmdb_find(name).map { |movie| new(movie.id) }
   end
 
   # @return <ExternalFilm::Backdrop>
