@@ -6,7 +6,7 @@ describe ExternalFilm do
 
     context 'single result' do
       let(:name)        { 'Crazy Heart' }
-      let(:find_result) { [{ 'id' => 25196 }] }
+      let(:find_result) { [instance_double(Tmdb::Movie, id: 25196)] }
 
       before do
         expect(Tmdb::Movie).to receive(:find).and_return(find_result)
@@ -25,7 +25,7 @@ describe ExternalFilm do
 
     context 'multiple results' do
       let(:name)        { 'The Dark Knight' }
-      let(:find_result) { [{ 'id' => 155 }, { 'id' => 72003 }] }
+      let(:find_result) { [instance_double(Tmdb::Movie, id: 155 ), instance_double(Tmdb::Movie, id: 72003 )] }
 
       before do
         expect(Tmdb::Movie).to receive(:find).and_return(find_result)
