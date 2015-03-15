@@ -16,8 +16,6 @@ describe Films::Hydrate do
 
       it 'changes the film data' do
         expect(film).to receive(:hydrate).with(tmdb_movie)
-        expect(film).to receive(:set_backdrop_source).with(tmdb_backdrop.uri)
-        expect(film).to receive(:set_poster_source).with(tmdb_poster.uri)
         job
       end
     end
@@ -31,8 +29,6 @@ describe Films::Hydrate do
 
       it 'does not change the film' do
         expect(film).to_not receive(:hydrate)
-        expect(film).to_not receive(:set_backdrop_source)
-        expect(film).to_not receive(:set_poster_source)
         job
       end
     end

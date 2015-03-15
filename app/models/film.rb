@@ -52,18 +52,8 @@ class Film < ActiveRecord::Base
                       year:            tmdb_movie.year)
   end
 
-  def set_backdrop_source(uri)
-    update_attributes(backdrop_source_uri: uri.to_s)
-    store_backdrop
-  end
-
   def update_possibles(array)
     update_attributes(tmdb_possibles: array)
-  end
-
-  def set_poster_source(uri)
-    update_attributes(poster_source_uri: uri.to_s)
-    store_poster
   end
 
   def to_param

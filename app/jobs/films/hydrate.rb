@@ -7,8 +7,6 @@ module Films
       return if film.tmdb_identifier.blank?
 
       film.hydrate(tmdb_movie)
-      film.set_backdrop_source(tmdb_backdrop_uri)
-      film.set_poster_source(tmdb_poster_uri)
     end
 
     private

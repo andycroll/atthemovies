@@ -188,48 +188,6 @@ describe Film do
     end
   end
 
-  describe '#set_backdrop_source(uri)' do
-    subject(:set_backdrop_source) { film.set_backdrop_source(uri) }
-
-    let(:film) { create :film }
-    let(:uri) { URI('https://image.tmdb.org/t/p/original/filenameforbackdrop.jpg') }
-
-    it 'sets the source uri' do
-      set_backdrop_source
-      expect(film.reload.backdrop_source_uri).to eq(uri.to_s)
-    end
-    it 'saves the film object' do
-      set_backdrop_source
-      expect(film).to be_persisted
-    end
-
-    it 'enqueues a job to store the film' do
-      expect(Films::StoreBackdrop).to receive(:perform_later).with(film)
-      set_backdrop_source
-    end
-  end
-
-  describe '#set_poster_source(uri)' do
-    subject(:set_poster_source) { film.set_poster_source(uri) }
-
-    let(:film) { create :film }
-    let(:uri) { URI('https://image.tmdb.org/t/p/original/filenameforbackdrop.jpg') }
-
-    it 'sets the source uri' do
-      set_poster_source
-      expect(film.reload.poster_source_uri).to eq(uri.to_s)
-    end
-    it 'saves the film object' do
-      set_poster_source
-      expect(film).to be_persisted
-    end
-
-    it 'enqueues a job to store the film' do
-      expect(Films::StorePoster).to receive(:perform_later).with(film)
-      set_poster_source
-    end
-  end
-
   describe '#update_possibles(array)' do
     let(:film) { build :film }
     let(:args) { [123, 322, 456] }
