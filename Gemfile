@@ -12,6 +12,8 @@ gem 'turbolinks'
 gem 'local_time'
 
 gem 'cineworld_uk'
+gem 'dragonfly'
+gem 'dragonfly-s3_data_store'
 gem 'geocoder'
 gem 'kaminari'
 gem 'odeon_uk'
