@@ -21,6 +21,10 @@ class Film < ActiveRecord::Base
     find_named(name) || create(name: name)
   end
 
+  def self.hydratable
+    where(information_added: false).where.not(tmdb_identifier: nil)
+  end
+
   def self.no_information
     where(information_added: false)
   end

@@ -44,6 +44,16 @@ describe Film do
   end
 
   describe 'scope' do
+    describe '.hydratable' do
+      let!(:film_1) { create(:film) }
+      let!(:film_2) { create(:film, information_added: false, tmdb_identifier: 23) }
+      let!(:film_3) { create(:film, information_added: false) }
+
+      it 'only returns films with no overview' do
+        expect(Film.hydratable.to_a).to eq([film_2])
+      end
+    end
+
     describe '.no_information' do
       let!(:film_1) { create(:film) }
       let!(:film_2) { create(:film, information_added: false) }
