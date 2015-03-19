@@ -2,6 +2,7 @@ GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
   specs:
+    CFPropertyList (2.3.0)
     actionmailer (4.2.0)
       actionpack (= 4.2.0)
       actionview (= 4.2.0)
@@ -212,7 +213,7 @@ GEM
       faraday (>= 0.7.6, < 0.10)
       multi_json (~> 1.0)
     pg (0.18.1)
-    picturehouse_uk (3.0.4)
+    picturehouse_uk (3.0.5)
       nokogiri
       tzinfo
       tzinfo-data
@@ -314,7 +315,7 @@ GEM
     themoviedb (0.0.25)
       httparty
     thor (0.19.1)
-    thread_safe (0.3.4)
+    thread_safe (0.3.5)
     tilt (1.4.1)
     timecop (0.7.1)
     timers (4.0.1)
