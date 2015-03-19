@@ -5,6 +5,8 @@ module Films
 
     def perform(film)
       @film = film
+      return unless @film.hydrated? && @film.poster.nil?
+
       remote_url = store_new_poster
       @film.update_attributes(poster: remote_url)
     end

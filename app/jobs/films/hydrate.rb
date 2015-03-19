@@ -4,7 +4,7 @@ module Films
 
     def perform(film)
       self.film = film
-      return if film.tmdb_identifier.blank?
+      return unless film.hydratable?
 
       film.hydrate(tmdb_movie)
     end

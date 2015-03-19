@@ -7,19 +7,21 @@ describe Film do
 
   describe 'callbacks' do
     describe 'before update' do
-      let!(:film) { create(:film, name: 'Alien') }
-
-      describe 'on addition ot a tmdb_identifier' do
-        it 'sets information_added to be true' do
-          film.tmdb_identifier = '12345'
-          expect { film.save }.to change(film, :information_added).from(false).to(true)
-        end
-      end
-
       describe 'on change of name' do
+        let!(:film) { create(:film, name: 'Alien') }
+
         it 'saves old name in alternate names' do
           film.name = 'Aliens'
           expect { film.save }.to change(film, :alternate_names).from([]).to(['Alien'])
+        end
+      end
+
+      describe 'on change of tmdb_identifier' do
+        let!(:film) { create(:film, :hydrated) }
+
+        it 'sets information_added to false' do
+          film.tmdb_identifier = 12345
+          expect { film.save }.to change(film, :information_added).from(true).to(false)
         end
       end
     end
@@ -169,6 +171,32 @@ describe Film do
     end
   end
 
+  describe '#hydratable?' do
+    subject(:hydratable?) { film.hydratable? }
+
+    context 'has external id' do
+      context 'has had information added' do
+        let(:film) { build :film, :hydrated }
+        it { is_expected.to be_falsey }
+      end
+
+      context 'no information added' do
+        let(:film) { build :film, :external_id }
+        it { is_expected.to be_truthy }
+      end
+
+      context 'has information manually added' do
+        let(:film) { build :film, :external_id, :external_information }
+        it { is_expected.to be_truthy }
+      end
+    end
+
+    context 'has no external id' do
+      let(:film) { build :film }
+      it { is_expected.to be_falsey }
+    end
+  end
+
   describe '#hydrate(tmdb_movie)' do
     subject(:hydrate) { film.hydrate(tmdb_movie) }
 
@@ -195,6 +223,9 @@ describe Film do
     end
     it 'sets year' do
       expect { hydrate }.to change(film, :year).to('2000')
+    end
+    it 'sets information_added' do
+      expect { hydrate }.to change(film, :information_added).to(true)
     end
   end
 

@@ -5,7 +5,7 @@ class Film < ActiveRecord::Base
   validates :name, presence: true
 
   before_update :add_old_name_to_alternate_names, if: :name_change
-  before_update :information_added_positive, if: :tmdb_identifier?
+  before_update :information_not_added, if: :tmdb_identifier_change
 
   acts_as_url :name
 
@@ -48,12 +48,19 @@ class Film < ActiveRecord::Base
     update_attributes(alternate_names: self.alternate_names + [name])
   end
 
+  def hydratable?
+    tmdb_identifier? && !information_added?
+  end
+
   def hydrate(tmdb_movie)
-    update_attributes(imdb_identifier: tmdb_movie.imdb_number.to_s,
-                      overview:        tmdb_movie.overview,
-                      runtime:         tmdb_movie.runtime,
-                      tagline:         tmdb_movie.tagline,
-                      year:            tmdb_movie.year)
+    update_attributes(imdb_identifier:     tmdb_movie.imdb_number.to_s,
+                      overview:            tmdb_movie.overview,
+                      runtime:             tmdb_movie.runtime,
+                      tagline:             tmdb_movie.tagline,
+                      year:                tmdb_movie.year,
+                      poster_source_uri:   tmdb_movie.poster.uri,
+                      backdrop_source_uri: tmdb_movie.backdrop.uri,
+                      information_added:   true)
   end
 
   def update_possibles(array)
@@ -70,8 +77,8 @@ class Film < ActiveRecord::Base
     self.alternate_names = alternate_names + [name_was]
   end
 
-  def information_added_positive
-    self.information_added = true
+  def information_not_added
+    self.information_added = false
   end
 
   def store_backdrop
