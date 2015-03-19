@@ -67,10 +67,6 @@ class Film < ActiveRecord::Base
     update_attributes(tmdb_possibles: array)
   end
 
-  def to_param
-    url
-  end
-
   private
 
   def add_old_name_to_alternate_names
