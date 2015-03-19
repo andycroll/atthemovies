@@ -75,6 +75,7 @@ class Film < ActiveRecord::Base
 
   def information_not_added
     self.information_added = false
+    true
   end
 
   def store_backdrop
