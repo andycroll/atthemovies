@@ -2,11 +2,12 @@ Atthemovies::Application.routes.draw do
   resources :cinemas, only: [:index, :show] do
     resources :screenings, only: [:index]
   end
-  resources :films, only: [:edit, :index, :update] do
-    get :triage, on: :collection
+
+  get '/films/triage' => 'films#triage'
+
+  resources :films, only: [:edit, :index, :show, :update] do
     put :merge, on: :member
   end
-  resources :films, only: :show
 
   root 'pages#home'
 end

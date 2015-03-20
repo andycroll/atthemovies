@@ -19,40 +19,40 @@ describe FilmsController do
       )
     end
     specify do
-      expect(get: '/films/3-the-dark-knight').to route_to(
+      expect(get: '/films/the-dark-knight').to route_to(
         controller: 'films',
         action: 'show',
-        id: '3-the-dark-knight'
+        id: 'the-dark-knight'
       )
     end
     specify do
-      expect(get: '/films/3-the-dark-knight.json').to route_to(
+      expect(get: '/films/the-dark-knight.json').to route_to(
         controller: 'films',
         action: 'show',
-        id: '3-the-dark-knight',
+        id: 'the-dark-knight',
         format: 'json'
       )
     end
     specify do
-      expect(get: '/films/3-the-dark-knight/edit').to route_to(
+      expect(get: '/films/uuid/edit').to route_to(
         controller: 'films',
         action: 'edit',
-        id: '3-the-dark-knight'
+        id: 'uuid'
       )
     end
     specify do
-      expect(put: '/films/3-the-dark-knight/merge?merge=4').to route_to(
+      expect(put: '/films/uuid/merge?merge=another_uuid').to route_to(
         controller: 'films',
         action: 'merge',
-        id: '3-the-dark-knight',
-        merge: '4'
+        id: 'uuid',
+        merge: 'another_uuid'
       )
     end
     specify do
-      expect(put: '/films/3-the-dark-knight').to route_to(
+      expect(put: '/films/uuid').to route_to(
         controller: 'films',
         action: 'update',
-        id: '3-the-dark-knight'
+        id: 'uuid'
       )
     end
   end
@@ -61,7 +61,7 @@ describe FilmsController do
     let!(:film) { create :film }
 
     def do_request(params = {})
-      get :edit, { id: film.to_param }.merge(params)
+      get :edit, { id: film.id }.merge(params)
     end
 
     include_examples 'authenticated'
@@ -79,7 +79,7 @@ describe FilmsController do
   end
 
   describe 'GET #index' do
-    let(:films) { [build(:film)] }
+    let(:films) { [create(:film)] }
 
     def do_request(params = {})
       get :index, {}.merge(params)
@@ -105,7 +105,7 @@ describe FilmsController do
 
     def do_request(params = {})
       request.env["HTTP_REFERER"] = 'back'
-      put :merge, { id: film.to_param, other_id: film_to_merge.id }.merge(params)
+      put :merge, { id: film.id, other_id: film_to_merge.id }.merge(params)
     end
 
     include_examples 'authenticated'
@@ -127,7 +127,7 @@ describe FilmsController do
     let!(:film) { create :film }
 
     def do_request(params = {})
-      get :show, { id: film.to_param }.merge(params)
+      get :show, { id: film.url }.merge(params)
     end
 
     describe 'HTML' do
@@ -187,7 +187,7 @@ describe FilmsController do
 
     def do_request(params = {})
       request.env["HTTP_REFERER"] = 'back'
-      put :update, { id: film.to_param }.merge(params)
+      put :update, { id: film }.merge(params)
     end
 
     include_examples 'authenticated'

@@ -4,9 +4,9 @@
 
 <% content_for :breadcrumbs do -%>
   <li><%= link_to 'Films', films_path %></li>
-  <li><%= link_to 'Triage', triage_films_path %></li>
-  <li><%= link_to @film.name, @film %></li>
-  <li class="active">Edit</li>
+  <li><%= link_to 'Triage', films_triage_path %></li>
+  <li class="active">Edit <%= @film.name %></li>
+  <li><i><%= link_to 'show', film_path(@film.url) %></i></li>
 <% end -%>
 
 <% content_for(:page_header) do -%>
