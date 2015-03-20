@@ -304,7 +304,7 @@ GEM
     stringex (2.5.2)
     textacular (3.2.1)
       activerecord (>= 3.0, < 5.0)
-    themoviedb (0.0.25)
+    themoviedb (0.1.0)
       httparty
     thor (0.19.1)
     thread_safe (0.3.5)
