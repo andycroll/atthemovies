@@ -1,6 +1,6 @@
 class FilmsController < ApplicationController
   before_filter :http_basic_auth, only: [:edit, :merge, :update]
-  before_filter :assign_film, except: [:index, :triage]
+  before_filter :assign_film_by_id, except: [:index, :show, :triage]
 
   def edit
     @similar_films = Film.similar_to(@film.name) - [@film]
@@ -16,6 +16,7 @@ class FilmsController < ApplicationController
   end
 
   def show
+    @film = Film.find_by_url(params[:id])
   end
 
   def triage
@@ -33,11 +34,11 @@ class FilmsController < ApplicationController
 
   private
 
-  def assign_film
+  def assign_film_by_id
     @film = Film.find(params[:id])
   end
 
   def film_attributes
-    params.require(:film).permit(:information_added, :name, :overview, :running_time, :tagline, :tmdb_identifier)
+    params.require(:film).permit(:information_added, :name, :overview, :running_time, :tagline, :tmdb_identifier, :event)
   end
 end
