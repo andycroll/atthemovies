@@ -44,8 +44,8 @@
           </div>
         <% end -%>
       </div>
-      <div class="col-sm-6">
-        <% if film.tmdb_possibles.present? %>
+      <% if film.tmdb_possibles.present? %>
+        <div class="col-sm-6">
           <%= form_for film, method: :put, html: { class: 'form-horizontal', role: 'form' } do |f| -%>
             <div class="form-group">
               <div class="col-sm-9">
@@ -56,15 +56,26 @@
               </div>
             </div>
           <% end %>
-
-        <% else %>
-          <%= form_for film, method: :put, html: { class: 'form-horizontal', role: 'form' } do |f| -%>
-            <%= f.hidden_field :information_added, value: true %>
-            <%= button_tag 'Do not import information', class: 'btn btn-warning btn-sm' %>
+        </div>
+      <% else %>
+        <div class="col-sm-1">
+          <%= form_for film, method: :put, html: { class: 'form-inline', role: 'form' } do |f| -%>
+            <div class="form-group">
+              <%= f.hidden_field :event, value: true %>
+              <%= f.hidden_field :information_added, value: true %>
+              <%= button_tag 'Not a film', class: 'btn btn-warning btn-sm' %>
+            </div>
           <% end %>
-
-        <% end %>
-      </div>
+        </div>
+        <div class="col-sm-1">
+          <%= form_for film, method: :put, html: { class: 'form-inline', role: 'form' } do |f| -%>
+            <div class="form-group">
+              <%= f.hidden_field :information_added, value: true %>
+              <%= button_tag 'No information', class: 'btn btn-warning btn-sm' %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
     </div>
   <% end %>
 <% end %>
