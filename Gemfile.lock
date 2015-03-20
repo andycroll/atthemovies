@@ -210,7 +210,7 @@ GEM
       nokogiri
       tzinfo
       tzinfo-data
-    opbeat (1.1.1)
+    opbeat (2.0.0)
       faraday (>= 0.7.6, < 0.10)
       multi_json (~> 1.0)
     pg (0.18.1)
