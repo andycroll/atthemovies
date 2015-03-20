@@ -6,16 +6,16 @@ FactoryGirl.define do
       tmdb_identifier { Faker::Number.number(4) }
     end
 
-    trait :external_information do
+    trait :information do
       tagline         { Faker::Lorem.sentence }
       overview        { Faker::Lorem.paragraph }
       runtime         { rand(120) + 60 }
       year            { Faker::Date.backward(10_000).year }
     end
 
-    trait :hydrated do
+    trait :information_added do
       external_id
-      external_information
+      information
       information_added true
     end
   end

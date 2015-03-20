@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Films::GetTmdbIds do
+describe Films::FetchExternalIds do
   let(:get_tmdb_ids) { described_class.new.perform(film) }
   let(:film)         { create(:film, id: 1, name: 'Batman') }
 

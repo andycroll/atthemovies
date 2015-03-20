@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-describe Films::StorePoster do
+describe Films::FetchPoster do
   let(:job)  { described_class.new.perform(film) }
-  let(:film) { create(:film, :external_information, poster_source_uri: 'poster_url.jpg') }
+  let(:film) { create(:film, poster_source_uri: 'poster_url.jpg') }
 
   describe '#perform' do
     let(:uploader) { instance_double(ImageUploader, store: 'RETURN_URL') }

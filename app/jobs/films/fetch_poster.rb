@@ -1,11 +1,13 @@
 module Films
-  class StorePoster < ActiveJob::Base
+  # take the original poster uri from a film and convert it into a smaller local
+  # version stored on our own cdn
+  class FetchPoster < ActiveJob::Base
     WIDTH = 400
     HEIGHT = 600
 
     def perform(film)
       @film = film
-      return unless @film.hydrated? && @film.poster.nil?
+      return if @film.poster_source_uri.nil?
 
       remote_url = store_new_poster
       @film.update_attributes(poster: remote_url)
@@ -22,9 +24,17 @@ module Films
       "#{@film.name.to_url}-#{@film.year}"
     end
 
+    def store_options
+      {
+        width:     WIDTH,
+        height:    HEIGHT,
+        url:       @film.poster_source_uri,
+        file_name: file_name
+      }
+    end
+
     def store_new_poster
-      opts = { width: WIDTH, height: HEIGHT, url: @film.poster_source_uri, file_name: file_name }
-      ImageUploader.new(opts).store
+      ImageUploader.new(store_options).store
     end
 
     def time

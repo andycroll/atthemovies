@@ -17,7 +17,7 @@ describe Film do
       end
 
       describe 'on change of tmdb_identifier' do
-        let!(:film) { create(:film, :hydrated) }
+        let!(:film) { create(:film, :information_added) }
 
         it 'sets information_added to false' do
           film.tmdb_identifier = 12345
@@ -46,23 +46,13 @@ describe Film do
   end
 
   describe 'scope' do
-    describe '.hydratable' do
-      let!(:film_1) { create(:film) }
-      let!(:film_2) { create(:film, information_added: false, tmdb_identifier: 23) }
-      let!(:film_3) { create(:film, information_added: false) }
-
-      it 'only returns films with no overview' do
-        expect(Film.hydratable.to_a).to eq([film_2])
-      end
-    end
-
     describe '.no_information' do
       let!(:film_1) { create(:film) }
       let!(:film_2) { create(:film, information_added: false) }
       let!(:film_3) { create(:film, information_added: true) }
 
       it 'only returns films with no overview' do
-        expect(Film.no_information.to_a).to eq([film_1, film_2])
+        expect(Film.no_information.to_a).to include(film_1, film_2)
       end
     end
 
@@ -171,12 +161,12 @@ describe Film do
     end
   end
 
-  describe '#hydratable?' do
-    subject(:hydratable?) { film.hydratable? }
+  describe '#needs_external_information?' do
+    subject(:needs_external_information?) { film.needs_external_information? }
 
     context 'has external id' do
       context 'has had information added' do
-        let(:film) { build :film, :hydrated }
+        let(:film) { build :film, :information }
         it { is_expected.to be_falsey }
       end
 
@@ -186,7 +176,7 @@ describe Film do
       end
 
       context 'has information manually added' do
-        let(:film) { build :film, :external_id, :external_information }
+        let(:film) { build :film, :external_id, :information }
         it { is_expected.to be_truthy }
       end
     end
@@ -197,8 +187,8 @@ describe Film do
     end
   end
 
-  describe '#hydrate(tmdb_movie)' do
-    subject(:hydrate) { film.hydrate(tmdb_movie) }
+  describe '#update_external_information_from(tmdb_movie)' do
+    subject { film.update_external_information_from(tmdb_movie) }
 
     let(:film)       { build :film }
     let(:tmdb_movie) do
@@ -206,26 +196,28 @@ describe Film do
                                     overview:    'overview',
                                     runtime:     106,
                                     tagline:     'tagline',
+                                    poster:      double(uri: 'poster.jpg'),
+                                    backdrop:    double(uri: 'backdrop.jpg'),
                                     year:        '2000')
     end
 
     it 'sets imdb_identifier' do
-      expect { hydrate }.to change(film, :imdb_identifier).to('1234567')
+      expect { subject }.to change(film, :imdb_identifier).to('1234567')
     end
     it 'sets overview' do
-      expect { hydrate }.to change(film, :overview).to('overview')
+      expect { subject }.to change(film, :overview).to('overview')
     end
     it 'sets runtime' do
-      expect { hydrate }.to change(film, :runtime).to(106)
+      expect { subject }.to change(film, :runtime).to(106)
     end
     it 'sets tagline' do
-      expect { hydrate }.to change(film, :tagline).to('tagline')
+      expect { subject }.to change(film, :tagline).to('tagline')
     end
     it 'sets year' do
-      expect { hydrate }.to change(film, :year).to('2000')
+      expect { subject }.to change(film, :year).to('2000')
     end
     it 'sets information_added' do
-      expect { hydrate }.to change(film, :information_added).to(true)
+      expect { subject }.to change(film, :information_added).to(true)
     end
   end
 

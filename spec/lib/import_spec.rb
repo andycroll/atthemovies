@@ -51,15 +51,6 @@ describe 'rake app' do
           rake['import:films:external_ids'].invoke
         end
       end
-
-      describe 'external_information' do
-        it 'imports using the service object' do
-          expect(Import::ExternalFilmInformation).to receive(:new)
-            .and_return(importer)
-          expect(importer).to receive(:perform)
-          rake['import:films:external_information'].invoke
-        end
-      end
     end
 
     describe 'screenings' do

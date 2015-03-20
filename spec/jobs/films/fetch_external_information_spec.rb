@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Films::Hydrate do
+describe Films::FetchExternalInformation do
   subject(:perform)   { described_class.new.perform(film) }
 
   let(:tmdb_movie)    { instance_double(ExternalFilm, poster: tmdb_poster, backdrop: tmdb_backdrop) }
@@ -16,20 +16,20 @@ describe Films::Hydrate do
       end
 
       it 'changes the film data' do
-        expect(film).to receive(:hydrate).with(tmdb_movie)
+        expect(film).to receive(:update_external_information_from).with(tmdb_movie)
         perform
       end
     end
 
     context 'with film with tmdb id and manual data' do
-      let(:film) { create(:film, :external_id, :external_information) }
+      let(:film) { create(:film, :external_id, :information) }
 
       before do
         expect(ExternalFilm).to receive(:new).with(film.tmdb_identifier).and_return(tmdb_movie)
       end
 
       it 'does not change the film' do
-        expect(film).to receive(:hydrate).with(tmdb_movie)
+        expect(film).to receive(:update_external_information_from).with(tmdb_movie)
         perform
       end
     end
@@ -42,7 +42,7 @@ describe Films::Hydrate do
       end
 
       it 'does not change the film' do
-        expect(film).to_not receive(:hydrate)
+        expect(film).to_not receive(:update_external_information_from)
         perform
       end
     end

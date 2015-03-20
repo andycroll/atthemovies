@@ -1,10 +1,10 @@
 module Films
-  class GetTmdbIds < ActiveJob::Base
+  class FetchExternalIds < ActiveJob::Base
     attr_accessor :film
 
     def perform(film)
       self.film = film
-      film.update_possibles(possible_tmdb_ids)
+      film.update_possibles(possible_ids)
       prime_cache
     end
 
@@ -14,12 +14,12 @@ module Films
       @external_films ||= ExternalFilm.find(film.name)
     end
 
-    def possible_tmdb_ids
+    def possible_ids
       external_films.map(&:tmdb_id)
     end
 
     def prime_cache
-      external_films.each { |film| film.title_and_year }
+      external_films.each(&:title_and_year)
     end
   end
 end

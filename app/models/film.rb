@@ -6,6 +6,8 @@ class Film < ActiveRecord::Base
 
   before_update :add_old_name_to_alternate_names, if: :name_change
   before_update :information_not_added, if: :tmdb_identifier_change
+  before_update :fetch_poster, if: :poster_source_uri_change
+  before_update :fetch_backdrop, if: :backdrop_source_uri_change
 
   acts_as_url :name
 
@@ -19,10 +21,6 @@ class Film < ActiveRecord::Base
 
   def self.find_or_create_by_name(name)
     find_named(name) || create(name: name)
-  end
-
-  def self.hydratable
-    where(information_added: false).where.not(tmdb_identifier: nil)
   end
 
   def self.no_information
@@ -48,11 +46,7 @@ class Film < ActiveRecord::Base
     update_attributes(alternate_names: self.alternate_names + [name])
   end
 
-  def hydratable?
-    tmdb_identifier? && !information_added?
-  end
-
-  def hydrate(tmdb_movie)
+  def update_external_information_from(tmdb_movie)
     update_attributes(imdb_identifier:     tmdb_movie.imdb_number.to_s,
                       overview:            tmdb_movie.overview,
                       runtime:             tmdb_movie.runtime,
@@ -61,6 +55,10 @@ class Film < ActiveRecord::Base
                       poster_source_uri:   tmdb_movie.poster.uri,
                       backdrop_source_uri: tmdb_movie.backdrop.uri,
                       information_added:   true)
+  end
+
+  def needs_external_information?
+    tmdb_identifier? && !information_added?
   end
 
   def update_possibles(array)
@@ -75,14 +73,19 @@ class Film < ActiveRecord::Base
 
   def information_not_added
     self.information_added = false
+    fetch_external_information if tmdb_identifier.present?
     true
   end
 
-  def store_backdrop
-    Films::StoreBackdrop.perform_later(self)
+  def fetch_external_information
+    Films::FetchExternalInformation.perform_later(self)
   end
 
-  def store_poster
-    Films::StorePoster.perform_later(self)
+  def fetch_backdrop
+    Films::FetchBackdrop.perform_later(self)
+  end
+
+  def fetch_poster
+    Films::FetchPoster.perform_later(self)
   end
 end
