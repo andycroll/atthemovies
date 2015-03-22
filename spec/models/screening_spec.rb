@@ -28,6 +28,64 @@ describe Screening do
   end
 
   describe 'scopes' do
+    describe '.on' do
+      subject { Screening.on(date) }
+
+      context 'today' do
+        let!(:screening_1) { create(:screening, showing_at: 10.minutes.ago) }
+        let!(:screening_2) { create(:screening, showing_at: 90.minutes.from_now) }
+        let!(:screening_3) { create(:screening, showing_at: 40.minutes.from_now) }
+        let!(:screening_4) { create(:screening, showing_at: 1.day.from_now.beginning_of_day + 1.minute) }
+
+        let(:date) { 0.day.from_now.to_date }
+
+        it 'returns screenings for today' do
+          expect(subject).to include(screening_2, screening_3)
+        end
+
+        it 'returns screenings in ascending order' do
+          expect(subject.first).to eq(screening_3)
+          expect(subject.last).to eq(screening_2)
+        end
+
+        it 'does not include past screenings' do
+          expect(subject).not_to include(screening_1)
+        end
+
+        it 'does not include screenings from other dates' do
+          expect(subject).not_to include(screening_4)
+        end
+      end
+
+      context 'tomorrow' do
+        let!(:screening_1) { create(:screening, showing_at: 10.minutes.ago) }
+        let!(:screening_2) { create(:screening, showing_at: 10.minutes.from_now) }
+        let!(:screening_3) { create(:screening, showing_at: 1.day.from_now) }
+        let!(:screening_4) { create(:screening, showing_at: 1.day.from_now.beginning_of_day + 1.minute) }
+        let!(:screening_5) { create(:screening, showing_at: 2.days.from_now.beginning_of_day + 1.minute) }
+
+        let(:date) { 1.day.from_now.to_date }
+
+        it 'returns screenings for tomorrow' do
+          expect(subject).to include(screening_3, screening_4)
+        end
+
+        it 'returns screenings in ascending order' do
+          expect(subject.first).to eq(screening_4)
+          expect(subject.last).to eq(screening_3)
+        end
+
+        it 'does not include past screenings' do
+          expect(subject).not_to include(screening_1)
+        end
+
+        it 'does not include screenings from other dates' do
+          expect(subject).not_to include(screening_2)
+          expect(subject).not_to include(screening_5)
+        end
+      end
+    end
+
     describe '.ordered' do
       subject { Screening.ordered }
 
