@@ -13,6 +13,13 @@ describe FilmsController do
       )
     end
     specify do
+      expect(get: '/films?q=2001').to route_to(
+        controller: 'films',
+        action: 'index',
+        q: '2001'
+      )
+    end
+    specify do
       expect(get: '/films/triage').to route_to(
         controller: 'films',
         action: 'triage'
@@ -90,6 +97,17 @@ describe FilmsController do
         before do
           expect(Film).to receive(:whats_on).and_return(films)
           do_request
+        end
+
+        it { is_expected.to respond_with :success }
+        specify { expect(assigns(:films)).to be_present }
+        it { is_expected.to render_template 'index' }
+      end
+
+      describe 'with query' do
+        before do
+          expect(Film).to receive(:similar_to).with('boom').and_return(films)
+          do_request(q: 'boom')
         end
 
         it { is_expected.to respond_with :success }

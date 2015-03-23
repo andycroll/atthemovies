@@ -7,7 +7,7 @@ class FilmsController < ApplicationController
   end
 
   def index
-    @films = Film.whats_on
+    @films = params[:q] ? Film.similar_to(params[:q]) : Film.whats_on
   end
 
   def merge
