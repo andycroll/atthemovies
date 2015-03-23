@@ -13,11 +13,31 @@
 
 <div class="row">
   <div class="col-sm-12">
-    <h3><%= link_to 'Screenings', cinema_screenings_path(@cinema) %></h3>
     <p>
       <%= @cinema.street_address %>,
       <%= @cinema.locality %>
       <%= @cinema.postal_code %>
     </p>
   </div>
+</div>
+
+<h3>Screenings Today • <%= link_to 'All Screenings', cinema_screenings_path(@cinema) %></h3>
+<hr />
+
+<div class="row">
+  <% @cinema.screenings.on(Time.current).each do |screening| -%>
+    <div class="col-sm-4 col-md-3" data-screening-id="<%= screening.id %>">
+      <div class="media">
+        <div class="pull-left" style="width: 80px; margin-right: 20px;">
+          <%= image_tag screening.film.poster_source_uri, alt: screening.film.name, class: 'media-object img-responsive' %>
+        </div>
+        <div class="media-body">
+          <h4 class="media-heading">
+            <small><%= local_time(screening.showing_at, '%H:%M') %></small><br />
+            <%= screening.film.name %>
+          </h4>
+        </div>
+      </div>
+    </div>
+  <% end -%>
 </div>
