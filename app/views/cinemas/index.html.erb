@@ -13,7 +13,12 @@
 <div class="row">
   <% @cinemas.each do |cinema| %>
     <div class="col-sm-6">
-      <p><%= link_to cinema.name, cinema_path(cinema) %></p>
+      <h4><%= link_to cinema.name, cinema_path(cinema) %></h4>
+      <p>
+        <%= cinema.street_address %>,
+        <%= cinema.locality %>
+        <%= cinema.postal_code %>
+      </p>
     </div>
   <% end %>
 </div>
