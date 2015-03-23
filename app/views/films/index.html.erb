@@ -1,14 +1,34 @@
 <% content_for(:title) do -%>
-  Films
+  Films <%= " named: #{params[:q]}" if params[:q] %>
 <% end -%>
 
 <% content_for :breadcrumbs do -%>
-  <li class="active">Films</li>
+  <% if params[:q] %>
+    <li><%= link_to 'Films', films_path %></li>
+    <li class="active">named &lsquo;<%= params[:q] %>&rsquo;</li>
+  <% else -%>
+    <li class="active">Films</li>
+  <% end -%>
 <% end -%>
 
 <% content_for(:page_header) do -%>
   Films
 <% end -%>
+
+<hr />
+
+<div class="row">
+  <div class="col-sm-12">
+    <%= form_tag films_path, method: :get, class: 'form-inline', role: 'format' do -%>
+      <div class="form-group">
+        <%= text_field_tag :q, params[:q], class: 'form-control' %>
+      </div>
+      <%= submit_tag 'Search', class: 'btn btn-primary' %>
+    <% end -%>
+  </div>
+</div>
+
+<hr />
 
 <div class="row">
   <% @films.each do |film| %>
