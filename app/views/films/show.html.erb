@@ -9,12 +9,24 @@
 
 <% content_for(:page_header) do -%>
   <%= @film.name %>
+  <% if @film.year? -%><small><%= @film.year %></small><% end -%>
 <% end -%>
 
 <div class="row">
-  <% @film.cinemas.each do |cinema| %>
-    <div class="col-sm-6">
-      <p><%= link_to cinema.name, cinema %></p>
-    </div>
-  <% end %>
+  <div class="col-sm-push-8 col-sm-4">
+    <h3>Showing at...</h3>
+    <% @film.cinemas.each do |cinema| %>
+    <p><%= link_to cinema.name, cinema %></p>
+    <% end %>
+  </div>
+  <div class="col-sm-pull-4 col-sm-8">
+    <h3><%= @film.tagline %></h3>
+    <p class="lead"><%= @film.overview %></p>
+    <p class="small">
+      <%= @film.runtime %> minutes<br />
+      <%= link_to 'tmdb', tmdb_url(@film.tmdb_identifier) %> •
+      <%= link_to 'imdb', imdb_url(@film.imdb_identifier) %> •
+      <%= @film.id %>
+    </p>
+  </div>
 </div>
