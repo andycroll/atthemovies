@@ -131,7 +131,7 @@ describe FilmsController do
     context 'with authentication' do
       before do
         http_login
-        expect(Films::Merge).to receive(:perform_later)
+        expect(Films::Merge).to receive(:perform_now)
           .with(film, film_to_merge)
         do_request
       end
