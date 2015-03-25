@@ -35,7 +35,7 @@ class ImageUploader
   end
 
   def resize_and_encode
-    @image.thumb(crop_to).encode(FORMAT, "-quality #{QUALITY}")
+    @image = @image.thumb(crop_to).encode(FORMAT, "-quality #{QUALITY}")
   end
 
   def save_to_storage

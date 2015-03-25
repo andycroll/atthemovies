@@ -12,12 +12,13 @@ describe ImageUploader do
     end
     let(:dragonfly) { double(Dragonfly) }
     let(:dragonfly_job) { double('DragonflyJob') }
+    let(:dragonfly_chain) { double('DragonflyChain') }
 
     before do
       expect(Dragonfly).to receive(:app) { dragonfly }
       expect(dragonfly).to receive(:fetch_url).with(args[:url]) { dragonfly_job }
-      expect(dragonfly_job).to receive_message_chain(:thumb, :encode)
-      expect(dragonfly_job).to receive(:store) { "#{args[:file_name]}.jpg" }
+      expect(dragonfly_job).to receive_message_chain(:thumb, :encode) { dragonfly_chain }
+      expect(dragonfly_chain).to receive(:store) { "#{args[:file_name]}.jpg" }
       expect(dragonfly).to receive(:remote_url_for).
         with("#{args[:file_name]}.jpg").
         and_return("http://cdn.com/#{args[:file_name]}.jpg")
