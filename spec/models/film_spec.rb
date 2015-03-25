@@ -192,7 +192,8 @@ describe Film do
 
     let(:film)       { build :film }
     let(:tmdb_movie) do
-      instance_double(ExternalFilm, imdb_number: 1234567,
+      instance_double(ExternalFilm, title:       'Batman',
+                                    imdb_number: 1234567,
                                     overview:    'overview',
                                     runtime:     106,
                                     tagline:     'tagline',
@@ -201,6 +202,9 @@ describe Film do
                                     year:        '2000')
     end
 
+    it 'sets imdb_identifier' do
+      expect { subject }.to change(film, :name).to('Batman')
+    end
     it 'sets imdb_identifier' do
       expect { subject }.to change(film, :imdb_identifier).to('1234567')
     end

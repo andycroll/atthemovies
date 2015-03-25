@@ -47,7 +47,8 @@ class Film < ActiveRecord::Base
   end
 
   def update_external_information_from(tmdb_movie)
-    update_attributes(imdb_identifier:     tmdb_movie.imdb_number.to_s,
+    update_attributes(name:                tmdb_movie.title,
+                      imdb_identifier:     tmdb_movie.imdb_number.to_s,
                       overview:            tmdb_movie.overview,
                       runtime:             tmdb_movie.runtime,
                       tagline:             tmdb_movie.tagline,
