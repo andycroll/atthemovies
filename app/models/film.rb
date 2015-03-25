@@ -10,7 +10,7 @@ class Film < ActiveRecord::Base
   after_commit :fetch_external_ids, if: 'previous_changes[:name]'
   after_commit :fetch_poster, if: 'previous_changes[:poster_source_uri]'
 
-  acts_as_url :name
+  acts_as_url :name, sync_url: true
 
   def self.alternately_named(name)
     where('alternate_names @> ?', "{#{name}}")
