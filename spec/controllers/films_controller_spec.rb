@@ -197,6 +197,16 @@ describe FilmsController do
         specify { expect(assigns(:films)).to be_present }
         it { is_expected.to render_template 'triage' }
       end
+
+      describe 'with query' do
+        before do
+          do_request(q: film_1.name)
+        end
+
+        it { is_expected.to respond_with :success }
+        specify { expect(assigns(:films)).to be_present }
+        it { is_expected.to render_template 'triage' }
+      end
     end
   end
 

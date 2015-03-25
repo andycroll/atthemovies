@@ -20,7 +20,11 @@ class FilmsController < ApplicationController
   end
 
   def triage
-    @films = Film.no_information.order(:name).page(params[:page]).per(10)
+    @films = if params[:q]
+      Film.similar_to(params[:q]).page(params[:page])
+    else
+      Film.no_information.no_tmdb_id.order('screenings_count DESC').page(params[:page]).per(20)
+    end
   end
 
   def update
