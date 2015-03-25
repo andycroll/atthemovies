@@ -43,12 +43,33 @@ describe Films::FetchExternalIds do
         [
           instance_double(ExternalFilm,
                           tmdb_id:        123,
+                          title:          'One',
                           title_and_year: 'One (2011)')
         ]
       end
 
       it 'queries themoviedb and sets films possibles' do
         expect(film).to receive(:update_possibles).with([123]).and_return(true)
+
+        get_tmdb_ids
+      end
+    end
+
+    context 'single result (with same name)' do
+      let(:tmdb_response) do
+        [
+          instance_double(ExternalFilm,
+                          tmdb_id:        123,
+                          title:          'Batman',
+                          title_and_year: 'Batman (1989)')
+        ]
+      end
+
+      it 'queries themoviedb and sets films possibles' do
+        expect(film).to receive(:update_possibles).with([123]).and_return(true)
+        expect(Films::FetchExternalInformation).to receive(:perform_now).
+          with(film).
+          and_return(true)
 
         get_tmdb_ids
       end
