@@ -39,6 +39,6 @@ class FilmsController < ApplicationController
   end
 
   def film_attributes
-    params.require(:film).permit(:information_added, :name, :overview, :running_time, :tagline, :tmdb_identifier, :event)
+    params.require(:film).permit(:information_added, :name, :overview, :running_time, :tagline, :tmdb_identifier, :event, :hidden)
   end
 end
