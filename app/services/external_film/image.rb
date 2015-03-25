@@ -7,6 +7,7 @@ class ExternalFilm
     end
 
     def uri
+      return unless file_path
       URI.join(base_url, 'original/', file_path.gsub(/\A\//, ''))
     end
 
