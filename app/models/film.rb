@@ -6,8 +6,9 @@ class Film < ActiveRecord::Base
 
   before_update :add_old_name_to_alternate_names, if: :name_change
   before_update :information_not_added, if: :tmdb_identifier_change
-  before_update :fetch_poster, if: :poster_source_uri_change
-  before_update :fetch_backdrop, if: :backdrop_source_uri_change
+  after_commit :fetch_backdrop, if: 'previous_changes[:backdrop_source_uri]'
+  after_commit :fetch_external_ids, if: 'previous_changes[:name]'
+  after_commit :fetch_poster, if: 'previous_changes[:poster_source_uri]'
 
   acts_as_url :name
 
@@ -76,6 +77,10 @@ class Film < ActiveRecord::Base
     self.information_added = false
     fetch_external_information if tmdb_identifier.present?
     true
+  end
+
+  def fetch_external_ids
+    Films::FetchExternalIds.perform_later(self)
   end
 
   def fetch_external_information
