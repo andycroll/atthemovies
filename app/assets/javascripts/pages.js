@@ -1,19 +1,26 @@
 atthemovies.pages.pages = {
   init: function() {},
   initHome: function() {
-    this.getGeoLocation();
+    this.buildGeoLink();
+    this.clickHandlerGeoLink();
   },
 
-  buildGeoLink: function(position) {
-    var latitude = position.coords.latitude.toFixed(4);
-    var longitude = position.coords.longitude.toFixed(4);
-    var link = ' or <a href="/cinemas?near=' + latitude + ',' + longitude + '"">Cinemas Nearby</a>';
-    $('h2').append(link);
-  },
-
-  getGeoLocation: function() {
+  buildGeoLink: function() {
     if (Modernizr.geolocation) {
-      navigator.geolocation.getCurrentPosition(this.buildGeoLink, this.handleGeoError);
+      var link = ' or <a id="geoLink" href="">Cinemas Nearby</a>';
+      $('h2').append(link);
+    }
+  },
+
+  clickHandlerGeoLink: function() {
+    if (Modernizr.geolocation) {
+      $('#geoLink').on('click', function() {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var latitude = position.coords.latitude.toFixed(4);
+          var longitude = position.coords.longitude.toFixed(4);
+          $('#geoLink').attr('href', '/cinemas?near=' + latitude + ',' + longitude).click();
+        }, this.handleGeoError);
+      })
     }
   },
 
