@@ -3,7 +3,7 @@ Atthemovies::Application.routes.draw do
     resources :screenings, only: [:index]
   end
 
-  get '/films/triage' => 'films#triage'
+  get '/triage' => 'films#triage', as: :triage
 
   resources :films, only: [:edit, :index, :show, :update] do
     put :merge, on: :member

@@ -20,7 +20,7 @@ describe FilmsController do
       )
     end
     specify do
-      expect(get: '/films/triage').to route_to(
+      expect(get: '/triage').to route_to(
         controller: 'films',
         action: 'triage'
       )
@@ -189,24 +189,28 @@ describe FilmsController do
       get :triage, {}.merge(params)
     end
 
-    describe 'HTML' do
-      describe 'successful' do
-        before { do_request }
+    include_examples 'authenticated'
 
-        it { is_expected.to respond_with :success }
-        specify { expect(assigns(:films)).to be_present }
-        it { is_expected.to render_template 'triage' }
+    context 'with authentication' do
+      before do
+        http_login
+        do_request
       end
 
-      describe 'with query' do
-        before do
-          do_request(q: film_1.name)
-        end
+      it { is_expected.to respond_with :success }
+      specify { expect(assigns(:films)).to be_present }
+      it { is_expected.to render_template 'triage' }
+    end
 
-        it { is_expected.to respond_with :success }
-        specify { expect(assigns(:films)).to be_present }
-        it { is_expected.to render_template 'triage' }
+    describe 'with query' do
+      before do
+        http_login
+        do_request(q: film_1.name)
       end
+
+      it { is_expected.to respond_with :success }
+      specify { expect(assigns(:films)).to be_present }
+      it { is_expected.to render_template 'triage' }
     end
   end
 

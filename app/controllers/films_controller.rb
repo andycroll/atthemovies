@@ -1,5 +1,5 @@
 class FilmsController < ApplicationController
-  before_filter :http_basic_auth, only: [:edit, :merge, :update]
+  before_filter :http_basic_auth, only: [:edit, :merge, :triage, :update]
   before_filter :assign_film_by_id, except: [:index, :show, :triage]
 
   def edit

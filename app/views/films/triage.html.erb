@@ -15,7 +15,7 @@
 
 <div class="row">
   <div class="col-sm-12">
-    <%= form_tag films_triage_path, method: :get, class: 'form-inline', role: 'format' do -%>
+    <%= form_tag triage_path, method: :get, class: 'form-inline', role: 'format' do -%>
       <div class="form-group">
         <%= text_field_tag :q, params[:q], class: 'form-control' %>
       </div>
