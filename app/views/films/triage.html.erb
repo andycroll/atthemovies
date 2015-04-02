@@ -82,7 +82,7 @@
               <%= select_tag :other_id, options_from_collection_for_select(other_films, :id, :name), class: 'form-control input-sm' if other_films.present? %>
             </div>
             <div class="col-sm-3">
-              <%= button_tag 'Merge', class: 'btn btn-primary btn-sm' %>
+              <%= button_tag 'Merge into this film', class: 'btn btn-primary btn-sm' %>
             </div>
           </div>
         <% end -%>

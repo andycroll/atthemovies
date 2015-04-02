@@ -125,7 +125,7 @@
       <%= form_tag merge_film_path(@film, other_id: film.id), method: :put, class: 'form-inline', role: 'form' do -%>
         <p>
           Merge with '<%= film.name %>'
-          <%= button_tag 'Merge', class: 'btn btn-default btn-sm' %>
+          <%= button_tag 'Merge into this film', class: 'btn btn-default btn-sm' %>
         </p>
       <% end -%>
     <% end -%>
