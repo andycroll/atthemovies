@@ -5,12 +5,12 @@ describe FilmNameComparison do
   describe '#code' do
     subject(:code) { described_class.new(name).code }
 
-    [nil, '', 'abc', 'SDGFD', 'fdjk m  sak', 'don: tie', 'some,'].each do |word|
+    [nil, '', 'abc', 'SGD 3', 'fdjk m  sak', 'don: tie', 'some,'].each do |word|
       context "name is '#{word}'" do
         let(:name) { word }
 
         it 'includes only lowercase alphabetical characters' do
-          expect(code).to match(/\A[a-z]*\z/)
+          expect(code).to match(/\A[0-9]*[a-z]*\z/)
         end
 
         it 'sorts all characters into alphabetical order' do

@@ -4,6 +4,6 @@ class FilmNameComparison
   end
 
   def code
-    @name.downcase.gsub(/[^a-z]/, '').chars.sort.join
+    @name.downcase.gsub(/[^a-z0-9]/, '').chars.sort.join
   end
 end
