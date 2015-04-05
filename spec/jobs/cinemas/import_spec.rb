@@ -35,6 +35,22 @@ describe Cinemas::Import do
           expect(cinema.country).to eq('United Kingdom')
         end
       end
+
+      context 'cinema exists with address' do
+        before do
+          create(:cinema, :with_address, name:             'Cineworld Brighton',
+                                         brand:            'Cineworld',
+                                         brand_identifier: '3')
+        end
+
+        it 'does not create a new cinema' do
+          expect { job }.not_to change(Cinema, :count)
+        end
+
+        it 'does not update address if one exists' do
+          expect { job }.not_to change(Cinema.last, :street_address)
+        end
+      end
     end
 
     context 'odeon example' do

@@ -8,7 +8,7 @@ module Cinemas
       @brand_identifier = args[:brand_identifier].to_s
       @name             = args[:name]
 
-      existing_or_new_cinema.update_address(address)
+      existing_or_new_cinema.update_address(address) unless existing_or_new_cinema.street_address.present?
     end
 
     private
