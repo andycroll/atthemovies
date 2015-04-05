@@ -1,0 +1,31 @@
+<% content_for(:title) do -%>
+  Edit <%= @cinema.name %> &bull; Cinemas
+<% end -%>
+
+<% content_for :breadcrumbs do -%>
+  <li><%= link_to 'Cinemas', cinemas_path %></li>
+  <li><%= link_to @cinema.name, @cinema %></li>
+  <li class="active">Edit</li>
+<% end -%>
+
+<% content_for(:page_header) do -%>
+  Edit <%= @cinema.name %>
+<% end -%>
+
+<div class="row">
+  <%= form_for @cinema, method: :put do |f| -%>
+    <div class="col-sm-6">
+      <div class="form-group">
+        <%= f.label :name %>
+        <%= f.text_field :name, class: 'form-control' %>
+      </div>
+      <% Cinema::ADDRESS_FIELDS.each do |field| -%>
+        <div class="form-group">
+          <%= f.label field %>
+          <%= f.text_field field, class: 'form-control' %>
+        </div>
+      <% end -%>
+      <%= button_tag 'Update Cinema', class: 'btn btn-primary' %>
+    </div>
+  <% end -%>
+</div>

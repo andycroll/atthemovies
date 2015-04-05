@@ -1,5 +1,5 @@
 Atthemovies::Application.routes.draw do
-  resources :cinemas, only: [:index, :show] do
+  resources :cinemas, only: [:edit, :index, :show, :update] do
     resources :screenings, only: [:index]
   end
 

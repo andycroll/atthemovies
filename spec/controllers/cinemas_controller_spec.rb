@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe CinemasController do
+  include BasicAuthHelper
+
   render_views
 
   describe 'routes' do
@@ -18,12 +20,40 @@ describe CinemasController do
       )
     end
     specify do
+      expect(get: '/cinemas/odeon-brighton/edit').to route_to(
+        controller: 'cinemas',
+        action: 'edit',
+        id: 'odeon-brighton'
+      )
+    end
+    specify do
       expect(get: '/cinemas/odeon-brighton.json').to route_to(
         controller: 'cinemas',
         action: 'show',
         id: 'odeon-brighton',
         format: 'json'
       )
+    end
+  end
+
+  describe '#GET edit' do
+    let!(:cinema) { create :cinema }
+
+    def do_request(params = {})
+      get :edit, { id: cinema.to_param }.merge(params)
+    end
+
+    include_examples 'authenticated'
+
+    context 'with authentication' do
+      before do
+        http_login
+        do_request
+      end
+
+      it { is_expected.to respond_with(:success) }
+      it { is_expected.to render_template(:edit) }
+      specify { expect(assigns(:cinema)).not_to be_nil }
     end
   end
 
@@ -88,6 +118,29 @@ describe CinemasController do
             expect(film.keys).to include('id', 'name', 'latitude', 'longitude')
           end
         end
+      end
+    end
+  end
+
+  describe '#PUT update' do
+    let!(:cinema) { create :cinema, name: 'Cinema' }
+
+    def do_request(params = {})
+      get :update, { id: cinema.to_param }.merge(params)
+    end
+
+    include_examples 'authenticated'
+
+    context 'with authentication' do
+      before do
+        http_login
+        do_request(cinema: attributes_for(:cinema))
+      end
+
+      it { is_expected.to respond_with(:redirect) }
+      it { is_expected.to redirect_to(cinemas_path) }
+      it 'changes values' do
+        expect(cinema.reload.name).not_to eq('Cinema')
       end
     end
   end
