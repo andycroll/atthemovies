@@ -213,7 +213,7 @@ GEM
       faraday (>= 0.7.6, < 0.10)
       multi_json (~> 1.0)
     pg (0.18.1)
-    picturehouse_uk (3.0.6)
+    picturehouse_uk (3.0.7)
       nokogiri
       tzinfo
       tzinfo-data
@@ -313,7 +313,7 @@ GEM
       coffee-rails
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    tzinfo-data (1.2015.1)
+    tzinfo-data (1.2015.2)
       tzinfo (>= 1.0.0)
     uglifier (2.7.0)
       execjs (>= 0.3.0)
