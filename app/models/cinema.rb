@@ -1,10 +1,13 @@
 class Cinema < ActiveRecord::Base
+  ADDRESS_FIELDS = %i(street_address extended_address locality region
+                      postal_code country)
+
   has_many :screenings, -> { ordered }
 
   acts_as_url :name
 
   geocoded_by :address_str
-  after_validation :geocode, if: :address_str
+  after_validation :geocode, if: :address_changed?
 
   # Sort cinemas by nearest to a passed lat, lng
   # @return [ActiveRecord::Relation<Cinema>]
@@ -29,9 +32,16 @@ class Cinema < ActiveRecord::Base
   # @param [Hash]
   # @return [Boolean] the updated object
   def update_address(address)
-    %w(street_address extended_address locality region postal_code country).map(&:to_sym).each do |attr|
+    ADDRESS_FIELDS.each do |attr|
       send(:"#{attr}=", address[attr]) if address[attr]
     end
     save
+  end
+
+  private
+
+  def address_changed?
+    address_str &&
+      street_address_changed? || locality_changed? || postal_code_changed?
   end
 end

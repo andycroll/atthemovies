@@ -32,6 +32,14 @@ describe Cinema do
       specify { expect(cinema.latitude).not_to be_nil }
       specify { expect(cinema.longitude).not_to be_nil }
     end
+
+    context 'on change of address' do
+      let!(:cinema) { create(:cinema, :with_address) }
+
+      it 're-geocodes if address changes' do
+        expect { cinema.update_attributes(postal_code: Faker::Address.postcode) }.to change(cinema.reload, :latitude)
+      end
+    end
   end
 
   describe '#to_param' do

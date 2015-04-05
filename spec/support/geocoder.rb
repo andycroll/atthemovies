@@ -1,27 +1,15 @@
-# http://grinnick.com/posts/how-to-test-the-ruby-geocoder-gem
-module Geocoder
-  module Lookup
-    class Base
-      private
-      def read_fixture(file)
-        File.read(File.join("spec", "fixtures", "geocoder", file)).strip.gsub(/\n\s*/, "")
-      end
-    end
+Geocoder.configure(:lookup => :test)
 
-    class Google < Base
-      private
-      def fetch_raw_data(query, reverse = false)
-        raise TimeoutError if query == "timeout"
-        raise SocketError if query == "socket_error"
-        file = case query
-          when "no results";   :no_results
-          when "no locality";  :no_locality
-          when "no city data"; :no_city_data
-          else                 :madison_square_garden
-        end
-        # make sure you specify the correct file name here
-        read_fixture "google_data.json"
-      end
-    end
-  end
-end
+Geocoder::Lookup::Test.set_default_stub(
+  [
+    {
+      'latitude'     => Random.new.rand(-1.0..1.0),
+      'longitude'    => Random.new.rand(49.0..52.0),
+      'address'      => '1 Brighton Street, Brighton',
+      'state'        => 'East Sussex',
+      'state_code'   => '',
+      'country'      => 'United Kingdom',
+      'country_code' => 'GB'
+    }
+  ]
+)
