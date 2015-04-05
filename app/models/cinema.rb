@@ -4,7 +4,7 @@ class Cinema < ActiveRecord::Base
 
   has_many :screenings, -> { ordered }
 
-  acts_as_url :name
+  acts_as_url :name, sync_url: true
 
   geocoded_by :address_str
   after_validation :geocode, if: :address_changed?

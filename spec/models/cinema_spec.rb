@@ -6,12 +6,24 @@ describe Cinema do
   end
 
   describe 'acts_as_url' do
-    let(:cinema) { build(:cinema) }
+    context 'on create' do
+      let(:cinema) { build(:cinema) }
 
-    before { cinema.save! }
+      before { cinema.save! }
 
-    specify { expect(cinema.url).not_to be_nil }
-    specify { expect(cinema.url).to eq(cinema.name.to_url) }
+      specify { expect(cinema.url).not_to be_nil }
+      specify { expect(cinema.url).to eq(cinema.name.to_url) }
+    end
+
+    context 'on update' do
+      let(:cinema) { create(:cinema) }
+
+      it 'regenerates url' do
+        expect {
+          cinema.update_attributes(name: 'New Name')
+        }.to change(cinema.reload, :url).to('new-name')
+      end
+    end
   end
 
   describe 'geocode_by' do
@@ -37,7 +49,9 @@ describe Cinema do
       let!(:cinema) { create(:cinema, :with_address) }
 
       it 're-geocodes if address changes' do
-        expect { cinema.update_attributes(postal_code: Faker::Address.postcode) }.to change(cinema.reload, :latitude)
+        expect {
+          cinema.update_attributes(postal_code: Faker::Address.postcode)
+        }.to change(cinema.reload, :latitude)
       end
     end
   end
