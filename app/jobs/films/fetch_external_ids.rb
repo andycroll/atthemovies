@@ -5,7 +5,10 @@ module Films
     def perform(film)
       self.film = film
       film.update_possibles(possible_ids)
-      FetchExternalInformation.perform_now(film) if single_film? && titles_match?
+      if single_film? && titles_match?
+        film.update_attributes(tmdb_identifier: first_film.tmdb_id)
+        FetchExternalInformation.perform_now(film)
+      end
       prime_cache
     end
 
@@ -32,7 +35,7 @@ module Films
     end
 
     def titles_match?
-      film.name == first_film.title
+      FilmNameComparison.new(film.name).code == FilmNameComparison.new(first_film.title).code
     end
   end
 end

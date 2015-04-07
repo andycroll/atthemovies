@@ -65,13 +65,18 @@ describe Films::FetchExternalIds do
         ]
       end
 
-      it 'queries themoviedb and sets films possibles' do
-        expect(film).to receive(:update_possibles).with([123]).and_return(true)
+      before do
         expect(Films::FetchExternalInformation).to receive(:perform_now).
           with(film).
           and_return(true)
+      end
 
-        get_tmdb_ids
+      it 'sets films id possibles' do
+          expect { get_tmdb_ids }.to change(film, :tmdb_possibles).to(['123'])
+      end
+
+      it 'queries themoviedb and sets film id' do
+        expect { get_tmdb_ids }.to change(film, :tmdb_identifier).to(123)
       end
     end
   end
