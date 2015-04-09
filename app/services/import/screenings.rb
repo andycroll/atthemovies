@@ -37,7 +37,11 @@ module Import
     end
 
     def remote_cinema(brand_identifier)
-      klass.find(brand_identifier.to_s)
+      if brand == 'Odeon'
+        klass.new(brand_identifier.to_s)
+      else
+        klass.find(brand_identifier.to_s)
+      end
     end
   end
 end
