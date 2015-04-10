@@ -6,6 +6,37 @@ describe Film do
   end
 
   describe 'callbacks' do
+    describe 'before save' do
+      context 'new film' do
+        let(:film) { build(:film, name: 'Alien') }
+
+        it 'stores name as hash' do
+          expect { film.save }.to change(film, :name_hashes).to(['aeiln'])
+        end
+      end
+
+      context 'existing film' do
+        let(:film) { create(:film, name: 'Alien') }
+
+        it 'stores name change as hash' do
+          expect do
+            film.update_attributes(name: 'Alien: Directors Cut')
+          end.to change(film, :name_hashes).to(%w(aeiln accdeeiilnorrsttu))
+        end
+      end
+
+      context 'existing film changes name back' do
+        let(:film) { create(:film, name: 'Alien') }
+
+        it 'stores name change as hash only once' do
+          expect do
+            film.update_attributes(name: 'Alien: Directors Cut')
+            film.update_attributes(name: 'Alien')
+          end.to change(film, :name_hashes).to(%w(aeiln accdeeiilnorrsttu))
+        end
+      end
+    end
+
     describe 'before update' do
       describe 'on change of name' do
         let!(:film) { create(:film, name: 'Alien') }

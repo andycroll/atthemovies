@@ -4,6 +4,7 @@ class Film < ActiveRecord::Base
 
   validates :name, presence: true
 
+  before_save :add_hashed_name, if: :name_change
   before_update :add_old_name_to_alternate_names, if: :name_change
   before_update :information_not_added, if: :tmdb_identifier_change
   after_commit :fetch_backdrop, if: 'previous_changes[:backdrop_source_uri]'
@@ -68,6 +69,10 @@ class Film < ActiveRecord::Base
   end
 
   private
+
+  def add_hashed_name
+    self.name_hashes = (name_hashes + [FilmNameComparison.new(name).code]).uniq
+  end
 
   def add_old_name_to_alternate_names
     self.alternate_names = alternate_names + [name_was]
