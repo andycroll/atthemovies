@@ -75,7 +75,7 @@ class Film < ActiveRecord::Base
   end
 
   def add_old_name_to_alternate_names
-    self.alternate_names = alternate_names + [name_was]
+    self.alternate_names = (alternate_names + [name_was]).uniq
   end
 
   def information_not_added

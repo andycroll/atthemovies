@@ -157,7 +157,7 @@ describe Film do
       end
     end
 
-    context 'film of that name (as slug) exists' do
+    context 'film of that name (different case) exists' do
       let!(:film) { create(:film, name: 'alien') }
 
       it 'creates a new film' do
@@ -168,8 +168,8 @@ describe Film do
       end
     end
 
-    context 'film of that name (as an alternate) exists' do
-      let!(:film) { create(:film, alternate_names: ['Alien']) }
+    context 'film of that name (as an hash) exists' do
+      let!(:film) { create(:film, name: 'alien', name_hashes: ['aeiln']) }
 
       it 'creates a new film' do
         expect { find_or_create_by_name }.not_to change(Film, :count)
@@ -189,6 +189,13 @@ describe Film do
     it 'joins names into primary film' do
       add_alternate_name
       expect(film.reload.alternate_names).to include('Extra Name')
+    end
+
+    it 'joins name only once primary film' do
+      add_alternate_name
+      add_alternate_name
+      expect(film.reload.alternate_names).to include('Extra Name')
+      expect(film.reload.alternate_names.count).to eq(1)
     end
   end
 
