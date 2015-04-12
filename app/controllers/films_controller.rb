@@ -11,7 +11,8 @@ class FilmsController < ApplicationController
   end
 
   def merge
-    Films::Merge.perform_now(@film, Film.find(params[:other_id]))
+    # merge _this_ film into the other film
+    Films::Merge.perform_now(Film.find(params[:other_id]), @film)
     redirect_to :back
   end
 

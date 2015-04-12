@@ -118,8 +118,8 @@ describe FilmsController do
   end
 
   describe 'PUT #merge' do
-    let!(:film)          { create :film }
-    let!(:film_to_merge) { create :film }
+    let!(:film)   { create :film }
+    let!(:target) { create :film }
 
     def do_request(params = {})
       request.env["HTTP_REFERER"] = 'back'
@@ -131,8 +131,7 @@ describe FilmsController do
     context 'with authentication' do
       before do
         http_login
-        expect(Films::Merge).to receive(:perform_now)
-          .with(film, film_to_merge)
+        expect(Films::Merge).to receive(:perform_now).with(target, film)
         do_request
       end
 
