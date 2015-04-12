@@ -92,42 +92,42 @@
       </h3>
     </div>
 
-  <div class="col-sm-6">
-    <%= form_for @film, method: :put, html: { class: 'form-horizontal', role: 'form' } do |f| -%>
-      <div class="form-group">
-        <div class="col-sm-9">
-          <%= f.select :tmdb_identifier, options_from_collection_for_select(@film.tmdb_possibles.map { |n| ExternalFilm.new(n) }, :tmdb_id, :title_and_year), {}, class: 'form-control input-sm' %>
+    <div class="col-sm-6">
+      <%= form_for @film, method: :put, html: { class: 'form-horizontal', role: 'form' } do |f| -%>
+        <div class="form-group">
+          <div class="col-sm-9">
+            <%= f.select :tmdb_identifier, options_from_collection_for_select(@film.tmdb_possibles.map { |n| ExternalFilm.new(n) }, :tmdb_id, :title_and_year), {}, class: 'form-control input-sm' %>
+          </div>
+          <div class="col-sm-3">
+            <%= button_tag 'Choose', class: 'btn btn-primary btn-sm' %>
+          </div>
         </div>
-        <div class="col-sm-3">
-          <%= button_tag 'Choose', class: 'btn btn-primary btn-sm' %>
+      <% end %>
+    </div>
+    <div class="col-sm-2">
+      <%= form_for @film, method: :put, html: { class: 'form-inline', role: 'form' } do |f| -%>
+        <div class="form-group">
+          <%= f.hidden_field :hidden, value: true %>
+          <%= button_tag 'Hide', class: 'btn btn-danger btn-sm' %>
         </div>
-      </div>
-    <% end %>
-  </div>
-  <div class="col-sm-2">
-    <%= form_for @film, method: :put, html: { class: 'form-inline', role: 'form' } do |f| -%>
-      <div class="form-group">
-        <%= f.hidden_field :hidden, value: true %>
-        <%= button_tag 'Hide', class: 'btn btn-danger btn-sm' %>
-      </div>
-    <% end %>
-  </div>
-  <div class="col-sm-2">
-    <%= form_for @film, method: :put, html: { class: 'form-inline', role: 'form' } do |f| -%>
-      <div class="form-group">
-        <%= f.hidden_field :event, value: true %>
-        <%= f.hidden_field :information_added, value: true %>
-        <%= button_tag 'Event', class: 'btn btn-warning btn-sm' %>
-      </div>
-    <% end %>
-  </div>
-  <div class="col-sm-2">
-    <%= form_for @film, method: :put, html: { class: 'form-inline', role: 'form' } do |f| -%>
-      <div class="form-group">
-        <%= f.hidden_field :information_added, value: true %>
-        <%= button_tag 'No information', class: 'btn btn-warning btn-sm' %>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
+    <div class="col-sm-2">
+      <%= form_for @film, method: :put, html: { class: 'form-inline', role: 'form' } do |f| -%>
+        <div class="form-group">
+          <%= f.hidden_field :event, value: true %>
+          <%= f.hidden_field :information_added, value: true %>
+          <%= button_tag 'Event', class: 'btn btn-warning btn-sm' %>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-sm-2">
+      <%= form_for @film, method: :put, html: { class: 'form-inline', role: 'form' } do |f| -%>
+        <div class="form-group">
+          <%= f.hidden_field :information_added, value: true %>
+          <%= button_tag 'No information', class: 'btn btn-warning btn-sm' %>
+        </div>
+      <% end %>
     </div>
   </div>
 <% end %>
