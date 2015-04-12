@@ -214,7 +214,7 @@ GEM
       faraday (>= 0.7.6, < 0.10)
       multi_json (~> 1.0)
     pg (0.18.1)
-    picturehouse_uk (3.0.8)
+    picturehouse_uk (3.0.9)
       nokogiri
       tzinfo
       tzinfo-data
