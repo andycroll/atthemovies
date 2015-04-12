@@ -32,8 +32,18 @@
 
 <div class="row">
   <% @films.each do |film| %>
-    <div class="col-sm-6">
-      <p><%= link_to film.name, film_path(film.url) %> <small><%= film.screenings_count %></small></p>
+    <div class="col-sm-3">
+      <div class="media">
+        <div class="pull-left" style="width: 50%; margin-right: 5px;">
+          <%= image_tag film.poster || image_tag('default-poster.jpg'), alt: film.name, class: 'media-object img-responsive' %>
+        </div>
+        <div class="media-body">
+          <h4 class="media-heading">
+            <%= link_to film.name, film_path(film.url) %>
+          </h4>
+          <p><small><%= film.screenings_count %></small></p>
+        </div>
+      </div>
     </div>
   <% end %>
 </div>
