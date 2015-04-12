@@ -71,10 +71,14 @@
 
 <hr />
 
-<div class="row">
-  <div class="col-sm-12">
-    <h3>Select Film</h3>
-  </div>
+<% unless @film.tmdb_identifier? %>
+  <div class="row">
+    <div class="col-sm-12">
+      <h3>
+        Select Film
+        <small><%= link_to 'on TMDB...', "https://www.themoviedb.org/search?query=#{querify(@film.name)}" %></small>
+      </h3>
+    </div>
 
   <div class="col-sm-6">
     <%= form_for @film, method: :put, html: { class: 'form-horizontal', role: 'form' } do |f| -%>
@@ -112,8 +116,9 @@
         <%= button_tag 'No information', class: 'btn btn-warning btn-sm' %>
       </div>
     <% end %>
+    </div>
   </div>
-</div>
+<% end %>
 
 <div class="row">
   <div class="col-sm-12">
