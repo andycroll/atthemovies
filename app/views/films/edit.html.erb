@@ -67,6 +67,18 @@
       <%= button_tag 'Add to Alternate Names', class: 'btn btn-primary' %>
     <% end -%>
   </div>
+
+  <div class="col-sm-6">
+    <hr>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <% @film.name_hashes.each do |hashed| -%>
+          <p><%= hashed %></p>
+        <% end -%>
+      </div>
+      <div class="panel-footer"><i>Name Hashes</i></div>
+    </div>
+  </div>
 </div>
 
 <hr />
