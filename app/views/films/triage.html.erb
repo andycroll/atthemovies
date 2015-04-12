@@ -30,13 +30,13 @@
   <% other_films = Film.similar_to(film.name).where('id != ?', film.id).select(:id, :name) -%>
   <% cache ['triage-row', film, other_films] do %>
     <div class="row">
-      <div class="col-sm-3">
+      <div class="col-sm-4">
         <h5>
           <%= link_to film.name, edit_film_path(film), title: film.id %>
         </h5>
       </div>
       <% if film.tmdb_possibles.present? && !film.tmdb_identifier? %>
-        <div class="col-sm-6">
+        <div class="col-sm-5">
           <%= form_for film, method: :put, html: { class: 'form-horizontal', role: 'form' } do |f| -%>
             <div class="form-group">
               <div class="col-sm-9">
@@ -66,7 +66,7 @@
             </div>
           <% end %>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-3">
           <%= form_for film, method: :put, html: { class: 'form-inline', role: 'form' } do |f| -%>
             <div class="form-group">
               <%= f.hidden_field :information_added, value: true %>
