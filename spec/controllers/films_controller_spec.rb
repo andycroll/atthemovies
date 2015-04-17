@@ -123,7 +123,7 @@ describe FilmsController do
 
     def do_request(params = {})
       request.env["HTTP_REFERER"] = 'back'
-      put :merge, { id: film.id, other_id: film_to_merge.id }.merge(params)
+      put :merge, { id: film.id, other_id: target.id }.merge(params)
     end
 
     include_examples 'authenticated'

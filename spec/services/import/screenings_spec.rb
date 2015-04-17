@@ -33,7 +33,7 @@ describe Import::Screenings do
     before do
       Timecop.freeze
 
-      expect(OdeonUk::Cinema).to receive(:find).with(odeon_brand_id.to_s).and_return(odeon_cinema)
+      expect(OdeonUk::Cinema).to receive(:new).with(odeon_brand_id.to_s).and_return(odeon_cinema)
       expect(odeon_cinema).to receive(:screenings).and_return([screening_1, screening_2, screening_3, screening_4])
 
       expect(screening_1).to receive(:dimension).and_return('2d')
