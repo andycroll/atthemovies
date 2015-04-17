@@ -15,6 +15,7 @@ gem 'delayed_job_active_record'
 gem 'cineworld_uk'
 gem 'dragonfly'
 gem 'dragonfly-s3_data_store'
+gem 'is_crawler'
 gem 'geocoder'
 gem 'kaminari'
 gem 'odeon_uk'
@@ -37,7 +38,7 @@ end
 group :development, :test do
   gem 'dotenv-rails'
   gem 'rspec-rails'
-  gem 'pry'
+  gem 'pry-rails'
 end
 
 group :test do
