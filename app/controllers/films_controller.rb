@@ -17,7 +17,7 @@ class FilmsController < ApplicationController
   end
 
   def show
-    @film = Film.find_by_url(params[:id])
+    @film = Film.find_by_url!(params[:id])
   end
 
   def triage

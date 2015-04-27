@@ -155,6 +155,12 @@ describe FilmsController do
         specify { expect(assigns(:film)).to be_present }
         it { is_expected.to render_template 'show' }
       end
+
+      describe 'unsuccessful' do
+        before { do_request(id: 'nope') }
+
+        it { is_expected.to respond_with :missing }
+      end
     end
 
     describe 'JSON' do
