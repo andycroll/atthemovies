@@ -157,9 +157,9 @@ describe FilmsController do
       end
 
       describe 'unsuccessful' do
-        before { do_request(id: 'nope') }
-
-        it { is_expected.to respond_with :missing }
+        it 'raises a 404' do
+          expect { do_request(id: 'nope') }.to raise_error(ActiveRecord::RecordNotFound)
+        end
       end
     end
 
