@@ -31,8 +31,9 @@ source 'https://rails-assets.org' do
 end
 
 group :development do
-  gem 'rails_db_info'
   gem 'foreman'
+  gem 'rails_db_info'
+  gem 'web-console'
 end
 
 group :development, :test do
