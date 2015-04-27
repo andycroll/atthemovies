@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
 
   def not_found(exception)
     if Rails.env.production?
-      if is_crawler?(request.env['HTTP_USER_AGENT'])
+      if is_crawler?(request.user_agent)
         render_404
       else
         Opbeat.capture_exception(exception)
