@@ -13,7 +13,7 @@ describe Films::FetchPoster do
         expect(ImageUploader).to receive(:new)
           .with(width: 400,
                 height: 600,
-                url: 'poster_url.jpg',
+                url: 'poster_uri.jpg',
                 file_name: "posters/#{film.name.to_url}-#{film.year}/400x600-#{Time.now.strftime('%Y%m%d%H%M%S')}")
           .and_return(uploader)
 
