@@ -83,6 +83,38 @@
 
 <hr />
 
+<div class="row">
+  <div class="col-sm-1">
+    <%= image_tag poster_uri(@film), alt: @film.name, class: 'img-responsive' %>
+  </div>
+
+  <div class="col-sm-5">
+    <%= form_for @film, method: :put do |f| -%>
+      <div class="form-group">
+        <%= f.label :poster_source_uri %>
+        <%= f.text_field :poster_source_uri, class: 'form-control' %>
+      </div>
+      <%= button_tag 'Set Poster', class: 'btn btn-primary' %>
+    <% end -%>
+  </div>
+
+  <div class="col-sm-2">
+    <%= image_tag backdrop_uri(@film), alt: @film.name, class: 'img-responsive' %>
+  </div>
+
+  <div class="col-sm-4">
+    <%= form_for @film, method: :put do |f| -%>
+      <div class="form-group">
+        <%= f.label :backdrop_source_uri %>
+        <%= f.text_field :backdrop_source_uri, class: 'form-control' %>
+      </div>
+      <%= button_tag 'Set Backdrop', class: 'btn btn-primary' %>
+    <% end -%>
+  </div>
+</div>
+
+<hr />
+
 <% unless @film.tmdb_identifier? %>
   <div class="row">
     <div class="col-sm-12">

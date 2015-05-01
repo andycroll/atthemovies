@@ -1,4 +1,9 @@
 module FilmHelper
+  def backdrop_uri(film)
+    return film.backdrop if film.backdrop
+    image_path('default-backdrop.jpg')
+  end
+
   def imdb_url(id)
     "http://www.imdb.com/title/#{id}"
   end
