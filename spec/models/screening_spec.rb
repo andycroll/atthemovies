@@ -31,6 +31,9 @@ describe Screening do
     describe '.on' do
       subject { Screening.on(date) }
 
+      before { Timecop.freeze(Time.current.at_noon) }
+      after { Timecop.return }
+
       context 'today' do
         let!(:screening_1) { create(:screening, showing_at: 10.minutes.ago) }
         let!(:screening_2) { create(:screening, showing_at: 90.minutes.from_now) }
