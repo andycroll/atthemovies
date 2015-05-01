@@ -20,7 +20,7 @@
     <% end %>
   </div>
   <div class="col-sm-pull-4 col-sm-2">
-    <%= image_tag @film.poster || image_path('default-poster.jpg'), class: 'img-responsive' %>
+    <%= image_tag poster_uri(@film), class: 'img-responsive' %>
   </div>
   <div class="col-sm-pull-4 col-sm-6">
     <h3><%= @film.tagline %></h3>

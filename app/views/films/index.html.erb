@@ -35,7 +35,7 @@
     <div class="col-sm-3">
       <div class="media">
         <div class="pull-left" style="width: 50%; margin-right: 5px;">
-          <%= image_tag film.poster || image_url('default-poster.jpg'), alt: film.name, class: 'media-object img-responsive' %>
+          <%= image_tag poster_uri(film), alt: film.name, class: 'media-object img-responsive' %>
         </div>
         <div class="media-body">
           <h4 class="media-heading">
