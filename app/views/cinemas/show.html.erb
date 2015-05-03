@@ -25,19 +25,5 @@
 <hr />
 
 <div class="row">
-  <% @cinema.screenings.on(Time.current).each do |screening| -%>
-    <div class="col-sm-4 col-md-3" data-screening-id="<%= screening.id %>">
-      <div class="media">
-        <div class="pull-left" style="width: 80px; margin-right: 20px;">
-          <%= image_tag poster_uri(screening.film), alt: screening.film.name, class: 'media-object img-responsive' %>
-        </div>
-        <div class="media-body">
-          <h4 class="media-heading">
-            <small><%= local_time(screening.showing_at, '%H:%M') %></small><br />
-            <%= screening.film.name %>
-          </h4>
-        </div>
-      </div>
-    </div>
-  <% end -%>
+  <%= render partial: 'screenings/screening', collection: @cinema.screenings.on(Time.current) -%>
 </div>
