@@ -13,7 +13,8 @@ module Import
           name: cinema.full_name,
           brand: cinema.brand,
           brand_identifier: cinema.id,
-          address: cinema.address
+          address: cinema.address,
+          screenings_url: cinema.url
         )
       end
     end
