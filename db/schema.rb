@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150412151303) do
+ActiveRecord::Schema.define(version: 20150504222345) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,8 @@ ActiveRecord::Schema.define(version: 20150412151303) do
     t.string   "brand_identifier"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "screenings_url"
+    t.string   "information_url"
   end
 
   add_index "cinemas", ["latitude", "longitude"], name: "index_cinemas_on_latitude_and_longitude", using: :btree
@@ -76,8 +78,6 @@ ActiveRecord::Schema.define(version: 20150412151303) do
     t.boolean  "event",                         default: false
     t.boolean  "hidden",                        default: false
     t.text     "name_hashes",                   default: [],                 array: true
-    t.string   "screenings_url"
-    t.string   "information_url"
   end
 
   add_index "films", ["name"], name: "index_films_on_name", using: :btree
