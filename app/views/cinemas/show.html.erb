@@ -16,7 +16,8 @@
     <p>
       <%= @cinema.street_address %>,
       <%= @cinema.locality %>
-      <%= @cinema.postal_code %>
+      <%= @cinema.postal_code %><br />
+      <small><%= link_to @cinema.screenings_url, @cinema.screenings_url %></small>
     </p>
   </div>
 </div>
