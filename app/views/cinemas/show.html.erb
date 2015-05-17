@@ -22,9 +22,11 @@
   </div>
 </div>
 
-<h3>Screenings Today • <%= link_to 'All Screenings', cinema_screenings_path(@cinema) %></h3>
+<h3>Screenings Today</h3>
 <hr />
 
 <div class="row">
   <%= render partial: 'screenings/screening', collection: @cinema.screenings.on(Time.current) -%>
 </div>
+
+<h3><%= link_to 'More Screenings', cinema_screenings_path(@cinema) %></h3>
