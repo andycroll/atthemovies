@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 
 ruby '2.2.2'
+gem 'mime-types', require: 'mime/types/columnar' # free memory
+
 gem 'rails', '4.2.2'
 gem 'pg'
 
@@ -31,6 +33,7 @@ source 'https://rails-assets.org' do
 end
 
 group :development do
+  gem 'derailed'
   gem 'foreman'
   gem 'rails_db_info'
   gem 'web-console'

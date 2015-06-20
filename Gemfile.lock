@@ -40,6 +40,7 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.3.8)
     arel (6.0.0)
+    benchmark-ips (2.2.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     builder (3.2.2)
@@ -62,6 +63,14 @@ GEM
     delayed_job_active_record (4.0.3)
       activerecord (>= 3.0, < 5.0)
       delayed_job (>= 3.0, < 4.1)
+    derailed (0.1.0)
+      derailed_benchmarks
+    derailed_benchmarks (1.0.1)
+      benchmark-ips (~> 2)
+      get_process_mem (~> 0)
+      memory_profiler (~> 0)
+      rack (~> 1)
+      rake (~> 10)
     diff-lcs (1.2.5)
     dotenv (1.0.2)
     dotenv-rails (1.0.2)
@@ -180,6 +189,7 @@ GEM
       thor (~> 0.19.1)
     formatador (0.2.5)
     geocoder (1.2.8)
+    get_process_mem (0.2.0)
     globalid (0.3.5)
       activesupport (>= 4.1.0)
     httparty (0.13.3)
@@ -205,6 +215,7 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
+    memory_profiler (0.9.4)
     method_source (0.8.2)
     mime-types (2.6.1)
     mini_portile (0.6.2)
@@ -344,6 +355,7 @@ DEPENDENCIES
   coffee-rails (~> 4)
   dalli
   delayed_job_active_record
+  derailed
   dotenv-rails
   dragonfly
   dragonfly-s3_data_store
@@ -356,6 +368,7 @@ DEPENDENCIES
   kaminari-rspec
   local_time
   lograge
+  mime-types
   odeon_uk
   opbeat
   pg
