@@ -16,7 +16,7 @@
       <h4>
         <%= link_to cinema.name, cinema_path(cinema) %>
         <%- if cinema.try(:distance) -%>
-          <small><%= cinema.distance %></small>
+          <small><%= number_with_precision(cinema.distance, precision: 2, significant: false) %>m</small>
         <%- end -%>
       </h4>
       <p>
