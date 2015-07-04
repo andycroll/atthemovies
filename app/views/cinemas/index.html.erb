@@ -15,7 +15,7 @@
     <div class="col-sm-6">
       <h4>
         <%= link_to cinema.name, cinema_path(cinema) %>
-        <%- if cinema.distance -%>
+        <%- if cinema.try(:distance) -%>
           <small><%= cinema.distance %></small>
         <%- end -%>
       </h4>
