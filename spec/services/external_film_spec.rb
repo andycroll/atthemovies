@@ -41,6 +41,29 @@ describe ExternalFilm do
         end
       end
     end
+
+    context 'empty results' do
+      let(:name)        { 'The Dark Knight' }
+      let(:find_result) { [] }
+
+      before do
+        expect(Tmdb::Movie).to receive(:find).and_return(find_result)
+      end
+
+      it 'returns an empty array' do
+        expect(find).to be_an(Array)
+        expect(find.length).to be(0)
+      end
+    end
+
+    context 'empty name' do
+      let(:name) { '' }
+
+      it 'returns an empty array' do
+        expect(find).to be_an(Array)
+        expect(find.length).to be(0)
+      end
+    end
   end
 
   describe '#backdrop' do
