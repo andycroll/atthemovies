@@ -9,7 +9,7 @@ module Import
 
     def perform
       brand_cinemas.each do |cinema|
-        puts "Importing #{cinema.name}"
+        puts "Importing #{cinema.name} (#{cinema.screenings_url})"
         perform_for(cinema)
       end
     end
