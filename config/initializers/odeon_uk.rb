@@ -1,3 +1,3 @@
 OdeonUk.configure do |config|
-  config.method = :api
+  config.method = :html
 end
