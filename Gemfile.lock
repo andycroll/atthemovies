@@ -179,6 +179,8 @@ GEM
       pry (>= 0.9.10)
     puma (2.11.3)
       rack (>= 1.1, < 2.0)
+    quiet_assets (1.1.0)
+      railties (>= 3.1, < 5.0)
     rabl (0.11.6)
       activesupport (>= 2.3.14)
     rack (1.6.4)
@@ -311,6 +313,7 @@ DEPENDENCIES
   picturehouse_uk
   pry-rails
   puma
+  quiet_assets
   rabl
   rack-timeout
   rails (= 4.2.3)

@@ -36,6 +36,7 @@ group :development do
   gem 'derailed'
   gem 'foreman'
   gem 'rails_db_info'
+  gem 'quiet_assets'
   gem 'web-console'
 end
 
