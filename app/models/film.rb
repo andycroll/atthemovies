@@ -14,7 +14,7 @@ class Film < ActiveRecord::Base
   acts_as_url :name, sync_url: true
 
   def self.alternately_named(name)
-    where('alternate_names @> ?', "{#{name.gsub(',', '')}}")
+    where('alternate_names @> ?', "{#{name.gsub(',', '').gsub('"', '')}}")
   end
 
   def self.find_named(name)
