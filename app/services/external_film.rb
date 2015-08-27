@@ -8,7 +8,7 @@ class ExternalFilm
   # @param name Name of the film
   # @return [Array<ExternalFilm>]
   def self.find(name)
-    return [] if name.empty?
+    return [] if name.nil? || name.empty?
     tmdb_find(name).map { |movie| new(movie.id) }
   end
 

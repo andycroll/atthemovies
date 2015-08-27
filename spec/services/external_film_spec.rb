@@ -64,6 +64,15 @@ describe ExternalFilm do
         expect(find.length).to be(0)
       end
     end
+
+    context 'empty name' do
+      let(:name) { nil }
+
+      it 'returns an empty array' do
+        expect(find).to be_an(Array)
+        expect(find.length).to be(0)
+      end
+    end
   end
 
   describe '#backdrop' do
