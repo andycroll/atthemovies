@@ -63,3 +63,5 @@ group :production do
   gem 'rails_12factor'
   gem 'skylight'
 end
+
+gem 'nokogiri', '>= 1.6.7.2'
