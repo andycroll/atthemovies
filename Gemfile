@@ -58,6 +58,7 @@ end
 group :production do
   gem 'dalli'
   gem 'lograge'
+  gem 'opbeat'
   gem 'puma'
   gem 'rails_12factor'
   gem 'skylight'

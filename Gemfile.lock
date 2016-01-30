@@ -156,6 +156,8 @@ GEM
       nokogiri
       tzinfo
       tzinfo-data
+    opbeat (3.0.0)
+      activesupport (>= 3.0.0)
     pg (0.18.4)
     picturehouse_uk (3.0.14)
       nokogiri
@@ -297,6 +299,7 @@ DEPENDENCIES
   lograge
   mime-types
   odeon_uk
+  opbeat
   pg
   picturehouse_uk
   pry-rails
