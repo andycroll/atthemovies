@@ -56,7 +56,7 @@ class ExternalFilm
 
   # @return <Integer>
   def year
-    tmdb_detail['release_date'][0..3]
+    tmdb_detail.fetch('release_date', '')[0..3]
   end
 
   private
