@@ -63,7 +63,3 @@ group :production do
   gem 'rails_12factor'
   gem 'skylight'
 end
-
-gem 'nokogiri', '>= 1.6.7.2'
-
-gem 'rails-html-sanitizer', '~> 1.0.3'

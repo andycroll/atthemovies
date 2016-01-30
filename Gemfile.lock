@@ -298,7 +298,6 @@ DEPENDENCIES
   local_time
   lograge
   mime-types
-  nokogiri (>= 1.6.7.2)
   odeon_uk
   opbeat
   pg
@@ -310,7 +309,6 @@ DEPENDENCIES
   rack-timeout
   rails (~> 4.2.5.1)
   rails-assets-zepto!
-  rails-html-sanitizer (~> 1.0.3)
   rails_12factor
   rails_db_info
   rspec-rails
@@ -326,4 +324,4 @@ DEPENDENCIES
   web-console
 
 BUNDLED WITH
-   1.10.6
+   1.11.2
