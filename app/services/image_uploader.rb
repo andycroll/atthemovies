@@ -1,6 +1,14 @@
 class ImageUploader
   FORMAT  = 'jpg'
-  QUALITY = 75
+  SUPER_OPTIMIZED = ['-filter Triangle', '-define filter:support=2',
+                     '-unsharp 0.25x0.08+8.3+0.045', '-dither None',
+                     '-posterize 136', '-quality 82',
+                     '-define jpeg:fancy-upsampling=off',
+                     '-define png:compression-filter=5',
+                     '-define png:compression-level=9',
+                     '-define png:compression-strategy=1',
+                     '-define png:exclude-chunk=all', '-interlace none',
+                     '-colorspace sRGB']
 
   def initialize(args)
     @width     = args.fetch(:width, 400)
@@ -35,7 +43,10 @@ class ImageUploader
   end
 
   def resize_and_encode
-    @image = @image.thumb(crop_to).encode(FORMAT, "-quality #{QUALITY}")
+    @image =
+      @image.thumb(crop_to)
+            .convert(SUPER_OPTIMIZED.join(' '))
+            .encode(FORMAT)
   end
 
   def save_to_storage

@@ -17,7 +17,7 @@ describe ImageUploader do
     before do
       expect(Dragonfly).to receive(:app) { dragonfly }
       expect(dragonfly).to receive(:fetch_url).with(args[:url]) { dragonfly_job }
-      expect(dragonfly_job).to receive_message_chain(:thumb, :encode) { dragonfly_chain }
+      expect(dragonfly_job).to receive_message_chain(:thumb, :convert, :encode) { dragonfly_chain }
       expect(dragonfly_chain).to receive(:store) { "#{args[:file_name]}.jpg" }
       expect(dragonfly).to receive(:remote_url_for).
         with("#{args[:file_name]}.jpg").
