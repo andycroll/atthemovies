@@ -1,10 +1,10 @@
-Geocoder.configure(:lookup => :test)
+Geocoder.configure(lookup: :test)
 
 Geocoder::Lookup::Test.set_default_stub(
   [
     {
-      'latitude'     => Random.new.rand(-1.0..1.0),
-      'longitude'    => Random.new.rand(49.0..52.0),
+      'latitude'     => Faker::Address.latitude,
+      'longitude'    => Faker::Address.longitude,
       'address'      => '1 Brighton Street, Brighton',
       'state'        => 'East Sussex',
       'state_code'   => '',

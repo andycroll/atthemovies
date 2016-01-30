@@ -45,13 +45,17 @@ describe Cinema do
       specify { expect(cinema.longitude).not_to be_nil }
     end
 
-    context 'on change of address' do
+    context 'on change of address' do # bit nasty as we're testing method calls
       let!(:cinema) { create(:cinema, :with_address) }
 
       it 're-geocodes if address changes' do
-        expect {
-          cinema.update_attributes(postal_code: Faker::Address.postcode)
-        }.to change(cinema.reload, :latitude)
+        expect(cinema).to receive(:geocode).and_call_original
+        cinema.update_attributes(postal_code: Faker::Address.postcode)
+      end
+
+      it 'does not geocode if address unchanged' do
+        expect(cinema).not_to receive(:geocode)
+        cinema.update_attributes(postal_code: cinema.postal_code)
       end
     end
   end
