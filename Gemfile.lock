@@ -92,7 +92,7 @@ GEM
     execjs (2.6.0)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
-    factory_girl_rails (4.5.0)
+    factory_girl_rails (4.6.0)
       factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
     faker (1.6.1)
@@ -156,7 +156,7 @@ GEM
       nokogiri
       tzinfo
       tzinfo-data
-    opbeat (3.0.0)
+    opbeat (3.0.1)
       activesupport (>= 3.0.0)
     pg (0.18.4)
     picturehouse_uk (3.0.14)
@@ -203,7 +203,7 @@ GEM
       rails_stdout_logging
     rails_db_info (0.2.0)
       rails (>= 3.1.0)
-    rails_serve_static_assets (0.0.4)
+    rails_serve_static_assets (0.0.5)
     rails_stdout_logging (0.0.4)
     railties (4.2.5.1)
       actionpack (= 4.2.5.1)
@@ -219,7 +219,7 @@ GEM
     rspec-mocks (3.4.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.4.0)
-    rspec-rails (3.4.1)
+    rspec-rails (3.4.2)
       actionpack (>= 3.0, < 4.3)
       activesupport (>= 3.0, < 4.3)
       railties (>= 3.0, < 4.3)
@@ -255,7 +255,7 @@ GEM
     stringex (2.6.0)
     textacular (3.2.2)
       activerecord (>= 3.0, < 5.0)
-    themoviedb (0.1.0)
+    themoviedb (1.0.0)
       httparty
     thor (0.19.1)
     thread_safe (0.3.5)
