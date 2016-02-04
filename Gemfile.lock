@@ -42,10 +42,11 @@ GEM
     arel (6.0.3)
     benchmark-ips (2.3.0)
     builder (3.2.2)
-    cineworld_uk (2.1.6)
-      nokogiri
+    cinebase (3.0.0)
       tzinfo
       tzinfo-data
+    cineworld_uk (3.0.1)
+      cinebase (~> 3.0.0)
     codeclimate-test-reporter (0.4.8)
       simplecov (>= 0.7.1, < 1.0.0)
     coderay (1.1.0)
