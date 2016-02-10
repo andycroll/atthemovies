@@ -3,7 +3,9 @@ module Import
     attr_reader :brand, :klass
 
     def initialize(options)
-      @brand = options[:brand] || options[:klass].to_s.gsub('::Cinema','').gsub(/Uk\z/,'')
+      @brand = options[:brand] || options[:klass].to_s
+                                                 .gsub('::Performance', '')
+                                                 .gsub(/Uk\z/, '')
       @klass = options[:klass]
     end
 
@@ -15,12 +17,12 @@ module Import
     end
 
     def perform_for(cinema)
-      remote_cinema(cinema.brand_identifier).screenings.each do |s|
+      remote_performances(cinema.brand_identifier).each do |s|
         ::Screenings::Import.perform_later(
           cinema_id:  cinema.id,
           dimension:  s.dimension,
           film_name:  s.film_name,
-          showing_at: s.showing_at.to_s,
+          showing_at: s.starting_at.to_s,
           variant:    s.variant.is_a?(Array) ? s.variant * ' ' : s.variant
         )
       end
@@ -32,16 +34,8 @@ module Import
       Cinema.where(brand: brand)
     end
 
-    def remote_cinemas
-      klass.all
-    end
-
-    def remote_cinema(brand_identifier)
-      if brand == 'Odeon'
-        klass.new(brand_identifier.to_s)
-      else
-        klass.find(brand_identifier.to_s)
-      end
+    def remote_performances(brand_identifier)
+      klass.at(brand_identifier.to_s)
     end
   end
 end
