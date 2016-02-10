@@ -1,6 +1,6 @@
 describe ExternalFilm::Poster do
   describe '#uri' do
-    subject(:uri) { described_class.new(file_path: file_path).uri }
+    subject(:uri) { described_class.new(file_path).uri }
 
     let(:file_path)     { '/filenameforposter.jpg' }
     let(:config_double) { double('config', secure_base_url: 'https://image.tmdb.org/t/p/') }

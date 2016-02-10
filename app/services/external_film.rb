@@ -14,37 +14,37 @@ class ExternalFilm
 
   # @return <ExternalFilm::Backdrop>
   def backdrop
-    ExternalFilm::Backdrop.new(file_path: tmdb_detail['backdrop_path'])
+    ExternalFilm::Backdrop.new(tmdb_detail.fetch('backdrop_path', ''))
   end
 
   # @return <String>
   def imdb_number
-    tmdb_detail['imdb_id']
+    tmdb_detail.fetch('imdb_id', '')
   end
 
   # @return <String>
   def overview
-    tmdb_detail['overview']
+    tmdb_detail.fetch('overview', '')
   end
 
   # @return <ExternalFilm::Poster>
   def poster
-    ExternalFilm::Poster.new(file_path: tmdb_detail['poster_path'])
+    ExternalFilm::Poster.new(tmdb_detail.fetch('poster_path', ''))
   end
 
   # @return <Integer>
   def runtime
-    tmdb_detail['runtime']
+    tmdb_detail.fetch('runtime', '')
   end
 
   # @return <String>
   def tagline
-    tmdb_detail['tagline']
+    tmdb_detail.fetch('tagline', '')
   end
 
   # @return <String>
   def title
-    tmdb_detail['title']
+    tmdb_detail.fetch('title', '')
   end
 
   # @return <String>
