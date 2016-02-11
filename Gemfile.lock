@@ -46,6 +46,8 @@ GEM
       nokogiri
       tzinfo
       tzinfo-data
+    cineworld_uk (3.0.3)
+      cinebase (~> 3.0.0)
     codeclimate-test-reporter (0.4.8)
       simplecov (>= 0.7.1, < 1.0.0)
     coderay (1.1.0)
@@ -151,7 +153,7 @@ GEM
     multi_xml (0.5.5)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
-    odeon_uk (3.0.6)
+    odeon_uk (4.0.1)
       CFPropertyList
       nokogiri
       tzinfo
