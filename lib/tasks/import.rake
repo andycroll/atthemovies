@@ -30,17 +30,17 @@ namespace :import do
   namespace :screenings do
     desc 'Import Cineworld Screenings'
     task :cineworld => :environment do
-      Import::Screenings.new(klass: CineworldUk::Cinema).perform
+      Import::Screenings.new(klass: CineworldUk::Performance).perform
     end
 
     desc 'Import Odeon Screenings'
     task :odeon => :environment do
-      Import::Screenings.new(klass: OdeonUk::Cinema).perform
+      Import::Screenings.new(klass: OdeonUk::Performance).perform
     end
 
     desc 'Import Picturehouse Screenings'
     task :picturehouse => :environment do
-      Import::Screenings.new(klass: PicturehouseUk::Cinema).perform
+      Import::Screenings.new(klass: PicturehouseUk::Performance).perform
     end
   end
 end
