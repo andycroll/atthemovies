@@ -42,8 +42,7 @@ GEM
     arel (6.0.3)
     benchmark-ips (2.3.0)
     builder (3.2.2)
-    cineworld_uk (2.1.6)
-      nokogiri
+    cinebase (3.0.1)
       tzinfo
       tzinfo-data
     cineworld_uk (3.0.3)
@@ -155,16 +154,13 @@ GEM
       mini_portile2 (~> 2.0.0.rc2)
     odeon_uk (4.0.1)
       CFPropertyList
-      nokogiri
-      tzinfo
-      tzinfo-data
+      cinebase (~> 3.0)
     opbeat (3.0.1)
       activesupport (>= 3.0.0)
     pg (0.18.4)
-    picturehouse_uk (3.0.14)
+    picturehouse_uk (4.0.0)
+      cinebase (~> 3.0)
       nokogiri
-      tzinfo
-      tzinfo-data
     pry (0.10.3)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -255,7 +251,7 @@ GEM
     stringex (2.6.0)
     textacular (3.2.2)
       activerecord (>= 3.0, < 5.0)
-    themoviedb (1.0.0)
+    themoviedb (1.0.1)
       httparty
     thor (0.19.1)
     thread_safe (0.3.5)
