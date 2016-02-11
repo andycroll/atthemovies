@@ -1,12 +1,12 @@
-<div class="col-sm-2 col-md-2" data-screening-id="<%= screening.id %>">
-  <div class="media">
-    <div class="pull-left" style="width: 80px; margin-right: 5px;">
-      <%= image_tag poster_uri(screening.film), alt: screening.film.name, class: 'media-object img-responsive' %>
+<div class="col-sm-6 col-md-4" data-screening-id="<%= screening.id %>">
+  <div class="row">
+    <div class="col-sm-4" data-screening-id="<%= screening.id %>">
+      <%= image_tag poster_uri(screening.film), alt: screening.film.name, class: 'img-responsive' %>
     </div>
-    <div class="media-body">
-      <h4 class="media-heading">
-        <small><%= local_time(screening.showing_at, '%H:%M') %></small><br />
-        <%= screening.film.name %>
+    <div class="col-sm-8">
+      <h4>
+        <%= local_time(screening.showing_at, '%H:%M') %><br />
+        <small><%= screening.film.name %></small>
       </h4>
       <% if screening.dimension != '2d' -%>
         <span class="label label-info"><%= screening.dimension.upcase %></span>
