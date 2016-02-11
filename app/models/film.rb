@@ -1,6 +1,6 @@
 class Film < ActiveRecord::Base
-  has_many :screenings
-  has_many :cinemas, -> { distinct }, through: :screenings
+  has_many :performances
+  has_many :cinemas, -> { distinct }, through: :performances
 
   validates :name, presence: true
 
@@ -14,7 +14,7 @@ class Film < ActiveRecord::Base
   acts_as_url :name, sync_url: true
 
   def self.alternately_named(name)
-    where('alternate_names @> ?', "{#{name.gsub(',', '').gsub('"', '')}}")
+    where('alternate_names @> ?', "{#{name.delete(',').delete('"')}}")
   end
 
   def self.find_named(name)
@@ -40,12 +40,12 @@ class Film < ActiveRecord::Base
   scope :similar_to, ->(name) { advanced_search(name: name.gsub(/[^0-9A-Za-z ]/, '').gsub(/\s+/, '|')) }
 
   def self.whats_on
-    where(Film.arel_table[:screenings_count].gt(0))
-      .order(screenings_count: :desc)
+    where(Film.arel_table[:performances_count].gt(0))
+      .order(performances_count: :desc)
   end
 
   def add_alternate_name(name)
-    update_attributes(alternate_names: self.alternate_names + [name])
+    update_attributes(alternate_names: alternate_names + [name])
   end
 
   def update_external_information_from(tmdb_movie)

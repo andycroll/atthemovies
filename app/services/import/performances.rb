@@ -1,5 +1,5 @@
 module Import
-  class Screenings
+  class Performances
     attr_reader :brand, :klass
 
     def initialize(options)
@@ -11,18 +11,18 @@ module Import
 
     def perform
       brand_cinemas.each do |cinema|
-        puts "Importing #{cinema.name} (#{cinema.screenings_url})"
+        puts "Importing for #{cinema.name}"
         perform_for(cinema)
       end
     end
 
     def perform_for(cinema)
       remote_performances(cinema.brand_identifier).each do |s|
-        ::Screenings::Import.perform_later(
+        ::Performances::Import.perform_later(
           cinema_id:  cinema.id,
           dimension:  s.dimension,
           film_name:  s.film_name,
-          showing_at: s.starting_at.to_s,
+          starting_at: s.starting_at.to_s,
           variant:    s.variant.is_a?(Array) ? s.variant * ' ' : s.variant
         )
       end

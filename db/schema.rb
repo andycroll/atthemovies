@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150504222345) do
+ActiveRecord::Schema.define(version: 20160211220033) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,26 +72,26 @@ ActiveRecord::Schema.define(version: 20150504222345) do
     t.string   "url"
     t.text     "alternate_names",               default: [],                 array: true
     t.boolean  "information_added",             default: false
-    t.integer  "screenings_count"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "event",                         default: false
     t.boolean  "hidden",                        default: false
     t.text     "name_hashes",                   default: [],                 array: true
+    t.integer  "performances_count"
   end
 
   add_index "films", ["name"], name: "index_films_on_name", using: :btree
 
-  create_table "screenings", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
-    t.uuid     "film_id",    null: false
-    t.uuid     "cinema_id",  null: false
-    t.string   "dimension",  null: false
-    t.string   "variant",    null: false
-    t.datetime "showing_at", null: false
+  create_table "performances", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.uuid     "film_id",     null: false
+    t.uuid     "cinema_id",   null: false
+    t.string   "dimension",   null: false
+    t.string   "variant",     null: false
+    t.datetime "starting_at", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "screenings", ["cinema_id"], name: "index_screenings_on_cinema_id", using: :btree
+  add_index "performances", ["cinema_id"], name: "index_performances_on_cinema_id", using: :btree
 
 end

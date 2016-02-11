@@ -14,12 +14,12 @@ import:cinemas:odeon
 import:cinemas:picturehouse
 ```
 
-### Import Screenings
+### Import Performances
 
 ```
-import:screenings:cineworld
-import:screenings:odeon
-import:screenings:picturehouse
+import:performances:cineworld
+import:performances:odeon
+import:performances:picturehouse
 ```
 
 ### Get Potential Film Ids

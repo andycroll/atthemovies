@@ -7,8 +7,8 @@ describe Films::Merge do
     context 'standard' do
       let!(:film)        { create(:film, id: 1, name: 'Batman') }
       let!(:other_film)  { create(:film, id: 2, name: 'Batman One') }
-      let!(:screening_1) { create(:screening, film: other_film) }
-      let!(:screening_2) { create(:screening, film: other_film) }
+      let!(:screening_1) { create(:performance, film: other_film) }
+      let!(:screening_2) { create(:performance, film: other_film) }
 
       it 'adds other film name to film' do
         expect(film.reload.alternate_names).to eq([])
@@ -30,8 +30,8 @@ describe Films::Merge do
     context 'same film name' do
       let!(:film)        { create(:film, id: 1, name: 'Batman') }
       let!(:other_film)  { create(:film, id: 2, name: 'Batman') }
-      let!(:screening_1) { create(:screening, film: other_film) }
-      let!(:screening_2) { create(:screening, film: other_film) }
+      let!(:screening_1) { create(:performance, film: other_film) }
+      let!(:screening_2) { create(:performance, film: other_film) }
 
       it 'does not repetition of name to film' do
         expect(film.reload.alternate_names).to eq([])

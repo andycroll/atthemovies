@@ -6,11 +6,11 @@ class CinemasController < ApplicationController
   end
 
   def index
-    if near_params
-      @cinemas = Cinema.closest_to(latitude_param, longitude_param)
-    else
-      @cinemas = Cinema.all
-    end
+    @cinemas = if near_params
+                 Cinema.closest_to(latitude_param, longitude_param)
+               else
+                 Cinema.all
+               end
   end
 
   def show

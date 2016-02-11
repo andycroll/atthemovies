@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   end
 
   def controller_for_js
-    controller_path.gsub('/', '.')
+    controller_path.tr('/', '.')
   end
 
   private

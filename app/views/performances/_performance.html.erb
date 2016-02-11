@@ -1,0 +1,17 @@
+<div class="col-sm-6 col-md-4" data-performance-id="<%= performance.id %>">
+  <div class="row">
+    <div class="col-sm-4" data-performance-id="<%= performance.id %>">
+      <%= image_tag poster_uri(performance.film), alt: performance.film.name, class: 'img-responsive' %>
+    </div>
+    <div class="col-sm-8">
+      <h4>
+        <%= local_time(performance.starting_at, '%H:%M') %><br />
+        <small><%= performance.film.name %></small>
+      </h4>
+      <% if performance.dimension != '2d' -%>
+        <span class="label label-info"><%= performance.dimension.upcase %></span>
+      <% end -%>
+      <span class="label label-default"><%= performance.variant %></span>
+    </div>
+  </div>
+</div>

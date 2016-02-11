@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe Film do
   describe 'associations' do
-    it { is_expected.to have_many :screenings }
+    it { is_expected.to have_many :performances }
   end
 
   describe 'callbacks' do
@@ -113,15 +113,15 @@ describe Film do
       let!(:film_1) { create(:film) }
       let!(:film_2) { create(:film) }
       let!(:film_3) { create(:film) }
-      let!(:screening_1_1) { create(:screening, film: film_1) }
-      let!(:screening_2_1) { create(:screening, film: film_2) }
-      let!(:screening_2_2) { create(:screening, film: film_2) }
+      let!(:performance_1_1) { create(:performance, film: film_1) }
+      let!(:performance_2_1) { create(:performance, film: film_2) }
+      let!(:performance_2_2) { create(:performance, film: film_2) }
 
-      it 'only returns films with screenings' do
+      it 'only returns films with performances' do
         expect(Film.whats_on).not_to include(film_3)
       end
 
-      it 'returns films in order of greatest number of screenings' do
+      it 'returns films in order of greatest number of performances' do
         expect(Film.whats_on).to eq([film_2, film_1])
       end
     end

@@ -1,6 +1,6 @@
 namespace :cleanup do
-  desc 'Remove Old Screenings'
-  task :past_screenings => :environment do
-    Maintenance::DestroyPastScreenings.new.perform
+  desc 'Remove Old Performances'
+  task :past_performances => :environment do
+    Maintenance::DestroyPastPerformances.new.perform
   end
 end

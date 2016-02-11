@@ -1,8 +1,8 @@
 class Cinema < ActiveRecord::Base
   ADDRESS_FIELDS = %i(street_address extended_address locality region
-                      postal_code country)
+                      postal_code country).freeze
 
-  has_many :screenings, -> { ordered }
+  has_many :performances, -> { ordered }
 
   acts_as_url :name, sync_url: true
 
