@@ -26,14 +26,6 @@ describe CinemasController do
         id: 'odeon-brighton'
       )
     end
-    specify do
-      expect(get: '/cinemas/odeon-brighton.json').to route_to(
-        controller: 'cinemas',
-        action: 'show',
-        id: 'odeon-brighton',
-        format: 'json'
-      )
-    end
   end
 
   describe '#GET edit' do
@@ -102,22 +94,6 @@ describe CinemasController do
         it { is_expected.to respond_with :success }
         specify { expect(assigns(:cinema)).to be_present }
         it { is_expected.to render_template 'show' }
-      end
-    end
-
-    describe 'JSON' do
-      describe 'successful' do
-        before { get_show(format: 'json') }
-
-        it { is_expected.to respond_with :success }
-        it 'has root key of cinemas' do
-          expect(JSON.parse(response.body).keys).to eq(['cinemas'])
-        end
-        it 'includes correct keys for the cinemas' do
-          JSON.parse(response.body)['cinemas'].each do |film|
-            expect(film.keys).to include('id', 'name', 'latitude', 'longitude')
-          end
-        end
       end
     end
   end

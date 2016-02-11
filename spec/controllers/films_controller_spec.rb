@@ -33,14 +33,6 @@ describe FilmsController do
       )
     end
     specify do
-      expect(get: '/films/the-dark-knight.json').to route_to(
-        controller: 'films',
-        action: 'show',
-        id: 'the-dark-knight',
-        format: 'json'
-      )
-    end
-    specify do
       expect(get: '/films/uuid/edit').to route_to(
         controller: 'films',
         action: 'edit',
@@ -159,28 +151,6 @@ describe FilmsController do
       describe 'unsuccessful' do
         it 'raises a 404' do
           expect { do_request(id: 'nope') }.to raise_error(ActiveRecord::RecordNotFound)
-        end
-      end
-    end
-
-    describe 'JSON' do
-      describe 'successful' do
-        before { do_request(format: 'json') }
-
-        it { is_expected.to respond_with :success }
-
-        it 'assigns film for the view' do
-          expect(assigns(:film)).to be_present
-        end
-
-        it 'has root key of films' do
-          expect(JSON.parse(response.body).keys).to eq(['films'])
-        end
-
-        it 'includes correct keys for the films' do
-          JSON.parse(response.body)['films'].each do |film|
-            expect(film.keys).to include('id', 'name')
-          end
         end
       end
     end
