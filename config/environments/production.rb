@@ -88,9 +88,5 @@ Atthemovies::Application.configure do
 
   config.lograge.enabled = true
 
-  config.opbeat.app_id = ENV['API_OPBEAT_APP_ID']
-  config.opbeat.organization_id = ENV['API_OPBEAT_ORGANISATION_ID']
-  config.opbeat.secret_token = ENV['API_OPBEAT_SECRET_TOKEN']
-
   config.skylight.probes = %w(net_http)
 end
