@@ -7,7 +7,7 @@ module Performances
       @cinema     = Cinema.find(args[:cinema_id])
       @film       = Film.find_or_create_by_name(args[:film_name])
 
-      existing_or_new_performance.update_variant!(variant)
+      existing_or_new_performance.update_variant!(@args[:variant])
     end
 
     private
@@ -18,14 +18,6 @@ module Performances
         dimension:  @args[:dimension],
         starting_at: @args[:starting_at]
       )
-    end
-
-    def variant
-      if @args[:variant].is_a?(Array)
-        @args[:variant] * ' '
-      else
-        @args[:variant]
-      end
     end
   end
 end

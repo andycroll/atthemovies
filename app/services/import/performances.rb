@@ -23,7 +23,7 @@ module Import
           dimension:  s.dimension,
           film_name:  s.film_name,
           starting_at: s.starting_at.to_s,
-          variant:    s.variant.is_a?(Array) ? s.variant * ' ' : s.variant
+          variant: s.variant.join(' ')
         )
       end
     end

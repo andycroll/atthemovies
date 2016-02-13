@@ -38,22 +38,22 @@ describe Import::Performances do
       expect(performance_1).to receive(:dimension).and_return('2d')
       expect(performance_1).to receive(:film_name).and_return('Iron Man 3')
       expect(performance_1).to receive(:starting_at).and_return(1.hour.from_now.utc)
-      expect(performance_1).to receive(:variant).and_return([]).twice
+      expect(performance_1).to receive(:variant).and_return([])
 
       expect(performance_2).to receive(:dimension).and_return('2d')
       expect(performance_2).to receive(:film_name).and_return('Iron Man 3')
       expect(performance_2).to receive(:starting_at).and_return(2.hours.from_now.utc)
-      expect(performance_2).to receive(:variant).and_return(%w(kids baby)).twice
+      expect(performance_2).to receive(:variant).and_return(%w(kids baby))
 
       expect(performance_3).to receive(:dimension).and_return('2d')
       expect(performance_3).to receive(:film_name).and_return('Avengers')
       expect(performance_3).to receive(:starting_at).and_return(3.hours.from_now.utc)
-      expect(performance_3).to receive(:variant).and_return('silver').twice
+      expect(performance_3).to receive(:variant).and_return(['silver'])
 
       expect(performance_4).to receive(:dimension).and_return('3d')
       expect(performance_4).to receive(:film_name).and_return('Iron Man 3')
       expect(performance_4).to receive(:starting_at).and_return(4.hours.from_now.utc)
-      expect(performance_4).to receive(:variant).and_return('').twice
+      expect(performance_4).to receive(:variant).and_return([])
     end
 
     after do
@@ -115,22 +115,22 @@ describe Import::Performances do
       expect(performance_1).to receive(:dimension).and_return('2d')
       expect(performance_1).to receive(:film_name).and_return('Iron Man 3')
       expect(performance_1).to receive(:starting_at).and_return(1.hour.from_now.utc)
-      expect(performance_1).to receive(:variant).and_return([]).twice
+      expect(performance_1).to receive(:variant).and_return([])
 
       expect(performance_2).to receive(:dimension).and_return('2d')
       expect(performance_2).to receive(:film_name).and_return('Iron Man 3')
       expect(performance_2).to receive(:starting_at).and_return(2.hours.from_now.utc)
-      expect(performance_2).to receive(:variant).and_return(%w(kids baby)).twice
+      expect(performance_2).to receive(:variant).and_return(%w(kids baby))
 
       expect(performance_3).to receive(:dimension).and_return('2d')
       expect(performance_3).to receive(:film_name).and_return('Avengers')
       expect(performance_3).to receive(:starting_at).and_return(3.hours.from_now.utc)
-      expect(performance_3).to receive(:variant).and_return('silver').twice
+      expect(performance_3).to receive(:variant).and_return(['silver'])
 
       expect(performance_4).to receive(:dimension).and_return('3d')
       expect(performance_4).to receive(:film_name).and_return('Iron Man 3')
       expect(performance_4).to receive(:starting_at).and_return(4.hours.from_now.utc)
-      expect(performance_4).to receive(:variant).and_return('').twice
+      expect(performance_4).to receive(:variant).and_return([])
     end
 
     after do
