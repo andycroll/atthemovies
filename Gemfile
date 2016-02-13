@@ -55,6 +55,7 @@ group :test do
 end
 
 group :production do
+  gem 'bugsnag'
   gem 'dalli'
   gem 'lograge'
   gem 'puma'
