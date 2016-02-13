@@ -155,8 +155,6 @@ GEM
     odeon_uk (4.0.1)
       CFPropertyList
       cinebase (~> 3.0)
-    opbeat (3.0.1)
-      activesupport (>= 3.0.0)
     pg (0.18.4)
     picturehouse_uk (4.0.0)
       cinebase (~> 3.0)
@@ -295,7 +293,6 @@ DEPENDENCIES
   lograge
   mime-types
   odeon_uk
-  opbeat
   pg
   picturehouse_uk
   pry-rails
