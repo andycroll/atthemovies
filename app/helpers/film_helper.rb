@@ -28,7 +28,7 @@ module FilmHelper
   end
 
   def querify(name)
-    name.downcase.gsub(/[^a-z0-9 ]/, '').gsub(' ', '+')
+    name.downcase.gsub(/[^a-z0-9 ]/, '').tr(' ', '+')
   end
 
   def tmdb_url(id)
