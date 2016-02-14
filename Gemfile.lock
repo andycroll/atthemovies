@@ -125,6 +125,9 @@ GEM
     get_process_mem (0.2.0)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
+    good_migrations (0.0.2)
+      activerecord (>= 3.1)
+      railties (>= 3.1)
     heapy (0.1.2)
     httparty (0.13.7)
       json (~> 1.8)
@@ -293,6 +296,7 @@ DEPENDENCIES
   faker
   foreman
   geocoder
+  good_migrations
   is_crawler
   kaminari
   kaminari-rspec
