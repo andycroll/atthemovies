@@ -44,8 +44,6 @@ GEM
       thread_safe
     arel (6.0.3)
     benchmark-ips (2.3.0)
-    bugsnag (3.0.0)
-      json (~> 1.7, >= 1.7.7)
     builder (3.2.2)
     cinebase (3.0.1)
       tzinfo
@@ -282,7 +280,6 @@ PLATFORMS
 
 DEPENDENCIES
   appsignal
-  bugsnag
   cineworld_uk
   codeclimate-test-reporter
   coffee-rails (~> 4)
