@@ -1,8 +1,18 @@
-# At The Movies (server)
+# At The Movies
 
 [ ![Codeship Status for andycroll/atthemovies](https://codeship.com/projects/3d9227a0-6d2c-0132-aa1f-326df4eb838b/status?branch=master)](https://codeship.com/projects/54193)
 
-# Scheduled tasks
+A Rails app that pulls cinema times from UK cinema chains, normalizes and then provides a sensible API.
+
+
+# Setup
+
+Using postgres for main datastore and a little memcache for caching some external calls in views.
+
+Relies on DelayedJob for asynchronous work (avoiding Redis dependency for now).
+
+
+# Rake tasks
 
 ## Nightly
 
@@ -32,4 +42,10 @@ import:films:external_ids
 
 ```
 import:films:external_information
+```
+
+## Every 10 minutes
+
+```
+cleanup:past_performances
 ```
