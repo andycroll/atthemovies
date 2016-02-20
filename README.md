@@ -4,6 +4,14 @@
 
 A Rails app that pulls cinema times from UK cinema chains, normalizes and then provides a sensible API.
 
+## License
+
+This app is open source, but not free for private commercial use.
+
+For non-commercial use the license is A-GPL (broadly meaning you have to in turn open source your code that uses this app).
+
+Commercial licensing under MIT can be arranged by contacting [andy@goodscary.com](mailto:andy@goodscary.com).
+
 
 # Setup
 
