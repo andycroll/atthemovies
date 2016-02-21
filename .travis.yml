@@ -2,7 +2,8 @@ before_script:
 - cp .env.example .env
 - bundle exec rake db:create
 - bundle exec rake db:schema:load
-bundler_args: "--without production"
+bundler_args: --without production --deployment --jobs=3 --retry=3
+cache: bundler
 deploy:
   after_deploy:
   - rake db:migrate
@@ -14,6 +15,7 @@ deploy:
   before_deploy:
   - git stash
   - pg:backups capture
+  clean_up: false
   on:
     branch: master
   provider: heroku
