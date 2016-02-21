@@ -9,7 +9,7 @@ deploy:
   - restart
   - rake cleanup
   api_key:
-    secure: KdA7z5SN5mljY6kfUD3fxnCR7YFXn06LoIIVs+YaybsR5WTtZbueBryerIwYaohMaxdndcAGZXgsiWrxO2A/A5faTNhPZgmhaWkmytE0r7ZvpxPEdMG6j8kmzaiIKyZjQXJRt9lsSrkWd2jvh7f1uLjghWR9ZIK3PSU4tQX9A3s=
+    secure: jtRdYaxDmsevBXiAVgOnemUIi89c0m4dRZF7OhY64cnOQELavdYKABnLKiMNJ+9o+aaA4a371WdCVPHDsdjRWzQR7qI5nLn3EnXB6DT/N0hITof1lEVO13dStfKphsIKSqgHIKWdULCAyXS7isxT5SRpOi4soMCL+3z/1jEWcHk=
   app: atthemovies
   before_deploy:
   - pg:backups capture
