@@ -10,7 +10,7 @@ deploy:
   - restart
   - rake cleanup
   api_key:
-    secure: jtRdYaxDmsevBXiAVgOnemUIi89c0m4dRZF7OhY64cnOQELavdYKABnLKiMNJ+9o+aaA4a371WdCVPHDsdjRWzQR7qI5nLn3EnXB6DT/N0hITof1lEVO13dStfKphsIKSqgHIKWdULCAyXS7isxT5SRpOi4soMCL+3z/1jEWcHk=
+    secure: "FCn11XFfho0K/nQU10K4Jhc2TXQeSeoXpdIuxmIBj9DONk/NtKd1Jx9H1OfkGt3DGhFB1qIhN1i35SylU9jmsua3yfwkzTXyCpOuqp84eCsgz+aJazd97BRDs2O+LDH1+M4bDTw+LnQ8RLJNe62a/nBLEUuC1RABAjI8mezzbKg="
   app: atthemovies
   before_deploy:
   - git stash
@@ -26,7 +26,7 @@ notifications:
   slack:
     on_failure: always
     on_success: always
-    secure: LzKkLVP1nOb90ZOURIIVL+dFIGYyXAYALsvqJZiyDXMBvjnd0i/2zg+ZHGer1/Xks8x/SZNFpAA4EUE9MPhqb9t8rLDsldpk8UyR9umlI3XJETp/qO0MXanIAyvXeRl09+t8yGzH6tkOwM42k1u6eVpFf9oq3pr5s5waWapOoLE=
+    secure: "C7U6G5pydNqjnfO7ee7fWf1toDX8cKP/SN6ziunvyNIx+wJF60LgYi/TwKDkwh4MRDmFSVsVBLX0+XUmVwOpmktYSQ64UWym0iqvqRebDJ/hCjbMZCpurnyQ1nQM4xaKNR5JxUm5doldRLZIVOnDRy15OEq+ccb7KSpL+Vt23cQ="
 rvm:
 - 2.3.0
 script: bundle exec rspec
