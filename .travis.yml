@@ -20,6 +20,8 @@ language: ruby
 notifications:
   email: false
   slack:
+    on_failure: always
+    on_success: always
     secure: LzKkLVP1nOb90ZOURIIVL+dFIGYyXAYALsvqJZiyDXMBvjnd0i/2zg+ZHGer1/Xks8x/SZNFpAA4EUE9MPhqb9t8rLDsldpk8UyR9umlI3XJETp/qO0MXanIAyvXeRl09+t8yGzH6tkOwM42k1u6eVpFf9oq3pr5s5waWapOoLE=
 rvm:
 - 2.3.0
