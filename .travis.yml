@@ -1,4 +1,7 @@
-before_script: "bundle exec rake db:schema:load"
+before_script:
+- "cp .env.example .env"
+- "bundle exec rake db:create"
+- "bundle exec rake db:schema:load"
 bundler_args: "--without production"
 language: ruby
 rvm:
