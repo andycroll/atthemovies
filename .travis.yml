@@ -10,12 +10,12 @@ deploy:
   - restart
   - rake cleanup
   api_key:
-    secure: "FCn11XFfho0K/nQU10K4Jhc2TXQeSeoXpdIuxmIBj9DONk/NtKd1Jx9H1OfkGt3DGhFB1qIhN1i35SylU9jmsua3yfwkzTXyCpOuqp84eCsgz+aJazd97BRDs2O+LDH1+M4bDTw+LnQ8RLJNe62a/nBLEUuC1RABAjI8mezzbKg="
+    secure: "zr12X6DHqlS6qX2PMZ+X+FbguVzoVT+NkiKzbJzKkD066EHJ/HGDr4sVpTwaz09IHPzEqTO0pXJFXpT+mflZU1fDTgZFR8x3Ad91bvsIBvofWSNWwZ+GM+V/5dcw8vnsVGmnpiFGH5NTKmPe07jvr328fNVnnZ2LMeZbwoaoyDtMXwbynvz0GEyv2DhDWYFh46vNQg3W4gil+IxzAm07gr0LN7JEF/wtv6Nz+VFsYb1TgjwLARw+3hNn3UgX/ygSXcbYJYYyEvYaZCNaUZ3f3+LDJrDydEV5OtFhnn+YD7MpGf9wmtPG1B80J1t+86y/J/xHcVRFiQeOgaXfjccTdkbM5CQ917z525toBQAeRYKKn6Tzx0tsmPiD8I2OW1OKFJtsiogKNRcz2xZXIYhf7TjERLzoiI1KPCxkofwqbvFMfa2RAtVbtBXeVN7lrRoXR11Dwh13/FxuIMjuYrizKSnKP/bcZ7Vg3ED4pisG77JdbHw0e5rwFORZk1ty/SXn0bdFbGCYh1778Hv9JnkvuYtQthGEJ4uKnPQagbZiZ409WYEhqN7bFXlnSMadCEidy7WtpgJ9rMvK+z1Pk4YpPOfZomeDsdOl+oJHa8b6OnJ+tWrEuz5WY5EAXLnHVzOKxA0jt5gnJeQmA2678PoP8TxbJ46kitnkTXE/20TKayg="
   app: atthemovies
   before_deploy:
   - git stash
   - pg:backups capture
-  clean_up: false
+  skip_cleanup: false
   on:
     branch: master
   provider: heroku
@@ -26,7 +26,8 @@ notifications:
   slack:
     on_failure: always
     on_success: always
-    secure: "C7U6G5pydNqjnfO7ee7fWf1toDX8cKP/SN6ziunvyNIx+wJF60LgYi/TwKDkwh4MRDmFSVsVBLX0+XUmVwOpmktYSQ64UWym0iqvqRebDJ/hCjbMZCpurnyQ1nQM4xaKNR5JxUm5doldRLZIVOnDRy15OEq+ccb7KSpL+Vt23cQ="
+    rooms:
+      secure: "C7U6G5pydNqjnfO7ee7fWf1toDX8cKP/SN6ziunvyNIx+wJF60LgYi/TwKDkwh4MRDmFSVsVBLX0+XUmVwOpmktYSQ64UWym0iqvqRebDJ/hCjbMZCpurnyQ1nQM4xaKNR5JxUm5doldRLZIVOnDRy15OEq+ccb7KSpL+Vt23cQ="
 rvm:
 - 2.3.0
 script: bundle exec rspec
