@@ -1,3 +1,4 @@
+before_script: "bundle exec rake db:schema:load"
 bundler_args: "--without production"
 language: ruby
 rvm:
