@@ -1,6 +1,8 @@
 # At The Movies
 
-[ ![Codeship Status for andycroll/atthemovies](https://codeship.com/projects/3d9227a0-6d2c-0132-aa1f-326df4eb838b/status?branch=master)](https://codeship.com/projects/54193)
+[![CI Status](https://travis-ci.org/andycroll/atthemovies.svg?branch=master)](https://travis-ci.org/andycroll/atthemovies)
+[![Code Climate](https://codeclimate.com/github/andycroll/atthemovies/badges/gpa.svg)](https://codeclimate.com/github/andycroll/atthemovies)
+[![Test Coverage](https://codeclimate.com/github/andycroll/atthemovies/badges/coverage.svg)](https://codeclimate.com/github/andycroll/atthemovies/coverage)
 
 A Rails app that pulls cinema times from UK cinema chains, normalizes and then provides a sensible API.
 
