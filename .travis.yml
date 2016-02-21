@@ -1,6 +1,3 @@
-after_success:
-- "gem install heroku"
-- "heroku pg:backups capture"
 before_script:
 - cp .env.example .env
 - bundle exec rake db:create
@@ -15,6 +12,7 @@ deploy:
     branch: master
   provider: heroku
   run:
+  - pg:backups capture
   - rake db:migrate
   - restart
 language: ruby
