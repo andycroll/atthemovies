@@ -3,6 +3,17 @@ before_script:
 - "bundle exec rake db:create"
 - "bundle exec rake db:schema:load"
 bundler_args: "--without production"
+deploy:
+  api_key:
+    secure: g0KdPv8/RJ639XVp14o8MsUptSe/CLfK6Z3IqpOSuPxQpTaC0kE34BYoyiL1tssXciS3eSb2oIKqqjC81nD98f1fJgV5McLPYK/1fB2ibTWqWfD1UWV1yZyp9hGrfNVy1EcNFHeTdmIBVxYQkzgmM+UDbn7nBgiM6iSrM7e/GZk=
+  on:
+    branch: master
+  provider: heroku
+  run:
+  - pg:backups capture
+  - rake db:migrate
+  - restart
+  - rake cleanup
 language: ruby
 notifications:
   email: false
