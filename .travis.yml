@@ -1,3 +1,6 @@
+after_success:
+- "gem install heroku"
+- "heroku pg:backups capture"
 before_script:
 - cp .env.example .env
 - bundle exec rake db:create
@@ -8,7 +11,6 @@ deploy:
   api_key:
     secure: "zr12X6DHqlS6qX2PMZ+X+FbguVzoVT+NkiKzbJzKkD066EHJ/HGDr4sVpTwaz09IHPzEqTO0pXJFXpT+mflZU1fDTgZFR8x3Ad91bvsIBvofWSNWwZ+GM+V/5dcw8vnsVGmnpiFGH5NTKmPe07jvr328fNVnnZ2LMeZbwoaoyDtMXwbynvz0GEyv2DhDWYFh46vNQg3W4gil+IxzAm07gr0LN7JEF/wtv6Nz+VFsYb1TgjwLARw+3hNn3UgX/ygSXcbYJYYyEvYaZCNaUZ3f3+LDJrDydEV5OtFhnn+YD7MpGf9wmtPG1B80J1t+86y/J/xHcVRFiQeOgaXfjccTdkbM5CQ917z525toBQAeRYKKn6Tzx0tsmPiD8I2OW1OKFJtsiogKNRcz2xZXIYhf7TjERLzoiI1KPCxkofwqbvFMfa2RAtVbtBXeVN7lrRoXR11Dwh13/FxuIMjuYrizKSnKP/bcZ7Vg3ED4pisG77JdbHw0e5rwFORZk1ty/SXn0bdFbGCYh1778Hv9JnkvuYtQthGEJ4uKnPQagbZiZ409WYEhqN7bFXlnSMadCEidy7WtpgJ9rMvK+z1Pk4YpPOfZomeDsdOl+oJHa8b6OnJ+tWrEuz5WY5EAXLnHVzOKxA0jt5gnJeQmA2678PoP8TxbJ46kitnkTXE/20TKayg="
   app: atthemovies
-  before_deploy: "heroku pg:backups capture"
   on:
     branch: master
   provider: heroku
