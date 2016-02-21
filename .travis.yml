@@ -12,7 +12,6 @@ deploy:
     branch: master
   provider: heroku
   run:
-  - pg:backups capture
   - rake db:migrate
   - restart
 language: ruby
