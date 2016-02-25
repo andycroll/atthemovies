@@ -39,7 +39,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     addressable (2.4.0)
-    appsignal (1.0.3)
+    appsignal (1.0.4)
       rack
       thread_safe
     arel (6.0.3)
