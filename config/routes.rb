@@ -6,6 +6,7 @@ Atthemovies::Application.routes.draw do
   resources :cinemas, only: [:edit, :index, :show, :update] do
     resources :performances, only: [:index]
   end
+  get '/cinemas/:cinema_id/performances/:when' => 'performances#index', as: :dated_cinema_performances
 
   get '/triage' => 'films#triage', as: :triage
 

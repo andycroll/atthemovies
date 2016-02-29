@@ -8,7 +8,7 @@ class Performance < ActiveRecord::Base
   before_save :variant_downcase!
 
   scope :ordered, -> { order(starting_at: :asc) }
-  scope :past, -> { where(arel_table[:starting_at].lt(Time.current)) }
+  scope :past, -> { before(Time.current) }
 
   def self.after(time)
     where(arel_table[:starting_at].gt(time))
@@ -18,14 +18,14 @@ class Performance < ActiveRecord::Base
     where(arel_table[:starting_at].lt(time))
   end
 
-  def self.on(date)
-    start = if date.to_date == Time.current.to_date
-              Time.current
-            else
-              date.beginning_of_day
-            end
+  def self.between(start_on, end_on)
+    after(beginning_of_day_or_current(start_on))
+      .before(end_on.end_of_day)
+      .ordered
+  end
 
-    after(start).before(date.end_of_day).ordered
+  def self.on(date)
+    between(date, date)
   end
 
   def update_variant!(variant)
@@ -33,6 +33,11 @@ class Performance < ActiveRecord::Base
   end
 
   private
+
+  def self.beginning_of_day_or_current(date)
+    date.to_date == Time.current.to_date ? Time.current : date.beginning_of_day
+  end
+  private_class_method :beginning_of_day_or_current
 
   def dimension_downcase!
     dimension.downcase!

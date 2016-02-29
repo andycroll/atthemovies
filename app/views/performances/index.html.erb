@@ -1,4 +1,4 @@
-<%- title = "Performances at #{@cinema.name}" %>
+<%- title = "Performances on #{@date.to_s(:long)} at #{@cinema.name}" %>
 
 <% content_for(:title) do -%>
   <%= title %>
@@ -7,7 +7,7 @@
 <% content_for :breadcrumbs do -%>
   <li><%= link_to 'Cinemas', cinemas_path %></li>
   <li><%= link_to @cinema.name, @cinema %></li>
-  <li class="active">Performances</li>
+  <li class="active">Performances on <%= @date.to_s(:long) %></li>
 <% end -%>
 
 <% content_for(:page_header) do -%>
@@ -15,9 +15,6 @@
   <hr />
 <% end -%>
 
-<% @performances.dates.each do |date| -%>
-  <h2><%= local_time(date, '%A %B %e') %></h2>
-  <div class="row">
-    <%= render partial: 'performance', collection: @performances.on(date) -%>
-  </div>
-<% end -%>
+<div class="row">
+  <%= render partial: 'performance', collection: @performances -%>
+</div>
