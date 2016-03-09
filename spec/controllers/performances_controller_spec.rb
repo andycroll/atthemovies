@@ -102,7 +102,7 @@ describe PerformancesController do
     end
 
     describe 'successful, date "YYYY-MM-DD"' do
-      let(:num) { rand(4) }
+      let(:num) { rand(2..7) }
 
       before do
         2.times do
