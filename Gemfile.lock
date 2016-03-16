@@ -43,7 +43,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     addressable (2.4.0)
-    appsignal (1.0.4)
+    appsignal (1.0.5)
       rack
       thread_safe
     arel (6.0.3)
@@ -269,7 +269,7 @@ GEM
       coffee-rails
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    tzinfo-data (1.2016.1)
+    tzinfo-data (1.2016.2)
       tzinfo (>= 1.0.0)
     uglifier (2.7.2)
       execjs (>= 0.3.0)
