@@ -57,7 +57,6 @@ group :test do
 end
 
 group :production do
-  gem 'appsignal'
   gem 'dalli'
   gem 'lograge'
   gem 'puma'

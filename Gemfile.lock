@@ -43,9 +43,6 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     addressable (2.4.0)
-    appsignal (1.1.5)
-      rack
-      thread_safe
     arel (6.0.3)
     benchmark-ips (2.6.1)
     builder (3.2.2)
@@ -285,7 +282,6 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers (= 0.10.0.rc4)
-  appsignal
   cineworld_uk
   codeclimate-test-reporter
   coffee-rails (~> 4)
