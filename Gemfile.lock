@@ -155,12 +155,13 @@ GEM
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
-    mini_portile2 (2.0.0)
+    mini_portile2 (2.1.0)
     minitest (5.9.0)
     multi_json (1.12.1)
     multi_xml (0.5.5)
-    nokogiri (1.6.7.2)
-      mini_portile2 (~> 2.0.0.rc2)
+    nokogiri (1.6.8)
+      mini_portile2 (~> 2.1.0)
+      pkg-config (~> 1.1.7)
     odeon_uk (4.0.1)
       CFPropertyList
       cinebase (~> 3.0)
@@ -168,6 +169,7 @@ GEM
     picturehouse_uk (4.0.0)
       cinebase (~> 3.0)
       nokogiri
+    pkg-config (1.1.7)
     pry (0.10.3)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -272,7 +274,7 @@ GEM
       tzinfo (>= 1.0.0)
     uglifier (3.0.0)
       execjs (>= 0.3.0, < 3)
-    web-console (3.1.1)
+    web-console (3.2.0)
       activemodel (>= 4.2)
       debug_inspector
       railties (>= 4.2)
