@@ -13,7 +13,7 @@ gem 'sass-rails', '~> 5.0'
 gem 'turbolinks'
 gem 'local_time'
 
-gem 'active_model_serializers', '=0.10.0.rc4'
+gem 'active_model_serializers'
 gem 'delayed_job_active_record'
 gem 'cineworld_uk'
 gem 'dragonfly'
