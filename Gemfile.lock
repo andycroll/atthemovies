@@ -22,10 +22,11 @@ GEM
       erubis (~> 2.7.0)
       rails-dom-testing (~> 1.0, >= 1.0.5)
       rails-html-sanitizer (~> 1.0, >= 1.0.2)
-    active_model_serializers (0.10.0.rc4)
-      actionpack (>= 4.0)
-      activemodel (>= 4.0)
-      railties (>= 4.0)
+    active_model_serializers (0.10.1)
+      actionpack (>= 4.1, < 6)
+      activemodel (>= 4.1, < 6)
+      jsonapi (~> 0.1.1.beta2)
+      railties (>= 4.1, < 6)
     activejob (4.2.6)
       activesupport (= 4.2.6)
       globalid (>= 0.3.0)
@@ -135,6 +136,8 @@ GEM
     ipaddress (0.8.3)
     is_crawler (0.1.5)
     json (1.8.3)
+    jsonapi (0.1.1.beta2)
+      json (~> 1.8)
     kaminari (0.17.0)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -283,7 +286,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_model_serializers (= 0.10.0.rc4)
+  active_model_serializers
   cineworld_uk
   codeclimate-test-reporter
   coffee-rails (~> 4)

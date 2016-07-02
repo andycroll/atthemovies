@@ -65,8 +65,8 @@ describe Api::V1::CinemasController do
           expect(c['type']).to eq('cinemas')
           expect(c.keys).to contain_exactly('id', 'type', 'attributes')
           expect(c['attributes'].keys).to contain_exactly(
-            'brand', 'country', 'country_code', 'extended_address', 'latitude',
-            'locality', 'longitude', 'postal_code', 'name', 'street_address',
+            'brand', 'country', 'country-code', 'extended-address', 'latitude',
+            'locality', 'longitude', 'postal-code', 'name', 'street-address',
             'url')
         end
       end
