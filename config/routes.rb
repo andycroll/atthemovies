@@ -3,6 +3,7 @@ Atthemovies::Application.routes.draw do
     resources :cinemas, only: :index do
       resources :performances, only: :index
     end
+    resources :films, only: :index
   end
 
   resources :cinemas, only: [:edit, :index, :show, :update] do
