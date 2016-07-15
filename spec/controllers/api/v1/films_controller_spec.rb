@@ -63,8 +63,8 @@ describe Api::V1::FilmsController do
           expect(c['type']).to eq('films')
           expect(c.keys).to contain_exactly('id', 'type', 'attributes')
           expect(c['attributes'].keys).to contain_exactly(
-            'backdrop', 'name', 'overview', 'poster', 'runtime', 'tagline',
-            'tmdb-identifier', 'year')
+            'backdrop', 'name', 'overview', 'performances-count', 'poster',
+            'runtime', 'tagline', 'tmdb-identifier', 'year')
         end
       end
     end
