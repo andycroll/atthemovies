@@ -1,9 +1,11 @@
 Atthemovies::Application.routes.draw do
   scope module: 'api/v1', constraints: APIConstraint.new(version: 1, default: true) do
     resources :cinemas, only: :index do
-      resources :performances, only: :index
+      resources :performances, only: :index, controller: 'cinemas/performances'
     end
-    resources :films, only: :index
+    resources :films, only: :index do
+      resources :performances, only: :index, controller: 'films/performances'
+    end
   end
 
   resources :cinemas, only: [:edit, :index, :show, :update] do

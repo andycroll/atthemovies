@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Api::V1::PerformancesController do
+describe Api::V1::Films::PerformancesController do
   render_views
 
   describe 'routes' do
@@ -13,42 +13,37 @@ describe Api::V1::PerformancesController do
       after { Rack::MockRequest::DEFAULT_ENV.delete 'HTTP_ACCEPT' }
 
       specify do
-        expect(get: '/cinemas/23/performances.json').to route_to(controller: 'api/v1/performances',
+        expect(get: '/films/23/performances.json').to route_to(controller: 'api/v1/films/performances',
                                                                  action: 'index',
                                                                  format: 'json',
-                                                                 cinema_id: '23')
+                                                                 film_id: '23')
 
-        expect(get: '/cinemas/23/performances').to route_to(controller: 'api/v1/performances',
-                                                            action: 'index',
-                                                            cinema_id: '23')
-      end
-
-      specify do
-        expect(get: '/performances').not_to be_routable
-        expect(get: '/performances.json').not_to be_routable
+        expect(get: '/films/23/performances').to route_to(controller: 'api/v1/films/performances',
+                                                          action: 'index',
+                                                          film_id: '23')
       end
     end
 
     describe 'with specified format' do
       specify do
-        expect(get: '/cinemas/23/performances.json').to route_to(controller: 'api/v1/performances',
-                                                                 action: 'index',
-                                                                 format: 'json',
-                                                                 cinema_id: '23')
+        expect(get: '/films/23/performances.json').to route_to(controller: 'api/v1/films/performances',
+                                                               action: 'index',
+                                                               format: 'json',
+                                                               film_id: '23')
       end
     end
   end
 
   describe '#GET index' do
-    let!(:cinema) { create(:cinema) }
-    let!(:performance_1) { create(:performance, cinema: cinema ) }
-    let!(:performance_2) { create(:performance, cinema: cinema) }
-    let!(:performance_other_cinema) { create(:performance) }
+    let!(:film) { create(:film) }
+    let!(:performance_1) { create(:performance, film: film ) }
+    let!(:performance_2) { create(:performance, film: film) }
+    let!(:performance_other_film) { create(:performance) }
     let!(:performance_other_date) { create(:performance, starting_at: 1.day.from_now) }
 
     def get_index(params = {})
       request.env['HTTP_ACCEPT'] = 'application/vnd.atthemovies.v1'
-      get :index, { cinema_id: cinema.id }.merge(params)
+      get :index, { film_id: film.id }.merge(params)
     end
 
     describe 'successful' do
@@ -66,14 +61,14 @@ describe Api::V1::PerformancesController do
         expect(performance_ids).to include(performance_2.id)
       end
 
-      it 'does not include performances from other cinemas or dates' do
+      it 'does not include performances from other films or dates' do
         parsed = JSON.parse(response.body)
         performance_ids = parsed['data'].map { |c| c['id'] }
-        expect(performance_ids).not_to include(performance_other_cinema.id)
+        expect(performance_ids).not_to include(performance_other_film.id)
         expect(performance_ids).not_to include(performance_other_date.id)
       end
 
-      it 'includes full performance data, and relationsships to film & cinema' do
+      it 'includes full performance data, and relationships to film & cinema' do
         parsed = JSON.parse(response.body)
         parsed['data'].each do |c|
           expect(c['type']).to eq('performances')
