@@ -4,7 +4,7 @@ module Api
       class PerformancesController < ApplicationController
         def index
           @film = Film.find(params[:film_id])
-          @performances = @film.performances.on(date)
+          @performances = @film.performances.includes(:cinema).on(date)
           render json: @performances
         end
 
