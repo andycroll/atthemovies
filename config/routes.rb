@@ -5,6 +5,7 @@ Atthemovies::Application.routes.draw do
     end
     resources :films, only: :index do
       resources :performances, only: :index, controller: 'films/performances'
+      resources :cinemas, only: :index, controller: 'films/cinemas'
     end
   end
 
