@@ -45,7 +45,7 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.4.0)
     arel (6.0.3)
-    benchmark-ips (2.7.0)
+    benchmark-ips (2.7.1)
     builder (3.2.2)
     cinebase (3.0.1)
       tzinfo
