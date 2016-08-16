@@ -50,6 +50,7 @@ end
 group :test do
   gem 'codeclimate-test-reporter', require: nil
   gem 'danger', require: nil
+  gem 'danger-rubocop', require: nil
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'kaminari-rspec', require: 'kaminari_rspec'
