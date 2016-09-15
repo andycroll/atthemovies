@@ -1,6 +1,6 @@
 class CinemasController < ApplicationController
-  before_filter :http_basic_auth, only: [:edit, :update]
-  before_filter :assign_cinema_by_url, except: [:index]
+  before_action :http_basic_auth, only: [:edit, :update]
+  before_action :assign_cinema_by_url, except: [:index]
 
   def edit
   end

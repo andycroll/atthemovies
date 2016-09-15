@@ -11,7 +11,7 @@ module Api
         private
 
         def date
-          raise StandardError, 'Bad date format' unless !!(params[:date] || '').match(/2\d{3}[01]\d[0123]\d/)
+          raise ActionController::ParameterMissing, 'Bad date format' unless !!(params[:date] || '').match(/2\d{3}[01]\d[0123]\d/)
           Date.parse(params[:date])
         end
       end

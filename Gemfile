@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ruby '2.3.0'
 gem 'mime-types', require: 'mime/types/columnar' # free memory
 
-gem 'rails', '~> 4.2.7.1'
+gem 'rails', '~> 5.0.0.1'
 gem 'pg'
 
 gem 'uglifier'
@@ -19,14 +19,13 @@ gem 'cineworld_uk'
 gem 'dragonfly'
 gem 'dragonfly-s3_data_store'
 gem 'geocoder'
-gem 'good_migrations'
 gem 'is_crawler'
 gem 'kaminari'
 gem 'odeon_uk'
 gem 'picturehouse_uk'
 gem 'rack-timeout'
 gem 'stringex'
-gem 'textacular'
+gem 'textacular', git: 'https://github.com/textacular/textacular'
 gem 'themoviedb'
 
 source 'https://rails-assets.org' do
@@ -37,7 +36,6 @@ group :development do
   gem 'derailed'
   gem 'foreman'
   gem 'rails_db_info'
-  gem 'quiet_assets'
   gem 'web-console'
 end
 
