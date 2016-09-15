@@ -1,6 +1,6 @@
 class FilmsController < ApplicationController
-  before_filter :http_basic_auth, only: [:edit, :merge, :triage, :update]
-  before_filter :assign_film_by_id, except: [:index, :show, :triage]
+  before_action :http_basic_auth, only: [:edit, :merge, :triage, :update]
+  before_action :assign_film_by_id, except: [:index, :show, :triage]
 
   def edit
     @similar_films = Film.similar_to(@film.name) - [@film]
@@ -13,7 +13,7 @@ class FilmsController < ApplicationController
   def merge
     # merge _this_ film into the other film
     Films::Merge.perform_now(Film.find(params[:other_id]), @film)
-    redirect_to :back
+    redirect_back(fallback_location: films_path)
   end
 
   def show
@@ -25,7 +25,8 @@ class FilmsController < ApplicationController
                Film.similar_to(params[:q]).page(params[:page])
              else
                Film.no_information
-                   .no_tmdb_id.order('performances_count DESC, name DESC')
+                   .no_tmdb_id
+                   .order('performances_count DESC, name ASC')
                    .page(params[:page]).per(20)
              end
   end
@@ -36,7 +37,7 @@ class FilmsController < ApplicationController
     else
       @film.update_attributes(film_attributes)
     end
-    redirect_to :back
+    redirect_back(fallback_location: films_path)
   end
 
   private
