@@ -25,7 +25,7 @@ gem 'odeon_uk'
 gem 'picturehouse_uk'
 gem 'rack-timeout'
 gem 'stringex'
-gem 'textacular', git: 'git@github.com:textacular/textacular'
+gem 'textacular', git: 'https://github.com/textacular/textacular'
 gem 'themoviedb'
 
 source 'https://rails-assets.org' do

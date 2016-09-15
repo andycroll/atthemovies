@@ -1,5 +1,5 @@
 GIT
-  remote: git@github.com:textacular/textacular
+  remote: https://github.com/textacular/textacular
   revision: 9905e65fe9efbc1d6a7c75ddf2d051a469939c3b
   specs:
     textacular (4.0.0)
