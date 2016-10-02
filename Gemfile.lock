@@ -63,7 +63,7 @@ GEM
     cineworld_uk (3.1.0)
       cinebase (~> 3.0.0)
     claide (1.0.0)
-    claide-plugins (0.9.1)
+    claide-plugins (0.9.2)
       cork
       nap
       open4 (~> 1.3)
