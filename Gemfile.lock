@@ -82,7 +82,7 @@ GEM
     cork (0.2.0)
       colored (~> 1.2)
     dalli (2.7.6)
-    danger (3.4.1)
+    danger (3.4.2)
       claide (~> 1.0)
       claide-plugins (> 0.9.0)
       colored (~> 1.2)
