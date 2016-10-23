@@ -26,6 +26,7 @@ class FilmsController < ApplicationController
              else
                Film.no_information
                    .no_tmdb_id
+                   .where.not(performances_count: nil)
                    .order('performances_count DESC, name ASC')
                    .page(params[:page]).per(20)
              end
