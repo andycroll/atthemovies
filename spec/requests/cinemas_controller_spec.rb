@@ -55,9 +55,9 @@ describe CinemasController, type: :request do
 
           expect(response.body).to include(h cinema_1.name)
           expect(response.body).to include(cinema_path(cinema_1))
-          expect(response.body).to include(cinema_2.name)
+          expect(response.body).to include(h(cinema_2.name))
           expect(response.body).to include(cinema_path(cinema_2))
-          expect(response.body).to include(cinema_3.name)
+          expect(response.body).to include(h(cinema_3.name))
           expect(response.body).to include(cinema_path(cinema_3))
         end
       end
@@ -69,11 +69,11 @@ describe CinemasController, type: :request do
           expect(response).to have_http_status(:success)
 
           expect(response.body).to match(/\d\.\d{2}m/) # distance
-          expect(response.body).to include(cinema_1.name)
+          expect(response.body).to include(h(cinema_1.name))
           expect(response.body).to include(cinema_path(cinema_1))
-          expect(response.body).to include(cinema_2.name)
+          expect(response.body).to include(h(cinema_2.name))
           expect(response.body).to include(cinema_path(cinema_2))
-          expect(response.body).to include(cinema_3.name)
+          expect(response.body).to include(h(cinema_3.name))
           expect(response.body).to include(cinema_path(cinema_3))
         end
       end
