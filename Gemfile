@@ -53,6 +53,7 @@ group :test do
   gem 'faker'
   gem 'kaminari-rspec', require: 'kaminari_rspec'
   gem 'shoulda-matchers'
+  gem 'simplecov'
   gem 'timecop'
 end
 
