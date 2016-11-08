@@ -19,10 +19,8 @@ describe PagesController, type: :request do
           expect(response.body).to include(films_path)
         end
 
-        it 'includes body classes and js init' do
-          expect(response.body).to include('<body id="pages-home" class="pages home">')
-          expect(response.body).to include('atthemovies.pages.pages.initHome();')
-          expect(response.body).to include('atthemovies.pages.pages.init();')
+        it 'includes body js init' do
+          expect(response.body).to include('<body data-js-controller="pages" data-js-action="Home">')
         end
       end
     end

@@ -26,12 +26,6 @@ describe CinemasController, type: :request do
         expect(response.body).to include("Edit #{cinema.name}")
         expect(response.body).to include('<form')
       end
-
-      it 'includes body classes and js init' do
-        expect(response.body).to include('<body id="cinemas-edit" class="cinemas edit">')
-        expect(response.body).to include('atthemovies.pages.cinemas.initEdit();')
-        expect(response.body).to include('atthemovies.pages.cinemas.init();')
-      end
     end
   end
 

@@ -38,12 +38,6 @@ describe PerformancesController, type: :request do
         expect(response.body).to include(performance_2.starting_at.utc.strftime('%H:%M'))
         expect(response.body).not_to include(performance_other_cinema.film.name)
       end
-
-      it 'includes body classes and js init' do
-        expect(response.body).to include('<body id="performances-index" class="performances index">')
-        expect(response.body).to include('atthemovies.pages.performances.initIndex();')
-        expect(response.body).to include('atthemovies.pages.performances.init();')
-      end
     end
 
     describe 'successful, date "tomorrow"' do
