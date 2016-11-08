@@ -1,5 +1,4 @@
-atthemovies.pages.pages = {
-  init: function() {},
+atthemovies.pages = {
   initHome: function() {
     this.buildGeoLink();
     this.clickHandlerGeoLink();
@@ -8,17 +7,23 @@ atthemovies.pages.pages = {
   buildGeoLink: function() {
     if (Modernizr.geolocation) {
       var link = ' or <a id="geoLink" href="">Cinemas Nearby</a>';
-      $('h2').append(link);
+      var headerTwo = document.querySelectorAll('h2')[0]
+      headerTwo.innerHTML = headerTwo.innerHTML + link;
     }
   },
 
   clickHandlerGeoLink: function() {
     if (Modernizr.geolocation) {
-      $('#geoLink').on('click', function() {
+      var geoLink = document.querySelectorAll('#geoLink')[0]
+      geoLink.addEventListener('click', function() {
         navigator.geolocation.getCurrentPosition(function(position) {
           var latitude = position.coords.latitude.toFixed(4);
           var longitude = position.coords.longitude.toFixed(4);
-          $('#geoLink').attr('href', '/cinemas?near=' + latitude + ',' + longitude).click();
+          geoLink.setAttribute('href', '/cinemas?near=' + latitude + ',' + longitude);
+
+          var event = document.createEvent('HTMLEvents');
+          event.initEvent('click', true, false);
+          geoLink.dispatchEvent(event);
         }, this.handleGeoError);
       })
     }

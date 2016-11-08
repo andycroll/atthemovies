@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   helper_method :action_for_js, :body_class, :body_id, :controller_for_js
 
   def action_for_js
+    return @action_for_js if @action_for_js
     case action_name
     when 'create' then 'new'
     when 'update' then 'edit'
@@ -15,17 +16,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def body_id
-    return @body_id if @body_id
-    "#{controller_for_js}-#{action_for_js}"
-  end
-
-  def body_class
-    return @body_class if @body_class
-    "#{controller_for_js} #{action_for_js}"
-  end
-
   def controller_for_js
+    return @controller_for_js if @controller_for_js
     controller_path.tr('/', '.')
   end
 
