@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
-  helper_method :action_for_js, :body_class, :body_id, :controller_for_js
+  helper_method :action_for_js, :controller_for_js
 
   def action_for_js
     return @action_for_js if @action_for_js

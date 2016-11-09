@@ -5,9 +5,7 @@
 //= require init
 //= require pages
 
-document.addEventListener("turbolinks:load", function() {
-  atthemovies.init();
-})
+document.addEventListener("turbolinks:load", atthemovies.init());
 
 if (document.readyState != 'loading') {
   atthemovies.init();
