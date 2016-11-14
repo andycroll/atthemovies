@@ -8,10 +8,12 @@ window.atthemovies = {
     this.pageJS("atthemovies." + jsController + ".init" + jsAction, window);
   },
 
-  pageJS: function(functionName, context) {
-    var namespaces = functionName.split(".");
-    var func = namespaces.pop();
+  // pass a string to call a namespaced function that may not exist
+  pageJS: function(functionString, context) {
+    var namespaces = functionString.split(".");
+    var functionName = namespaces.pop();
 
+    // recursively loop into existing namespaces, else return harmlessly
     for (var i = 0; i < namespaces.length; i++) {
       if(context[namespaces[i]]) {
         context = context[namespaces[i]];
@@ -19,8 +21,10 @@ window.atthemovies = {
         return null;
       }
     }
-    if(typeof context[func] === "function") {
-      return context[func].apply(context, null);
+
+    // call the function if it exists in this context, else return harmlessly
+    if(typeof context[functionName] === "function") {
+      return context[functionName].apply(context, null);
     } else {
       return null;
     }
