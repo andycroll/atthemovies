@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/textacular/textacular
-  revision: 1b55a7ee25dc4ca7d3905e958310e51feb6acd95
+  revision: 64905a307cbd8ebd77e46337909238115fa1380e
   specs:
     textacular (4.0.0)
       activerecord (>= 3.0, < 5.1)
@@ -221,7 +221,7 @@ GEM
     pry-rails (0.3.4)
       pry (>= 0.9.10)
     public_suffix (2.0.4)
-    puma (3.6.1)
+    puma (3.6.2)
     rack (2.0.1)
     rack-test (0.6.3)
       rack (>= 1.0)
