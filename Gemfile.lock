@@ -9,7 +9,7 @@ GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
   specs:
-    CFPropertyList (2.3.3)
+    CFPropertyList (2.3.4)
     actioncable (5.0.0.1)
       actionpack (= 5.0.0.1)
       nio4r (~> 1.2)
@@ -76,7 +76,7 @@ GEM
     coffee-script (2.4.1)
       coffee-script-source
       execjs
-    coffee-script-source (1.10.0)
+    coffee-script-source (1.11.1)
     colored (1.2)
     concurrent-ruby (1.0.2)
     cork (0.2.0)
@@ -176,7 +176,7 @@ GEM
       activesupport (>= 3.0.0)
     kaminari-rspec (0.16.1)
       kaminari (~> 0.16)
-    kramdown (1.13.0)
+    kramdown (1.13.1)
     local_time (1.0.3)
       coffee-rails
     lograge (0.4.1)
