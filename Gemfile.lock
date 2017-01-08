@@ -182,7 +182,7 @@ GEM
       activesupport (>= 3.0.0)
     kaminari-rspec (0.16.1)
       kaminari (~> 0.16)
-    kramdown (1.13.1)
+    kramdown (1.13.2)
     local_time (1.0.3)
       coffee-rails
     lograge (0.4.1)
