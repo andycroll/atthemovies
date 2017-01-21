@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -18,7 +17,7 @@ ActiveRecord::Schema.define(version: 20160211220033) do
   enable_extension "uuid-ossp"
   enable_extension "pg_trgm"
 
-  create_table "cinemas", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+  create_table "cinemas", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.string   "name"
     t.string   "url"
     t.decimal  "latitude",                   precision: 9, scale: 6
@@ -36,9 +35,8 @@ ActiveRecord::Schema.define(version: 20160211220033) do
     t.datetime "updated_at"
     t.string   "screenings_url"
     t.string   "information_url"
+    t.index ["latitude", "longitude"], name: "index_cinemas_on_latitude_and_longitude", using: :btree
   end
-
-  add_index "cinemas", ["latitude", "longitude"], name: "index_cinemas_on_latitude_and_longitude", using: :btree
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
@@ -52,11 +50,10 @@ ActiveRecord::Schema.define(version: 20160211220033) do
     t.string   "queue"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
   end
 
-  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
-
-  create_table "films", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+  create_table "films", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.string   "name",                                          null: false
     t.text     "overview"
     t.string   "year",                limit: 4
@@ -78,11 +75,10 @@ ActiveRecord::Schema.define(version: 20160211220033) do
     t.boolean  "hidden",                        default: false
     t.text     "name_hashes",                   default: [],                 array: true
     t.integer  "performances_count"
+    t.index ["name"], name: "index_films_on_name", using: :btree
   end
 
-  add_index "films", ["name"], name: "index_films_on_name", using: :btree
-
-  create_table "performances", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+  create_table "performances", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.uuid     "film_id",     null: false
     t.uuid     "cinema_id",   null: false
     t.string   "dimension",   null: false
@@ -90,8 +86,7 @@ ActiveRecord::Schema.define(version: 20160211220033) do
     t.datetime "starting_at", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["cinema_id"], name: "index_performances_on_cinema_id", using: :btree
   end
-
-  add_index "performances", ["cinema_id"], name: "index_performances_on_cinema_id", using: :btree
 
 end
