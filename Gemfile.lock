@@ -317,7 +317,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    stringex (2.7.0)
+    stringex (2.7.1)
     terminal-table (1.7.3)
       unicode-display_width (~> 1.1.1)
     themoviedb (1.0.1)
