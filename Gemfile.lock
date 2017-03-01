@@ -169,7 +169,7 @@ GEM
     heapy (0.1.2)
     httparty (0.14.0)
       multi_xml (>= 0.5.2)
-    i18n (0.8.0)
+    i18n (0.8.1)
     ipaddress (0.8.3)
     is_crawler (0.1.5)
     json (2.0.3)
