@@ -62,5 +62,6 @@ group :production do
   gem 'lograge'
   gem 'puma'
   gem 'rails_12factor'
+  gem 'rollbar'
   gem 'skylight'
 end
