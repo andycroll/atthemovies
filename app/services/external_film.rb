@@ -63,6 +63,8 @@ class ExternalFilm
 
   def self.tmdb_find(name)
     Tmdb::Movie.find(name)
+  rescue NoMethodError
+    []
   end
 
   def tmdb_detail
