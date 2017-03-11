@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
   end
 
   def not_found(exception)
-    if Rails.env.production? && is_crawler?(request.user_agent)
+    if Rails.env.production? && is_crawler?(request.user_agent) || request.path.include?('.php')
       render_404
     else
       raise exception
