@@ -1,9 +1,8 @@
 source 'https://rubygems.org'
 
 ruby '2.4.0'
-gem 'mime-types', require: 'mime/types/columnar' # free memory
 
-gem 'rails', '~> 5.0.0.1'
+gem 'rails', '~> 5.0.2'
 gem 'pg'
 
 gem 'uglifier'
