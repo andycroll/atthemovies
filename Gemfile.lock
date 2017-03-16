@@ -1,13 +1,5 @@
-GIT
-  remote: https://github.com/textacular/textacular
-  revision: 7fd6a5a8936dfa0619b10a13c9558a056640c5fe
-  specs:
-    textacular (4.0.1)
-      activerecord (>= 3.0, < 5.1)
-
 GEM
   remote: https://rubygems.org/
-  remote: https://rails-assets.org/
   specs:
     CFPropertyList (2.3.5)
     actioncable (5.0.2)
@@ -241,7 +233,6 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 5.0.2)
       sprockets-rails (>= 2.0.0)
-    rails-assets-zepto (1.2.0)
     rails-dom-testing (2.0.2)
       activesupport (>= 4.2.0, < 6.0)
       nokogiri (~> 1.6)
@@ -318,6 +309,8 @@ GEM
     stringex (2.7.1)
     terminal-table (1.7.3)
       unicode-display_width (~> 1.1.1)
+    textacular (4.0.1)
+      activerecord (>= 3.0, < 5.1)
     themoviedb (1.0.1)
       httparty
     thor (0.19.4)
@@ -350,7 +343,6 @@ DEPENDENCIES
   active_model_serializers
   cineworld_uk
   codeclimate-test-reporter
-  coffee-rails (~> 4)
   dalli
   danger
   danger-rubocop
@@ -375,17 +367,16 @@ DEPENDENCIES
   puma
   rack-timeout
   rails (~> 5.0.2)
-  rails-assets-zepto!
   rails_12factor
   rails_db_info
   rollbar
   rspec-rails
-  sass-rails (~> 5.0)
+  sass-rails
   shoulda-matchers
   simplecov
   skylight
   stringex
-  textacular!
+  textacular
   themoviedb
   timecop
   turbolinks

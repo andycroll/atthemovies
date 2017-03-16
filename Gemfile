@@ -3,14 +3,6 @@ source 'https://rubygems.org'
 ruby '2.4.0'
 
 gem 'rails', '~> 5.0.2'
-gem 'pg'
-
-gem 'uglifier'
-gem 'coffee-rails', '~> 4'
-gem 'sass-rails', '~> 5.0'
-
-gem 'turbolinks'
-gem 'local_time'
 
 gem 'active_model_serializers'
 gem 'delayed_job_active_record'
@@ -20,16 +12,17 @@ gem 'dragonfly-s3_data_store'
 gem 'geocoder'
 gem 'is_crawler'
 gem 'kaminari'
+gem 'local_time'
 gem 'odeon_uk'
+gem 'pg'
 gem 'picturehouse_uk'
 gem 'rack-timeout'
+gem 'sass-rails'
 gem 'stringex'
-gem 'textacular', git: 'https://github.com/textacular/textacular'
+gem 'textacular'
 gem 'themoviedb'
-
-source 'https://rails-assets.org' do
-  gem 'rails-assets-zepto'
-end
+gem 'turbolinks'
+gem 'uglifier'
 
 group :development do
   gem 'derailed'
