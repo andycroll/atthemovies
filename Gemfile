@@ -43,7 +43,6 @@ group :test do
   gem 'danger-rubocop', require: nil
   gem 'factory_girl_rails'
   gem 'faker'
-  gem 'kaminari-rspec', require: 'kaminari_rspec'
   gem 'shoulda-matchers'
   gem 'simplecov'
   gem 'timecop'

@@ -13,7 +13,6 @@ Faker::Config.locale = 'en-GB'
 
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
-  config.include KaminariRspec::TestHelpers, type: :controller
   config.use_transactional_fixtures = true
   config.infer_spec_type_from_file_location!
 end

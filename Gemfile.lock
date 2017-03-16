@@ -166,11 +166,18 @@ GEM
     is_crawler (0.1.5)
     json (2.0.3)
     jsonapi-renderer (0.1.2)
-    kaminari (0.17.0)
-      actionpack (>= 3.0.0)
-      activesupport (>= 3.0.0)
-    kaminari-rspec (0.16.1)
-      kaminari (~> 0.16)
+    kaminari (1.0.1)
+      activesupport (>= 4.1.0)
+      kaminari-actionview (= 1.0.1)
+      kaminari-activerecord (= 1.0.1)
+      kaminari-core (= 1.0.1)
+    kaminari-actionview (1.0.1)
+      actionview
+      kaminari-core (= 1.0.1)
+    kaminari-activerecord (1.0.1)
+      activerecord
+      kaminari-core (= 1.0.1)
+    kaminari-core (1.0.1)
     kramdown (1.13.2)
     local_time (1.0.3)
       coffee-rails
@@ -357,7 +364,6 @@ DEPENDENCIES
   geocoder
   is_crawler
   kaminari
-  kaminari-rspec
   local_time
   lograge
   odeon_uk
