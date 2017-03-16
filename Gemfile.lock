@@ -262,7 +262,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rainbow (2.2.1)
     rake (12.0.0)
-    rollbar (2.14.0)
+    rollbar (2.14.1)
       multi_json
     rspec-core (3.5.4)
       rspec-support (~> 3.5.0)
@@ -300,7 +300,7 @@ GEM
       faraday (~> 0.8, < 1.0)
     shoulda-matchers (3.1.1)
       activesupport (>= 4.0.0)
-    simplecov (0.13.0)
+    simplecov (0.14.0)
       docile (~> 1.1.0)
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
