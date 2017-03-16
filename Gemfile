@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.3.1'
+ruby '2.4.0'
 gem 'mime-types', require: 'mime/types/columnar' # free memory
 
 gem 'rails', '~> 5.0.0.1'
