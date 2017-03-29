@@ -1,0 +1,9 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.7.0
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  SNYK-RUBY-NOKOGIRI-20299:
+    - '* > dragonfly-s3_data_store@1.2':
+        reason: None given
+        expires: '2017-04-28T09:34:59.675Z'
+patch: {}
