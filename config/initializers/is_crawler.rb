@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Crawler::CUSTOM << Crawler.new(:apple, 'Applebot')
 Crawler::CUSTOM << Crawler.new(:arefs, 'AhrefsBot')
 Crawler::CUSTOM << Crawler.new(:blexbot, 'BLEXBot')

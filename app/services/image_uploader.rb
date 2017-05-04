@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ImageUploader
   FORMAT = 'jpg'.freeze
   SUPER_OPTIMIZED = ['-filter Triangle', '-define filter:support=2',

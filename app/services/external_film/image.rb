@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ExternalFilm
   Image = Struct.new(:file_path) do
     def uri

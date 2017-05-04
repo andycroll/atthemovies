@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 FactoryGirl.define do
   factory :cinema do
     name  { "#{Faker::Address.city} Cinema" }

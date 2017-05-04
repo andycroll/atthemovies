@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class FilmsController < ApplicationController
   before_action :http_basic_auth, only: [:edit, :merge, :triage, :update]
   before_action :assign_film_by_id, except: [:index, :show, :triage]

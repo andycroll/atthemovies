@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class FilmNameComparison
   def initialize(name)
     @name = name.to_s

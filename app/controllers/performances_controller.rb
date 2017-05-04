@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class PerformancesController < ApplicationController
   before_action :redirect_to_today_unless_date_constrained
   before_action :assign_cinema

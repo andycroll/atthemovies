@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class OneTrueMigration < ActiveRecord::Migration
   def change
     enable_extension "plpgsql"

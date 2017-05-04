@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Performance < ActiveRecord::Base
   belongs_to :cinema
   belongs_to :film, counter_cache: true

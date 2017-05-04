@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Films
   class FetchExternalIds < ActiveJob::Base
     attr_accessor :film

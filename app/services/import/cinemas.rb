@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Import
   class Cinemas
     attr_reader :brand, :klass

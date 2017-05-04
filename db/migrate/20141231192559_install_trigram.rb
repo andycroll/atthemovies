@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class InstallTrigram < ActiveRecord::Migration
   def self.up
     ActiveRecord::Base.connection.execute("CREATE EXTENSION pg_trgm;")

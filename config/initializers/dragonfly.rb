@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'dragonfly'
 require 'dragonfly/s3_data_store'
 

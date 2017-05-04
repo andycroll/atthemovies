@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Films
   class Merge < ActiveJob::Base
     attr_reader :film, :other_film

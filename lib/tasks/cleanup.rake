@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 namespace :cleanup do
   desc 'Remove Old Performances'
   task :past_performances => :environment do

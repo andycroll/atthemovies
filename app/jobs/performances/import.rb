@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Performances
   # creates performances asynchonously from passed data
   class Import < ActiveJob::Base
