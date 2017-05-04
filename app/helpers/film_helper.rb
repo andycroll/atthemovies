@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module FilmHelper
   def backdrop_uri(film)
     return film.backdrop if film.backdrop

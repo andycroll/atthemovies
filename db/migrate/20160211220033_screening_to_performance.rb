@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ScreeningToPerformance < ActiveRecord::Migration
   def change
     create_table :performances, id: :uuid do |t|

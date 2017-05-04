@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require_relative '../concerns/film_image_fetcher'
 
 module Films

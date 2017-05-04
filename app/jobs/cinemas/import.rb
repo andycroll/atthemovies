@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Cinemas
   class Import < ActiveJob::Base
     attr_reader :address, :brand, :brand_identifier, :name

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 describe ExternalFilm::Backdrop do
   describe '#uri' do
     subject(:uri) { described_class.new(file_path).uri }

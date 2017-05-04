@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'spec_helper'
 require_relative '../../app/services/film_name_comparison'
 

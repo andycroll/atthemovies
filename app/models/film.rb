@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Film < ActiveRecord::Base
   has_many :performances
   has_many :cinemas, -> { distinct }, through: :performances

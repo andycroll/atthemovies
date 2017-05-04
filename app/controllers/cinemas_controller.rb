@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class CinemasController < ApplicationController
   before_action :http_basic_auth, only: [:edit, :update]
   before_action :assign_cinema_by_url, except: [:index]

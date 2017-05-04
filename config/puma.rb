@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 workers ENV.fetch('WEB_CONCURRENCY') { 2 }.to_i
 
 threads_count = ENV.fetch('MAX_THREADS') { 5 }.to_i

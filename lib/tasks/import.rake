@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 namespace :import do
   namespace :cinemas do
     desc 'Import Cineworld Cinemas'

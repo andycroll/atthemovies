@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # A presenter for the displaying of an array of Performance objects
 class PerformanceGrouper
   attr_reader :performances

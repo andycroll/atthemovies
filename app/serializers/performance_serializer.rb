@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class PerformanceSerializer < ActiveModel::Serializer
   class IdSerializer < ActiveModel::Serializer
     attributes :id

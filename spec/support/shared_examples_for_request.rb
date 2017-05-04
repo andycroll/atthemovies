@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RSpec.shared_examples 'application/json' do
   describe 'with json "Accept" header' do
     it 'renders JSON' do
