@@ -200,7 +200,7 @@ GEM
     multipart-post (2.0.0)
     nap (1.1.0)
     nio4r (2.0.0)
-    nokogiri (1.7.1)
+    nokogiri (1.7.2)
       mini_portile2 (~> 2.1.0)
     octokit (4.7.0)
       sawyer (~> 0.8.0, >= 0.5.3)
@@ -389,9 +389,8 @@ DEPENDENCIES
   uglifier
   web-console
 
-
 RUBY VERSION
    ruby 2.4.0p0
 
 BUNDLED WITH
-   1.14.4
+   1.14.6
