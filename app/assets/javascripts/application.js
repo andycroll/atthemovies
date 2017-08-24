@@ -1,6 +1,6 @@
 //= require modernizr-2.8.3.custom
 //= require turbolinks
-//= require local_time
+//= require local-time
 
 //= require init
 //= require pages
