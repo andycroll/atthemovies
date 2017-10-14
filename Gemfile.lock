@@ -84,7 +84,7 @@ GEM
       no_proxy_fix
       octokit (~> 4.7)
       terminal-table (~> 1)
-    danger-rubocop (0.5.0)
+    danger-rubocop (0.6.0)
       danger
       rubocop
     delayed_job (4.1.3)
