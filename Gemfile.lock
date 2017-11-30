@@ -174,7 +174,7 @@ GEM
       activerecord
       kaminari-core (= 1.1.1)
     kaminari-core (1.1.1)
-    kramdown (1.16.1)
+    kramdown (1.16.2)
     local_time (2.0.0)
     lograge (0.7.1)
       actionpack (>= 4, < 5.2)
