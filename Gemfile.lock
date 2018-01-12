@@ -208,7 +208,7 @@ GEM
     parallel (1.12.1)
     parser (2.4.0.2)
       ast (~> 2.3)
-    pg (1.0.0)
+    pg (0.21.0)
     picturehouse_uk (4.0.0)
       cinebase (~> 3.0)
       nokogiri
@@ -372,7 +372,7 @@ DEPENDENCIES
   local_time
   lograge
   odeon_uk
-  pg
+  pg (~> 0.21)
   picturehouse_uk
   pry-rails
   puma
@@ -394,6 +394,8 @@ DEPENDENCIES
   uglifier
   web-console
 
+RUBY VERSION
+   ruby 2.4.1p111
 
 BUNDLED WITH
-   1.12.5
+   1.15.4
