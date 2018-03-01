@@ -14,7 +14,7 @@ gem 'is_crawler'
 gem 'kaminari'
 gem 'local_time'
 gem 'odeon_uk'
-gem 'pg', '~> 0.21'
+gem 'pg'
 gem 'picturehouse_uk'
 gem 'rack-timeout'
 gem 'sass-rails'
@@ -38,10 +38,9 @@ group :development, :test do
 end
 
 group :test do
-  gem 'codeclimate-test-reporter', require: nil
   gem 'danger', require: nil
   gem 'danger-rubocop', require: nil
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'faker'
   gem 'shoulda-matchers'
   gem 'simplecov'
@@ -56,4 +55,3 @@ group :production do
   gem 'rollbar'
   gem 'skylight'
 end
-gem 'nokogiri', '>= 1.8.2'
