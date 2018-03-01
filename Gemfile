@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.5.0'
 
-gem 'rails', '~> 5.0.6'
+gem 'rails', '~> 5.1.5'
 
 gem 'active_model_serializers'
 gem 'cineworld_uk'
