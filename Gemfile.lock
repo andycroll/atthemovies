@@ -378,7 +378,7 @@ DEPENDENCIES
   pry-rails
   puma
   rack-timeout
-  rails (~> 5.0.5)
+  rails (~> 5.0.6)
   rails_12factor
   rails_db_info
   rollbar
@@ -395,6 +395,8 @@ DEPENDENCIES
   uglifier
   web-console
 
+RUBY VERSION
+   ruby 2.5.0p0
 
 BUNDLED WITH
-   1.12.5
+   1.16.1
