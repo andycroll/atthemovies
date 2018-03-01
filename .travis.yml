@@ -10,16 +10,6 @@ before_script:
 - bundle exec danger
 bundler_args: "--without production --deployment --jobs=3 --retry=3"
 cache: bundler
-deploy:
-  api_key:
-    secure: zr12X6DHqlS6qX2PMZ+X+FbguVzoVT+NkiKzbJzKkD066EHJ/HGDr4sVpTwaz09IHPzEqTO0pXJFXpT+mflZU1fDTgZFR8x3Ad91bvsIBvofWSNWwZ+GM+V/5dcw8vnsVGmnpiFGH5NTKmPe07jvr328fNVnnZ2LMeZbwoaoyDtMXwbynvz0GEyv2DhDWYFh46vNQg3W4gil+IxzAm07gr0LN7JEF/wtv6Nz+VFsYb1TgjwLARw+3hNn3UgX/ygSXcbYJYYyEvYaZCNaUZ3f3+LDJrDydEV5OtFhnn+YD7MpGf9wmtPG1B80J1t+86y/J/xHcVRFiQeOgaXfjccTdkbM5CQ917z525toBQAeRYKKn6Tzx0tsmPiD8I2OW1OKFJtsiogKNRcz2xZXIYhf7TjERLzoiI1KPCxkofwqbvFMfa2RAtVbtBXeVN7lrRoXR11Dwh13/FxuIMjuYrizKSnKP/bcZ7Vg3ED4pisG77JdbHw0e5rwFORZk1ty/SXn0bdFbGCYh1778Hv9JnkvuYtQthGEJ4uKnPQagbZiZ409WYEhqN7bFXlnSMadCEidy7WtpgJ9rMvK+z1Pk4YpPOfZomeDsdOl+oJHa8b6OnJ+tWrEuz5WY5EAXLnHVzOKxA0jt5gnJeQmA2678PoP8TxbJ46kitnkTXE/20TKayg=
-  app: atthemovies
-  on:
-    branch: master
-  provider: heroku
-  run:
-  - rake db:migrate
-  - restart
 env:
   global:
     secure: xW/o/LpZDpa5zBgu4Q7fvqMdzaDA+OSblWJZmcg/ESJ4Nc1PVMvNzjY+2kX79HBPpDz21m/nunf3wU/YT8hf9qh3ZXhFuv4Y048mHh9h0oKpID+ItyhMY1GVuEo/MtYSXpsSnovlK9EeVkvjAPlLQvzn0vza8dgoyWnRCgmtQ7GTfDVYLfxtYyvGfKJfIErxaQHZ/XeSInNlcS5iZYb3n45nUUz0/pxxtgTb3GB8jnUr080U7Uk1IFtfd9fP99COaW66Ar0+hqlWIGa6mfcTGNp9XljUDMY4ZtR0cy2er8aREqhQt/ilPbQ8SxTby0wHb/hEETahRVOmTLl979xHlNednbsfM/ddeB9v8YIiVblRcMWYEevExeqUHOaMUFMnAEn7Hu1ofQVuygS/jDposnEea4ICAEt5LLXmRdXrm4MeTdQ5I8NvCbmizJ3yx9RsQMIlQlhU4dh+eA+7MlvRvmvvOcxLc9ZIUHXN9vbdw/3Pydgm5+E7NWYlGHysVkyk3k+N4AVrQKthbsDA51jUgXjKLhSSpeT/o5hlJraSlSaxQEIB3hNMjWklytkWSfV06rJKGpYpONEGwIPvIjQpCQri009sUoJG7P7WzKdKHNnZRsD1EQ2htRavdByieEJZygb65VjKTNcGWMUXscctOH3aitwXkH/nWXF2UD7FyIQ=
