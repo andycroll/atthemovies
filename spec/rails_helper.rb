@@ -13,7 +13,7 @@ ActiveRecord::Migration.maintain_test_schema!
 Faker::Config.locale = 'en-GB'
 
 RSpec.configure do |config|
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
   config.use_transactional_fixtures = true
   config.infer_spec_type_from_file_location!
 end

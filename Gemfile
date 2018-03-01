@@ -41,7 +41,7 @@ group :test do
   gem 'codeclimate-test-reporter', require: nil
   gem 'danger', require: nil
   gem 'danger-rubocop', require: nil
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'faker'
   gem 'shoulda-matchers'
   gem 'simplecov'
@@ -56,4 +56,3 @@ group :production do
   gem 'rollbar'
   gem 'skylight'
 end
-gem 'nokogiri', '>= 1.8.2'
