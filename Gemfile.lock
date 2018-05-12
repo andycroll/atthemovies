@@ -324,8 +324,8 @@ GEM
     stringex (2.8.4)
     terminal-table (1.8.0)
       unicode-display_width (~> 1.1, >= 1.1.1)
-    textacular (5.0.1)
-      activerecord (>= 3.0, < 5.2)
+    textacular (5.1.0)
+      activerecord (>= 5.0, < 6.0)
     themoviedb (1.0.1)
       httparty
     thor (0.19.4)
