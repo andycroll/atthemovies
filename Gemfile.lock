@@ -173,7 +173,7 @@ GEM
       kaminari-core (= 1.1.1)
     kaminari-core (1.1.1)
     kramdown (1.17.0)
-    local_time (2.0.1)
+    local_time (2.1.0)
     lograge (0.10.0)
       actionpack (>= 4)
       activesupport (>= 4)
