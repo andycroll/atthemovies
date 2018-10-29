@@ -14,13 +14,13 @@ FactoryBot.define do
     end
 
     trait :cineworld do
-      brand            'Cineworld'
+      brand            { 'Cineworld' }
       name             { "Cineworld #{locality || Faker::Address.city}" }
       brand_identifier { rand(1..100) }
     end
 
     trait :odeon do
-      brand            'Odeon'
+      brand            { 'Odeon' }
       name             { "Odeon #{locality || Faker::Address.city}" }
       brand_identifier { name.downcase.gsub(/\s/,'-') }
     end

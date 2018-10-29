@@ -17,7 +17,7 @@ FactoryBot.define do
     trait :information_added do
       external_id
       information
-      information_added true
+      information_added { true }
     end
   end
 end
