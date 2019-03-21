@@ -1,12 +1,14 @@
+addons:
+  postgresql: "9.6"
 after_script:
-- "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
+  - "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
 before_script:
-- "curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter"
-- chmod +x ./cc-test-reporter
-- "./cc-test-reporter before-build"
-- cp .env.example .env
-- bundle exec rake db:create
-- bundle exec rake db:schema:load
+  - "cp config/database.yml.travis config/database.yml"
+  - "psql -c 'create database travis_ci_test;' -U postgres"
+  - "cp .env.example .env"
+  - "curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter"
+  - chmod +x ./cc-test-reporter
+  - "./cc-test-reporter before-build"
 bundler_args: "--without production --deployment --jobs=3 --retry=3"
 cache: bundler
 env:
@@ -16,4 +18,7 @@ language: ruby
 rvm:
 - 2.5.3
 script:
-- bundle exec rspec
+  - bundle exec rake db:create db:schema:load RAILS_ENV=test
+  - bundle exec rspec
+services:
+  - postgresql
