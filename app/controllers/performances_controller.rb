@@ -5,6 +5,8 @@ class PerformancesController < ApplicationController
   before_action :assign_date
 
   def index
+    render_404 and return unless @date
+
     @performances = @cinema.performances
                            .on(@date)
                            .order(starting_at: :asc)
@@ -34,7 +36,7 @@ class PerformancesController < ApplicationController
       case @text
       when 'today' then Date.today
       when 'tomorrow' then Date.tomorrow
-      else Date.parse(@text)
+      when /\A\d{4}-\d{2}-\d{2}\z/ then Date.parse(@text)
       end
     end
   end
