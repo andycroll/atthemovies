@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class ScreeningToPerformance < ActiveRecord::Migration
+class ScreeningToPerformance < ActiveRecord::Migration[5.2]
   def change
     create_table :performances, id: :uuid do |t|
       t.uuid :film_id, null: false

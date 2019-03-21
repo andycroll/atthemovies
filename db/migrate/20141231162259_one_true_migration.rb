@@ -1,8 +1,9 @@
 # frozen_string_literal: true
-class OneTrueMigration < ActiveRecord::Migration
+class OneTrueMigration < ActiveRecord::Migration[5.2]
   def change
     enable_extension "plpgsql"
     enable_extension 'uuid-ossp'
+    enable_extension "pgcrypto"
 
     create_table :films, id: :uuid do |t|
       t.string :name, null: false, index: true
