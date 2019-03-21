@@ -27,6 +27,7 @@ gem 'uglifier'
 
 group :development do
   gem 'derailed'
+  gem "listen"
   gem 'foreman'
   gem 'rails_db_info'
   gem 'web-console'
