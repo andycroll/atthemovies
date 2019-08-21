@@ -284,8 +284,8 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     stringex (2.8.5)
-    textacular (5.1.0)
-      activerecord (>= 5.0, < 6.0)
+    textacular (5.2.0)
+      activerecord (>= 5.0, < 6.1)
     themoviedb (1.0.1)
       httparty
     thor (0.19.4)
