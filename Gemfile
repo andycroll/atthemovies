@@ -18,7 +18,7 @@ gem 'odeon_uk'
 gem 'pg'
 gem 'picturehouse_uk', '>= 4.0.0'
 gem 'rack-timeout'
-gem 'sass-rails', '>= 5.0.7'
+gem 'sass-rails', '>= 6.0.0'
 gem 'stringex'
 gem 'textacular'
 gem 'themoviedb'
@@ -35,12 +35,12 @@ end
 
 group :development, :test do
   gem 'dotenv-rails', '>= 2.7.5'
-  gem 'rspec-rails', '>= 3.8.2'
+  gem 'rspec-rails', '>= 3.9.0'
   gem 'pry-rails'
 end
 
 group :test do
-  gem 'factory_bot_rails', '>= 5.0.2'
+  gem 'factory_bot_rails', '>= 5.1.1'
   gem 'faker'
   gem 'shoulda-matchers'
   gem 'simplecov'
