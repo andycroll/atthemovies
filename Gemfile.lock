@@ -94,7 +94,7 @@ GEM
       dragonfly (~> 1.0)
       fog-aws
     erubi (1.9.0)
-    excon (0.66.0)
+    excon (0.71.0)
     execjs (2.7.0)
     factory_bot (5.1.1)
       activesupport (>= 4.2.0)
