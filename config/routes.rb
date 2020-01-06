@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 Rails.application.routes.draw do
   scope module: 'api/v1', constraints: APIConstraint.new(version: 1, default: true) do
     resources :cinemas, only: :index do
