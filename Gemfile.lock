@@ -192,7 +192,7 @@ GEM
     odeon_uk (4.0.1)
       CFPropertyList
       cinebase (~> 3.0)
-    pg (1.2.2)
+    pg (1.2.3)
     picturehouse_uk (4.0.0)
       cinebase (~> 3.0)
       nokogiri
