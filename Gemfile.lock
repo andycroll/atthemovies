@@ -349,7 +349,7 @@ DEPENDENCIES
   pry-rails
   puma
   rack-timeout
-  rails (~> 6.0.3)
+  rails (~> 6.0.3, >= 6.0.3.1)
   rails_12factor
   rails_db_info (>= 0.2.0)
   rollbar
