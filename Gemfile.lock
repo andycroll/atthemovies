@@ -114,7 +114,7 @@ GEM
     factory_bot_rails (6.2.0)
       factory_bot (~> 6.2.0)
       railties (>= 5.0.0)
-    faker (2.18.0)
+    faker (2.17.0)
       i18n (>= 1.6, < 2)
     ffi (1.15.0)
     fog-aws (3.5.2)
@@ -201,7 +201,7 @@ GEM
     pry-rails (0.3.9)
       pry (>= 0.10.4)
     public_suffix (4.0.6)
-    puma (4.3.6)
+    puma (5.3.1)
       nio4r (~> 2.0)
     racc (1.5.2)
     rack (2.2.3)
@@ -349,7 +349,7 @@ DEPENDENCIES
   pg
   picturehouse_uk (>= 4.0.0)
   pry-rails
-  puma
+  puma (>= 4.3.8)
   rack-timeout
   rails (~> 6.0.3)
   rails_12factor
