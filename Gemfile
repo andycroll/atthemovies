@@ -50,7 +50,7 @@ end
 group :production do
   gem 'dalli'
   gem 'lograge', '>= 0.11.2'
-  gem 'puma'
+  gem 'puma', '>= 4.3.9'
   gem 'rails_12factor'
   gem 'rollbar'
   gem 'skylight'
