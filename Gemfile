@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.5.3'
 
-gem 'rails', '~> 6.0.4'
+gem 'rails', '~> 6.0.4', '>= 6.0.4.2'
 
 gem 'active_model_serializers', '>= 0.10.10'
 gem 'cineworld_uk'
@@ -18,7 +18,7 @@ gem 'odeon_uk'
 gem 'pg'
 gem 'picturehouse_uk', '>= 4.0.0'
 gem 'rack-timeout'
-gem 'sass-rails', '>= 5.0.7'
+gem 'sass-rails', '>= 6.0.0'
 gem 'stringex'
 gem 'textacular'
 gem 'themoviedb'
@@ -30,17 +30,17 @@ group :development do
   gem "listen"
   gem 'foreman'
   gem 'rails_db_info', '>= 0.2.0'
-  gem 'web-console', '>= 3.7.0'
+  gem 'web-console', '>= 4.1.0'
 end
 
 group :development, :test do
-  gem 'dotenv-rails', '>= 2.7.5'
-  gem 'rspec-rails', '>= 3.8.2'
+  gem 'dotenv-rails', '>= 2.7.6'
+  gem 'rspec-rails', '>= 5.0.1'
   gem 'pry-rails'
 end
 
 group :test do
-  gem 'factory_bot_rails', '>= 5.0.2'
+  gem 'factory_bot_rails', '>= 6.2.0'
   gem 'faker'
   gem 'shoulda-matchers'
   gem 'simplecov'
