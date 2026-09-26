@@ -16,6 +16,7 @@
 /tmp
 /public/uploads/*
 /coverage
+/.amp/portals/*
 
 # Ignore .env
 .env

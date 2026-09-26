@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if command -v pg_lsclusters >/dev/null; then
+  while read -r version cluster _; do
+    if ! sudo pg_ctlcluster "$version" "$cluster" status >/dev/null 2>&1; then
+      sudo pg_ctlcluster "$version" "$cluster" start
+    fi
+  done < <(pg_lsclusters --no-header)
+fi
