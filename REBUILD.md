@@ -64,10 +64,29 @@ Keep three kinds of identity separate:
    providers separately. They aid imports, matching, and outbound links but do
    not define the record’s identity inside At The Movies.
 
-Names can still contribute a readable slug, for example
-`/films/PUBLIC_ID-film-title`, but lookup must use only `PUBLIC_ID`. A rename
-therefore changes the decorative part of the URL without breaking identity.
-Slugs should not be API IDs.
+Public HTML URLs should combine the stable token with a human-readable suffix:
+
+```text
+/films/PUBLIC_ID/alien-1979
+/cinemas/PUBLIC_ID/duke-of-yorks-brighton
+```
+
+Use a film’s name and year for its suffix. Use a cinema’s name and locality,
+without repeating the locality when the operator’s name already includes it.
+Uniqueness does not matter for these suffixes because lookup uses only
+`PUBLIC_ID`.
+
+The suffix is decorative. A request with a missing or stale suffix should
+permanently redirect to the current canonical URL, and HTML should emit a
+canonical link. Renaming a film or cinema therefore produces a better URL
+without breaking old links. Do not keep a slug-history table unless preserving
+the exact old wording is independently useful; the immutable token already
+solves link continuity.
+
+JSON API routes should use only the public ID (`/api/films/PUBLIC_ID`), while
+responses may include the canonical human-readable HTML URL. Slugs should never
+be API IDs, and neither slugs nor unguessable tokens are an authorization
+mechanism.
 
 There is no universally adopted identifier for a physical cinema. Keep each
 chain’s venue ID (`cineworld_venue`, `odeon_venue`, `picturehouse_venue`) and
