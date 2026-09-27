@@ -51,6 +51,64 @@ Rails 8.1.4.
 “Latest” should be rechecked when the new app is generated rather than treating
 the versions above as a permanent pin.
 
+### Identity strategy
+
+Keep three kinds of identity separate:
+
+1. **Database ID**: use Rails’ default integer primary key internally.
+2. **Public ID**: give both `Cinema` and `Film` an app-owned, immutable,
+   URL-safe `public_id`, generated with Rails’ `has_secure_token`. Add a unique,
+   non-null database index. Use this value in routes and JSON; never derive it
+   from a name or an external service.
+3. **External IDs**: store identifiers assigned by listing and metadata
+   providers separately. They aid imports, matching, and outbound links but do
+   not define the record’s identity inside At The Movies.
+
+Names can still contribute a readable slug, for example
+`/films/PUBLIC_ID-film-title`, but lookup must use only `PUBLIC_ID`. A rename
+therefore changes the decorative part of the URL without breaking identity.
+Slugs should not be API IDs.
+
+There is no universally adopted identifier for a physical cinema. Keep each
+chain’s venue ID (`cineworld_venue`, `odeon_venue`, `picturehouse_venue`) and
+optionally Wikidata or another place identifier as external IDs. Do not make an
+OpenStreetMap element ID or Google Place ID canonical: coverage, stability, and
+ownership differ.
+
+For films, IMDb’s `tt...` identifier is the most widely recognisable consumer
+identifier, while TMDB is already the metadata integration used here. Neither
+is universal, especially for event cinema, opera, theatre, and unmatched new
+releases. Store both when available. EIDR and ISAN are genuine audiovisual
+identifier standards and can also be stored when supplied, but neither has
+universal coverage. None should replace the app-owned `public_id`.
+
+A small `ExternalIdentifier` model is justified because both cinemas and films
+can have several identifiers and may gain more over time:
+
+```text
+ExternalIdentifier
+  identifiable_type / identifiable_id
+  source  # imdb_title, tmdb_movie, eidr, isan, odeon_venue, ...
+  value
+
+unique index: source + value
+index: identifiable_type + identifiable_id
+```
+
+Conventional film JSON can expose the stable app ID plus recognised external
+IDs without coupling the resource identity to any provider:
+
+```json
+{
+  "id": "app-owned-public-id",
+  "name": "Alien",
+  "external_ids": {
+    "imdb": "tt0078748",
+    "tmdb": "348"
+  }
+}
+```
+
 ## Current stack
 
 | Area | Current implementation |
@@ -381,9 +439,10 @@ several overlapping JSON logging templates.
 1. Create fresh `Cinema`, `Film`, and `Performance` migrations for SQLite from
    the domain requirements, not by replaying the nine historical migrations or
    copying PostgreSQL-specific column types.
-2. Add foreign keys and indexes. At minimum, consider uniqueness for provider
-   cinema identity and performance import identity; decide how title aliases
-   should be normalised before constraining films.
+2. Add foreign keys and indexes. Include unique public IDs, unique external
+   identifier source/value pairs, provider cinema identity, and performance
+   import identity; decide how title aliases should be normalised before
+   constraining films.
 3. Implement one provider adapter, its import job, and idempotency tests.
 4. Implement current/future listings and cleanup or expiry behaviour.
 5. Add public read pages or the API according to known consumers.
@@ -404,8 +463,9 @@ several overlapping JSON logging templates.
 
 ### 4. Migrate deliberately
 
-- Use Rails’ default primary keys for a clean re-import. Preserve old UUIDs only
-  in a separate legacy identifier if data migration or redirects require them.
+- Use Rails’ default primary keys plus app-owned public tokens for the new app.
+  Preserve old UUIDs only as `legacy` external identifiers if data migration or
+  redirects require them.
 - Replace PostgreSQL arrays (`alternate_names`, `tmdb_possibles`, and
   `name_hashes`) with normal SQLite-friendly relations or columns based on the
   actual workflow. Do not encode the old storage design into JSON by default.
