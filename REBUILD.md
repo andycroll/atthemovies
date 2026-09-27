@@ -4,7 +4,7 @@ This document records what the existing application does so it can be rebuilt
 from a fresh Rails application without treating old framework code as the
 specification.
 
-It reflects the repository as inspected on 26 September 2026. The last commit
+It reflects the repository as inspected on 27 September 2026. The last commit
 in this checkout is dated 21 July 2021.
 
 ## Executive summary
@@ -18,16 +18,38 @@ At The Movies is a small Rails monolith that:
 4. exposes public HTML listings and a read-only JSON:API API; and
 5. provides a basic-authenticated film/cinema triage UI.
 
-The useful parts to preserve are the domain model, import identities, API
-contract (if it still has consumers), and manual film-triage workflow. Most of
-the infrastructure should be selected afresh. In particular, do not begin by
-upgrading this application in place: it is tied to Ruby 2.5.3, Rails 6.0.4,
-Bundler 1.17.3, old scraper gems, Delayed Job, Dragonfly, Sprockets/Turbolinks,
-and Rails 5.1 defaults.
+The useful parts to preserve are the domain model, import identities, public
+behaviour, and manual film-triage workflow. Most of the infrastructure should
+be selected afresh. In particular, do not begin by upgrading this application
+in place: it is tied to Ruby 2.5.3, Rails 6.0.4, Bundler 1.17.3, old scraper
+gems, Delayed Job, Dragonfly, Sprockets/Turbolinks, and Rails 5.1 defaults.
 
 The largest unknown is not Rails; it is whether the three scraper gems still
 work against their cinema websites and whether anything still consumes the v1
 API. Establish those facts before reproducing all current behaviour.
+
+## Replacement target
+
+This is a clean rewrite using the current vanilla Rails stack, not a migration
+of the old technical architecture. As of this review, that means Ruby 4.0.7 and
+Rails 8.1.4.
+
+- Start from an unmodified full-stack `rails new` application.
+- Keep SQLite in development, test, and production.
+- Keep Solid Queue, Solid Cache, and Solid Cable; do not introduce Redis,
+  PostgreSQL, Sidekiq, or another queue/cache without measured need.
+- Keep Rails defaults including Hotwire (Turbo and Stimulus), Propshaft,
+  Importmap, Active Storage, Minitest, RuboCop Rails Omakase, Kamal, and
+  Thruster unless a concrete requirement proves otherwise.
+- Add Tailwind CSS and daisyUI for the interface.
+- Return conventional, well-formatted JSON with ordinary Rails naming. Do not
+  reproduce JSON:API envelopes, dashed keys, content-negotiated controllers,
+  or ActiveModelSerializers.
+- Prefer Rails generators and framework conventions over copied code from this
+  repository.
+
+“Latest” should be rechecked when the new app is generated rather than treating
+the versions above as a permanent pin.
 
 ## Current stack
 
@@ -212,6 +234,9 @@ Public read pages and the API require no authentication.
 
 ## v1 API contract
 
+This section describes the legacy API for understanding old clients only. It is
+not the target format for the replacement.
+
 API routes share the HTML paths. A request reaches the API controller when it
 uses `.json` or an `Accept: application/vnd.atthemovies.v1` header. Responses
 use JSON:API envelopes and dash-separated attribute names.
@@ -234,8 +259,11 @@ are asserted by request specs:
   TMDB ID, year; and
 - performance: dimension, starting time, variant, and cinema/film relationships.
 
-Before retaining this exact shape, check API traffic or known clients. There is
-no API documentation, authentication, rate limiting, pagination, or explicit
+Check API traffic or known clients before switching off the old application,
+but do not carry this shape into the new API. The new endpoints should use
+explicit routes and conventional JSON objects/arrays with underscore-separated
+keys. Add pagination only where result size requires it. The old API has no
+documentation, authentication, rate limiting, pagination, or explicit
 deprecation/version migration mechanism beyond content negotiation.
 
 ## External services and configuration
@@ -288,10 +316,54 @@ These are observations, not requirements for the replacement:
 
 ## Rebuild recommendation
 
-Start with a currently supported Ruby and Rails release and PostgreSQL. Generate
-a normal full-stack application rather than copying configuration files. Decide
-the job, cache, asset, and image-storage choices from current Rails defaults and
-the intended deployment platform.
+Generate a vanilla Rails 8.1 application on the latest Ruby 4.0 patch release.
+Do not pass a database option: retain SQLite and the generated Solid Queue,
+Solid Cache, and Solid Cable databases. Keep the generated framework choices
+unless this product demonstrates a reason to diverge.
+
+At the versions current during this review, the starting commands would be:
+
+```sh
+gem install rails --version 8.1.4
+rails _8.1.4_ new atthemovies \
+  -m https://railstemplates.org/daisyui/template
+```
+
+Review the generated diff and boot the untouched app before adding domain code.
+The daisyUI template installs `tailwindcss-rails` when Tailwind is absent and
+then installs daisyUI. Retain the template’s rake task so daisyUI can be updated
+deliberately.
+
+### Rails Templates to consider
+
+Apply templates individually after the base app works; inspect their source at
+[railstemplates.org](https://railstemplates.org/) before execution.
+
+Recommended initially:
+
+- **DaisyUI**: required UI choice; installs Tailwind when necessary.
+- **CI Pipeline**: uses Rails 8.1’s continuous-integration support and replaces
+  the repository’s dead Travis/CircleCI configuration.
+- **Procfile.dev**: runs web, Tailwind, and Solid Queue together in development.
+- **Dependabot with Automerge**: keeps the newly current stack current with
+  grouped, cooled-down dependency updates.
+
+Recommended when the corresponding production concern exists:
+
+- **Litestream**: replicate production SQLite to object storage for point-in-
+  time recovery. Use it only with a deployment that provides persistent local
+  storage and obey its single-writer rule.
+- **ApplicationClient + outgoing-API JSON logs**: a good boundary for cinema
+  provider and TMDB HTTP integrations once those adapters are implemented.
+- **ActiveJob JSON Logs** and **Request-ID Context**: useful once imports are
+  running asynchronously and production observability is being configured.
+- **Prosopite N+1 Detection** and **SimpleCov with Minitest Parallelism**: useful
+  testing additions once the first vertical slice exists.
+
+Do not apply **StandardRB (Replace Omakase)** because the target is the default
+Rails lint stack. Defer Strong Migrations, alternate logging stacks, APM, and
+workspace orchestration until there is a demonstrated need. Avoid installing
+several overlapping JSON logging templates.
 
 ### 1. Prove the boundaries first
 
@@ -306,8 +378,9 @@ the intended deployment platform.
 
 ### 2. Build the smallest useful vertical slice
 
-1. Create fresh `Cinema`, `Film`, and `Performance` migrations from the current
-   schema, not by replaying the nine historical migrations.
+1. Create fresh `Cinema`, `Film`, and `Performance` migrations for SQLite from
+   the domain requirements, not by replaying the nine historical migrations or
+   copying PostgreSQL-specific column types.
 2. Add foreign keys and indexes. At minimum, consider uniqueness for provider
    cinema identity and performance import identity; decide how title aliases
    should be normalised before constraining films.
@@ -320,16 +393,25 @@ the intended deployment platform.
 - Add TMDB lookup and an explicit enrichment state rather than a single boolean
   if operators need to distinguish pending, matched, no match, event, hidden,
   and failed states.
-- Use current Rails-supported file storage/image variants unless there is a
-  demonstrated reason to preserve Dragonfly paths.
-- Rebuild the small triage workflow with real authentication appropriate to the
-  deployment; retain Basic Auth only if that is a conscious operational choice.
-- Schedule imports and cleanup explicitly on the chosen platform and make
-  failures observable.
+- Use Active Storage and its image variants unless there is a demonstrated
+  reason to preserve Dragonfly paths.
+- Rebuild the small triage workflow with Rails’ authentication generator rather
+  than Basic Auth.
+- Use Solid Queue recurring tasks for imports and cleanup and make failures
+  observable.
+- Render JSON directly with explicit response shapes; do not add a serializer
+  framework until repetition justifies one.
 
 ### 4. Migrate deliberately
 
-- Preserve UUIDs if importing the old database or maintaining API identity.
+- Use Rails’ default primary keys for a clean re-import. Preserve old UUIDs only
+  in a separate legacy identifier if data migration or redirects require them.
+- Replace PostgreSQL arrays (`alternate_names`, `tmdb_possibles`, and
+  `name_hashes`) with normal SQLite-friendly relations or columns based on the
+  actual workflow. Do not encode the old storage design into JSON by default.
+- Replace Textacular/`pg_trgm` search with the simplest SQLite-backed search
+  that meets observed needs; SQLite FTS is available if simple indexed lookup
+  is insufficient.
 - Recalculate `performances_count` rather than trusting stale counters.
 - Validate orphan counts before adding foreign keys.
 - Deduplicate cinemas and performances before adding unique indexes.
@@ -353,7 +435,8 @@ than copying old test implementation. High-value replacement tests are:
 - deleting/expiring performances updates “what’s on” correctly;
 - selecting a TMDB match results in metadata and one set of stored images;
 - hidden/event/no-match states have explicitly agreed public behaviour;
-- API response fixtures remain compatible if the v1 API must be preserved; and
+- conventional JSON responses have explicit, stable shapes without JSON:API
+  envelopes; and
 - unauthenticated users cannot reach any operator mutation.
 
 ## Things not worth porting by default
@@ -362,13 +445,14 @@ than copying old test implementation. High-value replacement tests are:
 - Delayed Job’s table and worker setup;
 - Dragonfly middleware and its public signing secret;
 - Turbolinks/Sprockets page-initialisation plumbing;
+- ActiveModelSerializers and the JSON:API response contract;
 - Bootstrap 3 CDN markup and old pagination partials;
 - crawler-specific exception handling;
 - dual legacy CI configuration;
-- unused Action Cable, Active Storage, Redis, and `PerformanceGrouper` setup;
+- old Redis configuration and the unused `PerformanceGrouper`;
 - old monitoring vendors unless they remain the chosen services; and
 - historical migrations whose final state is already represented by the schema.
 
 The old repository should remain available as a behavioural reference until
-provider ingestion, data migration, operator triage, and any required API
-compatibility have all been verified in the replacement.
+provider ingestion, data migration, operator triage, and the transition from
+any active old API clients have all been verified in the replacement.
