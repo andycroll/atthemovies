@@ -1,0 +1,6 @@
+<nav class="flex flex-wrap gap-2 mb-8" aria-label="Showing dates">
+  <% 15.times do |offset| %>
+    <% date = Date.current + offset %>
+    <%= link_to offset == 0 ? "Today" : offset == 1 ? "Tomorrow" : date.strftime("%a %-d %b"), cinema_performances_path(cinema, date: date.iso8601), class: "btn btn-sm #{date == selected ? 'btn-primary' : 'btn-outline'}", aria: { current: date == selected ? "date" : nil } %>
+  <% end %>
+</nav>

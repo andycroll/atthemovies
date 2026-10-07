@@ -1,0 +1,6 @@
+<h1 class="text-3xl font-black mb-6">Edit <%= @cinema.name %></h1>
+<% if @cinema.errors.any? %><p role="alert" class="alert alert-error mb-5"><%= @cinema.errors.full_messages.join(", ") %></p><% end %>
+<%= form_with model: @cinema, url: operator_cinema_path(@cinema), class: "bg-base-100 border border-base-300 rounded-box p-6 grid gap-5 max-w-3xl" do |form| %>
+  <% %i[name street_address extended_address locality region postal_code country country_code latitude longitude screenings_url].each do |field| %><div><%= form.label field, class: "block font-semibold mb-2" %><%= form.text_field field, class: "input input-bordered w-full" %></div><% end %>
+  <%= form.submit "Save cinema", class: "btn btn-primary justify-self-start" %>
+<% end %>

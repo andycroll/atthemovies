@@ -1,30 +1,14 @@
-<%# frozen_string_literal: true %>
-<% content_for(:title) do -%>
-  Cinemas
-<% end -%>
-
-<% content_for :breadcrumbs do -%>
-  <li class="active">Cinemas</li>
-<% end -%>
-
-<% content_for(:page_header) do -%>
-  Cinemas
-<% end -%>
-
-<div class="row">
+<% content_for :title, "Cinemas · At The Movies" %>
+<h1 class="text-4xl font-black mb-3">Find your cinema</h1>
+<p class="text-base-content/70 mb-8"><%= params[:near].present? ? "Nearest cinemas first. Venues without coordinates appear last." : "Your local big screen, and a few worth travelling for." %></p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
   <% @cinemas.each do |cinema| %>
-    <div class="col-sm-6">
-      <h4>
-        <%= link_to cinema.name, cinema_path(cinema) %>
-        <%- if cinema.try(:distance) -%>
-          <small><%= number_with_precision(cinema.distance, precision: 2, significant: false) %>m</small>
-        <%- end -%>
-      </h4>
-      <p>
-        <%= cinema.street_address %>,
-        <%= cinema.locality %>
-        <%= cinema.postal_code %>
-      </p>
-    </div>
+    <article class="card bg-base-100 border border-base-300"><div class="card-body">
+      <p class="text-xs uppercase tracking-widest text-primary"><%= cinema.brand %> · <%= cinema.locality %></p>
+      <h2 class="card-title"><%= link_to cinema.name, cinema_path(cinema, suffix: cinema.suffix), class: "link link-hover" %></h2>
+      <p class="text-sm text-base-content/70"><%= cinema.address %></p>
+      <%= link_to "Today's showings →", cinema_performances_path(cinema, date: "today"), class: "text-primary font-semibold mt-3" %>
+    </div></article>
   <% end %>
 </div>
+<% if @cinemas.empty? %><p>No cinemas imported yet.</p><% end %>

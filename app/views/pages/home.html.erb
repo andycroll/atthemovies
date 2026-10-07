@@ -1,6 +1,18 @@
-<%# frozen_string_literal: true %>
-<% content_for(:page_header) do -%>
-  <h1>Coming Soon for iOS</h1>
-<% end -%>
-
-<h2><%= link_to 'Cinemas', cinemas_path %> or <%= link_to 'Films', films_path %></h2>
+<section class="bg-base-100 rounded-box border border-base-300 p-8 md:p-14 mb-10">
+  <p class="text-sm font-bold uppercase tracking-widest text-primary mb-4">A night at the cinema</p>
+  <h1 class="text-4xl md:text-6xl font-black tracking-tight max-w-2xl mb-5">Find your next<br>big-screen moment.</h1>
+  <p class="text-lg text-base-content/70 max-w-xl mb-8">Discover what's showing and find a cinema near you. Independent favourites, new releases and special events, all in one place.</p>
+  <div class="flex flex-wrap gap-3">
+    <%= link_to "Explore films", films_path, class: "btn btn-primary" %>
+    <%= link_to "Browse #{@cinema_count} cinemas", cinemas_path, class: "btn btn-outline" %>
+    <div data-controller="nearby">
+      <button class="btn btn-ghost" data-action="nearby#find">Find nearby cinemas</button>
+      <p class="text-sm mt-2" role="status" data-nearby-target="status"></p>
+    </div>
+  </div>
+</section>
+<div class="flex items-center justify-between mb-5">
+  <h2 class="text-2xl font-bold">What's on</h2>
+  <%= link_to "All films →", films_path, class: "link link-hover" %>
+</div>
+<%= render "films/list", films: @films %>

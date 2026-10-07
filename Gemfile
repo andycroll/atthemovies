@@ -1,57 +1,68 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
-ruby '2.5.3'
+# Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
+gem "rails", "~> 8.1.4"
+# The modern asset pipeline for Rails [https://github.com/rails/propshaft]
+gem "propshaft"
+# Use sqlite3 as the database for Active Record
+gem "sqlite3", ">= 2.1"
+# Use the Puma web server [https://github.com/puma/puma]
+gem "puma", ">= 5.0"
+# Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
+gem "importmap-rails"
+# Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
+gem "turbo-rails"
+# Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
+gem "stimulus-rails"
+# Build JSON APIs with ease [https://github.com/rails/jbuilder]
+gem "jbuilder"
 
-gem 'rails', '~> 6.0.4'
+# Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
+gem "bcrypt", "~> 3.1.7"
 
-gem 'active_model_serializers', '>= 0.10.10'
-gem 'cineworld_uk'
-gem 'delayed_job_active_record'
-gem 'dragonfly'
-gem 'dragonfly-s3_data_store', '>= 1.3.0'
-gem 'geocoder'
-gem 'is_crawler'
-gem 'kaminari', '>= 1.1.1'
-gem 'local_time'
-gem 'mime-types'
-gem 'odeon_uk'
-gem 'pg'
-gem 'picturehouse_uk', '>= 4.0.0'
-gem 'rack-timeout'
-gem 'sass-rails', '>= 5.0.7'
-gem 'stringex'
-gem 'textacular'
-gem 'themoviedb'
-gem 'turbolinks'
-gem 'uglifier'
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem "tzinfo-data", platforms: %i[ windows jruby ]
 
-group :development do
-  gem 'derailed'
-  gem "listen"
-  gem 'foreman'
-  gem 'rails_db_info', '>= 0.2.0'
-  gem 'web-console', '>= 3.7.0'
-end
+# Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
+gem "solid_cache"
+gem "solid_queue"
+gem "solid_cable"
+
+# Reduces boot times through caching; required in config/boot.rb
+gem "bootsnap", require: false
+
+# Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
+gem "kamal", require: false
+
+# Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
+gem "thruster", require: false
+
+# Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
+gem "image_processing", "~> 1.2"
 
 group :development, :test do
-  gem 'dotenv-rails', '>= 2.7.5'
-  gem 'rspec-rails', '>= 3.8.2'
-  gem 'pry-rails'
+  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+  gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
+
+  # Audits gems for known security defects (use config/bundler-audit.yml to ignore issues)
+  gem "bundler-audit", require: false
+
+  # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
+  gem "brakeman", require: false
+
+  # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
+  gem "rubocop-rails-omakase", require: false
+end
+
+group :development do
+  # Use console on exceptions pages [https://github.com/rails/web-console]
+  gem "web-console"
 end
 
 group :test do
-  gem 'factory_bot_rails', '>= 5.0.2'
-  gem 'faker'
-  gem 'shoulda-matchers'
-  gem 'simplecov'
-  gem 'timecop'
+  gem "minitest-mock"
+  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+  gem "capybara"
+  gem "selenium-webdriver"
 end
-
-group :production do
-  gem 'dalli'
-  gem 'lograge', '>= 0.11.2'
-  gem 'puma'
-  gem 'rails_12factor'
-  gem 'rollbar'
-  gem 'skylight'
-end
+gem "tailwindcss-rails"

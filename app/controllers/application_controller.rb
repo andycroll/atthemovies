@@ -1,46 +1,19 @@
-# frozen_string_literal: true
 class ApplicationController < ActionController::Base
-  include IsCrawler
+  include Authentication
+  # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
+  allow_browser versions: :modern
 
-  protect_from_forgery with: :exception
-
-  rescue_from ActiveRecord::RecordNotFound, with: :not_found
-
-  helper_method :action_for_js, :controller_for_js
-
-  def action_for_js
-    return @action_for_js if @action_for_js
-    case action_name
-    when 'create' then 'new'
-    when 'update' then 'edit'
-    else action_name
-    end
-  end
-
-  def controller_for_js
-    return @controller_for_js if @controller_for_js
-    controller_path.tr('/', '.')
-  end
+  # Changes to the importmap will invalidate the etag for HTML responses
+  stale_when_importmap_changes
 
   private
-
-  def http_basic_auth
-    authenticate_or_request_with_http_basic('Secret!') do |user, password|
-      user == ENV['HTTP_BASIC_USER'] && password == ENV['HTTP_BASIC_PASSWORD']
+    def listing_date
+      case params[:date]
+      when nil, "today" then Date.current
+      when "tomorrow" then Date.tomorrow
+      else
+        raise ArgumentError, "Use YYYY-MM-DD, today or tomorrow" unless params[:date].match?(/\A\d{4}-\d{2}-\d{2}\z/)
+        Date.iso8601(params[:date])
+      end
     end
-  end
-
-  def not_found(exception)
-    if Rails.env.production? && is_crawler?(request.user_agent) || request.path.include?('.php')
-      render_404
-    else
-      raise exception
-    end
-  end
-
-  def render_404
-    render file:   Rails.root.join('public', '404.html'),
-           layout: nil,
-           status: :not_found
-  end
 end

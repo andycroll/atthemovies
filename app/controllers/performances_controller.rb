@@ -1,43 +1,12 @@
-# frozen_string_literal: true
 class PerformancesController < ApplicationController
-  before_action :redirect_to_today_unless_date_constrained
-  before_action :assign_cinema
-  before_action :assign_date
+  allow_unauthenticated_access
 
   def index
-    render_404 and return unless @date
-
-    @performances = @cinema.performances
-                           .on(@date)
-                           .order(starting_at: :asc)
-                           .includes(:film)
-  end
-
-  private
-
-  def assign_cinema
-    @cinema = Cinema.find_by_url!(params[:cinema_id])
-  end
-
-  def assign_date
-    @date = DateParser.new(params[:when]).to_date
-  end
-
-  def redirect_to_today_unless_date_constrained
-    redirect_to dated_cinema_performances_path(params[:cinema_id], when: 'today') and return unless params[:when]
-  end
-
-  class DateParser
-    def initialize(text)
-      @text = text
-    end
-
-    def to_date
-      case @text
-      when 'today' then Date.today
-      when 'tomorrow' then Date.tomorrow
-      when /\A\d{4}-\d{2}-\d{2}\z/ then Date.parse(@text)
-      end
-    end
+    @cinema = Cinema.find_by!(public_id: params[:cinema_id])
+    return redirect_to cinema_performances_path(@cinema, date: "today") unless params[:date]
+    @date = listing_date
+    @performances = @cinema.performances.publicly_visible.on(@date).includes(:film)
+  rescue ArgumentError
+    render plain: "Use YYYY-MM-DD, today or tomorrow", status: :bad_request
   end
 end

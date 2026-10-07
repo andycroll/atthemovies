@@ -1,0 +1,8 @@
+# Procfile.dev — managed by railstemplates.org/procfile-dev
+#
+# Start every dev process with: bin/dev
+# Attach the debugger to the running web process with: rdbg -A
+
+web: env RUBY_DEBUG_OPEN=true bin/rails server
+css: bin/rails tailwindcss:watch
+jobs: bin/jobs

@@ -1,57 +1,21 @@
-# frozen_string_literal: true
 class FilmsController < ApplicationController
-  before_action :http_basic_auth, only: [:edit, :merge, :triage, :update]
-  before_action :assign_film_by_id, except: [:index, :show, :triage]
-
-  def edit
-    @similar_films = Film.similar_to(@film.name) - [@film]
-  end
+  allow_unauthenticated_access
 
   def index
-    @films = params[:q] ? Film.similar_to(params[:q]) : Film.whats_on
-  end
-
-  def merge
-    # merge _this_ film into the other film
-    Films::Merge.perform_now(Film.find(params[:other_id]), @film)
-    redirect_back(fallback_location: films_path)
+    @films = Film.showing.with_attached_poster
+    if params[:q].present?
+      query = "%#{Film.sanitize_sql_like(params[:q].strip)}%"
+      @films = Film.visible.where("name LIKE ?", query).with_attached_poster.order(:name)
+    end
   end
 
   def show
-    @film = Film.find_by_url!(params[:id])
-  end
-
-  def triage
-    @films = if params[:q]
-               Film.similar_to(params[:q]).page(params[:page])
-             else
-               Film.no_information
-                   .no_tmdb_id
-                   .where.not(performances_count: nil)
-                   .order('performances_count DESC, name ASC')
-                   .page(params[:page]).per(20)
-             end
-  end
-
-  def update
-    if params[:alternate_name]
-      @film.add_alternate_name(params[:alternate_name])
+    @film = Film.visible.find_by!(public_id: params[:id])
+    @canonical_url = film_url(@film, suffix: @film.suffix)
+    if params[:suffix] != @film.suffix
+      redirect_to @canonical_url, status: :moved_permanently
     else
-      @film.update_attributes(film_attributes)
+      @performances = @film.performances.upcoming.includes(:cinema)
     end
-    redirect_back(fallback_location: films_path)
-  end
-
-  private
-
-  def assign_film_by_id
-    @film = Film.find(params[:id])
-  end
-
-  def film_attributes
-    params.require(:film).permit(:information_added, :name, :overview,
-                                 :running_time, :tagline, :tmdb_identifier,
-                                 :event, :hidden, :poster_source_uri,
-                                 :backdrop_source_uri)
   end
 end

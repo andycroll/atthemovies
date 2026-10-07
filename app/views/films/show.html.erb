@@ -1,36 +1,21 @@
-<%# frozen_string_literal: true %>
-<% content_for(:title) do -%>
-  <%= @film.name %> &bull; Films
-<% end -%>
-
-<% content_for :breadcrumbs do -%>
-  <li><%= link_to 'Films', films_path %></li>
-  <li class="active"><%= @film.name %></li>
-<% end -%>
-
-<% content_for(:page_header) do -%>
-  <%= @film.name %>
-  <% if @film.year? -%><small><%= @film.year %></small><% end -%>
-<% end -%>
-
-<div class="row">
-  <div class="col-sm-push-8 col-sm-4">
-    <h3>Showing at...</h3>
-    <% @film.cinemas.each do |cinema| %>
-    <p><%= link_to cinema.name, cinema %></p>
-    <% end %>
+<% content_for :title, "#{@film.name} · At The Movies" %>
+<%= link_to "← All films", films_path, class: "link link-hover text-sm" %>
+<section class="bg-base-100 border border-base-300 rounded-box p-6 md:p-10 my-6 flex flex-col md:flex-row gap-8">
+  <% if @film.poster.attached? %><%= image_tag @film.poster.variant(:listing), alt: "#{@film.name} poster", class: "w-48 rounded-lg object-contain self-start" %><% end %>
+  <div>
+    <p class="text-base-content/60 mb-2"><%= [@film.year, @film.runtime && "#{@film.runtime} minutes"].compact.join(" · ") %></p>
+    <h1 class="text-4xl font-black mb-4"><%= @film.name %></h1>
+    <% if @film.event? %><p class="badge badge-outline mb-4">Special event</p><% end %>
+    <p class="text-lg font-medium mb-4"><%= @film.tagline %></p>
+    <p class="max-w-2xl leading-relaxed"><%= @film.overview %></p>
+    <% if authenticated? %><%= link_to "Edit film", edit_operator_film_path(@film), class: "btn btn-outline btn-sm mt-6" %><% end %>
   </div>
-  <div class="col-sm-pull-4 col-sm-2">
-    <%= image_tag poster_uri(@film), class: 'img-responsive' %>
-  </div>
-  <div class="col-sm-pull-4 col-sm-6">
-    <h3><%= @film.tagline %></h3>
-    <p class="lead"><%= @film.overview %></p>
-    <p class="small">
-      <%= @film.runtime %> minutes<br />
-      <%= link_to 'tmdb', tmdb_url(@film.tmdb_identifier) %> •
-      <%= link_to 'imdb', imdb_url(@film.imdb_identifier) %> •
-      <%= @film.id %>
-    </p>
-  </div>
-</div>
+</section>
+<h2 class="text-2xl font-bold mb-5">Upcoming showings</h2>
+<% @performances.group_by(&:cinema).each do |cinema, performances| %>
+  <section class="bg-base-100 border border-base-300 rounded-box p-6 mb-4">
+    <h3 class="text-xl font-bold mb-4"><%= link_to cinema.name, cinema_path(cinema, suffix: cinema.suffix), class: "link link-hover" %> <span class="text-sm font-normal"><%= cinema.locality %></span></h3>
+    <div class="flex flex-wrap gap-3"><% performances.each do |performance| %><span class="badge badge-lg badge-outline"><%= performance.starting_at.strftime("%a %-d %b, %H:%M") %> · <%= performance.dimension %></span><% end %></div>
+  </section>
+<% end %>
+<% if @performances.empty? %><p>No upcoming showings listed.</p><% end %>

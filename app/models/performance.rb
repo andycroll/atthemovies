@@ -1,50 +1,18 @@
-# frozen_string_literal: true
-class Performance < ActiveRecord::Base
+class Performance < ApplicationRecord
   belongs_to :cinema
   belongs_to :film, counter_cache: true
-
-  validates :cinema_id, :film_id, :dimension, :starting_at, presence: true
-
-  before_save :dimension_downcase!
-  before_save :variant_downcase!
-
-  scope :ordered, -> { order(starting_at: :asc) }
-  scope :past, -> { before(Time.current) }
-
-  def self.after(time)
-    where(arel_table[:starting_at].gt(time))
+  before_validation do
+    self.dimension = dimension.to_s.downcase
+    self.variant = variant.to_s.downcase
   end
-
-  def self.before(time)
-    where(arel_table[:starting_at].lt(time))
-  end
-
-  def self.between(start_on, end_on)
-    after(beginning_of_day_or_current(start_on))
-      .before(end_on.end_of_day)
-      .ordered
-  end
+  validates :dimension, :variant, :starting_at, presence: true
+  validates :booking_url, format: { with: %r{\Ahttps://[^\s/]+(?:/[^\s]*)?\z} }, allow_blank: true
+  scope :upcoming, -> { where(starting_at: Time.current..).order(:starting_at) }
+  scope :publicly_visible, -> { joins(:film).merge(Film.visible) }
 
   def self.on(date)
-    between(date, date)
-  end
-
-  def update_variant!(variant)
-    update_attributes(variant: variant)
-  end
-
-  private
-
-  def self.beginning_of_day_or_current(date)
-    date.to_date == Time.current.to_date ? Time.current : date.beginning_of_day
-  end
-  private_class_method :beginning_of_day_or_current
-
-  def dimension_downcase!
-    dimension.downcase!
-  end
-
-  def variant_downcase!
-    variant.downcase!
+    beginning = date.in_time_zone.beginning_of_day
+    beginning = [ beginning, Time.current ].max if date == Date.current
+    where(starting_at: beginning...date.in_time_zone.tomorrow.beginning_of_day).order(:starting_at)
   end
 end

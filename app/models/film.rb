@@ -1,103 +1,62 @@
-# frozen_string_literal: true
-class Film < ActiveRecord::Base
-  has_many :performances
+class Film < ApplicationRecord
+  has_secure_token :public_id
+  attr_readonly :public_id
+  has_many :external_identifiers, as: :identifiable, dependent: :destroy
+  has_many :film_aliases, dependent: :destroy
+  has_many :tmdb_candidates, dependent: :destroy
+  has_many :performances, dependent: :destroy
   has_many :cinemas, -> { distinct }, through: :performances
-
+  has_one_attached :poster do |attachable|
+    attachable.variant :listing, resize_to_limit: [ 400, 600 ]
+  end
+  has_one_attached :backdrop
   validates :name, presence: true
+  validates :poster_source_url, :backdrop_source_url, format: { with: %r{\Ahttps://image\.tmdb\.org/t/p/(original|w\d+)/[a-zA-Z0-9]+\.(jpg|png)\z} }, allow_blank: true
+  validate do
+    %i[poster backdrop].each do |kind|
+      image = public_send(kind)
+      errors.add(kind, "must be a JPEG, PNG or WebP image") if image.attached? && !image.content_type.in?(%w[image/jpeg image/png image/webp])
+    end
+  end
+  validates :enrichment_state, inclusion: { in: %w[pending candidates matched no_match failed] }
+  scope :visible, -> { where(hidden: false) }
+  scope :showing, -> { visible.where(id: Performance.upcoming.select(:film_id)).order(performances_count: :desc, name: :asc) }
 
-  before_save :add_hashed_name, if: :name_change
-  before_update :add_old_name_to_alternate_names, if: :name_change
-  before_update :information_not_added, if: :tmdb_identifier_change
-  after_commit :fetch_backdrop, if: -> { previous_changes.key?(:backdrop_source_uri) }
-  after_commit :fetch_external_ids, if: -> { previous_changes.key?(:name) }
-  after_commit :fetch_poster, if: -> { previous_changes.key?(:poster_source_uri) }
-
-  acts_as_url :name, sync_url: true
-
-  def self.alternately_named(name)
-    where('alternate_names @> ?', "{#{name.delete(',').delete('"')}}")
+  def to_param
+    public_id
   end
 
-  def self.find_named(name)
-    find_by(url: name.to_url) || alternately_named(name).first
+  def suffix
+    [ name, year ].compact.join(" ").parameterize
   end
 
-  def self.find_or_create_by_name(name)
-    find_named(name) || create(name: name)
+  def self.resolve_title!(name)
+    normalized = FilmAlias.normalize(name)
+    transaction do
+      existing = FilmAlias.find_by(normalized_name: normalized)
+      return existing.film if existing
+      film = create!(name: name)
+      film.film_aliases.create!(name: name)
+      film
+    end
+  rescue ActiveRecord::RecordNotUnique
+    FilmAlias.find_by!(normalized_name: normalized).film
   end
 
-  def self.no_information
-    where(information_added: false)
-  end
-
-  def self.no_tmdb_details
-    no_tmdb_id.where("tmdb_possibles = '{}'")
-  end
-
-  def self.no_tmdb_id
-    where(tmdb_identifier: nil)
-  end
-
-  scope :similar_to, ->(name) { advanced_search(name: name.gsub(/[^0-9A-Za-z ]/, '').gsub(/\s+/, '|')) }
-
-  def self.whats_on
-    where(Film.arel_table[:performances_count].gt(0))
-      .order(performances_count: :desc)
-  end
-
-  def add_alternate_name(name)
-    update_attributes(alternate_names: alternate_names + [name])
-  end
-
-  def update_external_information_from(tmdb_movie)
-    update_attributes(name:                tmdb_movie.title,
-                      imdb_identifier:     tmdb_movie.imdb_number.to_s,
-                      overview:            tmdb_movie.overview,
-                      runtime:             tmdb_movie.runtime,
-                      tagline:             tmdb_movie.tagline,
-                      year:                tmdb_movie.year,
-                      poster_source_uri:   tmdb_movie.poster.uri,
-                      backdrop_source_uri: tmdb_movie.backdrop.uri,
-                      information_added:   true)
-  end
-
-  def needs_external_information?
-    tmdb_identifier? && !information_added?
-  end
-
-  def update_possibles(array)
-    update_attributes(tmdb_possibles: array)
-  end
-
-  private
-
-  def add_hashed_name
-    self.name_hashes = (name_hashes + [FilmNameComparison.new(name).code]).uniq
-  end
-
-  def add_old_name_to_alternate_names
-    self.alternate_names = (alternate_names + [name_was]).uniq
-  end
-
-  def information_not_added
-    self.information_added = false
-    fetch_external_information if tmdb_identifier.present?
-    true
-  end
-
-  def fetch_external_ids
-    Films::FetchExternalIds.perform_later(self)
-  end
-
-  def fetch_external_information
-    Films::FetchExternalInformation.perform_later(self)
-  end
-
-  def fetch_backdrop
-    Films::FetchBackdrop.perform_later(self)
-  end
-
-  def fetch_poster
-    Films::FetchPoster.perform_later(self)
+  def merge_into!(target)
+    raise ArgumentError, "Cannot merge a film into itself" if target == self
+    transaction do
+      performances.each do |performance|
+        duplicate = target.performances.find_by(cinema_id: performance.cinema_id, dimension: performance.dimension, starting_at: performance.starting_at)
+        duplicate ? performance.destroy! : performance.update!(film: target)
+      end
+      film_aliases.update_all(film_id: target.id)
+      target.film_aliases.create!(name: name) unless target.film_aliases.exists?(normalized_name: FilmAlias.normalize(name))
+      external_identifiers.each do |identifier|
+        identifier.update!(identifiable: target) unless target.external_identifiers.exists?(source: identifier.source)
+      end
+      reload.destroy!
+      self.class.reset_counters(target.id, :performances)
+    end
   end
 end

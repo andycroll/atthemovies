@@ -1,0 +1,17 @@
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+  <% films.each do |film| %>
+    <article class="card bg-base-100 border border-base-300">
+      <% if film.poster.attached? %>
+        <figure class="h-64 bg-base-300"><%= image_tag film.poster.variant(:listing), alt: "#{film.name} poster", class: "h-full object-contain", loading: "lazy" %></figure>
+      <% end %>
+      <div class="card-body">
+        <div class="text-xs uppercase tracking-wider text-base-content/60"><%= [film.year, film.runtime && "#{film.runtime} min"].compact.join(" · ").presence || "On the big screen" %></div>
+        <h3 class="card-title"><%= link_to film.name, film_path(film, suffix: film.suffix), class: "link link-hover" %></h3>
+        <% if film.event? %><span class="badge badge-outline">Special event</span><% end %>
+        <% if film.tagline.present? %><p class="text-base-content/70"><%= film.tagline %></p><% end %>
+        <div class="card-actions mt-4"><%= link_to "Find a showing →", film_path(film, suffix: film.suffix), class: "text-primary font-semibold" %></div>
+      </div>
+    </article>
+  <% end %>
+</div>
+<% if films.empty? %><p class="p-8 rounded-box bg-base-100 border border-base-300">No films to show yet. Please check back soon.</p><% end %>
