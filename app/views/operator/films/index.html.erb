@@ -1,0 +1,8 @@
+<h1 class="text-3xl font-black mb-6">Film triage</h1>
+<%= form_with url: operator_films_path, method: :get, class: "flex gap-3 mb-6" do |form| %>
+  <%= form.label :q, "Search", class: "sr-only" %><%= form.search_field :q, value: params[:q], class: "input input-bordered", placeholder: "Search pending films" %><%= form.submit "Search", class: "btn btn-primary" %>
+<% end %>
+<div class="bg-base-100 rounded-box border border-base-300 divide-y divide-base-300">
+  <% @films.each do |film| %><div class="p-5 flex justify-between gap-4"><%= link_to film.name, edit_operator_film_path(film), class: "font-semibold link link-hover" %><span class="badge badge-outline"><%= film.enrichment_state %></span></div><% end %>
+  <% if @films.empty? %><p class="p-6">All caught up.</p><% end %>
+</div>

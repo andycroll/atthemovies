@@ -1,50 +1,9 @@
-<%# frozen_string_literal: true %>
-<% content_for(:title) do -%>
-  Films <%= " named: #{params[:q]}" if params[:q] %>
-<% end -%>
-
-<% content_for :breadcrumbs do -%>
-  <% if params[:q] %>
-    <li><%= link_to 'Films', films_path %></li>
-    <li class="active">named &lsquo;<%= params[:q] %>&rsquo;</li>
-  <% else -%>
-    <li class="active">Films</li>
-  <% end -%>
-<% end -%>
-
-<% content_for(:page_header) do -%>
-  Films
-<% end -%>
-
-<hr />
-
-<div class="row">
-  <div class="col-sm-12">
-    <%= form_tag films_path, method: :get, class: 'form-inline', role: 'format' do -%>
-      <div class="form-group">
-        <%= text_field_tag :q, params[:q], class: 'form-control' %>
-      </div>
-      <%= submit_tag 'Search', class: 'btn btn-primary' %>
-    <% end -%>
-  </div>
-</div>
-
-<hr />
-
-<div class="row">
-  <% @films.each do |film| %>
-    <div class="col-sm-3">
-      <div class="media">
-        <div class="pull-left" style="width: 50%; margin-right: 5px;">
-          <%= image_tag poster_uri(film), alt: film.name, class: 'media-object img-responsive' %>
-        </div>
-        <div class="media-body">
-          <h4 class="media-heading">
-            <%= link_to film.name, film_path(film.url) %>
-          </h4>
-          <p><small><%= film.performances_count %></small></p>
-        </div>
-      </div>
-    </div>
-  <% end %>
-</div>
+<% content_for :title, "Films · At The Movies" %>
+<h1 class="text-4xl font-black mb-3">What's on</h1>
+<p class="text-base-content/70 mb-6">Find a film for your next trip to the cinema.</p>
+<%= form_with url: films_path, method: :get, class: "flex flex-wrap gap-3 mb-8" do |form| %>
+  <%= form.label :q, "Search films", class: "sr-only" %>
+  <%= form.search_field :q, value: params[:q], placeholder: "Search by film title", class: "input input-bordered w-full max-w-sm" %>
+  <%= form.submit "Search", class: "btn btn-primary" %>
+<% end %>
+<%= render "list", films: @films %>

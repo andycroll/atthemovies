@@ -1,0 +1,10 @@
+<section class="max-w-md mx-auto bg-base-100 border border-base-300 rounded-box p-8">
+  <h1 class="font-black text-3xl mb-6">Forgot your password?</h1>
+  <%= form_with url: passwords_path, class: "grid gap-5" do |form| %>
+    <div>
+      <%= form.label :email_address, "Email address", class: "block font-semibold mb-2" %>
+      <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", value: params[:email_address], class: "input input-bordered w-full" %>
+    </div>
+    <%= form.submit "Email reset instructions", class: "btn btn-primary" %>
+  <% end %>
+</section>

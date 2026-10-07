@@ -1,60 +1,51 @@
-<%# frozen_string_literal: true %>
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html lang="en" data-theme="light">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <%- dev_prefix = Rails.env.development? ? '/dev' : nil %>
-    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="<%= dev_prefix %>/apple-touch-icon-57x57.png">
-    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="<%= dev_prefix %>/apple-touch-icon-60x60.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<%= dev_prefix %>/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="<%= dev_prefix %>/apple-touch-icon-76x76.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<%= dev_prefix %>/apple-touch-icon-114x114.png">
-    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="<%= dev_prefix %>/apple-touch-icon-120x120.png">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="<%= dev_prefix %>/apple-touch-icon-144x144.png">
-    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="<%= dev_prefix %>/apple-touch-icon-152x152.png">
-    <link rel="apple-touch-icon-precomposed" sizes="180x180" href="<%= dev_prefix %>/apple-touch-icon-180x180.png">
-    <link rel="icon" type="image/png" href="<%= dev_prefix %>/favicon-16x16.png" sizes="16x16">
-    <link rel="icon" type="image/png" href="<%= dev_prefix %>/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="<%= dev_prefix %>/favicon-96x96.png" sizes="96x96">
-    <link rel="icon" type="image/png" href="<%= dev_prefix %>/android-chrome-192x192.png" sizes="192x192">
-    <link rel="manifest" href="/manifest.json">
-    <link rel="shortcut icon" type="image/x-icon" href="<%= dev_prefix %>/favicon.ico">
-
-    <meta name="msapplication-TileColor" content="#2d89ef">
-    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
-    <meta name="theme-color" content="#ffffff">
-
-    <title><%= content_for?(:title) ? yield(:title) : 'At The Movies' %><%= ' • DEVELOPMENT' if Rails.env.development? %></title>
-
+    <title><%= content_for(:title) || "At The Movies" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Atthemovies">
+    <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag '//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css' %>
-    <%= javascript_include_tag 'application', defer: '', async: '' %>
+    <%= yield :head %>
+    <% if @canonical_url %><%= tag.link rel: "canonical", href: @canonical_url %><% end %>
+
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
   </head>
 
-  <body data-js-controller="<%= controller_for_js %>" data-js-action="<%= action_for_js.capitalize %>">
-    <ol class="breadcrumb" style="margin-bottom:0">
-      <li><a href="/">Movies UK</a></li>
-      <%= yield(:breadcrumbs) %>
-    </ol>
-
-    <div class="container-fluid">
-
-      <header>
-        <h1><%= yield(:page_header) %></h1>
-      </header>
-
+  <body class="bg-base-200 min-h-screen text-base-content">
+    <header class="bg-base-100 border-b border-base-300">
+      <nav class="max-w-6xl mx-auto px-5 py-5 flex flex-wrap items-center gap-5" aria-label="Main navigation">
+        <%= link_to "At The Movies", root_path, class: "font-black text-xl tracking-tight mr-auto" %>
+        <%= link_to "Films", films_path, class: "link link-hover" %>
+        <%= link_to "Cinemas", cinemas_path, class: "link link-hover" %>
+        <% if authenticated? %>
+          <%= link_to "Triage", operator_films_path, class: "link link-hover" %>
+          <%= button_to "Sign out", session_path, method: :delete, class: "btn btn-ghost btn-sm" %>
+        <% else %>
+          <%= link_to "Operator sign in", new_session_path, class: "text-sm link link-hover" %>
+        <% end %>
+      </nav>
+    </header>
+    <main class="max-w-6xl mx-auto px-5 py-10">
+      <% flash.each do |kind, message| %>
+        <div role="status" class="alert <%= kind == 'alert' ? 'alert-error' : 'alert-success' %> mb-6"><%= message %></div>
+      <% end %>
       <%= yield %>
-
-      <hr />
-
-      <div class="row">
-        <div class="col-sm-12">
-          <small>Coming Soon</small>
-        </div>
-      </div>
-    </div>
+    </main>
+    <footer class="max-w-6xl mx-auto px-5 py-8 text-sm text-base-content/60 border-t border-base-300">
+      UK cinema listings. All times are local to Europe/London. Always check with the cinema before booking.
+    </footer>
   </body>
 </html>

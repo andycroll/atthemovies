@@ -1,0 +1,18 @@
+brighton:
+  public_id: brightonPublicToken123456
+  name: Duke's at Komedia
+  brand: Picturehouse
+  locality: Brighton
+  street_address: 44–47 Gardner Street
+  postal_code: BN1 1UN
+  latitude: 50.825
+  longitude: -0.139
+  screenings_url: https://www.picturehouses.com/cinema/duke-s-at-komedia
+
+london:
+  public_id: londonPublicToken12345678
+  name: Greenwich Picturehouse
+  brand: Picturehouse
+  locality: Greenwich
+  latitude: 51.477
+  longitude: -0.009

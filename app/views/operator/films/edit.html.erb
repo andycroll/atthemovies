@@ -1,0 +1,21 @@
+<%= link_to "← Film triage", operator_films_path, class: "link link-hover" %>
+<h1 class="text-3xl font-black mt-5 mb-6">Edit <%= @film.name %></h1>
+<%= form_with model: @film, url: operator_film_path(@film), class: "bg-base-100 border border-base-300 rounded-box p-6 grid gap-5 max-w-3xl" do |form| %>
+  <% %i[name year runtime tagline overview].each do |field| %>
+    <div><%= form.label field, class: "block font-semibold mb-2" %><%= field == :overview ? form.text_area(field, class: "textarea textarea-bordered w-full", rows: 5) : form.text_field(field, class: "input input-bordered w-full") %></div>
+  <% end %>
+  <div class="flex gap-6"><label><%= form.check_box :event, class: "checkbox checkbox-sm mr-2" %> Special event</label><label><%= form.check_box :hidden, class: "checkbox checkbox-sm mr-2" %> Hidden from public listings</label></div>
+  <div><%= form.label :enrichment_state, "Metadata state", class: "block font-semibold mb-2" %><%= form.select :enrichment_state, %w[pending candidates matched no_match failed], {}, class: "select select-bordered w-full" %><p class="text-sm mt-2">Use no_match for a deliberate decision not to add metadata.</p></div>
+  <div><%= label_tag :alternate_name, "Add alternate title", class: "block font-semibold mb-2" %><%= text_field_tag :alternate_name, nil, class: "input input-bordered w-full" %><p class="text-sm mt-2"><%= @film.film_aliases.pluck(:name).join(", ") %></p></div>
+  <div><%= label_tag :tmdb_id, "Select TMDB ID", class: "block font-semibold mb-2" %><%= text_field_tag :tmdb_id, nil, class: "input input-bordered w-full", placeholder: @film.external_identifiers.find_by(source: "tmdb_movie")&.value %></div>
+  <% %i[poster_source_url backdrop_source_url].each do |field| %><div><%= form.label field, class: "block font-semibold mb-2" %><%= form.url_field field, class: "input input-bordered w-full" %><p class="text-sm mt-2">HTTPS image.tmdb.org image URL only, or upload an image below.</p></div><% end %>
+  <% %i[poster backdrop].each do |field| %><div><%= form.label field, "Upload #{field}", class: "block font-semibold mb-2" %><%= form.file_field field, accept: "image/jpeg,image/png,image/webp", class: "file-input file-input-bordered w-full" %></div><% end %>
+  <%= form.submit "Save film", class: "btn btn-primary justify-self-start" %>
+<% end %>
+<section class="my-8 max-w-3xl"><h2 class="text-xl font-bold mb-4">TMDB candidates</h2>
+  <%= button_to "Search TMDB", search_tmdb_operator_film_path(@film), class: "btn btn-outline mb-4" %>
+  <% @film.tmdb_candidates.each do |candidate| %><div class="flex flex-wrap gap-4 items-center bg-base-100 border border-base-300 rounded-box p-4 mb-2"><span class="mr-auto"><%= candidate.name %> (<%= candidate.year %>) · <%= candidate.tmdb_id %></span><%= button_to "Choose", operator_film_path(@film), method: :patch, params: { film: { enrichment_state: "pending" }, tmdb_id: candidate.tmdb_id }, class: "btn btn-sm" %></div><% end %>
+</section>
+<section class="max-w-3xl border border-error rounded-box p-6"><h2 class="font-bold text-xl mb-3">Merge duplicate film</h2><p class="mb-4">Move this film's showings and aliases into another film. This removes this record.</p>
+  <%= form_with url: merge_operator_film_path(@film), class: "flex flex-wrap gap-3", data: { turbo_confirm: "Merge and remove this film?" } do |form| %><%= form.label :target_id, "Destination public ID", class: "sr-only" %><%= form.text_field :target_id, required: true, class: "input input-bordered", placeholder: "Destination public ID" %><%= form.submit "Merge", class: "btn btn-error" %><% end %>
+</section>

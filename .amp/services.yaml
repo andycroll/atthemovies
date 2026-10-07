@@ -1,0 +1,12 @@
+services:
+  web:
+    command: bin/rails server -b 0.0.0.0 -p "$PORT"
+    port: 3000
+    health: /up
+    portal:
+      title: At The Movies
+      description: Fresh Rails rebuild with live Picturehouse listings.
+  css:
+    command: bin/rails tailwindcss:watch[always]
+  jobs:
+    command: bin/jobs

@@ -1,0 +1,12 @@
+alien:
+  public_id: alienPublicToken123456789
+  name: Alien
+  year: 1979
+  runtime: 117
+  enrichment_state: pending
+
+arrival:
+  public_id: arrivalPublicToken1234567
+  name: Arrival
+  year: 2016
+  enrichment_state: pending

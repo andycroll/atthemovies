@@ -2,70 +2,31 @@
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
-
-packages=(
-  autoconf
-  bison
-  build-essential
-  ca-certificates
-  curl
-  imagemagick
-  libffi-dev
-  libgdbm-dev
-  libncurses-dev
-  libpq-dev
-  libreadline-dev
-  libssl-dev
-  libyaml-dev
-  patch
-  postgresql
-  postgresql-client
-  rbenv
-  ruby-build
-  zlib1g-dev
-)
-
-missing_packages=()
+packages=(build-essential autoconf bison libssl-dev libyaml-dev libreadline-dev zlib1g-dev libffi-dev libgdbm-dev libncurses-dev libvips42 sqlite3 git curl ca-certificates rbenv)
+missing=()
 for package in "${packages[@]}"; do
   if ! dpkg-query -W -f='${Status}' "$package" 2>/dev/null | grep -q 'install ok installed'; then
-    missing_packages+=("$package")
+    missing+=("$package")
   fi
 done
-
-if ((${#missing_packages[@]})); then
-  echo "==> Installing system packages"
+if ((${#missing[@]})); then
   sudo apt-get update
-  sudo DEBIAN_FRONTEND=noninteractive apt-get install -y "${missing_packages[@]}"
+  sudo DEBIAN_FRONTEND=noninteractive apt-get install -y "${missing[@]}"
 fi
 
 export RBENV_ROOT="$HOME/.rbenv"
 export PATH="$RBENV_ROOT/bin:$RBENV_ROOT/shims:$PATH"
 eval "$(rbenv init - bash)"
-
-ruby_version="ruby-2.5.3"
-ruby_path="$RBENV_ROOT/versions/$ruby_version/bin/ruby"
-openssl_version="$($ruby_path -ropenssl -e 'print OpenSSL::OPENSSL_VERSION' 2>/dev/null || true)"
-if [[ ! -x "$ruby_path" || "$openssl_version" != "OpenSSL 1.1.1w  11 Sep 2023" ]]; then
-  echo "==> Building Ruby $ruby_version"
-  rm -rf "$RBENV_ROOT/versions/$ruby_version"
-  definition_dir="$(mktemp -d)"
-  trap 'rm -rf "$definition_dir"' EXIT
-  cat > "$definition_dir/2.5.3-orb" <<'EOF'
-install_package "openssl-1.1.1w" "https://www.openssl.org/source/openssl-1.1.1w.tar.gz#cf3098950cb4d853ad95c0841f1f9c6d3dc102dccfcacd521d93925208b76ac8" mac_openssl
-install_package "ruby-2.5.3" "https://cache.ruby-lang.org/pub/ruby/2.5/ruby-2.5.3.tar.bz2#228a787ba68a7b20ac6e1d5af3d176d36e8ed600eb754d6325da341c3088ed76" warn_eol ldflags_dirs enable_shared standard verify_openssl
-EOF
-  cat > "$definition_dir/security" <<'EOF'
-#!/usr/bin/env bash
-cat /etc/ssl/certs/ca-certificates.crt
-EOF
-  chmod +x "$definition_dir/security"
-  PATH="$definition_dir:$PATH" RUBY_BUILD_DEFINITIONS="$definition_dir:/usr/share/ruby-build" \
-    ruby-build 2.5.3-orb "$RBENV_ROOT/versions/$ruby_version"
+version="$(cat .ruby-version)"
+if [[ ! -x "$RBENV_ROOT/versions/$version/bin/ruby" ]]; then
+  build_dir="$(mktemp -d)"
+  trap 'rm -rf "$build_dir"' EXIT
+  git clone --depth 1 https://github.com/rbenv/ruby-build.git "$build_dir/ruby-build"
+  "$build_dir/ruby-build/bin/ruby-build" "$version" "$RBENV_ROOT/versions/$version"
 fi
 rbenv rehash
-
-profile_marker="# atthemovies rbenv"
-if ! grep -Fqx "$profile_marker" "$HOME/.bash_profile" 2>/dev/null; then
+marker="# atthemovies rbenv"
+if ! grep -Fqx "$marker" "$HOME/.bash_profile" 2>/dev/null; then
   cat >> "$HOME/.bash_profile" <<'EOF'
 
 # atthemovies rbenv
@@ -75,36 +36,9 @@ eval "$(rbenv init - bash)"
 EOF
 fi
 
-if ! gem list --installed --exact --version 1.17.3 bundler >/dev/null; then
-  echo "==> Installing Bundler 1.17.3"
-  gem install bundler --version 1.17.3 --no-document
-  rbenv rehash
-fi
-
-echo "==> Installing bundled gems"
-bundle _1.17.3_ check || bundle _1.17.3_ install --jobs 4 --retry 3
-
-if [[ ! -f .env ]]; then
-  cp .env.example .env
-fi
-
-echo "==> Starting PostgreSQL"
-while read -r version cluster _; do
-  if ! sudo pg_ctlcluster "$version" "$cluster" status >/dev/null 2>&1; then
-    sudo pg_ctlcluster "$version" "$cluster" start
-  fi
-done < <(pg_lsclusters --no-header)
-
-db_user="$(id -un)"
-if ! sudo -u postgres psql -tAc "SELECT 1 FROM pg_roles WHERE rolname = '$db_user'" | grep -q 1; then
-  sudo -u postgres createuser --superuser "$db_user"
-fi
-
-echo "==> Preparing databases"
-bundle _1.17.3_ exec rails db:prepare
-test_schema="$(mktemp)"
-rm -f "$test_schema"
-SCHEMA="$test_schema" RAILS_ENV=test bundle _1.17.3_ exec rails db:prepare
-rm -f "$test_schema"
-
+echo "==> Installing gems"
+bundle check || bundle install --jobs 4 --retry 3
+echo "==> Preparing SQLite databases and CSS"
+bin/rails db:prepare tailwindcss:build
+RAILS_ENV=test bin/rails db:prepare
 echo "==> Orb setup complete"

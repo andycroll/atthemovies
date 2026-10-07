@@ -1,50 +1,11 @@
-<%# frozen_string_literal: true %>
-<% content_for(:title) do -%>
-  <%= @cinema.name %> &bull; Cinemas
-<% end -%>
-
-<% content_for :breadcrumbs do -%>
-  <li><%= link_to 'Cinemas', cinemas_path %></li>
-  <li class="active"><%= @cinema.name %></li>
-<% end -%>
-
-<% content_for(:page_header) do -%>
-  <%= @cinema.name %>
-<% end -%>
-
-<div class="row">
-  <div class="col-sm-12">
-    <p>
-      <%= @cinema.street_address %>,
-      <%= @cinema.locality %>
-      <%= @cinema.postal_code %><br />
-      <small><%= link_to @cinema.screenings_url, @cinema.screenings_url %></small>
-    </p>
-  </div>
-</div>
-
-<h3>Performances</h3>
-<hr />
-
-<div class="row">
-  <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-    <p><%= link_to 'Today', dated_cinema_performances_path(@cinema, when: 'today') %></p>
-  </div>
-
-  <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-    <p><%= link_to 'Tomorrow', dated_cinema_performances_path(@cinema, when: 'tomorrow') %></p>
-  </div>
-</div>
-
-<div class="row">
-  <% (2..14).each do |num| %>
-    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-      <p>
-        <% date = num.days.from_now.to_date %>
-        <%= link_to dated_cinema_performances_path(@cinema, when: date.to_s) do %>
-          <%= local_time date, '%a, %e %b' %>
-        <% end %>
-      </p>
-    </div>
-  <% end %>
-</div>
+<% content_for :title, "#{@cinema.name} · At The Movies" %>
+<%= link_to "← All cinemas", cinemas_path, class: "link link-hover text-sm" %>
+<section class="bg-base-100 rounded-box border border-base-300 p-8 my-6">
+  <p class="uppercase tracking-widest text-sm text-primary mb-3"><%= @cinema.brand %></p>
+  <h1 class="text-4xl font-black mb-4"><%= @cinema.name %></h1>
+  <p class="text-base-content/70 mb-6"><%= @cinema.address %></p>
+  <% if @cinema.screenings_url.present? %><%= link_to "Cinema website ↗", @cinema.screenings_url, class: "btn btn-outline", rel: "noopener" %><% end %>
+  <% if authenticated? %><%= link_to "Edit cinema", edit_operator_cinema_path(@cinema), class: "btn btn-ghost" %><% end %>
+</section>
+<h2 class="text-2xl font-bold mb-5">Pick a day</h2>
+<%= render "performances/dates", cinema: @cinema, selected: nil %>

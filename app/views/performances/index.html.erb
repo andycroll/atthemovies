@@ -1,21 +1,19 @@
-<%# frozen_string_literal: true %>
-<%- title = "Performances on #{@date.to_s(:long)} at #{@cinema.name}" %>
-
-<% content_for(:title) do -%>
-  <%= title %>
-<% end -%>
-
-<% content_for :breadcrumbs do -%>
-  <li><%= link_to 'Cinemas', cinemas_path %></li>
-  <li><%= link_to @cinema.name, @cinema %></li>
-  <li class="active">Performances on <%= @date.to_s(:long) %></li>
-<% end -%>
-
-<% content_for(:page_header) do -%>
-  <%= title %>
-  <hr />
-<% end -%>
-
-<div class="row">
-  <%= render partial: 'performance', collection: @performances -%>
-</div>
+<% content_for :title, "Showings at #{@cinema.name} · At The Movies" %>
+<%= link_to "← #{@cinema.name}", cinema_path(@cinema, suffix: @cinema.suffix), class: "link link-hover text-sm" %>
+<h1 class="text-3xl font-black mt-5 mb-3"><%= @cinema.name %></h1>
+<p class="text-lg mb-6"><%= @date.strftime("%A %-d %B %Y") %></p>
+<%= render "dates", cinema: @cinema, selected: @date %>
+<% @performances.group_by(&:film).each do |film, performances| %>
+  <section class="bg-base-100 border border-base-300 rounded-box p-6 mb-4">
+    <h2 class="text-xl font-bold mb-4"><%= link_to film.name, film_path(film, suffix: film.suffix), class: "link link-hover" %></h2>
+    <div class="flex flex-wrap gap-3">
+      <% performances.each do |performance| %>
+        <div class="border border-base-300 rounded-lg px-4 py-3">
+          <% if performance.booking_url.present? %><%= link_to performance.starting_at.strftime("%H:%M"), performance.booking_url, class: "font-bold text-primary link link-hover", rel: "noopener" %><% else %><span class="font-bold"><%= performance.starting_at.strftime("%H:%M") %></span><% end %>
+          <p class="text-xs text-base-content/60 mt-1"><%= performance.dimension.upcase %> · <%= performance.variant %></p>
+        </div>
+      <% end %>
+    </div>
+  </section>
+<% end %>
+<% if @performances.empty? %><p class="bg-base-100 p-8 rounded-box border border-base-300">No showings listed for this day.</p><% end %>
