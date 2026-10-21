@@ -27,10 +27,18 @@ every provisioned user is an operator. Supply passwords privately, not in shell 
 
 ```sh
 bin/rails runner 'ImportPicturehouseJob.perform_later'
+bin/rails runner 'ImportCineworldJob.perform_later'
 bin/rails runner 'EnrichPendingFilmsJob.perform_later'
 bin/rails runner 'CleanupPerformancesJob.perform_later'
 bin/rails imports:status
 ```
+
+Cineworld uses `cineworld_uk` with its bundled authentication executable. Each
+job acquires a guest token in memory; no token is stored in the database.
+Its import discovers every advertised business date for each cinema, then loads
+the showtimes on those dates, including events months ahead with gaps between
+dates. There is no app-imposed future cutoff. Cineworld
+imports are manual; the production recurring import remains Picturehouse-only.
 
 Picturehouse is the first live-verified provider. Cinema discovery and listings
 are fresh adapters, not the old gem. Numeric venue IDs are separate from website
