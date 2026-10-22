@@ -100,20 +100,20 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
-    cinebase (5.4.0)
+    cinebase (5.5.0)
       tzinfo
       tzinfo-data
-    cineworld_uk (4.3.1)
-      cinebase (~> 5.4)
+    cineworld_uk (4.3.2)
+      cinebase (~> 5.5)
       nokogiri (>= 1.11)
-    cineworld_uk (4.3.1-aarch64-linux-gnu)
-      cinebase (~> 5.4)
+    cineworld_uk (4.3.2-aarch64-linux-gnu)
+      cinebase (~> 5.5)
       nokogiri (>= 1.11)
-    cineworld_uk (4.3.1-arm64-darwin)
-      cinebase (~> 5.4)
+    cineworld_uk (4.3.2-arm64-darwin)
+      cinebase (~> 5.5)
       nokogiri (>= 1.11)
-    cineworld_uk (4.3.1-x86_64-linux-gnu)
-      cinebase (~> 5.4)
+    cineworld_uk (4.3.2-x86_64-linux-gnu)
+      cinebase (~> 5.5)
       nokogiri (>= 1.11)
     concurrent-ruby (1.3.8)
     connection_pool (3.0.2)
@@ -469,11 +469,11 @@ CHECKSUMS
   builder (3.3.0) sha256=497918d2f9dca528fdca4b88d84e4ef4387256d984b8154e9d5d3fe5a9c8835f
   bundler-audit (0.9.3) sha256=81c8766c71e47d0d28a0f98c7eed028539f21a6ea3cd8f685eb6f42333c9b4e9
   capybara (3.40.0) sha256=42dba720578ea1ca65fd7a41d163dd368502c191804558f6e0f71b391054aeef
-  cinebase (5.4.0) sha256=b5be1d1fcd30e9b3ae4711cfaaf47612f62404453b8909ab32d1dba87fd157b2
-  cineworld_uk (4.3.1) sha256=bdad2cfc699b427ab2223b835ba49790d7910c1cc8ab64f31d239c5b0ffc1c6b
-  cineworld_uk (4.3.1-aarch64-linux-gnu) sha256=e43a495924a51548b5e3797c8333fa0a8848a3c292d1e1d46c7bef6ca4dde102
-  cineworld_uk (4.3.1-arm64-darwin) sha256=5887fdb69b9abdd9837af1d06e27aec14058d489cb078a6e01908158e38820dc
-  cineworld_uk (4.3.1-x86_64-linux-gnu) sha256=2c87279e82c531d825ea32193d51e0d38341ecc04009cb5140e9c1a370470e3a
+  cinebase (5.5.0) sha256=0553a50c0bfb28a1d0ab612d100ce431599db9cad172ce826cbb3055c7777d80
+  cineworld_uk (4.3.2) sha256=6bab11752c02ff1a6526dfff9a6177aa3f2827eb8523a8a39a549b84fbc3d563
+  cineworld_uk (4.3.2-aarch64-linux-gnu) sha256=9efc318003e9d95a94ce72677102acce747e4ab8a7de492cae13cda7658c9f95
+  cineworld_uk (4.3.2-arm64-darwin) sha256=d516db4caedefcf419cc60308bfd78f8a0e07de26ee9a6af350561f88f46d7c4
+  cineworld_uk (4.3.2-x86_64-linux-gnu) sha256=9a1e5ac18af4bedf40c8979b8469e334f44b90842280ab0b65e4101e14054691
   concurrent-ruby (1.3.8) sha256=b2f1be836e968ccc78ccfce277ea79c72a88633f22306782c16ff23fb415d1e1
   connection_pool (3.0.2) sha256=33fff5ba71a12d2aa26cb72b1db8bba2a1a01823559fb01d29eb74c286e62e0a
   crass (1.0.8) sha256=7a0145c7a2c59f8e7923b3a69ce819c444823a00a5127d805298fea13be24efe
