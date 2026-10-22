@@ -2,7 +2,9 @@ class SearchTmdbJob < ApplicationJob
   def perform(film)
     title = film.name
     state = film.enrichment_state
-    results = TmdbClient.new.search(title)
+    client = TmdbClient.new
+    results = film.year ? client.search(title, year: film.year) : []
+    results = client.search(title) if results.empty?
     film.with_lock do
       return if film.name != title || film.enrichment_state != state
       film.tmdb_candidates.destroy_all

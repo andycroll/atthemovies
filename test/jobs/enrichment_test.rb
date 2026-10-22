@@ -4,17 +4,40 @@ require "minitest/mock"
 class EnrichmentTest < ActiveJob::TestCase
   test "single exact match queues enrichment and ambiguous candidates remain for triage" do
     client = Object.new
-    client.define_singleton_method(:search) { |name| [ { "id" => 348, "title" => name, "release_date" => "1979-05-25" } ] }
+    client.define_singleton_method(:search) { |name, year: nil| [ { "id" => 348, "title" => name, "release_date" => "1979-05-25" } ] }
     TmdbClient.stub(:new, client) do
       assert_enqueued_with(job: EnrichFilmJob, args: [ films(:alien) ]) { SearchTmdbJob.perform_now(films(:alien)) }
     end
     assert_equal "348", films(:alien).external_identifiers.find_by!(source: "tmdb_movie").value
-    client.define_singleton_method(:search) { |_name| [ { "id" => 1, "title" => "Different title" }, { "id" => 2, "title" => "Arrival" } ] }
+    client.define_singleton_method(:search) { |_name, year: nil| [ { "id" => 1, "title" => "Different title" }, { "id" => 2, "title" => "Arrival" } ] }
     TmdbClient.stub(:new, client) do
       assert_no_enqueued_jobs(only: EnrichFilmJob) { SearchTmdbJob.perform_now(films(:arrival)) }
     end
     assert_equal "candidates", films(:arrival).reload.enrichment_state
     assert_equal [ "1", "2" ], films(:arrival).tmdb_candidates.order(:tmdb_id).pluck(:tmdb_id)
+  end
+
+  test "search narrows by the film year and falls back to any year" do
+    film = Film.resolve_title!("From Dusk Till Dawn", year: 1996)
+    searches = []
+    client = Object.new
+    client.define_singleton_method(:search) do |name, year: nil|
+      searches << [ name, year ]
+      year ? [] : [ { "id" => 755, "title" => name, "release_date" => "1996-01-19" } ]
+    end
+    TmdbClient.stub(:new, client) { SearchTmdbJob.perform_now(film) }
+    assert_equal [ [ "From Dusk Till Dawn", 1996 ], [ "From Dusk Till Dawn", nil ] ], searches
+    assert_equal "755", film.external_identifiers.find_by!(source: "tmdb_movie").value
+  end
+
+  test "tmdb search sends the year as the primary release year" do
+    http = Object.new
+    http.define_singleton_method(:request) { |url, headers:| { results: [ { url: url } ] }.to_json }
+    results = ENV.stub(:[], ->(key) { key == "TMDB_ACCESS_TOKEN" ? "token" : nil }) do
+      TmdbClient.new(http: http).search("From Dusk Till Dawn", year: 1996)
+    end
+    assert_includes results.first.fetch("url"), "primary_release_year=1996"
+    assert_includes results.first.fetch("url"), "query=From+Dusk+Till+Dawn"
   end
 
   test "repeat enrichment and image jobs store one set of images and correct metadata" do
@@ -51,7 +74,7 @@ class EnrichmentTest < ActiveJob::TestCase
   test "upstream failures are visible and unsafe image URLs are rejected" do
     film = films(:alien)
     client = Object.new
-    client.define_singleton_method(:search) { |_name| raise HttpClient::Error, "Upstream HTTP 503" }
+    client.define_singleton_method(:search) { |_name, year: nil| raise HttpClient::Error, "Upstream HTTP 503" }
     TmdbClient.stub(:new, client) do
       assert_raises(HttpClient::Error) { SearchTmdbJob.new.perform(film) }
     end
@@ -78,7 +101,7 @@ class EnrichmentTest < ActiveJob::TestCase
   test "in-flight search cannot overwrite a deliberate no-match decision" do
     film = films(:alien)
     client = Object.new
-    client.define_singleton_method(:search) do |_name|
+    client.define_singleton_method(:search) do |_name, year: nil|
       Film.find(film.id).update!(enrichment_state: "no_match")
       [ { "id" => 348, "title" => "Alien" } ]
     end

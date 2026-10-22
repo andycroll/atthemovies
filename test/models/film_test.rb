@@ -9,6 +9,21 @@ class FilmTest < ActiveSupport::TestCase
     refute_equal film, Film.resolve_title!("Aliens")
   end
 
+  test "resolving a title records the year the cinema gives" do
+    film = Film.resolve_title!("From Dusk Till Dawn", year: 1996)
+    assert_equal 1996, film.year
+    assert_equal film, Film.resolve_title!("From Dusk Till Dawn")
+  end
+
+  test "resolving fills a missing year but keeps one already known" do
+    film = Film.resolve_title!("Street Fighter")
+    assert_nil film.year
+    Film.resolve_title!("Street Fighter", year: 2026)
+    assert_equal 2026, film.reload.year
+    Film.resolve_title!("Street Fighter", year: 1994)
+    assert_equal 2026, film.reload.year
+  end
+
   test "merge moves distinct performances, removes collisions and preserves aliases and counts" do
     source = films(:arrival)
     target = films(:alien)

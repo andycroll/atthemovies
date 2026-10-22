@@ -10,6 +10,9 @@
 #     schedule: at 5am every day
 
 production:
+  import_cineworld:
+    class: ImportCineworldJob
+    schedule: every day at 1am Europe/London
   import_picturehouse:
     class: ImportPicturehouseJob
     schedule: every day at 2am Europe/London

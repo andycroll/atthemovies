@@ -11,7 +11,7 @@ class ImportCineworldPerformancesJob < ImportCinemaPerformancesJob
     dates.each do |date|
       CineworldUk::Performance.at(id, from: date, to: date).each do |performance|
         next if performance.starting_at < Time.current
-        import!(cinema, name: performance.film_name, starting_at: performance.starting_at,
+        import!(cinema, name: performance.film_name, year: performance.film_year, starting_at: performance.starting_at,
           dimension: performance.dimension, variant: performance.variant.presence&.join(", ") || "standard",
           booking_url: performance.booking_url)
       end

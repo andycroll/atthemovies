@@ -8,7 +8,7 @@ class ImportCinemaPerformancesJob < ApplicationJob
   end
 
   def import!(cinema, attributes)
-    film = Film.resolve_title!(attributes.fetch(:name))
+    film = Film.resolve_title!(attributes.fetch(:name), year: attributes[:year])
     Performance.transaction do
       identity = { film: film, dimension: attributes.fetch(:dimension).downcase, starting_at: attributes.fetch(:starting_at) }
       performance = cinema.performances.find_or_initialize_by(identity)
