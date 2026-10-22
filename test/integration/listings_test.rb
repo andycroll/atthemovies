@@ -2,6 +2,7 @@ require "test_helper"
 
 class ListingsTest < ActionDispatch::IntegrationTest
   setup do
+    travel_to Time.zone.local(2026, 10, 22, 12)
     @film = films(:alien)
     @cinema = cinemas(:brighton)
     @performance = Performance.create!(film: @film, cinema: @cinema, starting_at: 1.hour.from_now)
