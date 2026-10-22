@@ -412,7 +412,7 @@ DEPENDENCIES
   brakeman
   bundler-audit
   capybara
-  cineworld_uk (~> 4.3)
+  cineworld_uk
   debug
   image_processing (~> 1.2)
   importmap-rails
