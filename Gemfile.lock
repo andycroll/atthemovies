@@ -103,7 +103,16 @@ GEM
     cinebase (5.4.0)
       tzinfo
       tzinfo-data
-    cineworld_uk (4.3.0)
+    cineworld_uk (4.3.1)
+      cinebase (~> 5.4)
+      nokogiri (>= 1.11)
+    cineworld_uk (4.3.1-aarch64-linux-gnu)
+      cinebase (~> 5.4)
+      nokogiri (>= 1.11)
+    cineworld_uk (4.3.1-arm64-darwin)
+      cinebase (~> 5.4)
+      nokogiri (>= 1.11)
+    cineworld_uk (4.3.1-x86_64-linux-gnu)
       cinebase (~> 5.4)
       nokogiri (>= 1.11)
     concurrent-ruby (1.3.8)
@@ -461,7 +470,10 @@ CHECKSUMS
   bundler-audit (0.9.3) sha256=81c8766c71e47d0d28a0f98c7eed028539f21a6ea3cd8f685eb6f42333c9b4e9
   capybara (3.40.0) sha256=42dba720578ea1ca65fd7a41d163dd368502c191804558f6e0f71b391054aeef
   cinebase (5.4.0) sha256=b5be1d1fcd30e9b3ae4711cfaaf47612f62404453b8909ab32d1dba87fd157b2
-  cineworld_uk (4.3.0) sha256=12354096cb94b5e32ef80031b0ddc2b5d027a16ea159de7549cf45d25cb68667
+  cineworld_uk (4.3.1) sha256=bdad2cfc699b427ab2223b835ba49790d7910c1cc8ab64f31d239c5b0ffc1c6b
+  cineworld_uk (4.3.1-aarch64-linux-gnu) sha256=e43a495924a51548b5e3797c8333fa0a8848a3c292d1e1d46c7bef6ca4dde102
+  cineworld_uk (4.3.1-arm64-darwin) sha256=5887fdb69b9abdd9837af1d06e27aec14058d489cb078a6e01908158e38820dc
+  cineworld_uk (4.3.1-x86_64-linux-gnu) sha256=2c87279e82c531d825ea32193d51e0d38341ecc04009cb5140e9c1a370470e3a
   concurrent-ruby (1.3.8) sha256=b2f1be836e968ccc78ccfce277ea79c72a88633f22306782c16ff23fb415d1e1
   connection_pool (3.0.2) sha256=33fff5ba71a12d2aa26cb72b1db8bba2a1a01823559fb01d29eb74c286e62e0a
   crass (1.0.7) sha256=94868719948664c89ddcaf0a37c65048413dfcb1c869470a5f7a7ceb5390b295
