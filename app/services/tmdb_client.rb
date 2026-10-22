@@ -5,8 +5,8 @@ class TmdbClient
     @http = http
   end
 
-  def search(name)
-    get("/search/movie?#{URI.encode_www_form(query: name)}").fetch("results")
+  def search(name, year: nil)
+    get("/search/movie?#{URI.encode_www_form({ query: name, primary_release_year: year }.compact)}").fetch("results")
   end
 
   def movie(id)

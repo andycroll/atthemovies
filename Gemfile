@@ -67,4 +67,4 @@ group :test do
 end
 gem "tailwindcss-rails"
 
-gem "cineworld_uk", "~> 4.1"
+gem "cineworld_uk", "~> 4.3"

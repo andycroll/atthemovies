@@ -9,7 +9,7 @@ class ImportTest < ActiveJob::TestCase
     starting_at = 2.days.from_now.change(usec: 0)
     distant_start = 210.days.from_now.change(usec: 0)
     performances = [
-      CineworldUk::Performance.new(cinema_id: 14, cinema_name: "Brighton", film_name: "New Cineworld Release", starting_at: starting_at,
+      CineworldUk::Performance.new(cinema_id: 14, cinema_name: "Brighton", film_name: "New Cineworld Release", film_year: 2026, starting_at: starting_at,
         dimension: "3d", variant: [ "imax", "audio_described" ], booking_url: "https://web.cineworld.co.uk/order/showtimes/014-123/seats"),
       CineworldUk::Performance.new(cinema_id: 14, cinema_name: "Brighton", film_name: "New Cineworld Release", starting_at: distant_start,
         dimension: "2d", variant: [], booking_url: "https://web.cineworld.co.uk/order/showtimes/014-456/seats"),
@@ -48,6 +48,7 @@ class ImportTest < ActiveJob::TestCase
               assert_equal "3d", performance.dimension
               assert_equal "audio_described, imax", performance.variant
               assert_equal performances.first.booking_url, performance.booking_url
+              assert_equal 2026, performance.film.year
               distant = cinema.performances.find_by!(starting_at: distant_start)
               assert_equal "standard", distant.variant
               assert_equal "2d", distant.dimension
@@ -72,6 +73,12 @@ class ImportTest < ActiveJob::TestCase
     assert_equal 1, performance.film.reload.performances_count
     job.import!(cinema, attributes.merge(dimension: "3D"))
     assert_equal 2, performance.film.reload.performances_count
+  end
+
+  test "imports record the film year from the cinema" do
+    ImportCinemaPerformancesJob.new.import!(cinemas(:brighton), name: "From Dusk Till Dawn", year: 1996,
+      starting_at: 1.day.from_now, dimension: "2d", variant: "standard")
+    assert_equal 1996, Film.find_by!(name: "From Dusk Till Dawn").year
   end
 
   test "cinema provider identity survives operator renames and repeated imports" do
