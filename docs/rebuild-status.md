@@ -43,7 +43,8 @@ and macOS. Production must run on one of those platforms.
 
 ## Before going live
 
-1. Deploy to movies.andycroll.com on Hatchbox, as wbrdash and btnbuses are.
+1. Deploy to movies.andycroll.com on Hatchbox with
+   [the runbook](runbooks/deploy-to-hatchbox.md).
 2. Provision an operator, mail delivery, the TMDB token, persistent storage and
    tested backup/restore. No default login or live credentials are checked in.
 3. Run the first import for each chain and enrichment, then check listings for
