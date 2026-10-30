@@ -1,5 +1,8 @@
 # At The Movies: repository state and rebuild brief
 
+> Historical. This describes the legacy application, removed on 7 October 2026.
+> The current app is described in [README.md](README.md).
+
 This document records what the existing application does so it can be rebuilt
 from a fresh Rails application without treating old framework code as the
 specification.
