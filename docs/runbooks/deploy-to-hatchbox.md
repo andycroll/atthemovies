@@ -47,15 +47,15 @@ No `Procfile`. Hatchbox starts Puma, and Puma starts Solid Queue. There is no
 separate worker process. The Kamal files are gone; the reference apps do not
 use Kamal. `Dockerfile` and `bin/thrust` stay, as in btnbuses and wbrdash.
 
-**Provider binaries.** `cineworld_uk` (and `picturehouse_uk` / `odeon_uk`, if
-they are added) ship platform gems with a bundled `curl-impersonate`
+**Provider binaries.** `cineworld_uk`, `odeon_uk` and `picturehouse_uk` ship
+platform gems with a bundled `curl-impersonate`
 executable for glibc Linux x86-64 and ARM64. `Gemfile.lock` lists
 `x86_64-linux-gnu` and `aarch64-linux-gnu`, so Bundler picks the right gem on
 the box. Two ways this breaks:
 
 - `BUNDLE_FORCE_RUBY_PLATFORM` set on the server or app. Bundler installs the
   source gem, which has no executable. Imports then fail with
-  `CineworldUk::AuthenticationError`.
+  `Cinebase::Vista::AuthenticationError`.
 - A musl or non-x86/ARM server. Hatchbox servers are Ubuntu, so this should not
   happen.
 
@@ -67,8 +67,7 @@ Chunk 6 checks both.
 
 Production reads `config/credentials/production.yml.enc`, decrypted by
 `config/credentials/production.key`. Neither exists yet. The old
-`config/credentials.yml.enc` is not used in production and its secrets still
-need rotation (see `docs/rebuild-status.md`).
+`config/credentials.yml.enc` is not used in production.
 
 ```sh
 mise x -- bin/rails credentials:edit --environment production
@@ -244,15 +243,15 @@ a year.
    # solid-queue supervisor's PPID is puma's PID
    ```
 
-4. Cineworld authentication from this box's IP. The provider sits behind
-   Cloudflare bot checks, and a datacenter IP may be challenged:
+4. Guest tokens from this box's IP. Cineworld, ODEON and Picturehouse sit
+   behind bot checks, and a datacenter IP may be challenged:
 
    ```sh
-   bundle exec rails runner 'CineworldUk.acquire_token!; puts "token ok"'
+   bundle exec rails runner 'Chain.all.each { |chain| chain.authenticate!; puts "#{chain.key} ok" }'
    ```
 
-   `CineworldUk::AuthenticationError` here means the nightly Cineworld import
-   will fail every night. See "Known risks" below.
+   `Cinebase::Vista::AuthenticationError` here means that chain's nightly
+   import will fail every night. See "Known risks" below.
 
 ---
 
@@ -278,18 +277,18 @@ Then:
 2. Sign out and request a password reset. The email arrives and its link
    points at `https://movies.andycroll.com/...`. Postmark → Activity shows it.
 
-**Run the first imports.** The job names live in README → "Imports and
-metadata". Run each import job listed there, in the order listed, on the box:
+**Run the first imports.** On the box:
 
 ```sh
 cd ~/atthemovies/current
-bundle exec rails runner '<ImportJob>.perform_later'   # once per import job in README
-bundle exec rails imports:status                        # counts, plus any Solid Queue failures
+bundle exec rails runner 'Chain.all.each { |chain| ImportChainJob.perform_later(chain.key) }'
+bundle exec rails imports:status   # counts, plus any Solid Queue failures
 ```
 
 `perform_later` hands the job to the Solid Queue worker inside Puma. Watch
-`imports:status` until the counts stop growing. Then run the enrichment job
-from the same README section the same way, so TMDB metadata fills in.
+`imports:status` until the counts stop growing. Then run
+`bundle exec rails runner 'EnrichPendingFilmsJob.perform_later'` so TMDB
+metadata fills in.
 
 Check:
 
@@ -356,10 +355,10 @@ Follow `wbrdash/docs/runbooks/deploy-to-hatchbox.md`, chunk 6. It needs the
 
 ## Known risks
 
-- **Cineworld from a datacenter IP.** `docs/rebuild-status.md` records a
-  Cloudflare 403 from another environment. If chunk 6 step 4 fails, the
-  nightly Cineworld entry in `config/recurring.yml` fails every night. Remove
-  it in a PR or accept the failures.
+- **Vista chains from a datacenter IP.** Tokens were only checked from a
+  home connection. If chunk 6 step 4 fails for a chain, its nightly entry in
+  `config/recurring.yml` fails every night. Remove it in a PR or accept the
+  failures.
 - **Visitor IP behind Cloudflare.** The other apps use `cloudflare-rails` so
   `request.remote_ip` is the visitor. Without it, sign-in and password-reset
   rate limits key on Cloudflare's edge IP, and sessions record that IP. With a
@@ -371,7 +370,6 @@ Follow `wbrdash/docs/runbooks/deploy-to-hatchbox.md`, chunk 6. It needs the
   wbrdash chunk 5.
 - Backups: the gate in chunk 8.
 - `cloudflare-rails`, as above.
-- Remove the `kamal` gem from the `Gemfile`.
 
 ## Checklist
 

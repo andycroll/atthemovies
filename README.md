@@ -110,13 +110,9 @@ requires all five.
 
 ## Deployment
 
-Rollout to movies.andycroll.com: [docs/runbooks/deploy-to-hatchbox.md](docs/runbooks/deploy-to-hatchbox.md).
-
-Generated Kamal/Thruster/Docker configuration is retained as a starting point,
-not a configured production deployment. Set your hosts, registry and secret store
-before deploying. Keep a persistent storage volume and one SQLite writer. Back up
-**all four production SQLite databases and Active Storage files**. Add Litestream
-only once the actual persistent-storage deployment and recovery process are chosen.
-Configure real mail delivery and `config.action_mailer.default_url_options` for
-password reset, and keep Rails master keys outside Git. Production needs glibc
+Production runs on Hatchbox at movies.andycroll.com, like wbrdash and btnbuses.
+Follow [docs/runbooks/deploy-to-hatchbox.md](docs/runbooks/deploy-to-hatchbox.md).
+Puma runs Solid Queue, so there is no separate worker. Mail goes through Postmark.
+Keep one SQLite writer. Back up **all four production SQLite databases and Active
+Storage files** before operators start editing data. Production needs glibc
 Linux (x86-64 or ARM64) for the gems' bundled `curl-impersonate`.
