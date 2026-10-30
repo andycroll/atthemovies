@@ -3,17 +3,19 @@ class ImportChainJob < ApplicationJob
 
   def perform(key)
     chain = Chain.new(key)
-    chain.authenticate!
-    chain.cinemas.each do |venue|
-      cinema = Cinema.transaction do
-        identifier = ExternalIdentifier.find_by(source: chain.source, value: venue.id.to_s)
-        attributes = cinema_attributes(venue)
-        record = identifier&.identifiable || Cinema.create!(attributes)
-        record.external_identifiers.create!(source: chain.source, value: venue.id.to_s) unless identifier
-        record.update!(attributes.slice(:brand, :screenings_url))
-        record
+    chain.authenticated do
+      chain.cinemas.each do |venue|
+        cinema = Cinema.transaction do
+          identifier = ExternalIdentifier.find_by(source: chain.source, value: venue.id.to_s)
+          attributes = cinema_attributes(venue)
+          record = identifier&.identifiable || Cinema.create!(attributes)
+          record.external_identifiers.create!(source: chain.source, value: venue.id.to_s) unless identifier
+          record.update!(attributes.slice(:brand, :screenings_url))
+          record.update!(attributes.slice(:latitude, :longitude)) if record.latitude.blank? && record.longitude.blank?
+          record
+        end
+        ImportChainPerformancesJob.perform_later(cinema, key)
       end
-      ImportChainPerformancesJob.perform_later(cinema, key)
     end
   end
 
@@ -30,6 +32,8 @@ class ImportChainJob < ApplicationJob
       postal_code: venue.postal_code.presence,
       country: "United Kingdom",
       country_code: "GB",
+      latitude: venue.try(:latitude),
+      longitude: venue.try(:longitude),
       screenings_url: venue.url.to_s.sub("http://", "https://").presence
     }
   end

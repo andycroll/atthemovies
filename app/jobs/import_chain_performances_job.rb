@@ -4,8 +4,8 @@ class ImportChainPerformancesJob < ApplicationJob
   def perform(cinema, key)
     chain = Chain.new(key)
     id = cinema.external_identifiers.find_by!(source: chain.source).value
-    chain.authenticate!
-    chain.performances(id).each do |performance|
+    performances = chain.authenticated { chain.performances(id) }
+    performances.each do |performance|
       next if performance.starting_at < Time.current
       import!(cinema, name: performance.film_name, year: performance.film_year, starting_at: performance.starting_at,
         dimension: performance.dimension, variant: performance.variant.join(", ").presence || "standard",

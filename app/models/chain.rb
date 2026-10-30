@@ -12,6 +12,9 @@ class Chain
   # Vue answers every advertised date in one request; the horizon only bounds it
   ADVERTISED_HORIZON = 1.year
 
+  # Guest tokens last 12 hours; renew early so a chain's import never outlives one
+  TOKEN_RENEWAL_MARGIN = 1.hour
+
   attr_reader :key
 
   def self.all
@@ -28,7 +31,15 @@ class Chain
   end
 
   def authenticate!
-    namespace.acquire_token! if namespace.respond_to?(:acquire_token!)
+    namespace.acquire_token! if namespace.respond_to?(:acquire_token!) && !token_fresh?
+  end
+
+  def authenticated
+    authenticate!
+    yield
+  rescue Cinebase::Vista::AuthenticationError
+    namespace.token = nil
+    raise
   end
 
   def cinemas
@@ -50,6 +61,13 @@ class Chain
 
   def namespace
     @config.fetch(:gem).constantize
+  end
+
+  def token_fresh?
+    claims = JSON.parse(Base64.urlsafe_decode64(namespace.token.to_s.split(".").fetch(1)))
+    Time.zone.at(Integer(claims.fetch("exp"))) > TOKEN_RENEWAL_MARGIN.from_now
+  rescue IndexError, KeyError, ArgumentError, TypeError, JSON::ParserError
+    false
   end
 
   def screening_dates(cinema_id)

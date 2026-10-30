@@ -38,8 +38,9 @@ Each chain comes from its own gem: `cineworld_uk`, `curzon_uk`, `odeon_uk`,
 for each one.
 
 Cineworld, Curzon, ODEON and Picturehouse run on Vista's OCAPI and need a guest
-token. Each job acquires one in memory with the gem's bundled `curl-impersonate`; no
-token is stored. The app asks OCAPI for every advertised business date for each
+token. The worker acquires one with the gem's bundled `curl-impersonate` and
+reuses it in memory until an hour before it expires; a rejected token is dropped
+so the retry fetches a new one. No token is stored. The app asks OCAPI for every advertised business date for each
 cinema, then loads the showtimes on those dates, so events months ahead are
 included. Vue needs no token and returns every advertised date in one request;
 `Chain::ADVERTISED_HORIZON` (one year) only bounds it. There is no other
@@ -47,9 +48,9 @@ app-imposed future cutoff.
 
 Cinema identity is the chain's venue ID, stored as an external identifier such
 as `cineworld_venue`. Imports keep operator edits to names and addresses, and
-update only brand and screenings URL. ODEON supplies no postcodes. No chain gem
-supplies coordinates, so "near me" sorts imported cinemas last until an
-operator adds latitude and longitude.
+update only brand and screenings URL. Coordinates come from the chain's gem when
+it supplies them, and only fill a cinema that has none, so operator edits stay.
+"Near me" sorts cinemas without coordinates last. ODEON supplies no postcodes.
 
 Case, punctuation and whitespace-normalised title aliases resolve repeated titles.
 Titles shared by remakes/events may need manual triage; a title is not a film's public ID.

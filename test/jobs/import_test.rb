@@ -102,6 +102,29 @@ class ImportTest < ActiveJob::TestCase
     assert_equal "subtitled", cinema.performances.find_by!(starting_at: starting_at).variant
   end
 
+  test "chain coordinates fill cinemas without them and keep operator edits" do
+    venue = PicturehouseUk::Cinema.new(19)
+    venue.define_singleton_method(:name) { "Duke's at Komedia" }
+    venue.define_singleton_method(:adr) { { locality: "Brighton" } }
+    venue.define_singleton_method(:url) { "https://www.picturehouses.com/cinema/duke-s-at-komedia" }
+    coordinates = nil
+    venue.define_singleton_method(:latitude) { coordinates&.first }
+    venue.define_singleton_method(:longitude) { coordinates&.last }
+    PicturehouseUk.stub(:acquire_token!, nil) do
+      PicturehouseUk::Cinema.stub(:all, [ venue ]) do
+        ImportChainJob.perform_now("picturehouse")
+        cinema = ExternalIdentifier.find_by!(source: "picturehouse_venue", value: "019").identifiable
+        assert_nil cinema.latitude
+        coordinates = [ 50.8248, -0.1394 ]
+        ImportChainJob.perform_now("picturehouse")
+        assert_equal [ 50.8248, -0.1394 ], [ cinema.reload.latitude, cinema.longitude ].map(&:to_f)
+        cinema.update!(latitude: 50.8, longitude: -0.1)
+        ImportChainJob.perform_now("picturehouse")
+        assert_equal [ 50.8, -0.1 ], [ cinema.reload.latitude, cinema.longitude ].map(&:to_f)
+      end
+    end
+  end
+
   test "cinema provider identity survives operator renames and repeated imports" do
     venue = PicturehouseUk::Cinema.new(19)
     venue.define_singleton_method(:name) { "Duke's at Komedia" }
