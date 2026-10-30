@@ -4,6 +4,7 @@ class Chain
   CHAINS = {
     "cineworld" => { gem: "CineworldUk", vista_url: "https://digital-api.cineworld.co.uk/ocapi/v1/", region_code: "GB" },
     "curzon" => { gem: "CurzonUk", vista_url: "https://digital-api.curzon.com/ocapi/v1/", region_code: nil },
+    "everyman" => { gem: "EverymanUk" },
     "odeon" => { gem: "OdeonUk", vista_url: "https://vwc.odeon.co.uk/WSVistaWebClient/ocapi/v1/", region_code: "UK" },
     "picturehouse" => { gem: "PicturehouseUk", vista_url: "https://digital-api.picturehouses.com/ocapi/v1/", region_code: nil },
     "vue" => { gem: "VueUk" }

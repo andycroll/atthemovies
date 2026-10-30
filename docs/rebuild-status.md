@@ -19,6 +19,7 @@ development machine.
 | --- | --- | --- | --- | --- |
 | Cineworld | `cineworld_uk` 4.3.2 | 87 | to June 2027 | Vista OCAPI, guest token |
 | Curzon | `curzon_uk` 1.0.0 | 14 | to December 2026 | Vista OCAPI, guest token, coded site ids such as SOH1 |
+| Everyman | `everyman_uk` 1.0.0, in `vendor/gems` | 49 | to December 2026 | Boxoffice routes on everymancinema.com, no token, postcodes and coordinates |
 | ODEON | `odeon_uk` 5.1.1 | 101 | to April 2027 | Vista OCAPI, guest token, no postcodes, UK only |
 | Picturehouse | `picturehouse_uk` 6.0.1 | 25 | to June 2027 | Vista OCAPI, guest token |
 | Vue | `vue_uk` 1.0.0 | 88 | to May 2027 | myvue.com API, no token, UK only |

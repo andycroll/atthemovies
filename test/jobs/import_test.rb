@@ -125,6 +125,33 @@ class ImportTest < ActiveJob::TestCase
     end
   end
 
+  test "Everyman imports every advertised date in one request" do
+    venue = EverymanUk::Cinema.new("X0712")
+    venue.define_singleton_method(:name) { "Baker Street" }
+    venue.define_singleton_method(:adr) { { street_address: "96-98 Baker Street", locality: "London", postal_code: "W1U 6TJ" } }
+    venue.define_singleton_method(:url) { "https://www.everymancinema.com/theaters/x0712-everyman-baker-street" }
+    venue.define_singleton_method(:latitude) { 51.5205 }
+    venue.define_singleton_method(:longitude) { -0.1567 }
+    starting_at = 45.days.from_now.change(usec: 0)
+    fetch = ->(id, from:, to:) do
+      assert_equal "X0712", id
+      assert_equal [ Time.zone.today, Time.zone.today + 1.year ], [ from, to ]
+      [ EverymanUk::Performance.new(cinema_id: id, cinema_name: "Baker Street", film_name: "Hocus Pocus", film_year: 1993,
+        starting_at: starting_at, variant: [ "35mm", "senior" ], booking_url: "https://purchase.everymancinema.com/launch/ticketing/abc") ]
+    end
+    EverymanUk::Cinema.stub(:all, [ venue ]) do
+      EverymanUk::Performance.stub(:at, fetch) do
+        perform_enqueued_jobs { ImportChainJob.perform_now("everyman") }
+      end
+    end
+    cinema = ExternalIdentifier.find_by!(source: "everyman_venue", value: "X0712").identifiable
+    assert_equal [ "Everyman", "W1U 6TJ" ], [ cinema.brand, cinema.postal_code ]
+    assert_equal [ 51.5205, -0.1567 ], [ cinema.latitude, cinema.longitude ].map(&:to_f)
+    performance = cinema.performances.find_by!(starting_at: starting_at)
+    assert_equal [ "35mm, senior", 1993 ], [ performance.variant, performance.film.year ]
+    assert_equal "https://purchase.everymancinema.com/launch/ticketing/abc", performance.booking_url
+  end
+
   test "cinema provider identity survives operator renames and repeated imports" do
     venue = PicturehouseUk::Cinema.new(19)
     venue.define_singleton_method(:name) { "Duke's at Komedia" }
