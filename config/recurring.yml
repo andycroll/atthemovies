@@ -11,11 +11,21 @@
 
 production:
   import_cineworld:
-    class: ImportCineworldJob
+    class: ImportChainJob
+    args: [ "cineworld" ]
     schedule: every day at 1am Europe/London
   import_picturehouse:
-    class: ImportPicturehouseJob
+    class: ImportChainJob
+    args: [ "picturehouse" ]
     schedule: every day at 2am Europe/London
+  import_odeon:
+    class: ImportChainJob
+    args: [ "odeon" ]
+    schedule: every day at 2:30am Europe/London
+  import_vue:
+    class: ImportChainJob
+    args: [ "vue" ]
+    schedule: every day at 3am Europe/London
   enrich_films:
     class: EnrichPendingFilmsJob
     schedule: every day at 4am Europe/London

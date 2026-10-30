@@ -13,7 +13,7 @@ class ConcurrentImportTest < ActiveSupport::TestCase
         ActiveRecord::Base.connection_pool.with_connection do
           ready << true
           start.pop
-          ImportCinemaPerformancesJob.new.import!(Cinema.find(cinema_id), attributes)
+          ImportChainPerformancesJob.new.import!(Cinema.find(cinema_id), attributes)
         end
       end
     end
