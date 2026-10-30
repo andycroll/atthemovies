@@ -1,6 +1,6 @@
 require_relative 'fixtures_helper'
 
-class FakeApiResponse
+class FakeClient
   include FixturesHelper
 
   attr_reader :movie_requests, :schedule_requests

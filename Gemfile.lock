@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/andycroll/cinebase.git
+  revision: 26b25b86677fd240a0218c97747675fbb746b5bb
+  branch: boxoffice
+  specs:
+    cinebase (5.5.0)
+      tzinfo
+      tzinfo-data
+
 PATH
   remote: vendor/gems/everyman_uk
   specs:
@@ -105,9 +114,6 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
-    cinebase (5.5.0)
-      tzinfo
-      tzinfo-data
     cineworld_uk (4.3.2)
       cinebase (~> 5.5)
       nokogiri (>= 1.11)
@@ -422,6 +428,7 @@ DEPENDENCIES
   brakeman
   bundler-audit
   capybara
+  cinebase!
   cineworld_uk
   curzon_uk
   debug
@@ -474,7 +481,7 @@ CHECKSUMS
   builder (3.3.0) sha256=497918d2f9dca528fdca4b88d84e4ef4387256d984b8154e9d5d3fe5a9c8835f
   bundler-audit (0.9.3) sha256=81c8766c71e47d0d28a0f98c7eed028539f21a6ea3cd8f685eb6f42333c9b4e9
   capybara (3.40.0) sha256=42dba720578ea1ca65fd7a41d163dd368502c191804558f6e0f71b391054aeef
-  cinebase (5.5.0) sha256=0553a50c0bfb28a1d0ab612d100ce431599db9cad172ce826cbb3055c7777d80
+  cinebase (5.5.0)
   cineworld_uk (4.3.2) sha256=6bab11752c02ff1a6526dfff9a6177aa3f2827eb8523a8a39a549b84fbc3d563
   cineworld_uk (4.3.2-aarch64-linux-gnu) sha256=9efc318003e9d95a94ce72677102acce747e4ab8a7de492cae13cda7658c9f95
   cineworld_uk (4.3.2-arm64-darwin) sha256=d516db4caedefcf419cc60308bfd78f8a0e07de26ee9a6af350561f88f46d7c4

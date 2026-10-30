@@ -27,7 +27,9 @@ No token or setup is needed. The website runs on Webedia's "Movies Pro"
 platform and sells tickets through Boxoffice. Listings come from the
 website's own `/api/gatsby-source-boxofficeapi/` routes. The theatre list
 is in the website's static build, whose path changes every day, so the gem
-finds the current build from the home page first.
+finds the current build from the home page first. The client and most of
+the cinema and performance logic live in cinebase's `Cinebase::Boxoffice`,
+shared with other chains on the same platform.
 
 ### Cinema
 
@@ -120,8 +122,8 @@ performance.cinema_id
 Film release dates in the API are UK release dates, so re-releases would get
 the wrong year. `film_year` only comes from a year in the title.
 
-Variants are `35mm`, `arts`, `baby`, `kids`, `members`, `q&a`, `relaxed`,
-`senior` and `subtitled`.
+Variants are `35mm`, `arts`, `audio_described`, `baby`, `kids`, `members`,
+`q&a`, `relaxed`, `senior` and `subtitled`.
 
 ## Tests
 

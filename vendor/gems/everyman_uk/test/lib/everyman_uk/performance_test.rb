@@ -4,7 +4,7 @@ class EverymanUk::PerformanceTest < Minitest::Test
   DATE = Date.new(2026, 10, 24)
 
   def setup
-    @api_response = FakeApiResponse.new
+    @client = FakeClient.new
     EverymanUk::Cinema.instance_variable_set(:@theaters_hash, nil)
   end
 
@@ -31,8 +31,8 @@ class EverymanUk::PerformanceTest < Minitest::Test
     with_fake_api { EverymanUk::Performance.at('X0712', from: DATE, to: DATE + 365) }
 
     assert_equal [{ theater_id: 'X0712', time_zone: 'Europe/London', from: DATE, to: DATE + 365 }],
-                 @api_response.schedule_requests
-    assert_equal [%w(1001 1002 1003 1004 1005)], @api_response.movie_requests
+                 @client.schedule_requests
+    assert_equal [%w(1001 1002 1003 1004 1005)], @client.movie_requests
   end
 
   def test_at_parses_first_performance
@@ -112,6 +112,6 @@ class EverymanUk::PerformanceTest < Minitest::Test
   end
 
   def with_fake_api(&block)
-    EverymanUk::Internal::ApiResponse.stub(:new, @api_response, &block)
+    EverymanUk::Cinema.stub(:client, @client, &block)
   end
 end
