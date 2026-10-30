@@ -30,6 +30,10 @@ production:
     class: ImportChainJob
     args: [ "vue" ]
     schedule: every day at 3am Europe/London
+  import_everyman:
+    class: ImportChainJob
+    args: [ "everyman" ]
+    schedule: every day at 3:30am Europe/London
   enrich_films:
     class: EnrichPendingFilmsJob
     schedule: every day at 4am Europe/London

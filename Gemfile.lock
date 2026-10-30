@@ -1,3 +1,9 @@
+PATH
+  remote: vendor/gems/everyman_uk
+  specs:
+    everyman_uk (1.0.0)
+      cinebase (~> 5.5)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -423,6 +429,7 @@ DEPENDENCIES
   cineworld_uk
   curzon_uk
   debug
+  everyman_uk!
   image_processing (~> 1.2)
   importmap-rails
   jbuilder
@@ -488,6 +495,7 @@ CHECKSUMS
   erb (6.0.7) sha256=c5ca6dc25b0ef974a44dc8f59fe847577122483b1968a38dec305c60bf91ee92
   erubi (1.13.1) sha256=a082103b0885dbc5ecf1172fede897f9ebdb745a4b97a5e8dc63953db1ee4ad9
   et-orbi (1.4.2) sha256=bb555dae668419cb24caa2a293a170e58be6d4df1e017c51f5030bdc133cd20c
+  everyman_uk (1.0.0)
   ffi (1.17.4-aarch64-linux-gnu) sha256=b208f06f91ffd8f5e1193da3cae3d2ccfc27fc36fba577baf698d26d91c080df
   ffi (1.17.4-aarch64-linux-musl) sha256=9286b7a615f2676245283aef0a0a3b475ae3aae2bb5448baace630bb77b91f39
   ffi (1.17.4-arm-linux-gnu) sha256=d6dbddf7cb77bf955411af5f187a65b8cd378cb003c15c05697f5feee1cb1564

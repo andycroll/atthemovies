@@ -66,6 +66,7 @@ gem "tailwindcss-rails"
 
 gem "cineworld_uk"
 gem "curzon_uk"
+gem "everyman_uk", path: "vendor/gems/everyman_uk"
 gem "odeon_uk"
 gem "picturehouse_uk"
 gem "vue_uk"
