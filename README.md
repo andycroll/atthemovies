@@ -110,6 +110,8 @@ requires all five.
 
 ## Deployment
 
+Rollout to movies.andycroll.com: [docs/runbooks/deploy-to-hatchbox.md](docs/runbooks/deploy-to-hatchbox.md).
+
 Generated Kamal/Thruster/Docker configuration is retained as a starting point,
 not a configured production deployment. Set your hosts, registry and secret store
 before deploying. Keep a persistent storage volume and one SQLite writer. Back up
