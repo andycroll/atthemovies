@@ -1,0 +1,7 @@
+[
+  { "id": "2001", "title": "The Example Film", "runtime": 6000, "release": "2026-10-23T00:00:00.000Z" },
+  { "id": "2002", "title": "Imaginary Picture (50th Anniversary 4K Restoration)", "runtime": 5400, "release": "2026-10-09T00:00:00.000Z" },
+  { "id": "2003", "title": "Made Up Movie 3D", "runtime": 7200, "release": "2026-10-25T00:00:00.000Z" },
+  { "id": "2004", "title": "Pretend Picture - Sensory Friendly Screening", "runtime": 6600, "release": "2026-10-25T00:00:00.000Z" },
+  { "id": "2005", "title": "Met Opera 2026-27: Invented Opera", "runtime": 12000, "release": "2026-10-25T00:00:00.000Z" }
+]
