@@ -152,6 +152,33 @@ class ImportTest < ActiveJob::TestCase
     assert_equal "https://purchase.everymancinema.com/launch/ticketing/abc", performance.booking_url
   end
 
+  test "Showcase imports every advertised date in one request" do
+    venue = ShowcaseUk::Cinema.new("X06JR")
+    venue.define_singleton_method(:name) { "Bluewater" }
+    venue.define_singleton_method(:adr) { { street_address: "Bluewater Plaza", locality: "Greenhithe", postal_code: "DA9 9SG" } }
+    venue.define_singleton_method(:url) { "https://www.showcasecinemas.co.uk/theaters/x06jr-showcase-cinema-de-lux-bluewater" }
+    venue.define_singleton_method(:latitude) { 51.4371 }
+    venue.define_singleton_method(:longitude) { 0.2705 }
+    starting_at = 200.days.from_now.change(usec: 0)
+    fetch = ->(id, from:, to:) do
+      assert_equal "X06JR", id
+      assert_equal [ Time.zone.today, Time.zone.today + 1.year ], [ from, to ]
+      [ ShowcaseUk::Performance.new(cinema_id: id, cinema_name: "Bluewater", film_name: "Dune: Part Three", dimension: "3d",
+        starting_at: starting_at, variant: [ "xplus", "subtitled" ], booking_url: "https://tickets.showcasecinemas.co.uk/launch/ticketing/abc") ]
+    end
+    ShowcaseUk::Cinema.stub(:all, [ venue ]) do
+      ShowcaseUk::Performance.stub(:at, fetch) do
+        perform_enqueued_jobs { ImportChainJob.perform_now("showcase") }
+      end
+    end
+    cinema = ExternalIdentifier.find_by!(source: "showcase_venue", value: "X06JR").identifiable
+    assert_equal [ "Showcase", "DA9 9SG" ], [ cinema.brand, cinema.postal_code ]
+    assert_equal [ 51.4371, 0.2705 ], [ cinema.latitude, cinema.longitude ].map(&:to_f)
+    performance = cinema.performances.find_by!(starting_at: starting_at)
+    assert_equal [ "subtitled, xplus", "3d" ], [ performance.variant, performance.dimension ]
+    assert_equal "https://tickets.showcasecinemas.co.uk/launch/ticketing/abc", performance.booking_url
+  end
+
   test "cinema provider identity survives operator renames and repeated imports" do
     venue = PicturehouseUk::Cinema.new(19)
     venue.define_singleton_method(:name) { "Duke's at Komedia" }
