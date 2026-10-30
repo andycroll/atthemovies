@@ -31,9 +31,6 @@ gem "solid_cable"
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
-# Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
-gem "kamal", require: false
-
 # Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
 gem "thruster", require: false
 
@@ -69,3 +66,8 @@ end
 gem "tailwindcss-rails"
 
 gem "cineworld_uk"
+gem "curzon_uk"
+gem "everyman_uk", path: "vendor/gems/everyman_uk"
+gem "odeon_uk"
+gem "picturehouse_uk"
+gem "vue_uk"

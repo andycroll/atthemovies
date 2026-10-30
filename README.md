@@ -2,8 +2,8 @@
 
 A fresh Rails 8.1.4 / Ruby 4.0.7 application for UK cinema listings. SQLite in
 all environments; Solid Queue, Cache and Cable; Hotwire, Importmap, Propshaft,
-Active Storage, Tailwind and daisyUI. See [REBUILD.md](REBUILD.md) for the original
-brief and [docs/rebuild-status.md](docs/rebuild-status.md) for boundaries and cutover gates.
+Active Storage, Tailwind and daisyUI. See [docs/rebuild-status.md](docs/rebuild-status.md) for provider checks,
+decisions and what remains before going live.
 
 ## Run locally
 
@@ -26,24 +26,33 @@ every provisioned user is an operator. Supply passwords privately, not in shell 
 ## Imports and metadata
 
 ```sh
-bin/rails runner 'ImportPicturehouseJob.perform_later'
-bin/rails runner 'ImportCineworldJob.perform_later'
+bin/rails runner 'ImportChainJob.perform_later("cineworld")'   # or curzon, everyman, odeon, picturehouse, vue
 bin/rails runner 'EnrichPendingFilmsJob.perform_later'
 bin/rails runner 'CleanupPerformancesJob.perform_later'
 bin/rails imports:status
 ```
 
-Cineworld uses `cineworld_uk` with its bundled authentication executable. Each
-job acquires a guest token in memory; no token is stored in the database.
-Its import discovers every advertised business date for each cinema, then loads
-the showtimes on those dates, including events months ahead with gaps between
-dates. There is no app-imposed future cutoff. Cineworld
-imports are manual; the production recurring import remains Picturehouse-only.
+Each chain comes from its own gem: `cineworld_uk`, `curzon_uk`, `everyman_uk`,
+`odeon_uk`, `picturehouse_uk` and `vue_uk`, all built on `cinebase`. `Chain`
+lists them. `everyman_uk` lives in `vendor/gems` until it has its own repository.
+`ImportChainJob` loads a chain's cinemas and queues `ImportChainPerformancesJob`
+for each one.
 
-Picturehouse is the first live-verified provider. Cinema discovery and listings
-are fresh adapters, not the old gem. Numeric venue IDs are separate from website
-slugs, sessions are filtered by venue, and offset-free times use Europe/London.
-Imports preserve manual venue names/addresses and use database-enforced identities.
+Cineworld, Curzon, ODEON and Picturehouse run on Vista's OCAPI and need a guest
+token. The worker acquires one with the gem's bundled `curl-impersonate` and
+reuses it in memory until an hour before it expires; a rejected token is dropped
+so the retry fetches a new one. No token is stored. The app asks OCAPI for every advertised business date for each
+cinema, then loads the showtimes on those dates, so events months ahead are
+included. Vue and Everyman need no token and return every advertised date in
+one request; `Chain::ADVERTISED_HORIZON` (one year) only bounds it. There is no other
+app-imposed future cutoff.
+
+Cinema identity is the chain's venue ID, stored as an external identifier such
+as `cineworld_venue`. Imports keep operator edits to names and addresses, and
+update only brand and screenings URL. Coordinates come from the chain's gem when
+it supplies them, and only fill a cinema that has none, so operator edits stay.
+"Near me" sorts cinemas without coordinates last. ODEON supplies no postcodes.
+
 Case, punctuation and whitespace-normalised title aliases resolve repeated titles.
 Titles shared by remakes/events may need manual triage; a title is not a film's public ID.
 
@@ -60,8 +69,9 @@ visible. What's on requires a current/future showing, independently of cleanup.
 Days are midnight-to-midnight in London (not a 06:00 cinema day); today excludes
 elapsed showings. Cleanup destroys past performances, maintaining film counters.
 
-Production recurring tasks import at 02:00 London, enrich at 04:00 London and
-clean up every 10 minutes. Network failures retry five times with backoff; queue
+Production recurring tasks import Cineworld at 01:00, Curzon at 01:30,
+Picturehouse at 02:00, ODEON at 02:30, Vue at 03:00 and Everyman at 03:30
+London, enrich at 04:00 London and clean up every 10 minutes. Network failures retry five times with backoff; queue
 failures remain available in Solid Queue and `imports:status`. Development tasks
 are manual to avoid unexpected website requests. Run the worker for queued work.
 
@@ -92,21 +102,18 @@ bin/rails zeitwerk:check
 bin/rails daisyui:install   # deliberately update vendored UI plugins
 ```
 
-Minitest covers aliases, repeat/concurrent import identity, atomic merges and
+Minitest covers chain imports, aliases, repeat/concurrent import identity, atomic merges and
 counters, London/BST boundaries, cleanup, metadata and image idempotency, canonical
 URLs, JSON shapes and operator authentication. GitHub Actions runs security, lint,
-test and system-test checks. Dependabot updates are grouped and cooled down; its
-automerge workflow requires repository auto-merge and required CI branch protection.
-Those remote settings have not been changed.
+test and system-test checks. Dependabot updates are grouped and cooled down.
+Non-major updates auto-merge once the checks pass; the `Protect master` ruleset
+requires all five.
 
 ## Deployment
 
-Generated Kamal/Thruster/Docker configuration is retained as a starting point,
-not a configured production deployment. Set your hosts, registry and secret store
-before deploying. Keep a persistent storage volume and one SQLite writer. Back up
-**all four production SQLite databases and Active Storage files**. Add Litestream
-only once the actual persistent-storage deployment and recovery process are chosen.
-Configure real mail delivery and `config.action_mailer.default_url_options` for
-password reset, rotate old credentials, and keep Rails master keys outside Git.
-Do not deploy or cut over until the outstanding checks in `docs/rebuild-status.md`
-are resolved.
+Production runs on Hatchbox at movies.andycroll.com, like wbrdash and btnbuses.
+Follow [docs/runbooks/deploy-to-hatchbox.md](docs/runbooks/deploy-to-hatchbox.md).
+Puma runs Solid Queue, so there is no separate worker. Mail goes through Postmark.
+Keep one SQLite writer. Back up **all four production SQLite databases and Active
+Storage files** before operators start editing data. Production needs glibc
+Linux (x86-64 or ARM64) for the gems' bundled `curl-impersonate`.
