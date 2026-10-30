@@ -18,6 +18,10 @@ production:
     class: ImportChainJob
     args: [ "picturehouse" ]
     schedule: every day at 2am Europe/London
+  import_curzon:
+    class: ImportChainJob
+    args: [ "curzon" ]
+    schedule: every day at 1:30am Europe/London
   import_odeon:
     class: ImportChainJob
     args: [ "odeon" ]

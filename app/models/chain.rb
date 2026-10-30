@@ -3,6 +3,7 @@ require "cinebase/vista"
 class Chain
   CHAINS = {
     "cineworld" => { gem: "CineworldUk", vista_url: "https://digital-api.cineworld.co.uk/ocapi/v1/", region_code: "GB" },
+    "curzon" => { gem: "CurzonUk", vista_url: "https://digital-api.curzon.com/ocapi/v1/", region_code: nil },
     "odeon" => { gem: "OdeonUk", vista_url: "https://vwc.odeon.co.uk/WSVistaWebClient/ocapi/v1/", region_code: "UK" },
     "picturehouse" => { gem: "PicturehouseUk", vista_url: "https://digital-api.picturehouses.com/ocapi/v1/", region_code: nil },
     "vue" => { gem: "VueUk" }
@@ -53,8 +54,14 @@ class Chain
 
   def screening_dates(cinema_id)
     client = Cinebase::Vista::Client.new(base_url: @config[:vista_url], region_code: @config[:region_code], token: namespace.token)
-    response = client.get("film-screening-dates", "siteIds" => cinema_id.to_s.rjust(3, "0"))
+    response = client.get("film-screening-dates", "siteIds" => site_id(cinema_id))
     dates = response.fetch("filmScreeningDates").map { |entry| Date.iso8601(entry.fetch("businessDate")) }
     dates.uniq.sort.select { |date| date >= Time.zone.today }
+  end
+
+  # Numeric Vista site ids are zero-padded; Curzon's are codes such as SOH1
+  def site_id(cinema_id)
+    id = cinema_id.to_s
+    id.match?(/\A\d+\z/) ? id.rjust(3, "0") : id
   end
 end

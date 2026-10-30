@@ -18,11 +18,12 @@ development machine.
 | Chain | Gem | Cinemas | Advertised dates | Notes |
 | --- | --- | --- | --- | --- |
 | Cineworld | `cineworld_uk` 4.3.2 | 87 | to June 2027 | Vista OCAPI, guest token |
+| Curzon | `curzon_uk` 1.0.0 | 14 | to December 2026 | Vista OCAPI, guest token, coded site ids such as SOH1 |
 | ODEON | `odeon_uk` 5.1.1 | 101 | to April 2027 | Vista OCAPI, guest token, no postcodes, UK only |
 | Picturehouse | `picturehouse_uk` 6.0.1 | 25 | to June 2027 | Vista OCAPI, guest token |
 | Vue | `vue_uk` 1.0.0 | 88 | to May 2027 | myvue.com API, no token, UK only |
 
-The three Vista gems bundle `curl-impersonate` for glibc Linux (x86-64, ARM64)
+The four Vista gems bundle `curl-impersonate` for glibc Linux (x86-64, ARM64)
 and macOS. Production must run on one of those platforms.
 
 ## Decisions

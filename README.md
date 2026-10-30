@@ -26,18 +26,19 @@ every provisioned user is an operator. Supply passwords privately, not in shell 
 ## Imports and metadata
 
 ```sh
-bin/rails runner 'ImportChainJob.perform_later("cineworld")'   # or odeon, picturehouse, vue
+bin/rails runner 'ImportChainJob.perform_later("cineworld")'   # or curzon, odeon, picturehouse, vue
 bin/rails runner 'EnrichPendingFilmsJob.perform_later'
 bin/rails runner 'CleanupPerformancesJob.perform_later'
 bin/rails imports:status
 ```
 
-Each chain comes from its own gem: `cineworld_uk`, `odeon_uk`, `picturehouse_uk`
-and `vue_uk`, all built on `cinebase`. `Chain` lists them. `ImportChainJob` loads
-a chain's cinemas and queues `ImportChainPerformancesJob` for each one.
+Each chain comes from its own gem: `cineworld_uk`, `curzon_uk`, `odeon_uk`,
+`picturehouse_uk` and `vue_uk`, all built on `cinebase`. `Chain` lists them.
+`ImportChainJob` loads a chain's cinemas and queues `ImportChainPerformancesJob`
+for each one.
 
-Cineworld, ODEON and Picturehouse run on Vista's OCAPI and need a guest token.
-Each job acquires one in memory with the gem's bundled `curl-impersonate`; no
+Cineworld, Curzon, ODEON and Picturehouse run on Vista's OCAPI and need a guest
+token. Each job acquires one in memory with the gem's bundled `curl-impersonate`; no
 token is stored. The app asks OCAPI for every advertised business date for each
 cinema, then loads the showtimes on those dates, so events months ahead are
 included. Vue needs no token and returns every advertised date in one request;
@@ -66,9 +67,9 @@ visible. What's on requires a current/future showing, independently of cleanup.
 Days are midnight-to-midnight in London (not a 06:00 cinema day); today excludes
 elapsed showings. Cleanup destroys past performances, maintaining film counters.
 
-Production recurring tasks import Cineworld at 01:00, Picturehouse at 02:00,
-ODEON at 02:30 and Vue at 03:00 London, enrich at 04:00 London and clean up
-every 10 minutes. Network failures retry five times with backoff; queue
+Production recurring tasks import Cineworld at 01:00, Curzon at 01:30,
+Picturehouse at 02:00, ODEON at 02:30 and Vue at 03:00 London, enrich at 04:00
+London and clean up every 10 minutes. Network failures retry five times with backoff; queue
 failures remain available in Solid Queue and `imports:status`. Development tasks
 are manual to avoid unexpected website requests. Run the worker for queued work.
 

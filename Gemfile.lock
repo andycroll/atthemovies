@@ -118,6 +118,14 @@ GEM
     concurrent-ruby (1.3.8)
     connection_pool (3.0.2)
     crass (1.0.8)
+    curzon_uk (1.0.0)
+      cinebase (~> 5.4)
+    curzon_uk (1.0.0-aarch64-linux-gnu)
+      cinebase (~> 5.4)
+    curzon_uk (1.0.0-arm64-darwin)
+      cinebase (~> 5.4)
+    curzon_uk (1.0.0-x86_64-linux-gnu)
+      cinebase (~> 5.4)
     date (3.6.0)
     debug (1.11.1)
       irb (~> 1.10)
@@ -440,6 +448,7 @@ DEPENDENCIES
   bundler-audit
   capybara
   cineworld_uk
+  curzon_uk
   debug
   image_processing (~> 1.2)
   importmap-rails
@@ -498,6 +507,10 @@ CHECKSUMS
   concurrent-ruby (1.3.8) sha256=b2f1be836e968ccc78ccfce277ea79c72a88633f22306782c16ff23fb415d1e1
   connection_pool (3.0.2) sha256=33fff5ba71a12d2aa26cb72b1db8bba2a1a01823559fb01d29eb74c286e62e0a
   crass (1.0.8) sha256=7a0145c7a2c59f8e7923b3a69ce819c444823a00a5127d805298fea13be24efe
+  curzon_uk (1.0.0) sha256=f0296993c626b168958d72c143bb8793d449333d0e600f724dfbad7df480344e
+  curzon_uk (1.0.0-aarch64-linux-gnu) sha256=97a3cff57af2885f2083dcbb9f6023f5c7b73f914d611097293943f30a8a2eca
+  curzon_uk (1.0.0-arm64-darwin) sha256=b5ef5ee91426453831450971425e13b497ebc1321885b12b4df14dc6392ae60d
+  curzon_uk (1.0.0-x86_64-linux-gnu) sha256=f6b34c2185c2ae1b807b704883fdfcac37e1d398350672cdbde6f1200182ae98
   date (3.6.0) sha256=18ac945c4e24ebd93534f8eab8c2fd8c5604b3e977105b3798d62a1e8d27b580
   debug (1.11.1) sha256=2e0b0ac6119f2207a6f8ac7d4a73ca8eb4e440f64da0a3136c30343146e952b6
   dotenv (3.2.0) sha256=e375b83121ea7ca4ce20f214740076129ab8514cd81378161f11c03853fe619d
