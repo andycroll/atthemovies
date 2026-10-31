@@ -5,5 +5,6 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     options.binary = ENV["CHROME_BIN"] if ENV["CHROME_BIN"].present?
     options.add_argument("no-sandbox") if ENV["AMP_ORB"].present?
     options.add_argument("force-device-scale-factor=2")
+    options.add_preference("profile.password_manager_leak_detection", false)
   end
 end
