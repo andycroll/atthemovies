@@ -34,8 +34,7 @@ bin/rails imports:status
 
 Each chain comes from its own gem: `cineworld_uk`, `curzon_uk`, `everyman_uk`,
 `odeon_uk`, `picturehouse_uk`, `showcase_uk` and `vue_uk`, all built on
-`cinebase`. `Chain` lists them. `everyman_uk` and `showcase_uk` come from
-their GitHub repositories until their first RubyGems release.
+`cinebase`. `Chain` lists them.
 `ImportChainJob` loads a chain's cinemas and queues `ImportChainPerformancesJob`
 for each one.
 
