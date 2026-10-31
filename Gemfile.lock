@@ -1,23 +1,14 @@
-GIT
-  remote: https://github.com/andycroll/cinebase.git
-  revision: 26b25b86677fd240a0218c97747675fbb746b5bb
-  branch: boxoffice
-  specs:
-    cinebase (5.5.0)
-      tzinfo
-      tzinfo-data
-
 PATH
   remote: vendor/gems/everyman_uk
   specs:
     everyman_uk (1.0.0)
-      cinebase (~> 5.5)
+      cinebase (~> 5.6)
 
 PATH
   remote: vendor/gems/showcase_uk
   specs:
     showcase_uk (1.0.0)
-      cinebase (~> 5.5)
+      cinebase (~> 5.6)
 
 GEM
   remote: https://rubygems.org/
@@ -120,6 +111,9 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
+    cinebase (5.6.0)
+      tzinfo
+      tzinfo-data
     cineworld_uk (4.3.2)
       cinebase (~> 5.5)
       nokogiri (>= 1.11)
@@ -395,7 +389,7 @@ GEM
       railties (>= 7.1.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
-    tzinfo-data (1.2026.5)
+    tzinfo-data (1.2026.6)
       tzinfo (>= 1.0.0)
     unicode-display_width (3.3.0)
       unicode-emoji (~> 4.3)
@@ -434,7 +428,6 @@ DEPENDENCIES
   brakeman
   bundler-audit
   capybara
-  cinebase!
   cineworld_uk
   curzon_uk
   debug
@@ -488,7 +481,7 @@ CHECKSUMS
   builder (3.3.0) sha256=497918d2f9dca528fdca4b88d84e4ef4387256d984b8154e9d5d3fe5a9c8835f
   bundler-audit (0.9.3) sha256=81c8766c71e47d0d28a0f98c7eed028539f21a6ea3cd8f685eb6f42333c9b4e9
   capybara (3.40.0) sha256=42dba720578ea1ca65fd7a41d163dd368502c191804558f6e0f71b391054aeef
-  cinebase (5.5.0)
+  cinebase (5.6.0) sha256=c36ad62331408545520bce46c8bdb011949e520de64f27e6dc787aec594d14b3
   cineworld_uk (4.3.2) sha256=6bab11752c02ff1a6526dfff9a6177aa3f2827eb8523a8a39a549b84fbc3d563
   cineworld_uk (4.3.2-aarch64-linux-gnu) sha256=9efc318003e9d95a94ce72677102acce747e4ab8a7de492cae13cda7658c9f95
   cineworld_uk (4.3.2-arm64-darwin) sha256=d516db4caedefcf419cc60308bfd78f8a0e07de26ee9a6af350561f88f46d7c4
@@ -616,7 +609,7 @@ CHECKSUMS
   tsort (0.2.0) sha256=9650a793f6859a43b6641671278f79cfead60ac714148aabe4e3f0060480089f
   turbo-rails (2.0.23) sha256=ee0d90733aafff056cf51ff11e803d65e43cae258cc55f6492020ec1f9f9315f
   tzinfo (2.0.6) sha256=8daf828cc77bcf7d63b0e3bdb6caa47e2272dcfaf4fbfe46f8c3a9df087a829b
-  tzinfo-data (1.2026.5) sha256=0bdc3c5a540b1704f73a7b5c9be5c90bd0a5866c8e9e8e8a7885977d23a81645
+  tzinfo-data (1.2026.6) sha256=fefda3d5a0f26730d7464f2853ceb021cb2eb1f1f504da2108ea1ce5d5309670
   unicode-display_width (3.3.0) sha256=4b7aa66a4b11db50f6f7e98411215cd0dd10eaecb665d36eec5bcacb3fa0b613
   unicode-emoji (4.3.0) sha256=11c02fa73290378c066bb0562cd4c87d8e1b706fbbe0059ca12746a4244de8ce
   uri (1.1.2) sha256=89292e98eabbef6248b0a0ed5e7e398e152f83f17560023a6d94a7f492b169fb

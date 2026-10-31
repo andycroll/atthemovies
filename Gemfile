@@ -65,7 +65,6 @@ group :test do
 end
 gem "tailwindcss-rails"
 
-gem "cinebase", github: "andycroll/cinebase", branch: "boxoffice"
 gem "cineworld_uk"
 gem "curzon_uk"
 gem "everyman_uk", path: "vendor/gems/everyman_uk"
