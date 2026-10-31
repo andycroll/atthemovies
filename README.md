@@ -40,19 +40,21 @@ Each chain comes from its own gem: `cineworld_uk`, `curzon_uk`, `everyman_uk`,
 for each one.
 
 Cineworld, Curzon, ODEON and Picturehouse run on Vista's OCAPI and need a guest
-token. The worker acquires one with the gem's bundled `curl-impersonate` and
-reuses it in memory until an hour before it expires; a rejected token is dropped
-so the retry fetches a new one. No token is stored. The app asks OCAPI for every advertised business date for each
+token. Each job calls the gem's `ensure_token!`, which fetches one with the
+bundled `curl-impersonate` only when the worker has none or it expires within
+an hour. A rejected token is dropped, so the retry fetches a new one. No token
+is stored. The app asks OCAPI for every advertised business date for each
 cinema, then loads the showtimes on those dates, so events months ahead are
-included. Vue, Everyman and Showcase need no token and return every advertised date in
-one request; `Chain::ADVERTISED_HORIZON` (one year) only bounds it. There is no other
-app-imposed future cutoff.
+included. Vue, Everyman and Showcase need no token and return every advertised
+date in one request; `Chain::ADVERTISED_HORIZON` (one year) only bounds it.
+There is no other app-imposed future cutoff.
 
 Cinema identity is the chain's venue ID, stored as an external identifier such
 as `cineworld_venue`. Imports keep operator edits to names and addresses, and
-update only brand and screenings URL. Coordinates come from the chain's gem when
-it supplies them, and only fill a cinema that has none, so operator edits stay.
-"Near me" sorts cinemas without coordinates last. ODEON supplies no postcodes.
+update only brand and screenings URL. Coordinates come from the chain's gem and
+only fill a cinema that has none, so operator edits stay. Every chain supplies
+them; Picturehouse has none for Chester, and "near me" sorts it last. ODEON's
+API has no postcodes.
 
 Case, punctuation and whitespace-normalised title aliases resolve repeated titles.
 Titles shared by remakes/events may need manual triage; a title is not a film's public ID.

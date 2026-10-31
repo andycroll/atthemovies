@@ -6,6 +6,8 @@ class ImportTest < ActiveJob::TestCase
     venue = CineworldUk::Cinema.new(14)
     venue.define_singleton_method(:name) { "Brighton" }
     venue.define_singleton_method(:adr) { { street_address: "Marina", locality: "Brighton", postal_code: "BN2 5UF" } }
+    venue.define_singleton_method(:latitude) { nil }
+    venue.define_singleton_method(:longitude) { nil }
     starting_at = 2.days.from_now.change(usec: 0)
     distant_start = 210.days.from_now.change(usec: 0)
     dates = [ distant_start.to_date, starting_at.to_date, Time.zone.today ]
@@ -27,7 +29,7 @@ class ImportTest < ActiveJob::TestCase
       performances.select { |performance| performance.starting_at.to_date == from }
     end
     Cinebase::Vista::Client.stub(:new, client) do
-      CineworldUk.stub(:acquire_token!, nil) do
+      CineworldUk.stub(:ensure_token!, nil) do
         CineworldUk::Cinema.stub(:all, [ venue ]) do
           CineworldUk::Performance.stub(:at, fetch) do
             perform_enqueued_jobs do
@@ -85,6 +87,8 @@ class ImportTest < ActiveJob::TestCase
     venue = VueUk::Cinema.new(10051)
     venue.define_singleton_method(:name) { "Accrington" }
     venue.define_singleton_method(:adr) { { street_address: "The Viaduct", locality: "Accrington", postal_code: "BB5 1QF" } }
+    venue.define_singleton_method(:latitude) { nil }
+    venue.define_singleton_method(:longitude) { nil }
     venue.define_singleton_method(:url) { "https://www.myvue.com/cinema/accrington" }
     starting_at = 300.days.from_now.change(usec: 0)
     fetch = ->(id, from:, to:) do
@@ -110,7 +114,7 @@ class ImportTest < ActiveJob::TestCase
     coordinates = nil
     venue.define_singleton_method(:latitude) { coordinates&.first }
     venue.define_singleton_method(:longitude) { coordinates&.last }
-    PicturehouseUk.stub(:acquire_token!, nil) do
+    PicturehouseUk.stub(:ensure_token!, nil) do
       PicturehouseUk::Cinema.stub(:all, [ venue ]) do
         ImportChainJob.perform_now("picturehouse")
         cinema = ExternalIdentifier.find_by!(source: "picturehouse_venue", value: "019").identifiable
@@ -183,8 +187,10 @@ class ImportTest < ActiveJob::TestCase
     venue = PicturehouseUk::Cinema.new(19)
     venue.define_singleton_method(:name) { "Duke's at Komedia" }
     venue.define_singleton_method(:adr) { { locality: "Brighton" } }
+    venue.define_singleton_method(:latitude) { nil }
+    venue.define_singleton_method(:longitude) { nil }
     venue.define_singleton_method(:url) { "https://www.picturehouses.com/cinema/duke-s-at-komedia" }
-    PicturehouseUk.stub(:acquire_token!, nil) do
+    PicturehouseUk.stub(:ensure_token!, nil) do
       PicturehouseUk::Cinema.stub(:all, [ venue ]) do
         assert_difference "Cinema.count", 1 do
           2.times { ImportChainJob.perform_now("picturehouse") }

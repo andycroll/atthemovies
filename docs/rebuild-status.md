@@ -10,20 +10,20 @@ so the Procfile's worker actually runs jobs.
 The old application has been removed from the working tree. Historical source
 remains in Git history. [REBUILD.md](../REBUILD.md) records what it did.
 
-## Provider checks (30 October 2026)
+## Provider checks (31 October 2026)
 
-Each chain's gem was run live against one cinema through `Chain`, from a
-development machine.
+Each chain's gem was run live through `Chain` from a development machine:
+every cinema, and one cinema's future showings.
 
-| Chain | Gem | Cinemas | Advertised dates | Notes |
-| --- | --- | --- | --- | --- |
-| Cineworld | `cineworld_uk` 4.3.2 | 87 | to June 2027 | Vista OCAPI, guest token |
-| Curzon | `curzon_uk` 1.0.0 | 14 | to December 2026 | Vista OCAPI, guest token, coded site ids such as SOH1 |
-| Everyman | `everyman_uk` 1.0.0, in `vendor/gems` | 49 | to December 2026 | Boxoffice routes on everymancinema.com, no token, postcodes and coordinates |
-| ODEON | `odeon_uk` 5.1.1 | 101 | to April 2027 | Vista OCAPI, guest token, no postcodes, UK only |
-| Picturehouse | `picturehouse_uk` 6.0.1 | 25 | to June 2027 | Vista OCAPI, guest token |
-| Showcase | `showcase_uk` 1.0.0, in `vendor/gems` | 16 | to May 2027 | Boxoffice routes on showcasecinemas.co.uk through `cinebase/boxoffice` (shared with Everyman), no token, postcodes and coordinates; Bluewater: 1,574 future performances in one request |
-| Vue | `vue_uk` 1.0.0 | 88 | to May 2027 | myvue.com API, no token, UK only |
+| Chain | Gem | Cinemas | With coordinates | Advertised dates | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Cineworld | `cineworld_uk` 4.4.0 | 87 | 87 | to June 2027 | Vista OCAPI, guest token |
+| Curzon | `curzon_uk` 1.1.0 | 14 | 14 | to December 2026 | Vista OCAPI, guest token, coded site ids such as SOH1 |
+| Everyman | `everyman_uk` 1.0.0, in `vendor/gems` | 49 | 49 | to May 2027 | Boxoffice routes through `cinebase/boxoffice`, no token |
+| ODEON | `odeon_uk` 5.2.0 | 101 | 101 | to April 2027 | Vista OCAPI, guest token, no postcodes in the API, UK only |
+| Picturehouse | `picturehouse_uk` 6.1.0 | 25 | 24 (not Chester) | to June 2027 | Vista OCAPI, guest token |
+| Showcase | `showcase_uk` 1.0.0, in `vendor/gems` | 16 | 16 | to May 2027 | Boxoffice routes through `cinebase/boxoffice`, no token; Bluewater has about 1,500 future showings |
+| Vue | `vue_uk` 1.1.0 | 88 | from each cinema page | to May 2027 | myvue.com API, no token, UK only |
 
 The four Vista gems bundle `curl-impersonate` for glibc Linux (x86-64, ARM64)
 and macOS. Production must run on one of those platforms.
