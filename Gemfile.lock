@@ -1,11 +1,13 @@
-PATH
-  remote: vendor/gems/everyman_uk
+GIT
+  remote: https://github.com/andycroll/everyman_uk.git
+  revision: 32d88d2f3f21c55b83c8a2d7dce90600572ef70c
   specs:
     everyman_uk (1.0.0)
       cinebase (~> 5.6)
 
-PATH
-  remote: vendor/gems/showcase_uk
+GIT
+  remote: https://github.com/andycroll/showcase_uk.git
+  revision: 50f10417e7330326ed16d2faf15450a3baabc06f
   specs:
     showcase_uk (1.0.0)
       cinebase (~> 5.6)
