@@ -5,7 +5,7 @@ class LiveApiShapeTest < Minitest::Test
   include ApiShapes
 
   def test_responses_are_readable
-    api = EverymanUk::Internal::ApiResponse.new
+    api = EverymanUk::Cinema.client
     tomorrow = Date.today + 1
 
     assert_theaters_shape('data' => { 'allTheater' => { 'nodes' => api.theaters } })

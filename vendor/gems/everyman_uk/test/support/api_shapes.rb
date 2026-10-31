@@ -2,7 +2,7 @@
 # hand-written fixtures and, in the live suite, against real responses held
 # only in memory.
 module ApiShapes
-  BUILD_URL = EverymanUk::Internal::Boxoffice::Client::BUILD_URL
+  BUILD_URL = Cinebase::Boxoffice::Client::BUILD_URL
 
   private
 

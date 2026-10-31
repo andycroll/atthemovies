@@ -2,8 +2,12 @@ require_relative '../../test_helper'
 
 class EverymanUk::CinemaTest < Minitest::Test
   def setup
-    @api_response = FakeApiResponse.new
+    @client = FakeClient.new
     EverymanUk::Cinema.instance_variable_set(:@theaters_hash, nil)
+  end
+
+  def test_reads_everymancinema_com
+    assert_equal 'https://www.everymancinema.com', EverymanUk::Cinema.client.base_url
   end
 
   def test_new_stores_upcase_string_id
@@ -78,14 +82,14 @@ class EverymanUk::CinemaTest < Minitest::Test
 
   def test_refetches_theaters_after_an_hour
     calls = 0
-    api = FakeApiResponse.new
+    api = FakeClient.new
     counting = Object.new
     counting.define_singleton_method(:theaters) do
       calls += 1
       api.theaters
     end
 
-    EverymanUk::Internal::ApiResponse.stub(:new, counting) do
+    EverymanUk::Cinema.stub(:client, counting) do
       2.times { EverymanUk::Cinema.all }
       EverymanUk::Cinema.instance_variable_set(:@fetched_at, -EverymanUk::Cinema::CACHE_SECONDS * 2)
       EverymanUk::Cinema.all
@@ -97,6 +101,6 @@ class EverymanUk::CinemaTest < Minitest::Test
   private
 
   def with_fake_api(&block)
-    EverymanUk::Internal::ApiResponse.stub(:new, @api_response, &block)
+    EverymanUk::Cinema.stub(:client, @client, &block)
   end
 end

@@ -34,6 +34,10 @@ production:
     class: ImportChainJob
     args: [ "everyman" ]
     schedule: every day at 3:30am Europe/London
+  import_showcase:
+    class: ImportChainJob
+    args: [ "showcase" ]
+    schedule: every day at 3:45am Europe/London
   enrich_films:
     class: EnrichPendingFilmsJob
     schedule: every day at 4am Europe/London

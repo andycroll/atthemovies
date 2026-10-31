@@ -22,6 +22,7 @@ development machine.
 | Everyman | `everyman_uk` 1.0.0, in `vendor/gems` | 49 | to December 2026 | Boxoffice routes on everymancinema.com, no token, postcodes and coordinates |
 | ODEON | `odeon_uk` 5.1.1 | 101 | to April 2027 | Vista OCAPI, guest token, no postcodes, UK only |
 | Picturehouse | `picturehouse_uk` 6.0.1 | 25 | to June 2027 | Vista OCAPI, guest token |
+| Showcase | `showcase_uk` 1.0.0, in `vendor/gems` | 16 | to May 2027 | Boxoffice routes on showcasecinemas.co.uk through `cinebase/boxoffice` (shared with Everyman), no token, postcodes and coordinates; Bluewater: 1,574 future performances in one request |
 | Vue | `vue_uk` 1.0.0 | 88 | to May 2027 | myvue.com API, no token, UK only |
 
 The four Vista gems bundle `curl-impersonate` for glibc Linux (x86-64, ARM64)

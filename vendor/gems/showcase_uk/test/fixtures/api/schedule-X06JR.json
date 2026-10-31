@@ -1,0 +1,121 @@
+{
+  "X06JR": {
+    "schedule": {
+      "2001": {
+        "2026-10-24": [
+          {
+            "id": "2001-2026-10-24 14:00:00-Auditorium.Experience.PLF",
+            "startsAt": "2026-10-24T14:00:00",
+            "tags": ["Auditorium.Comfort.Recliners", "Auditorium.Comfort.ReservedSeating", "Auditorium.Experience.PLF", "Format.Projection.Laser", "Internal.Brand.XPlus", "Showtime.Accessibility.Subtitled"],
+            "isExpired": false,
+            "data": {
+              "ticketing": [
+                { "urls": ["https://relay.example.com/ticketing/dbz?code_theater=X06JR&perfd=20261024&perft=14:00"], "type": "DESKTOP", "provider": "relay" },
+                { "urls": ["https://tickets.showcasecinemas.co.uk/launch/ticketing/00000000-0000-0000-0000-000000000001"], "type": "DESKTOP", "provider": "default" }
+              ]
+            },
+            "occupancy": { "rate": 0 },
+            "screen": { "name": "1" }
+          },
+          {
+            "id": "2001-2026-10-24 23:45:00-Format.Projection.Digital",
+            "startsAt": "2026-10-24T23:45:00",
+            "tags": ["Auditorium.Comfort.Recliners", "Format.Projection.Digital", "Showtime.Restriction.Senior"],
+            "isExpired": false,
+            "data": {
+              "ticketing": [
+                { "urls": ["https://tickets.showcasecinemas.co.uk/launch/ticketing/00000000-0000-0000-0000-000000000002"], "type": "DESKTOP", "provider": "default" },
+                { "urls": ["https://relay.example.com/ticketing/dbz?code_theater=X06JR&perfd=20261024&perft=23:45"], "type": "DESKTOP", "provider": "relay" }
+              ]
+            },
+            "occupancy": { "rate": 0 },
+            "screen": { "name": "2" }
+          }
+        ]
+      },
+      "2002": {
+        "2026-10-24": [
+          {
+            "id": "2002-2026-10-24 18:30:00-Format.Projection.4k",
+            "startsAt": "2026-10-24T18:30:00",
+            "tags": ["Auditorium.Comfort.Recliners", "Format.Projection.4k"],
+            "isExpired": false,
+            "data": {
+              "ticketing": [
+                { "urls": ["https://tickets.showcasecinemas.co.uk/launch/ticketing/00000000-0000-0000-0000-000000000003"], "type": "DESKTOP", "provider": "default" }
+              ]
+            },
+            "occupancy": { "rate": 0 },
+            "screen": { "name": "3" }
+          }
+        ]
+      },
+      "2003": {
+        "2026-10-25": [
+          {
+            "id": "2003-2026-10-25 11:00:00-Auditorium.Experience.RealD3D",
+            "startsAt": "2026-10-25T11:00:00",
+            "tags": ["Auditorium.Experience.PLF", "Auditorium.Experience.RealD3D"],
+            "isExpired": false,
+            "data": {
+              "ticketing": [
+                { "urls": ["https://tickets.showcasecinemas.co.uk/launch/ticketing/00000000-0000-0000-0000-000000000004"], "type": "DESKTOP", "provider": "default" }
+              ]
+            },
+            "occupancy": { "rate": 0 },
+            "screen": { "name": "1" }
+          }
+        ]
+      },
+      "2004": {
+        "2026-10-25": [
+          {
+            "id": "2004-2026-10-25 10:00:00-Showtime.Accessibility.SensoryFriendly",
+            "startsAt": "2026-10-25T10:00:00",
+            "tags": ["Format.Projection.Digital", "Localization.Language.Hindi", "Showtime.Accessibility.SensoryFriendly"],
+            "isExpired": false,
+            "data": {
+              "ticketing": [
+                { "urls": ["https://tickets.showcasecinemas.co.uk/launch/ticketing/00000000-0000-0000-0000-000000000005"], "type": "DESKTOP", "provider": "default" }
+              ]
+            },
+            "occupancy": { "rate": 0 },
+            "screen": { "name": "4" }
+          }
+        ]
+      },
+      "2005": {
+        "2026-10-25": [
+          {
+            "id": "2005-2026-10-25 19:00:00-Showtime.Event.SpecialEvent",
+            "startsAt": "2026-10-25T19:00:00",
+            "tags": ["Format.Projection.Digital", "Showtime.Event.SpecialEvent", "Showtime.Experience.LiveSatellite"],
+            "isExpired": false,
+            "data": {
+              "ticketing": [
+                { "urls": ["https://relay.example.com/ticketing/dbz?code_theater=X06JR&perfd=20261025&perft=19:00"], "type": "DESKTOP", "provider": "relay" }
+              ]
+            },
+            "occupancy": { "rate": 0 },
+            "screen": { "name": "5" }
+          }
+        ]
+      },
+      "2006": {
+        "2026-10-25": [
+          {
+            "id": "2006-2026-10-25 20:00:00",
+            "startsAt": "2026-10-25T20:00:00",
+            "tags": [],
+            "isExpired": false,
+            "data": { "ticketing": [] },
+            "occupancy": { "rate": 0 },
+            "screen": { "name": "6" }
+          }
+        ]
+      }
+    },
+    "moviesTags": {},
+    "showtimesDates": ["2026-10-24", "2026-10-25"]
+  }
+}
