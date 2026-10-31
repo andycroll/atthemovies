@@ -95,6 +95,10 @@ jobs:
 
   system-test:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
 
     # services:
     #  redis:
@@ -119,12 +123,23 @@ jobs:
           RAILS_ENV: test
           # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           # REDIS_URL: redis://localhost:6379/0
-        run: bin/rails db:test:prepare test:system
+          INSTRUMENT: ${{ github.workspace }}/test/flaky_instrument.rb
+          TRACE_STEPS: "1"
+        run: |
+          bin/rails db:test:prepare tailwindcss:build
+          google-chrome --version || true
+          pass=0; fail=0
+          for i in $(seq 1 15); do
+            if bin/rails test test/system > run.log 2>&1; then pass=$((pass+1)); else fail=$((fail+1)); echo "::group::failure run $i"; cat run.log; echo "::endgroup::"; mkdir -p tmp/screenshots/run-$i; mv tmp/screenshots/*.png tmp/screenshots/run-$i/ 2>/dev/null || true; fi
+            rm -f tmp/screenshots/*.png
+          done
+          echo "RESULT pass=$pass fail=$fail"
+          test $fail -eq 0
 
       - name: Keep screenshots from failed system tests
         uses: actions/upload-artifact@v7
         if: failure()
         with:
-          name: screenshots
+          name: screenshots-${{ matrix.shard }}
           path: ${{ github.workspace }}/tmp/screenshots
           if-no-files-found: ignore

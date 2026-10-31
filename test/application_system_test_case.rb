@@ -7,3 +7,4 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     options.add_argument("force-device-scale-factor=2")
   end
 end
+require ENV["INSTRUMENT"] if ENV["INSTRUMENT"]
