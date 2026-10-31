@@ -98,7 +98,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40]
+        shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 
     # services:
     #  redis:
@@ -123,11 +123,20 @@ jobs:
           RAILS_ENV: test
           # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           # REDIS_URL: redis://localhost:6379/0
-          INSTRUMENT: ${{ matrix.shard > 20 && format('{0}/test/flaky_instrument.rb', github.workspace) || '' }}
+          INSTRUMENT: ${{ matrix.shard > 10 && format('{0}/test/flaky_instrument.rb', github.workspace) || '' }}
           TRACE_STEPS: "1"
         run: |
-          google-chrome --version || true
-          bin/rails db:test:prepare test:system
+          nproc
+          bin/rails db:test:prepare tailwindcss:build
+          for c in $(seq 1 $(nproc)); do (yes > /dev/null &); done
+          pass=0; fail=0
+          for i in $(seq 1 10); do
+            if bin/rails test test/system > run.log 2>&1; then pass=$((pass+1)); else fail=$((fail+1)); echo "::group::failure run $i"; cat run.log; echo "::endgroup::"; mkdir -p tmp/screenshots/run-$i; mv tmp/screenshots/*.png tmp/screenshots/run-$i/ 2>/dev/null || true; fi
+            rm -f tmp/screenshots/*.png
+          done
+          pkill yes || true
+          echo "RESULT pass=$pass fail=$fail"
+          test $fail -eq 0
 
       - name: Keep screenshots from failed system tests
         uses: actions/upload-artifact@v7
