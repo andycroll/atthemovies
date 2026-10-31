@@ -5,10 +5,13 @@ class ListingsSystemTest < ApplicationSystemTestCase
     film = films(:alien)
     cinema = cinemas(:brighton)
     Performance.create!(film: film, cinema: cinema, starting_at: Date.tomorrow.in_time_zone + 19.hours)
+    Performance.create!(film: films(:arrival), cinema: cinema, starting_at: Date.tomorrow.in_time_zone + 21.hours)
     visit root_url
     click_on "Explore films"
+    assert_link "Arrival"
     fill_in "Search films", with: "Alien"
     click_on "Search"
+    assert_no_link "Arrival"
     click_on "Alien"
     assert_selector "h1", text: "Alien"
     assert_current_path film_path(film, suffix: "alien-1979")
@@ -48,6 +51,7 @@ class ListingsSystemTest < ApplicationSystemTestCase
     assert_selector "h1", text: "Brighton Picturehouse"
     assert_current_path cinema_path(cinemas(:brighton).reload, suffix: "brighton-picturehouse")
     click_on "Sign out"
+    assert_selector "h1", text: "Operator sign in"
     visit operator_films_url
     assert_selector "h1", text: "Operator sign in"
   end
