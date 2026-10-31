@@ -183,6 +183,32 @@ class ImportTest < ActiveJob::TestCase
     assert_equal "https://tickets.showcasecinemas.co.uk/launch/ticketing/abc", performance.booking_url
   end
 
+  test "Light imports every advertised date without coordinates" do
+    venue = LightUk::Cinema.new("7")
+    venue.define_singleton_method(:name) { "Sheffield" }
+    venue.define_singleton_method(:adr) { { street_address: "The Moor", locality: "Sheffield", postal_code: "S1 4PF" } }
+    venue.define_singleton_method(:url) { "https://sheffield.thelight.co.uk" }
+    venue.define_singleton_method(:latitude) { nil }
+    venue.define_singleton_method(:longitude) { nil }
+    starting_at = 100.days.from_now.change(usec: 0)
+    fetch = ->(id, from:, to:) do
+      assert_equal "7", id
+      assert_equal [ Time.zone.today, Time.zone.today + 1.year ], [ from, to ]
+      [ LightUk::Performance.new(cinema_id: id, cinema_name: "Sheffield", film_name: "Wicked: For Good",
+        starting_at: starting_at, variant: [ "relaxed" ], booking_url: "https://sheffield.thelight.co.uk/#!book/cinema/123") ]
+    end
+    LightUk::Cinema.stub(:all, [ venue ]) do
+      LightUk::Performance.stub(:at, fetch) do
+        perform_enqueued_jobs { ImportChainJob.perform_now("light") }
+      end
+    end
+    cinema = ExternalIdentifier.find_by!(source: "light_venue", value: "7").identifiable
+    assert_equal [ "Light", "S1 4PF", nil ], [ cinema.brand, cinema.postal_code, cinema.latitude ]
+    performance = cinema.performances.find_by!(starting_at: starting_at)
+    assert_equal [ "relaxed", "2d" ], [ performance.variant, performance.dimension ]
+    assert_equal "https://sheffield.thelight.co.uk/#!book/cinema/123", performance.booking_url
+  end
+
   test "cinema provider identity survives operator renames and repeated imports" do
     venue = PicturehouseUk::Cinema.new(19)
     venue.define_singleton_method(:name) { "Duke's at Komedia" }
