@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'minitest-mock'
   spec.add_development_dependency 'minitest-reporters'
   spec.add_development_dependency 'rake'
-  spec.add_development_dependency 'simplecov', '< 1'
+  spec.add_development_dependency 'simplecov', '< 2'
   spec.add_development_dependency 'webmock'
 
   spec.add_runtime_dependency 'cinebase', '~> 5.6'
