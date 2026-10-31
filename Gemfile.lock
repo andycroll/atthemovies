@@ -114,29 +114,29 @@ GEM
     cinebase (5.6.0)
       tzinfo
       tzinfo-data
-    cineworld_uk (4.3.2)
-      cinebase (~> 5.5)
+    cineworld_uk (4.4.0)
+      cinebase (~> 5.6)
       nokogiri (>= 1.11)
-    cineworld_uk (4.3.2-aarch64-linux-gnu)
-      cinebase (~> 5.5)
+    cineworld_uk (4.4.0-aarch64-linux-gnu)
+      cinebase (~> 5.6)
       nokogiri (>= 1.11)
-    cineworld_uk (4.3.2-arm64-darwin)
-      cinebase (~> 5.5)
+    cineworld_uk (4.4.0-arm64-darwin)
+      cinebase (~> 5.6)
       nokogiri (>= 1.11)
-    cineworld_uk (4.3.2-x86_64-linux-gnu)
-      cinebase (~> 5.5)
+    cineworld_uk (4.4.0-x86_64-linux-gnu)
+      cinebase (~> 5.6)
       nokogiri (>= 1.11)
     concurrent-ruby (1.3.8)
     connection_pool (3.0.2)
     crass (1.0.8)
-    curzon_uk (1.0.0)
-      cinebase (~> 5.4)
-    curzon_uk (1.0.0-aarch64-linux-gnu)
-      cinebase (~> 5.4)
-    curzon_uk (1.0.0-arm64-darwin)
-      cinebase (~> 5.4)
-    curzon_uk (1.0.0-x86_64-linux-gnu)
-      cinebase (~> 5.4)
+    curzon_uk (1.1.0)
+      cinebase (~> 5.6)
+    curzon_uk (1.1.0-aarch64-linux-gnu)
+      cinebase (~> 5.6)
+    curzon_uk (1.1.0-arm64-darwin)
+      cinebase (~> 5.6)
+    curzon_uk (1.1.0-x86_64-linux-gnu)
+      cinebase (~> 5.6)
     date (3.6.0)
     debug (1.11.1)
       irb (~> 1.10)
@@ -219,26 +219,26 @@ GEM
       racc (~> 1.4)
     nokogiri (1.19.4-x86_64-linux-musl)
       racc (~> 1.4)
-    odeon_uk (5.1.1)
-      cinebase (~> 5.5)
-    odeon_uk (5.1.1-aarch64-linux-gnu)
-      cinebase (~> 5.5)
-    odeon_uk (5.1.1-arm64-darwin)
-      cinebase (~> 5.5)
-    odeon_uk (5.1.1-x86_64-linux-gnu)
-      cinebase (~> 5.5)
+    odeon_uk (5.2.0)
+      cinebase (~> 5.6)
+    odeon_uk (5.2.0-aarch64-linux-gnu)
+      cinebase (~> 5.6)
+    odeon_uk (5.2.0-arm64-darwin)
+      cinebase (~> 5.6)
+    odeon_uk (5.2.0-x86_64-linux-gnu)
+      cinebase (~> 5.6)
     parallel (2.3.0)
     parser (3.3.12.0)
       ast (~> 2.4.1)
       racc
-    picturehouse_uk (6.0.1)
-      cinebase (~> 5.5)
-    picturehouse_uk (6.0.1-aarch64-linux-gnu)
-      cinebase (~> 5.5)
-    picturehouse_uk (6.0.1-arm64-darwin)
-      cinebase (~> 5.5)
-    picturehouse_uk (6.0.1-x86_64-linux-gnu)
-      cinebase (~> 5.5)
+    picturehouse_uk (6.1.0)
+      cinebase (~> 5.6)
+    picturehouse_uk (6.1.0-aarch64-linux-gnu)
+      cinebase (~> 5.6)
+    picturehouse_uk (6.1.0-arm64-darwin)
+      cinebase (~> 5.6)
+    picturehouse_uk (6.1.0-x86_64-linux-gnu)
+      cinebase (~> 5.6)
     pp (0.6.4)
       prettyprint
     prettyprint (0.2.1)
@@ -396,7 +396,7 @@ GEM
     unicode-emoji (4.3.0)
     uri (1.1.2)
     useragent (0.16.11)
-    vue_uk (1.0.0)
+    vue_uk (1.1.0)
       cinebase (~> 5.4)
     web-console (4.3.0)
       actionview (>= 8.0.0)
@@ -482,17 +482,17 @@ CHECKSUMS
   bundler-audit (0.9.3) sha256=81c8766c71e47d0d28a0f98c7eed028539f21a6ea3cd8f685eb6f42333c9b4e9
   capybara (3.40.0) sha256=42dba720578ea1ca65fd7a41d163dd368502c191804558f6e0f71b391054aeef
   cinebase (5.6.0) sha256=c36ad62331408545520bce46c8bdb011949e520de64f27e6dc787aec594d14b3
-  cineworld_uk (4.3.2) sha256=6bab11752c02ff1a6526dfff9a6177aa3f2827eb8523a8a39a549b84fbc3d563
-  cineworld_uk (4.3.2-aarch64-linux-gnu) sha256=9efc318003e9d95a94ce72677102acce747e4ab8a7de492cae13cda7658c9f95
-  cineworld_uk (4.3.2-arm64-darwin) sha256=d516db4caedefcf419cc60308bfd78f8a0e07de26ee9a6af350561f88f46d7c4
-  cineworld_uk (4.3.2-x86_64-linux-gnu) sha256=9a1e5ac18af4bedf40c8979b8469e334f44b90842280ab0b65e4101e14054691
+  cineworld_uk (4.4.0) sha256=017b2df3f9d7a94e7a3da14cb567ded1819685461b9799fdfa939903d1d02bd7
+  cineworld_uk (4.4.0-aarch64-linux-gnu) sha256=449abbc957c8f798a36363686b7ea70a0509dbc55a4394c310df221d7b09eadf
+  cineworld_uk (4.4.0-arm64-darwin) sha256=3bbe671db59d1a78aa6f247b41b82768fcf0fbf4c477f26408d962a0b0efc193
+  cineworld_uk (4.4.0-x86_64-linux-gnu) sha256=2acf77339efa90dbaa2d026d0c7271f77a673b031024f88a2d7335fb0d3e1fc8
   concurrent-ruby (1.3.8) sha256=b2f1be836e968ccc78ccfce277ea79c72a88633f22306782c16ff23fb415d1e1
   connection_pool (3.0.2) sha256=33fff5ba71a12d2aa26cb72b1db8bba2a1a01823559fb01d29eb74c286e62e0a
   crass (1.0.8) sha256=7a0145c7a2c59f8e7923b3a69ce819c444823a00a5127d805298fea13be24efe
-  curzon_uk (1.0.0) sha256=f0296993c626b168958d72c143bb8793d449333d0e600f724dfbad7df480344e
-  curzon_uk (1.0.0-aarch64-linux-gnu) sha256=97a3cff57af2885f2083dcbb9f6023f5c7b73f914d611097293943f30a8a2eca
-  curzon_uk (1.0.0-arm64-darwin) sha256=b5ef5ee91426453831450971425e13b497ebc1321885b12b4df14dc6392ae60d
-  curzon_uk (1.0.0-x86_64-linux-gnu) sha256=f6b34c2185c2ae1b807b704883fdfcac37e1d398350672cdbde6f1200182ae98
+  curzon_uk (1.1.0) sha256=05c01e654eea8b2dea3648af2de240a6657c1c6678c49a21ffd9fde06037b6e6
+  curzon_uk (1.1.0-aarch64-linux-gnu) sha256=a8a8f93618d2c11dca70996f83ad62a27ccae85cdb1fdf6b95a40c4183bb78b9
+  curzon_uk (1.1.0-arm64-darwin) sha256=14dbe4f15eb35e6d142e8025fa0f230d3009cf981f58c9c7ab70c69a821b4fdb
+  curzon_uk (1.1.0-x86_64-linux-gnu) sha256=11110eff866986601f6ed24c506d23e27ccacbebb5dbeeb59a1e6da13d77a056
   date (3.6.0) sha256=18ac945c4e24ebd93534f8eab8c2fd8c5604b3e977105b3798d62a1e8d27b580
   debug (1.11.1) sha256=2e0b0ac6119f2207a6f8ac7d4a73ca8eb4e440f64da0a3136c30343146e952b6
   drb (2.2.3) sha256=0b00d6fdb50995fe4a45dea13663493c841112e4068656854646f418fda13373
@@ -539,16 +539,16 @@ CHECKSUMS
   nokogiri (1.19.4-arm64-darwin) sha256=a46db9853286e6597b36ebc6953817d15acf3a299583eb3f89fdc6f91dd63527
   nokogiri (1.19.4-x86_64-linux-gnu) sha256=379fae440b28915e3f19d752ce2dcf8465ed2b2fbefd2a7ca0dd497bc981a06a
   nokogiri (1.19.4-x86_64-linux-musl) sha256=17dfb7c1fa194ae02fbf7c51a7afc8d278045ab3fdacfd86f91d02d7b274470b
-  odeon_uk (5.1.1) sha256=bd1ff188d92001baf0b6f6f8b3476cb57e52ac02c8535621aaa1047e9c47c6d4
-  odeon_uk (5.1.1-aarch64-linux-gnu) sha256=a6801cc73a6431ffeeeed859b3d3cebfd38d9d889c12d4fe5b60df4084c60eea
-  odeon_uk (5.1.1-arm64-darwin) sha256=3a9502b992d7a1b93a3a765b781b39912a8889782740c6b815803b3bc258cb16
-  odeon_uk (5.1.1-x86_64-linux-gnu) sha256=1e46eb272b7d379dc6ba00ddeba70ab0e3dab512666bfa194cee7b7f83f8e2fb
+  odeon_uk (5.2.0) sha256=9464453113e81f44c477c774115dec9cbd705b4a1225621cde6f2013d8f6628f
+  odeon_uk (5.2.0-aarch64-linux-gnu) sha256=f76ebdc4f10ed781122552c1c7e6969782432327046dbe8f8fcbfc057c4add01
+  odeon_uk (5.2.0-arm64-darwin) sha256=a396701b5fc692141ec79a37011f79a828ae64a5e12a8a5aa26b8163b945761d
+  odeon_uk (5.2.0-x86_64-linux-gnu) sha256=f8c6fb924575ac6061d93b3a52c3396fd84b5a3ce69cc32a4d49feb9ea824938
   parallel (2.3.0) sha256=f75a3e904101ce6a1ccb6b8dc800cbafd42166d83330192438dcf29395167a6f
   parser (3.3.12.0) sha256=21a6d7f755d5a24dfbdc6e6b772e4e879a52e7631a88bc5a3a134606052c9828
-  picturehouse_uk (6.0.1) sha256=7ef336f7ce68998b70e546a6501e9a07617cf02aaadf2221c148ee7b28ef726c
-  picturehouse_uk (6.0.1-aarch64-linux-gnu) sha256=a78d5d94d0b34cfe4ee9b0ae9e6c13f4c7d43abfef21f48b61720d7e3f5da4b2
-  picturehouse_uk (6.0.1-arm64-darwin) sha256=4ff8596429a101d192b049cf31758c9cb5fcbb3f70bbdff0c4b844598e746e58
-  picturehouse_uk (6.0.1-x86_64-linux-gnu) sha256=e3160c985354d1ffdc6be80a0c482dcc3633ec2a1ddf942618084852ad648a0e
+  picturehouse_uk (6.1.0) sha256=88cc3ed88b68ea1140c0a8973f0f249ff4d2def9337917ffbaf26816f0041d5e
+  picturehouse_uk (6.1.0-aarch64-linux-gnu) sha256=798b2e344eeb62ebe4536c510b09f3e30d1bea1e229c7082a9c21e801304f63a
+  picturehouse_uk (6.1.0-arm64-darwin) sha256=267e4b8c6c4b57e48c606f77764ec9ab3d6a97962100741e6e67aa5a833aad5b
+  picturehouse_uk (6.1.0-x86_64-linux-gnu) sha256=9c05f55feb8d3c5e9a482299fa070a8c5397ec154ff433f83e54a29e2f384861
   pp (0.6.4) sha256=dfcb0fce700c41456265922884f9fe195d7fbb0674a3578e6c0f69588e82b570
   prettyprint (0.2.1) sha256=d555d57ea6d7cf001d4774b693546a6bd88bec1e778ddffb5c60b68ceec4b7d4
   prism (1.9.0) sha256=7b530c6a9f92c24300014919c9dcbc055bf4cdf51ec30aed099b06cd6674ef85
@@ -614,7 +614,7 @@ CHECKSUMS
   unicode-emoji (4.3.0) sha256=11c02fa73290378c066bb0562cd4c87d8e1b706fbbe0059ca12746a4244de8ce
   uri (1.1.2) sha256=89292e98eabbef6248b0a0ed5e7e398e152f83f17560023a6d94a7f492b169fb
   useragent (0.16.11) sha256=700e6413ad4bb954bb63547fa098dddf7b0ebe75b40cc6f93b8d54255b173844
-  vue_uk (1.0.0) sha256=31202f4187fb6a8032a2df0b646962ed76c051563e0b3864ac9c51e9a1c740ca
+  vue_uk (1.1.0) sha256=d3b136446e9140861636353ff46e07e2b2db4c30f84eb32aadff640aa255407d
   web-console (4.3.0) sha256=e13b71301cdfc2093f155b5aa3a622db80b4672d1f2f713119cc7ec7ac6a6da4
   websocket (1.2.11) sha256=b7e7a74e2410b5e85c25858b26b3322f29161e300935f70a0e0d3c35e0462737
   websocket-driver (0.8.2) sha256=97c556b019bf3410b4961002ac501621e9322d3f8a7bc02161a09301cc4c4146
