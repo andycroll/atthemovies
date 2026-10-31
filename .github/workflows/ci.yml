@@ -123,13 +123,14 @@ jobs:
           RAILS_ENV: test
           # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           # REDIS_URL: redis://localhost:6379/0
-          INSTRUMENT: ${{ github.workspace }}/test/flaky_instrument.rb
+          INSTRUMENT: ${{ matrix.shard > 2 && format('{0}/test/flaky_instrument.rb', github.workspace) || '' }}
           TRACE_STEPS: "1"
         run: |
           bin/rails db:test:prepare tailwindcss:build
           google-chrome --version || true
           pass=0; fail=0
           for i in $(seq 1 15); do
+            sync; sudo sh -c "echo 3 > /proc/sys/vm/drop_caches"; rm -rf ~/.cache/fontconfig ~/.cache/google-chrome ~/.config/google-chrome || true
             if bin/rails test test/system > run.log 2>&1; then pass=$((pass+1)); else fail=$((fail+1)); echo "::group::failure run $i"; cat run.log; echo "::endgroup::"; mkdir -p tmp/screenshots/run-$i; mv tmp/screenshots/*.png tmp/screenshots/run-$i/ 2>/dev/null || true; fi
             rm -f tmp/screenshots/*.png
           done
