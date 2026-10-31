@@ -26,15 +26,15 @@ every provisioned user is an operator. Supply passwords privately, not in shell 
 ## Imports and metadata
 
 ```sh
-bin/rails runner 'ImportChainJob.perform_later("cineworld")'   # or curzon, everyman, odeon, picturehouse, showcase, vue
+bin/rails runner 'ImportChainJob.perform_later("cineworld")'   # or curzon, everyman, light, odeon, picturehouse, showcase, vue
 bin/rails runner 'EnrichPendingFilmsJob.perform_later'
 bin/rails runner 'CleanupPerformancesJob.perform_later'
 bin/rails imports:status
 ```
 
 Each chain comes from its own gem: `cineworld_uk`, `curzon_uk`, `everyman_uk`,
-`odeon_uk`, `picturehouse_uk`, `showcase_uk` and `vue_uk`, all built on
-`cinebase`. `Chain` lists them.
+`light_uk`, `odeon_uk`, `picturehouse_uk`, `showcase_uk` and `vue_uk`, all
+built on `cinebase`. `Chain` lists them.
 `ImportChainJob` loads a chain's cinemas and queues `ImportChainPerformancesJob`
 for each one.
 
@@ -45,15 +45,18 @@ an hour. A rejected token is dropped, so the retry fetches a new one. No token
 is stored. The app asks OCAPI for every advertised business date for each
 cinema, then loads the showtimes on those dates, so events months ahead are
 included. Vue, Everyman and Showcase need no token and return every advertised
-date in one request; `Chain::ADVERTISED_HORIZON` (one year) only bounds it.
+date in one request. Light needs no token either and returns every advertised
+date from its fortnight guide and coming soon page.
+`Chain::ADVERTISED_HORIZON` (one year) only bounds these.
 There is no other app-imposed future cutoff.
 
 Cinema identity is the chain's venue ID, stored as an external identifier such
 as `cineworld_venue`. Imports keep operator edits to names and addresses, and
 update only brand and screenings URL. Coordinates come from the chain's gem and
 only fill a cinema that has none, so operator edits stay. Every chain supplies
-them; Picturehouse has none for Chester, and "near me" sorts it last. ODEON's
-API has no postcodes.
+them except Light, whose website has none, and Picturehouse has none for
+Chester. "Near me" sorts cinemas without coordinates last. ODEON's API has no
+postcodes.
 
 Case, punctuation and whitespace-normalised title aliases resolve repeated titles.
 Titles shared by remakes/events may need manual triage; a title is not a film's public ID.
@@ -72,8 +75,8 @@ Days are midnight-to-midnight in London (not a 06:00 cinema day); today excludes
 elapsed showings. Cleanup destroys past performances, maintaining film counters.
 
 Production recurring tasks import Cineworld at 01:00, Curzon at 01:30,
-Picturehouse at 02:00, ODEON at 02:30, Vue at 03:00, Everyman at 03:30 and
-Showcase at 03:45 London, enrich at 04:00 London and clean up every 10 minutes. Network failures retry five times with backoff; queue
+Picturehouse at 02:00, ODEON at 02:30, Vue at 03:00, Light at 03:15, Everyman
+at 03:30 and Showcase at 03:45 London, enrich at 04:00 London and clean up every 10 minutes. Network failures retry five times with backoff; queue
 failures remain available in Solid Queue and `imports:status`. Development tasks
 are manual to avoid unexpected website requests. Run the worker for queued work.
 

@@ -30,6 +30,10 @@ production:
     class: ImportChainJob
     args: [ "vue" ]
     schedule: every day at 3am Europe/London
+  import_light:
+    class: ImportChainJob
+    args: [ "light" ]
+    schedule: every day at 3:15am Europe/London
   import_everyman:
     class: ImportChainJob
     args: [ "everyman" ]

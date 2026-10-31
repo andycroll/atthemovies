@@ -21,6 +21,7 @@ every cinema, and one cinema's future showings.
 | Curzon | `curzon_uk` 1.1.0 | 14 | 14 | to December 2026 | Vista OCAPI, guest token, coded site ids such as SOH1 |
 | Everyman | `everyman_uk` 1.0.0 | 49 | 49 | to May 2027 | Boxoffice routes through `cinebase/boxoffice`, no token |
 | ODEON | `odeon_uk` 5.2.0 | 101 | 101 | to April 2027 | Vista OCAPI, guest token, no postcodes in the API, UK only |
+| Light | `light_uk` 1.0.0 | 14 | none on the website | to May 2027 | Glitterfish site, no token; fortnight guide plus coming soon page; certificate needs Sectigo Root R46 |
 | Picturehouse | `picturehouse_uk` 6.1.0 | 25 | 24 (not Chester) | to June 2027 | Vista OCAPI, guest token |
 | Showcase | `showcase_uk` 1.0.0 | 16 | 16 | to May 2027 | Boxoffice routes through `cinebase/boxoffice`, no token; Bluewater has about 1,500 future showings |
 | Vue | `vue_uk` 1.1.0 | 88 | from each cinema page | to May 2027 | myvue.com API, no token, UK only |
