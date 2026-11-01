@@ -370,6 +370,58 @@ class ImportTest < ActiveJob::TestCase
     assert_equal "https://princecharlescinema.com/prince-charles-cinema/booknow/123/", performance.booking_url
   end
 
+  test "Depot imports as an independent" do
+    venue = DepotUk::Cinema.new("deplew")
+    venue.define_singleton_method(:name) { "Depot" }
+    venue.define_singleton_method(:adr) { { street_address: "Pinwell Road", locality: "Lewes", postal_code: "BN7 2JS" } }
+    venue.define_singleton_method(:url) { "https://lewesdepot.org" }
+    venue.define_singleton_method(:latitude) { 50.8715 }
+    venue.define_singleton_method(:longitude) { 0.0120 }
+    starting_at = 60.days.from_now.change(usec: 0)
+    fetch = ->(id, from:, to:) do
+      assert_equal "deplew", id
+      assert_equal [ Time.zone.today, Time.zone.today + 1.year ], [ from, to ]
+      [ DepotUk::Performance.new(cinema_id: id, cinema_name: "Depot", film_name: "Fjord",
+        starting_at: starting_at, variant: [ "relaxed" ], booking_url: "https://lewesdepot.org/film/fjord/booknow/123") ]
+    end
+    DepotUk::Cinema.stub(:all, [ venue ]) do
+      DepotUk::Performance.stub(:at, fetch) do
+        perform_enqueued_jobs { ImportChainJob.perform_now("depot") }
+      end
+    end
+    cinema = ExternalIdentifier.find_by!(source: "depot_venue", value: "deplew").identifiable
+    assert_equal [ "Independent", "Depot", "BN7 2JS" ], [ cinema.brand, cinema.name, cinema.postal_code ]
+    performance = cinema.performances.find_by!(starting_at: starting_at)
+    assert_equal [ "relaxed", "2d" ], [ performance.variant, performance.dimension ]
+    assert_equal "https://lewesdepot.org/film/fjord/booknow/123", performance.booking_url
+  end
+
+  test "Merlin imports films from each cinema's home page" do
+    venue = MerlinUk::Cinema.new("MER_FALM")
+    venue.define_singleton_method(:name) { "Phoenix Cinema, Falmouth" }
+    venue.define_singleton_method(:adr) { { street_address: "11 Berkeley Vale", locality: "Falmouth", postal_code: "TR11 3PL" } }
+    venue.define_singleton_method(:url) { "https://falmouth.merlincinemas.co.uk" }
+    venue.define_singleton_method(:latitude) { 50.1541 }
+    venue.define_singleton_method(:longitude) { -5.0743 }
+    starting_at = 45.days.from_now.change(usec: 0)
+    fetch = ->(id, from:, to:) do
+      assert_equal "MER_FALM", id
+      assert_equal [ Time.zone.today, Time.zone.today + 1.year ], [ from, to ]
+      [ MerlinUk::Performance.new(cinema_id: id, cinema_name: "Phoenix Cinema, Falmouth", film_name: "Bugonia",
+        starting_at: starting_at, variant: [ "subtitled" ], booking_url: "https://merlinfalmouth.admit-one.eu/?p=tickets&perfCode=123") ]
+    end
+    MerlinUk::Cinema.stub(:all, [ venue ]) do
+      MerlinUk::Performance.stub(:at, fetch) do
+        perform_enqueued_jobs { ImportChainJob.perform_now("merlin") }
+      end
+    end
+    cinema = ExternalIdentifier.find_by!(source: "merlin_venue", value: "MER_FALM").identifiable
+    assert_equal [ "Merlin", "TR11 3PL" ], [ cinema.brand, cinema.postal_code ]
+    performance = cinema.performances.find_by!(starting_at: starting_at)
+    assert_equal [ "subtitled", "2d" ], [ performance.variant, performance.dimension ]
+    assert_equal "https://merlinfalmouth.admit-one.eu/?p=tickets&perfCode=123", performance.booking_url
+  end
+
   test "Light imports every advertised date without coordinates" do
     venue = LightUk::Cinema.new("7")
     venue.define_singleton_method(:name) { "Sheffield" }
