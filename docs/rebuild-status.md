@@ -24,6 +24,7 @@ every cinema, and one cinema's future showings.
 | Movie House | `moviehouse_uk` 1.0.1 | 4 (Northern Ireland) | 4, from OpenStreetMap | about four weeks ahead | Admit One A1Web pages through `cinebase/a1web`, no token |
 | ODEON | `odeon_uk` 5.2.0 | 101 | 101 | to April 2027 | Vista OCAPI, guest token, no postcodes in the API, UK only |
 | Light | `light_uk` 1.0.0 | 14 | none on the website | to May 2027 | Glitterfish site, no token; fortnight guide plus coming soon page; certificate needs Sectigo Root R46 |
+| Omniplex | `omniplex_uk` 1.0.0 | 22 (8 GB, 14 NI; not ROI) | 22 | to May 2027 (most NI to December) | Admit One with Omniplex's own pages, one day per page, about 1,070 requests a night |
 | Picturehouse | `picturehouse_uk` 6.1.0 | 25 | 24 (not Chester) | to June 2027 | Vista OCAPI, guest token |
 | Showcase | `showcase_uk` 1.0.0 | 16 | 16 | to May 2027 | Boxoffice routes through `cinebase/boxoffice`, no token; Bluewater has about 1,500 future showings |
 | Spektrix independents | `spektrix_uk` 1.0.0 | 5 | 5 | to June 2027 | Spektrix API v3, no token; Broadway, HOME, Hyde Park Picture House, Showroom, Tyneside; coordinates from OpenStreetMap |

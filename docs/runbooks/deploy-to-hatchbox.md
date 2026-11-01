@@ -253,14 +253,15 @@ a year.
    `Cinebase::Vista::AuthenticationError` here means that chain's nightly
    import will fail every night. See "Known risks" below.
 
-5. Light's certificate chains to Sectigo's Public Server Authentication
-   Root R46. The box's trust store must include it:
+5. Light's and Omniplex's certificates chain to Sectigo's Public Server
+   Authentication Root R46. The box's trust store must include it:
 
    ```sh
-   bundle exec rails runner 'puts LightUk::Cinema.all.size'   # 14
+   bundle exec rails runner 'puts LightUk::Cinema.all.size'      # 14
+   bundle exec rails runner 'puts OmniplexUk::Cinema.all.size'   # 22
    ```
 
-   A certificate verify error means the import fails every night. Update
+   A certificate verify error means that chain's import fails every night. Update
    the `ca-certificates` package.
 
 ---

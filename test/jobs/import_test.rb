@@ -261,6 +261,32 @@ class ImportTest < ActiveJob::TestCase
     assert_equal "https://moviehousecoleraine.admit-one.co.uk/tickets/?perfCode=123", performance.booking_url
   end
 
+  test "Omniplex imports every advertised date" do
+    venue = OmniplexUk::Cinema.new("OMP_SUND")
+    venue.define_singleton_method(:name) { "Sunderland" }
+    venue.define_singleton_method(:adr) { { street_address: "4 Lambton Street", locality: "Sunderland", postal_code: "SR1 1TP" } }
+    venue.define_singleton_method(:url) { "https://www.omniplexcinemas.co.uk/cinema/showtimes?sitecode=OMP_SUND" }
+    venue.define_singleton_method(:latitude) { 54.9082 }
+    venue.define_singleton_method(:longitude) { -1.3800 }
+    starting_at = 180.days.from_now.change(usec: 0)
+    fetch = ->(id, from:, to:) do
+      assert_equal "OMP_SUND", id
+      assert_equal [ Time.zone.today, Time.zone.today + 1.year ], [ from, to ]
+      [ OmniplexUk::Performance.new(cinema_id: id, cinema_name: "Sunderland", film_name: "Avatar: Fire and Ash", dimension: "3d",
+        starting_at: starting_at, variant: [ "maxx" ], booking_url: "https://www.omniplexcinemas.co.uk/booking/seats/sunderland/123") ]
+    end
+    OmniplexUk::Cinema.stub(:all, [ venue ]) do
+      OmniplexUk::Performance.stub(:at, fetch) do
+        perform_enqueued_jobs { ImportChainJob.perform_now("omniplex") }
+      end
+    end
+    cinema = ExternalIdentifier.find_by!(source: "omniplex_venue", value: "OMP_SUND").identifiable
+    assert_equal [ "Omniplex", "SR1 1TP" ], [ cinema.brand, cinema.postal_code ]
+    performance = cinema.performances.find_by!(starting_at: starting_at)
+    assert_equal [ "maxx", "3d" ], [ performance.variant, performance.dimension ]
+    assert_equal "https://www.omniplexcinemas.co.uk/booking/seats/sunderland/123", performance.booking_url
+  end
+
   test "Light imports every advertised date without coordinates" do
     venue = LightUk::Cinema.new("7")
     venue.define_singleton_method(:name) { "Sheffield" }
