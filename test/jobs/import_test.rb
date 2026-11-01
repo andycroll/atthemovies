@@ -183,6 +183,32 @@ class ImportTest < ActiveJob::TestCase
     assert_equal "https://tickets.showcasecinemas.co.uk/launch/ticketing/abc", performance.booking_url
   end
 
+  test "Spektrix imports independent cinemas as Independent" do
+    venue = SpektrixUk::Cinema.new("tyneside")
+    venue.define_singleton_method(:name) { "Tyneside Cinema" }
+    venue.define_singleton_method(:adr) { { street_address: "10 Pilgrim Street", locality: "Newcastle upon Tyne", postal_code: "NE1 6QG" } }
+    venue.define_singleton_method(:url) { "https://tynesidecinema.co.uk" }
+    venue.define_singleton_method(:latitude) { 54.9724 }
+    venue.define_singleton_method(:longitude) { -1.6111 }
+    starting_at = 150.days.from_now.change(usec: 0)
+    fetch = ->(id, from:, to:) do
+      assert_equal "tyneside", id
+      assert_equal [ Time.zone.today, Time.zone.today + 1.year ], [ from, to ]
+      [ SpektrixUk::Performance.new(cinema_id: id, cinema_name: "Tyneside Cinema", film_name: "Nosferatu", film_year: 1922,
+        starting_at: starting_at, variant: [ "35mm", "q&a" ], booking_url: "https://tynesidecinema.co.uk/book-online/123") ]
+    end
+    SpektrixUk::Cinema.stub(:all, [ venue ]) do
+      SpektrixUk::Performance.stub(:at, fetch) do
+        perform_enqueued_jobs { ImportChainJob.perform_now("spektrix") }
+      end
+    end
+    cinema = ExternalIdentifier.find_by!(source: "spektrix_venue", value: "tyneside").identifiable
+    assert_equal [ "Independent", "Tyneside Cinema", "NE1 6QG" ], [ cinema.brand, cinema.name, cinema.postal_code ]
+    performance = cinema.performances.find_by!(starting_at: starting_at)
+    assert_equal [ "35mm, q&a", 1922 ], [ performance.variant, performance.film.year ]
+    assert_equal "https://tynesidecinema.co.uk/book-online/123", performance.booking_url
+  end
+
   test "Light imports every advertised date without coordinates" do
     venue = LightUk::Cinema.new("7")
     venue.define_singleton_method(:name) { "Sheffield" }
