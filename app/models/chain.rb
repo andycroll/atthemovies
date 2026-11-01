@@ -9,6 +9,7 @@ class Chain
     "light" => { gem: "LightUk" },
     "moviehouse" => { gem: "MoviehouseUk" },
     "odeon" => { gem: "OdeonUk", vista_url: "https://vwc.odeon.co.uk/WSVistaWebClient/ocapi/v1/", region_code: "UK" },
+    "omniplex" => { gem: "OmniplexUk" },
     "picturehouse" => { gem: "PicturehouseUk", vista_url: "https://digital-api.picturehouses.com/ocapi/v1/", region_code: nil },
     "showcase" => { gem: "ShowcaseUk" },
     "spektrix" => { gem: "SpektrixUk" },

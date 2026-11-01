@@ -223,6 +223,8 @@ GEM
       cinebase (~> 5.6)
     odeon_uk (5.2.0-x86_64-linux-gnu)
       cinebase (~> 5.6)
+    omniplex_uk (1.0.0)
+      cinebase (~> 5.7)
     parallel (2.3.0)
     parser (3.3.12.0)
       ast (~> 2.4.1)
@@ -440,6 +442,7 @@ DEPENDENCIES
   minitest-mock
   moviehouse_uk
   odeon_uk
+  omniplex_uk
   picturehouse_uk
   propshaft
   puma (>= 5.0)
@@ -550,6 +553,7 @@ CHECKSUMS
   odeon_uk (5.2.0-aarch64-linux-gnu) sha256=f76ebdc4f10ed781122552c1c7e6969782432327046dbe8f8fcbfc057c4add01
   odeon_uk (5.2.0-arm64-darwin) sha256=a396701b5fc692141ec79a37011f79a828ae64a5e12a8a5aa26b8163b945761d
   odeon_uk (5.2.0-x86_64-linux-gnu) sha256=f8c6fb924575ac6061d93b3a52c3396fd84b5a3ce69cc32a4d49feb9ea824938
+  omniplex_uk (1.0.0) sha256=93b5dbc5dcabff7ef31d7c66038561f0a29a168df60e63255ce6f2cb731192c0
   parallel (2.3.0) sha256=f75a3e904101ce6a1ccb6b8dc800cbafd42166d83330192438dcf29395167a6f
   parser (3.3.12.0) sha256=21a6d7f755d5a24dfbdc6e6b772e4e879a52e7631a88bc5a3a134606052c9828
   picturehouse_uk (6.1.0) sha256=88cc3ed88b68ea1140c0a8973f0f249ff4d2def9337917ffbaf26816f0041d5e
