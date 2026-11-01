@@ -209,6 +209,32 @@ class ImportTest < ActiveJob::TestCase
     assert_equal "https://tynesidecinema.co.uk/book-online/123", performance.booking_url
   end
 
+  test "Arc imports every advertised date from the whatson page" do
+    venue = ArcUk::Cinema.new("ARC_BEE")
+    venue.define_singleton_method(:name) { "Beeston" }
+    venue.define_singleton_method(:adr) { { street_address: "Styles Way", locality: "Beeston", postal_code: "NG9 2WJ" } }
+    venue.define_singleton_method(:url) { "https://beeston.arccinema.co.uk" }
+    venue.define_singleton_method(:latitude) { 52.9256 }
+    venue.define_singleton_method(:longitude) { -1.2163 }
+    starting_at = 170.days.from_now.change(usec: 0)
+    fetch = ->(id, from:, to:) do
+      assert_equal "ARC_BEE", id
+      assert_equal [ Time.zone.today, Time.zone.today + 1.year ], [ from, to ]
+      [ ArcUk::Performance.new(cinema_id: id, cinema_name: "Beeston", film_name: "Swan Lake",
+        starting_at: starting_at, variant: [ "arts" ], booking_url: "https://beeston.admit-one.co.uk/tickets/?perfCode=123") ]
+    end
+    ArcUk::Cinema.stub(:all, [ venue ]) do
+      ArcUk::Performance.stub(:at, fetch) do
+        perform_enqueued_jobs { ImportChainJob.perform_now("arc") }
+      end
+    end
+    cinema = ExternalIdentifier.find_by!(source: "arc_venue", value: "ARC_BEE").identifiable
+    assert_equal [ "Arc", "NG9 2WJ" ], [ cinema.brand, cinema.postal_code ]
+    performance = cinema.performances.find_by!(starting_at: starting_at)
+    assert_equal [ "arts", "2d" ], [ performance.variant, performance.dimension ]
+    assert_equal "https://beeston.admit-one.co.uk/tickets/?perfCode=123", performance.booking_url
+  end
+
   test "Light imports every advertised date without coordinates" do
     venue = LightUk::Cinema.new("7")
     venue.define_singleton_method(:name) { "Sheffield" }

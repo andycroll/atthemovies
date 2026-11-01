@@ -17,6 +17,7 @@ every cinema, and one cinema's future showings.
 
 | Chain | Gem | Cinemas | With coordinates | Advertised dates | Notes |
 | --- | --- | --- | --- | --- | --- |
+| Arc | `arc_uk` 1.0.0 | 9 (Lewisham not open yet) | 9, from OpenStreetMap | to May 2027 | Admit One A1Web pages through `cinebase/a1web`, no token |
 | Cineworld | `cineworld_uk` 4.4.0 | 87 | 87 | to June 2027 | Vista OCAPI, guest token |
 | Curzon | `curzon_uk` 1.1.0 | 14 | 14 | to December 2026 | Vista OCAPI, guest token, coded site ids such as SOH1 |
 | Everyman | `everyman_uk` 1.0.0 | 49 | 49 | to May 2027 | Boxoffice routes through `cinebase/boxoffice`, no token |
