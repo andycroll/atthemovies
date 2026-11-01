@@ -38,6 +38,14 @@ production:
     class: ImportChainJob
     args: [ "princecharles" ]
     schedule: every day at 12:35am Europe/London
+  import_depot:
+    class: ImportChainJob
+    args: [ "depot" ]
+    schedule: every day at 12:40am Europe/London
+  import_merlin:
+    class: ImportChainJob
+    args: [ "merlin" ]
+    schedule: every day at 12:50am Europe/London
   import_cineworld:
     class: ImportChainJob
     args: [ "cineworld" ]

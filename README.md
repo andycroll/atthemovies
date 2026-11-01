@@ -26,19 +26,20 @@ every provisioned user is an operator. Supply passwords privately, not in shell 
 ## Imports and metadata
 
 ```sh
-bin/rails runner 'ImportChainJob.perform_later("cineworld")'   # or arc, curzon, everyman, light, moviehouse, odeon, omniplex, princecharles, reel, scott, picturehouse, showcase, spektrix, vue
+bin/rails runner 'ImportChainJob.perform_later("cineworld")'   # or arc, curzon, depot, everyman, light, merlin, moviehouse, odeon, omniplex, picturehouse, princecharles, reel, scott, showcase, spektrix, vue
 bin/rails runner 'EnrichPendingFilmsJob.perform_later'
 bin/rails runner 'CleanupPerformancesJob.perform_later'
 bin/rails imports:status
 ```
 
 Each chain comes from its own gem: `arc_uk`, `cineworld_uk`, `curzon_uk`,
-`everyman_uk`, `light_uk`, `moviehouse_uk`, `odeon_uk`, `omniplex_uk`,
-`picturehouse_uk`, `princecharles_uk`, `reel_uk`, `scott_uk`, `showcase_uk` and
-`vue_uk`, all built on `cinebase`. `spektrix_uk` covers independent cinemas
-that sell through Spektrix: Broadway, HOME, Hyde Park Picture House, Showroom
-and Tyneside, and `princecharles_uk` covers the Prince Charles Cinema. Their
-brand is "Independent". `Chain` lists them.
+`depot_uk`, `everyman_uk`, `light_uk`, `merlin_uk`, `moviehouse_uk`,
+`odeon_uk`, `omniplex_uk`, `picturehouse_uk`, `princecharles_uk`, `reel_uk`,
+`scott_uk`, `showcase_uk` and `vue_uk`, all built on `cinebase`. `spektrix_uk`
+covers independent cinemas that sell through Spektrix: Broadway, HOME, Hyde
+Park Picture House, Showroom and Tyneside, `depot_uk` covers Depot in Lewes,
+and `princecharles_uk` covers the Prince Charles Cinema. Their brand is
+"Independent". `Chain` lists them.
 `ImportChainJob` loads a chain's cinemas and queues `ImportChainPerformancesJob`
 for each one.
 
@@ -50,15 +51,16 @@ is stored. The app asks OCAPI for every advertised business date for each
 cinema, then loads the showtimes on those dates, so events months ahead are
 included. Vue, Everyman and Showcase need no token and return every advertised
 date in one request. Light needs no token either and returns every advertised
-date from its fortnight guide and coming soon page. Spektrix needs no token
-and returns every advertised date in two requests per cinema. Arc's and Movie
-House's whatson pages hold every advertised date for a cinema. Omniplex
-shows one day per page, so it takes about 50 requests per cinema. Reel's
-WordPress venues take one request per film, about 40 per cinema, and its
-Hull, Morecambe and Quinton venues still use A1Web. Scott publishes a JSON
-feed per cinema. The Prince Charles Cinema lists its whole programme on one
-page.
-`Chain::ADVERTISED_HORIZON` (one year) only bounds these.
+date from its fortnight guide and coming soon page. Spektrix needs no token and
+returns every advertised date in two requests per cinema. Arc's and Movie
+House's whatson pages hold every advertised date for a cinema. Omniplex shows
+one day per page, so it takes about 50 requests per cinema. Reel's WordPress
+venues take one request per film, about 40 per cinema, and its Hull, Morecambe
+and Quinton venues still use A1Web. Scott publishes a JSON feed per cinema. The
+Prince Charles Cinema lists its whole programme on one page. Depot's calendar
+holds every advertised date. Each Merlin cinema's home page holds its whole
+schedule; Merlin's live stage shows are left out. `Chain::ADVERTISED_HORIZON`
+(one year) only bounds these.
 There is no other app-imposed future cutoff.
 
 Cinema identity is the chain's venue ID, stored as an external identifier such
@@ -87,13 +89,13 @@ elapsed showings. Cleanup destroys past performances, maintaining film counters.
 
 Production recurring tasks import Omniplex at 00:05, Reel at 00:10, Scott at
 00:15, Movie House at 00:20, Spektrix cinemas at 00:30, the Prince Charles
-Cinema at 00:35, Arc at 00:45, Cineworld at 01:00, Curzon at 01:30,
-Picturehouse at 02:00, ODEON at 02:30, Vue at 03:00, Light at 03:15, Everyman
-at 03:30 and Showcase at 03:45 London, enrich at 04:00 London and clean up
-every 10 minutes. Network failures retry five times with backoff; queue
-failures remain available in Solid Queue and `imports:status`. Development
-tasks are manual to avoid unexpected website requests. Run the worker for
-queued work.
+Cinema at 00:35, Depot at 00:40, Arc at 00:45, Merlin at 00:50, Cineworld at
+01:00, Curzon at 01:30, Picturehouse at 02:00, ODEON at 02:30, Vue at 03:00,
+Light at 03:15, Everyman at 03:30 and Showcase at 03:45 London, enrich at 04:00
+London and clean up every 10 minutes. Network failures retry five times with
+backoff; queue failures remain available in Solid Queue and `imports:status`.
+Development tasks are manual to avoid unexpected website requests. Run the
+worker for queued work.
 
 ## Routes and API
 
