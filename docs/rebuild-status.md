@@ -24,6 +24,7 @@ every cinema, and one cinema's future showings.
 | Light | `light_uk` 1.0.0 | 14 | none on the website | to May 2027 | Glitterfish site, no token; fortnight guide plus coming soon page; certificate needs Sectigo Root R46 |
 | Picturehouse | `picturehouse_uk` 6.1.0 | 25 | 24 (not Chester) | to June 2027 | Vista OCAPI, guest token |
 | Showcase | `showcase_uk` 1.0.0 | 16 | 16 | to May 2027 | Boxoffice routes through `cinebase/boxoffice`, no token; Bluewater has about 1,500 future showings |
+| Spektrix independents | `spektrix_uk` 1.0.0 | 5 | 5 | to June 2027 | Spektrix API v3, no token; Broadway, HOME, Hyde Park Picture House, Showroom, Tyneside; coordinates from OpenStreetMap |
 | Vue | `vue_uk` 1.1.0 | 88 | from each cinema page | to May 2027 | myvue.com API, no token, UK only |
 
 The four Vista gems bundle `curl-impersonate` for glibc Linux (x86-64, ARM64)
