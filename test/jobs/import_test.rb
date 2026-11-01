@@ -344,6 +344,32 @@ class ImportTest < ActiveJob::TestCase
     assert_equal "https://exmouth.scottcinemas.co.uk/book-now/swan-lake/123", performance.booking_url
   end
 
+  test "Prince Charles Cinema imports as an independent" do
+    venue = PrincecharlesUk::Cinema.new("PRILON")
+    venue.define_singleton_method(:name) { "Prince Charles Cinema" }
+    venue.define_singleton_method(:adr) { { street_address: "7 Leicester Place", locality: "London", postal_code: "WC2H 7BY" } }
+    venue.define_singleton_method(:url) { "https://princecharlescinema.com" }
+    venue.define_singleton_method(:latitude) { 51.5115 }
+    venue.define_singleton_method(:longitude) { -0.1302 }
+    starting_at = 200.days.from_now.change(usec: 0)
+    fetch = ->(id, from:, to:) do
+      assert_equal "PRILON", id
+      assert_equal [ Time.zone.today, Time.zone.today + 1.year ], [ from, to ]
+      [ PrincecharlesUk::Performance.new(cinema_id: id, cinema_name: "Prince Charles Cinema", film_name: "The Sound of Music", film_year: 1965,
+        starting_at: starting_at, variant: [ "sing_along", "70mm" ], booking_url: "https://princecharlescinema.com/prince-charles-cinema/booknow/123/") ]
+    end
+    PrincecharlesUk::Cinema.stub(:all, [ venue ]) do
+      PrincecharlesUk::Performance.stub(:at, fetch) do
+        perform_enqueued_jobs { ImportChainJob.perform_now("princecharles") }
+      end
+    end
+    cinema = ExternalIdentifier.find_by!(source: "princecharles_venue", value: "PRILON").identifiable
+    assert_equal [ "Independent", "Prince Charles Cinema", "WC2H 7BY" ], [ cinema.brand, cinema.name, cinema.postal_code ]
+    performance = cinema.performances.find_by!(starting_at: starting_at)
+    assert_equal [ "70mm, sing_along", 1965 ], [ performance.variant, performance.film.year ]
+    assert_equal "https://princecharlescinema.com/prince-charles-cinema/booknow/123/", performance.booking_url
+  end
+
   test "Light imports every advertised date without coordinates" do
     venue = LightUk::Cinema.new("7")
     venue.define_singleton_method(:name) { "Sheffield" }
