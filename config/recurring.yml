@@ -26,6 +26,14 @@ production:
     class: ImportChainJob
     args: [ "omniplex" ]
     schedule: every day at 12:05am Europe/London
+  import_reel:
+    class: ImportChainJob
+    args: [ "reel" ]
+    schedule: every day at 12:10am Europe/London
+  import_scott:
+    class: ImportChainJob
+    args: [ "scott" ]
+    schedule: every day at 12:15am Europe/London
   import_cineworld:
     class: ImportChainJob
     args: [ "cineworld" ]

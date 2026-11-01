@@ -26,6 +26,8 @@ every cinema, and one cinema's future showings.
 | Light | `light_uk` 1.0.0 | 14 | none on the website | to May 2027 | Glitterfish site, no token; fortnight guide plus coming soon page; certificate needs Sectigo Root R46 |
 | Omniplex | `omniplex_uk` 1.0.0 | 22 (8 GB, 14 NI; not ROI) | 22 | to May 2027 (most NI to December) | Admit One with Omniplex's own pages, one day per page, about 1,070 requests a night |
 | Picturehouse | `picturehouse_uk` 6.1.0 | 25 | 24 (not Chester) | to June 2027 | Vista OCAPI, guest token |
+| Reel | `reel_uk` 1.0.0 | 16 | 16 (Burnley from its postcode) | to May 2027 (A1Web venues to December) | 13 venues on a Jacro WordPress site, one request per film; Hull, Morecambe, Quinton on A1Web; TapOS ticketing |
+| Scott | `scott_uk` 1.0.0 | 6 | 6 | to May 2027 | Scott's own JSON feed per venue; TapOS ticketing |
 | Showcase | `showcase_uk` 1.0.0 | 16 | 16 | to May 2027 | Boxoffice routes through `cinebase/boxoffice`, no token; Bluewater has about 1,500 future showings |
 | Spektrix independents | `spektrix_uk` 1.0.0 | 5 | 5 | to June 2027 | Spektrix API v3, no token; Broadway, HOME, Hyde Park Picture House, Showroom, Tyneside; coordinates from OpenStreetMap |
 | Vue | `vue_uk` 1.1.0 | 88 | from each cinema page | to May 2027 | myvue.com API, no token, UK only |
