@@ -18,6 +18,10 @@ production:
     class: ImportChainJob
     args: [ "arc" ]
     schedule: every day at 12:45am Europe/London
+  import_moviehouse:
+    class: ImportChainJob
+    args: [ "moviehouse" ]
+    schedule: every day at 12:20am Europe/London
   import_cineworld:
     class: ImportChainJob
     args: [ "cineworld" ]

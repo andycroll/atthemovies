@@ -235,6 +235,32 @@ class ImportTest < ActiveJob::TestCase
     assert_equal "https://beeston.admit-one.co.uk/tickets/?perfCode=123", performance.booking_url
   end
 
+  test "Movie House imports every advertised date from the whatson page" do
+    venue = MoviehouseUk::Cinema.new("MH_COLE")
+    venue.define_singleton_method(:name) { "Coleraine" }
+    venue.define_singleton_method(:adr) { { street_address: "1 Riverside Park South", locality: "Coleraine", postal_code: "BT51 3RT" } }
+    venue.define_singleton_method(:url) { "https://www.moviehouse.co.uk/coleraine" }
+    venue.define_singleton_method(:latitude) { 55.1199 }
+    venue.define_singleton_method(:longitude) { -6.6781 }
+    starting_at = 20.days.from_now.change(usec: 0)
+    fetch = ->(id, from:, to:) do
+      assert_equal "MH_COLE", id
+      assert_equal [ Time.zone.today, Time.zone.today + 1.year ], [ from, to ]
+      [ MoviehouseUk::Performance.new(cinema_id: id, cinema_name: "Coleraine", film_name: "National Theatre Live: Hamlet",
+        starting_at: starting_at, variant: [ "arts" ], booking_url: "https://moviehousecoleraine.admit-one.co.uk/tickets/?perfCode=123") ]
+    end
+    MoviehouseUk::Cinema.stub(:all, [ venue ]) do
+      MoviehouseUk::Performance.stub(:at, fetch) do
+        perform_enqueued_jobs { ImportChainJob.perform_now("moviehouse") }
+      end
+    end
+    cinema = ExternalIdentifier.find_by!(source: "moviehouse_venue", value: "MH_COLE").identifiable
+    assert_equal [ "Movie House", "BT51 3RT" ], [ cinema.brand, cinema.postal_code ]
+    performance = cinema.performances.find_by!(starting_at: starting_at)
+    assert_equal [ "arts", "2d" ], [ performance.variant, performance.dimension ]
+    assert_equal "https://moviehousecoleraine.admit-one.co.uk/tickets/?perfCode=123", performance.booking_url
+  end
+
   test "Light imports every advertised date without coordinates" do
     venue = LightUk::Cinema.new("7")
     venue.define_singleton_method(:name) { "Sheffield" }

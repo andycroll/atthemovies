@@ -7,6 +7,7 @@ class Chain
     "curzon" => { gem: "CurzonUk", vista_url: "https://digital-api.curzon.com/ocapi/v1/", region_code: nil },
     "everyman" => { gem: "EverymanUk" },
     "light" => { gem: "LightUk" },
+    "moviehouse" => { gem: "MoviehouseUk" },
     "odeon" => { gem: "OdeonUk", vista_url: "https://vwc.odeon.co.uk/WSVistaWebClient/ocapi/v1/", region_code: "UK" },
     "picturehouse" => { gem: "PicturehouseUk", vista_url: "https://digital-api.picturehouses.com/ocapi/v1/", region_code: nil },
     "showcase" => { gem: "ShowcaseUk" },
