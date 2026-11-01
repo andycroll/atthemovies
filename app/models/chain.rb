@@ -2,6 +2,7 @@ require "cinebase/vista"
 
 class Chain
   CHAINS = {
+    "arc" => { gem: "ArcUk" },
     "cineworld" => { gem: "CineworldUk", vista_url: "https://digital-api.cineworld.co.uk/ocapi/v1/", region_code: "GB" },
     "curzon" => { gem: "CurzonUk", vista_url: "https://digital-api.curzon.com/ocapi/v1/", region_code: nil },
     "everyman" => { gem: "EverymanUk" },

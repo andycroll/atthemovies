@@ -65,6 +65,7 @@ group :test do
 end
 gem "tailwindcss-rails"
 
+gem "arc_uk"
 gem "cineworld_uk"
 gem "curzon_uk"
 gem "everyman_uk"

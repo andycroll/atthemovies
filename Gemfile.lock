@@ -77,6 +77,8 @@ GEM
       uri (>= 0.13.1)
     addressable (2.9.2)
       public_suffix (>= 2.0.2, < 8.0)
+    arc_uk (1.0.0)
+      cinebase (~> 5.7)
     ast (2.4.3)
     base64 (0.3.0)
     bcrypt (3.1.22)
@@ -99,7 +101,7 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
-    cinebase (5.6.0)
+    cinebase (5.7.0)
       tzinfo
       tzinfo-data
     cineworld_uk (4.4.0)
@@ -419,6 +421,7 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
+  arc_uk
   bcrypt (~> 3.1.7)
   bootsnap
   brakeman
@@ -469,6 +472,7 @@ CHECKSUMS
   activestorage (8.1.4) sha256=f4956f3ec9ee63e5e0b332b57c877cb627f82b56f4cc902279310d2aa285c7a8
   activesupport (8.1.4) sha256=891dd3fe43c4fc8391934b237b1189bb1f661c932a84a840043db9d46a4e80df
   addressable (2.9.2) sha256=9117c7e7d6ee07230e75ce41fb9401ae55354dc654fcd0e862ba41d539e9a610
+  arc_uk (1.0.0) sha256=185b01d5464667c314cf32d02b326afbad1c920feb0790cdb50c3debac7115f8
   ast (2.4.3) sha256=954615157c1d6a382bc27d690d973195e79db7f55e9765ac7c481c60bdb4d383
   base64 (0.3.0) sha256=27337aeabad6ffae05c265c450490628ef3ebd4b67be58257393227588f5a97b
   bcrypt (3.1.22) sha256=1f0072e88c2d705d94aff7f2c5cb02eb3f1ec4b8368671e19112527489f29032
@@ -479,7 +483,7 @@ CHECKSUMS
   builder (3.3.0) sha256=497918d2f9dca528fdca4b88d84e4ef4387256d984b8154e9d5d3fe5a9c8835f
   bundler-audit (0.9.3) sha256=81c8766c71e47d0d28a0f98c7eed028539f21a6ea3cd8f685eb6f42333c9b4e9
   capybara (3.40.0) sha256=42dba720578ea1ca65fd7a41d163dd368502c191804558f6e0f71b391054aeef
-  cinebase (5.6.0) sha256=c36ad62331408545520bce46c8bdb011949e520de64f27e6dc787aec594d14b3
+  cinebase (5.7.0) sha256=392c2294ad2b5e12c1de602caaefb2ad9762149b6d8b3c64499b1748355966cd
   cineworld_uk (4.4.0) sha256=017b2df3f9d7a94e7a3da14cb567ded1819685461b9799fdfa939903d1d02bd7
   cineworld_uk (4.4.0-aarch64-linux-gnu) sha256=449abbc957c8f798a36363686b7ea70a0509dbc55a4394c310df221d7b09eadf
   cineworld_uk (4.4.0-arm64-darwin) sha256=3bbe671db59d1a78aa6f247b41b82768fcf0fbf4c477f26408d962a0b0efc193

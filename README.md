@@ -26,15 +26,15 @@ every provisioned user is an operator. Supply passwords privately, not in shell 
 ## Imports and metadata
 
 ```sh
-bin/rails runner 'ImportChainJob.perform_later("cineworld")'   # or curzon, everyman, light, odeon, picturehouse, showcase, spektrix, vue
+bin/rails runner 'ImportChainJob.perform_later("cineworld")'   # or arc, curzon, everyman, light, odeon, picturehouse, showcase, spektrix, vue
 bin/rails runner 'EnrichPendingFilmsJob.perform_later'
 bin/rails runner 'CleanupPerformancesJob.perform_later'
 bin/rails imports:status
 ```
 
-Each chain comes from its own gem: `cineworld_uk`, `curzon_uk`, `everyman_uk`,
-`light_uk`, `odeon_uk`, `picturehouse_uk`, `showcase_uk` and `vue_uk`, all
-built on `cinebase`. `spektrix_uk` covers independent cinemas that sell
+Each chain comes from its own gem: `arc_uk`, `cineworld_uk`, `curzon_uk`,
+`everyman_uk`, `light_uk`, `odeon_uk`, `picturehouse_uk`, `showcase_uk` and
+`vue_uk`, all built on `cinebase`. `spektrix_uk` covers independent cinemas that sell
 through Spektrix: Broadway, HOME, Hyde Park Picture House, Showroom and
 Tyneside. Their brand is "Independent". `Chain` lists them.
 `ImportChainJob` loads a chain's cinemas and queues `ImportChainPerformancesJob`
@@ -49,7 +49,8 @@ cinema, then loads the showtimes on those dates, so events months ahead are
 included. Vue, Everyman and Showcase need no token and return every advertised
 date in one request. Light needs no token either and returns every advertised
 date from its fortnight guide and coming soon page. Spektrix needs no token
-and returns every advertised date in two requests per cinema.
+and returns every advertised date in two requests per cinema. Arc's whatson
+page holds every advertised date for a cinema.
 `Chain::ADVERTISED_HORIZON` (one year) only bounds these.
 There is no other app-imposed future cutoff.
 
@@ -77,9 +78,9 @@ visible. What's on requires a current/future showing, independently of cleanup.
 Days are midnight-to-midnight in London (not a 06:00 cinema day); today excludes
 elapsed showings. Cleanup destroys past performances, maintaining film counters.
 
-Production recurring tasks import Spektrix cinemas at 00:30, Cineworld at
-01:00, Curzon at 01:30, Picturehouse at 02:00, ODEON at 02:30, Vue at 03:00,
-Light at 03:15, Everyman at 03:30 and Showcase at 03:45 London, enrich at 04:00 London and clean up every 10 minutes. Network failures retry five times with backoff; queue
+Production recurring tasks import Spektrix cinemas at 00:30, Arc at 00:45,
+Cineworld at 01:00, Curzon at 01:30, Picturehouse at 02:00, ODEON at 02:30,
+Vue at 03:00, Light at 03:15, Everyman at 03:30 and Showcase at 03:45 London, enrich at 04:00 London and clean up every 10 minutes. Network failures retry five times with backoff; queue
 failures remain available in Solid Queue and `imports:status`. Development tasks
 are manual to avoid unexpected website requests. Run the worker for queued work.
 
