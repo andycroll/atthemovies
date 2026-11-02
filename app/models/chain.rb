@@ -21,7 +21,8 @@ class Chain
     "showcase" => { gem: "ShowcaseUk" },
     "spektrix" => { gem: "SpektrixUk" },
     "vue" => { gem: "VueUk" },
-    "watershed" => { gem: "WatershedUk" }
+    "watershed" => { gem: "WatershedUk" },
+    "wtw" => { gem: "WtwUk" }
   }.freeze
 
   # Vue answers every advertised date in one request; the horizon only bounds it

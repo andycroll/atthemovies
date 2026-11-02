@@ -37,6 +37,7 @@ every cinema, and one cinema's future showings.
 | Spektrix independents | `spektrix_uk` 1.0.0 | 5 | 5 | to June 2027 | Spektrix API v3, no token; Broadway, HOME, Hyde Park Picture House, Showroom, Tyneside; coordinates from OpenStreetMap |
 | Vue | `vue_uk` 1.1.0 | 88 | from each cinema page | to May 2027 | myvue.com API, no token, UK only |
 | Watershed, Bristol | `watershed_uk` 1.0.0 | 1 | 1 | to May 2027 | Ticketsolve XML feed, 1 request; brand Independent |
+| WTW | `wtw_uk` 1.0.0 | 4 (Cornwall) | 4 | to May 2027 | Jacro WordPress site, 1 request per cinema; showtimes already started today have no booking link |
 
 The four Vista gems bundle `curl-impersonate` for glibc Linux (x86-64, ARM64)
 and macOS. Production must run on one of those platforms.

@@ -62,6 +62,10 @@ production:
     class: ImportChainJob
     args: [ "rio" ]
     schedule: every day at 1:15am Europe/London
+  import_wtw:
+    class: ImportChainJob
+    args: [ "wtw" ]
+    schedule: every day at 1:45am Europe/London
   import_picturehouse:
     class: ImportChainJob
     args: [ "picturehouse" ]

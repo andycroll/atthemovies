@@ -474,6 +474,32 @@ class ImportTest < ActiveJob::TestCase
     assert_equal "https://www.glasgowfilm.org/checkout/showing/sentimental-value/123/", performance.booking_url
   end
 
+  test "WTW imports every advertised date for each cinema" do
+    venue = WtwUk::Cinema.new("PLATRU")
+    venue.define_singleton_method(:name) { "Truro" }
+    venue.define_singleton_method(:adr) { { street_address: "69 Lemon Street", locality: "Truro", postal_code: "TR1 2PN" } }
+    venue.define_singleton_method(:url) { "https://wtwcinemas.co.uk/truro" }
+    venue.define_singleton_method(:latitude) { 50.2619 }
+    venue.define_singleton_method(:longitude) { -5.0523 }
+    starting_at = 120.days.from_now.change(usec: 0)
+    fetch = ->(id, from:, to:) do
+      assert_equal "PLATRU", id
+      assert_equal [ Time.zone.today, Time.zone.today + 1.year ], [ from, to ]
+      [ WtwUk::Performance.new(cinema_id: id, cinema_name: "Truro", film_name: "Wicked: For Good",
+        starting_at: starting_at, variant: [ "kids" ], booking_url: "https://wtwcinemas.co.uk/truro/booknow/123/") ]
+    end
+    WtwUk::Cinema.stub(:all, [ venue ]) do
+      WtwUk::Performance.stub(:at, fetch) do
+        perform_enqueued_jobs { ImportChainJob.perform_now("wtw") }
+      end
+    end
+    cinema = ExternalIdentifier.find_by!(source: "wtw_venue", value: "PLATRU").identifiable
+    assert_equal [ "WTW Cinemas", "Truro", "TR1 2PN" ], [ cinema.brand, cinema.name, cinema.postal_code ]
+    performance = cinema.performances.find_by!(starting_at: starting_at)
+    assert_equal [ "kids", "2d" ], [ performance.variant, performance.dimension ]
+    assert_equal "https://wtwcinemas.co.uk/truro/booknow/123/", performance.booking_url
+  end
+
   test "Rio imports as an independent" do
     venue = RioUk::Cinema.new("rio")
     venue.define_singleton_method(:name) { "Rio Cinema" }

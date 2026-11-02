@@ -26,7 +26,7 @@ every provisioned user is an operator. Supply passwords privately, not in shell 
 ## Imports and metadata
 
 ```sh
-bin/rails runner 'ImportChainJob.perform_later("cineworld")'   # or arc, curzon, depot, everyman, gft, light, merlin, moviehouse, odeon, omniplex, picturehouse, princecharles, reel, rio, scott, showcase, spektrix, vue, watershed
+bin/rails runner 'ImportChainJob.perform_later("cineworld")'   # or arc, curzon, depot, everyman, gft, light, merlin, moviehouse, odeon, omniplex, picturehouse, princecharles, reel, rio, scott, showcase, spektrix, vue, watershed, wtw
 bin/rails runner 'EnrichPendingFilmsJob.perform_later'
 bin/rails runner 'CleanupPerformancesJob.perform_later'
 bin/rails imports:status
@@ -34,13 +34,13 @@ bin/rails imports:status
 
 Each chain comes from its own gem: `arc_uk`, `cineworld_uk`, `curzon_uk`,
 `everyman_uk`, `light_uk`, `merlin_uk`, `moviehouse_uk`, `odeon_uk`,
-`omniplex_uk`, `picturehouse_uk`, `reel_uk`, `scott_uk`, `showcase_uk` and
-`vue_uk`, all built on `cinebase`. `spektrix_uk` covers independent cinemas
-that sell through Spektrix: Broadway, HOME, Hyde Park Picture House, Showroom
-and Tyneside. `depot_uk` covers Depot in Lewes, `gft_uk` the Glasgow Film
-Theatre, `princecharles_uk` the Prince Charles Cinema, `rio_uk` the Rio in
-Dalston and `watershed_uk` Watershed in Bristol. Their brand is "Independent".
-`Chain` lists them.
+`omniplex_uk`, `picturehouse_uk`, `reel_uk`, `scott_uk`, `showcase_uk`,
+`vue_uk` and `wtw_uk`, all built on `cinebase`. `spektrix_uk` covers
+independent cinemas that sell through Spektrix: Broadway, HOME, Hyde Park
+Picture House, Showroom and Tyneside. `depot_uk` covers Depot in Lewes,
+`gft_uk` the Glasgow Film Theatre, `princecharles_uk` the Prince Charles
+Cinema, `rio_uk` the Rio in Dalston and `watershed_uk` Watershed in Bristol.
+Their brand is "Independent". `Chain` lists them.
 `ImportChainJob` loads a chain's cinemas and queues `ImportChainPerformancesJob`
 for each one.
 
@@ -60,10 +60,10 @@ venues take one request per film, about 40 per cinema, and its Hull, Morecambe
 and Quinton venues still use A1Web. Scott publishes a JSON feed per cinema. The
 Prince Charles Cinema lists its whole programme on one page. Depot's calendar
 holds every advertised date. Each Merlin cinema's home page holds its whole
-schedule; Merlin's live stage shows are left out. Watershed's Ticketsolve feed
-and the Rio's what's on page take one request each, and the Glasgow Film
-Theatre's API about six. `Chain::ADVERTISED_HORIZON` (one year) only bounds
-these.
+schedule; Merlin's live stage shows are left out. WTW takes one request per
+cinema. Watershed's Ticketsolve feed and the Rio's what's on page take one
+request each, and the Glasgow Film Theatre's API about six.
+`Chain::ADVERTISED_HORIZON` (one year) only bounds these.
 There is no other app-imposed future cutoff.
 
 Cinema identity is the chain's venue ID, stored as an external identifier such
@@ -94,10 +94,11 @@ Production recurring tasks import Omniplex at 00:05, Reel at 00:10, Scott at
 00:15, Movie House at 00:20, the Glasgow Film Theatre at 00:25, Spektrix
 cinemas at 00:30, the Prince Charles Cinema at 00:35, Depot at 00:40, Arc at
 00:45, Merlin at 00:50, Watershed at 00:55, Cineworld at 01:00, the Rio at
-01:15, Curzon at 01:30, Picturehouse at 02:00, ODEON at 02:30, Vue at 03:00,
-Light at 03:15, Everyman at 03:30 and Showcase at 03:45 London, enrich at 04:00
-London and clean up every 10 minutes. Network failures retry five times with
-backoff; queue failures remain available in Solid Queue and `imports:status`.
+01:15, Curzon at 01:30, WTW at 01:45, Picturehouse at 02:00, ODEON at 02:30,
+Vue at 03:00, Light at 03:15, Everyman at 03:30 and Showcase at 03:45 London,
+enrich at 04:00 London and clean up every 10 minutes. Network failures retry
+five times with backoff; queue failures remain available in Solid Queue and
+`imports:status`.
 Development tasks are manual to avoid unexpected website requests. Run the
 worker for queued work.
 
