@@ -22,6 +22,7 @@ every cinema, and one cinema's future showings.
 | Curzon | `curzon_uk` 1.1.0 | 14 | 14 | to December 2026 | Vista OCAPI, guest token, coded site ids such as SOH1 |
 | Depot, Lewes | `depot_uk` 1.0.0 | 1 | 1 | to May 2027 | Jacro WordPress calendar, 5 requests; films only; brand Independent |
 | Everyman | `everyman_uk` 1.0.0 | 49 | 49 | to May 2027 | Boxoffice routes through `cinebase/boxoffice`, no token |
+| Glasgow Film Theatre | `gft_uk` 1.0.0 | 1 | 1 | to February 2027 | Indy GraphQL API, about 6 requests; brand Independent |
 | Merlin | `merlin_uk` 1.0.0 | 22 | 22 (3 from postcodes) | to May 2027 | Each cinema's home page, 1 request; Admit One booking; live stage shows left out |
 | Movie House | `moviehouse_uk` 1.0.1 | 4 (Northern Ireland) | 4, from OpenStreetMap | about four weeks ahead | Admit One A1Web pages through `cinebase/a1web`, no token |
 | ODEON | `odeon_uk` 5.2.0 | 101 | 101 | to April 2027 | Vista OCAPI, guest token, no postcodes in the API, UK only |
@@ -30,10 +31,12 @@ every cinema, and one cinema's future showings.
 | Picturehouse | `picturehouse_uk` 6.1.0 | 25 | 24 (not Chester) | to June 2027 | Vista OCAPI, guest token |
 | Prince Charles Cinema | `princecharles_uk` 1.0.0 | 1 | 1 | to June 2027 | Jacro WordPress site, whole programme on one page; TapOS ticketing; brand Independent |
 | Reel | `reel_uk` 1.0.0 | 16 | 16 (Burnley from its postcode) | to May 2027 (A1Web venues to December) | 13 venues on a Jacro WordPress site, one request per film; Hull, Morecambe, Quinton on A1Web; TapOS ticketing |
+| Rio, Dalston | `rio_uk` 1.0.0 | 1 | 1 | to January 2027 | Savoy what's on page, 1 request; titles put in title case; brand Independent |
 | Scott | `scott_uk` 1.0.0 | 6 | 6 | to May 2027 | Scott's own JSON feed per venue; TapOS ticketing |
 | Showcase | `showcase_uk` 1.0.0 | 16 | 16 | to May 2027 | Boxoffice routes through `cinebase/boxoffice`, no token; Bluewater has about 1,500 future showings |
 | Spektrix independents | `spektrix_uk` 1.0.0 | 5 | 5 | to June 2027 | Spektrix API v3, no token; Broadway, HOME, Hyde Park Picture House, Showroom, Tyneside; coordinates from OpenStreetMap |
 | Vue | `vue_uk` 1.1.0 | 88 | from each cinema page | to May 2027 | myvue.com API, no token, UK only |
+| Watershed, Bristol | `watershed_uk` 1.0.0 | 1 | 1 | to May 2027 | Ticketsolve XML feed, 1 request; brand Independent |
 
 The four Vista gems bundle `curl-impersonate` for glibc Linux (x86-64, ARM64)
 and macOS. Production must run on one of those platforms.

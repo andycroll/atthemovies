@@ -7,6 +7,7 @@ class Chain
     "curzon" => { gem: "CurzonUk", vista_url: "https://digital-api.curzon.com/ocapi/v1/", region_code: nil },
     "depot" => { gem: "DepotUk" },
     "everyman" => { gem: "EverymanUk" },
+    "gft" => { gem: "GftUk" },
     "light" => { gem: "LightUk" },
     "merlin" => { gem: "MerlinUk" },
     "moviehouse" => { gem: "MoviehouseUk" },
@@ -15,10 +16,12 @@ class Chain
     "picturehouse" => { gem: "PicturehouseUk", vista_url: "https://digital-api.picturehouses.com/ocapi/v1/", region_code: nil },
     "princecharles" => { gem: "PrincecharlesUk" },
     "reel" => { gem: "ReelUk" },
+    "rio" => { gem: "RioUk" },
     "scott" => { gem: "ScottUk" },
     "showcase" => { gem: "ShowcaseUk" },
     "spektrix" => { gem: "SpektrixUk" },
-    "vue" => { gem: "VueUk" }
+    "vue" => { gem: "VueUk" },
+    "watershed" => { gem: "WatershedUk" }
   }.freeze
 
   # Vue answers every advertised date in one request; the horizon only bounds it

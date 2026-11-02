@@ -422,6 +422,84 @@ class ImportTest < ActiveJob::TestCase
     assert_equal "https://merlinfalmouth.admit-one.eu/?p=tickets&perfCode=123", performance.booking_url
   end
 
+  test "Watershed imports as an independent" do
+    venue = WatershedUk::Cinema.new("watershed")
+    venue.define_singleton_method(:name) { "Watershed" }
+    venue.define_singleton_method(:adr) { { street_address: "1 Canons Road", locality: "Bristol", postal_code: "BS1 5TX" } }
+    venue.define_singleton_method(:url) { "https://www.watershed.co.uk" }
+    venue.define_singleton_method(:latitude) { 51.4518 }
+    venue.define_singleton_method(:longitude) { -2.5981 }
+    starting_at = 90.days.from_now.change(usec: 0)
+    fetch = ->(id, from:, to:) do
+      assert_equal "watershed", id
+      assert_equal [ Time.zone.today, Time.zone.today + 1.year ], [ from, to ]
+      [ WatershedUk::Performance.new(cinema_id: id, cinema_name: "Watershed", film_name: "Hamnet",
+        starting_at: starting_at, variant: [ "subtitled" ], booking_url: "https://watershed.ticketsolve.com/shows/1/events/2") ]
+    end
+    WatershedUk::Cinema.stub(:all, [ venue ]) do
+      WatershedUk::Performance.stub(:at, fetch) do
+        perform_enqueued_jobs { ImportChainJob.perform_now("watershed") }
+      end
+    end
+    cinema = ExternalIdentifier.find_by!(source: "watershed_venue", value: "watershed").identifiable
+    assert_equal [ "Independent", "Watershed", "BS1 5TX" ], [ cinema.brand, cinema.name, cinema.postal_code ]
+    performance = cinema.performances.find_by!(starting_at: starting_at)
+    assert_equal [ "subtitled", "2d" ], [ performance.variant, performance.dimension ]
+    assert_equal "https://watershed.ticketsolve.com/shows/1/events/2", performance.booking_url
+  end
+
+  test "Glasgow Film Theatre imports as an independent" do
+    venue = GftUk::Cinema.new("103")
+    venue.define_singleton_method(:name) { "Glasgow Film Theatre" }
+    venue.define_singleton_method(:adr) { { street_address: "12 Rose Street", locality: "Glasgow", postal_code: "G3 6RB" } }
+    venue.define_singleton_method(:url) { "https://www.glasgowfilm.org" }
+    venue.define_singleton_method(:latitude) { 55.8657 }
+    venue.define_singleton_method(:longitude) { -4.2613 }
+    starting_at = 75.days.from_now.change(usec: 0)
+    fetch = ->(id, from:, to:) do
+      assert_equal "103", id
+      assert_equal [ Time.zone.today, Time.zone.today + 1.year ], [ from, to ]
+      [ GftUk::Performance.new(cinema_id: id, cinema_name: "Glasgow Film Theatre", film_name: "Sentimental Value",
+        starting_at: starting_at, variant: [ "subtitled" ], booking_url: "https://www.glasgowfilm.org/checkout/showing/sentimental-value/123/") ]
+    end
+    GftUk::Cinema.stub(:all, [ venue ]) do
+      GftUk::Performance.stub(:at, fetch) do
+        perform_enqueued_jobs { ImportChainJob.perform_now("gft") }
+      end
+    end
+    cinema = ExternalIdentifier.find_by!(source: "gft_venue", value: "103").identifiable
+    assert_equal [ "Independent", "Glasgow Film Theatre", "G3 6RB" ], [ cinema.brand, cinema.name, cinema.postal_code ]
+    performance = cinema.performances.find_by!(starting_at: starting_at)
+    assert_equal [ "subtitled", "2d" ], [ performance.variant, performance.dimension ]
+    assert_equal "https://www.glasgowfilm.org/checkout/showing/sentimental-value/123/", performance.booking_url
+  end
+
+  test "Rio imports as an independent" do
+    venue = RioUk::Cinema.new("rio")
+    venue.define_singleton_method(:name) { "Rio Cinema" }
+    venue.define_singleton_method(:adr) { { street_address: "107 Kingsland High Street", locality: "London", postal_code: "E8 2PB" } }
+    venue.define_singleton_method(:url) { "https://riocinema.org.uk" }
+    venue.define_singleton_method(:latitude) { 51.5496 }
+    venue.define_singleton_method(:longitude) { -0.0756 }
+    starting_at = 30.days.from_now.change(usec: 0)
+    fetch = ->(id, from:, to:) do
+      assert_equal "rio", id
+      assert_equal [ Time.zone.today, Time.zone.today + 1.year ], [ from, to ]
+      [ RioUk::Performance.new(cinema_id: id, cinema_name: "Rio Cinema", film_name: "Marty Supreme",
+        starting_at: starting_at, variant: [ "relaxed" ], booking_url: "https://riocinema.org.uk/Rio.dll/Booking?Booking=TSelectItems.waSelectItemsPrompt.TcsPerformance_123") ]
+    end
+    RioUk::Cinema.stub(:all, [ venue ]) do
+      RioUk::Performance.stub(:at, fetch) do
+        perform_enqueued_jobs { ImportChainJob.perform_now("rio") }
+      end
+    end
+    cinema = ExternalIdentifier.find_by!(source: "rio_venue", value: "rio").identifiable
+    assert_equal [ "Independent", "Rio Cinema", "E8 2PB" ], [ cinema.brand, cinema.name, cinema.postal_code ]
+    performance = cinema.performances.find_by!(starting_at: starting_at)
+    assert_equal [ "relaxed", "2d" ], [ performance.variant, performance.dimension ]
+    assert_equal "https://riocinema.org.uk/Rio.dll/Booking?Booking=TSelectItems.waSelectItemsPrompt.TcsPerformance_123", performance.booking_url
+  end
+
   test "Light imports every advertised date without coordinates" do
     venue = LightUk::Cinema.new("7")
     venue.define_singleton_method(:name) { "Sheffield" }
