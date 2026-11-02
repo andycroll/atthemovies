@@ -46,10 +46,22 @@ production:
     class: ImportChainJob
     args: [ "merlin" ]
     schedule: every day at 12:50am Europe/London
+  import_gft:
+    class: ImportChainJob
+    args: [ "gft" ]
+    schedule: every day at 12:25am Europe/London
+  import_watershed:
+    class: ImportChainJob
+    args: [ "watershed" ]
+    schedule: every day at 12:55am Europe/London
   import_cineworld:
     class: ImportChainJob
     args: [ "cineworld" ]
     schedule: every day at 1am Europe/London
+  import_rio:
+    class: ImportChainJob
+    args: [ "rio" ]
+    schedule: every day at 1:15am Europe/London
   import_picturehouse:
     class: ImportChainJob
     args: [ "picturehouse" ]
