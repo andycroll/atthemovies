@@ -77,8 +77,8 @@ GEM
       uri (>= 0.13.1)
     addressable (2.9.2)
       public_suffix (>= 2.0.2, < 8.0)
-    arc_uk (1.0.0)
-      cinebase (~> 5.7)
+    arc_uk (1.2.0)
+      cinebase (~> 5.10)
     ast (2.4.3)
     base64 (0.3.0)
     bcrypt (3.1.22)
@@ -101,45 +101,45 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
-    cinebase (5.9.3)
+    cinebase (5.10.1)
       tzinfo
       tzinfo-data
-    cineworld_uk (4.4.0)
-      cinebase (~> 5.6)
+    cineworld_uk (4.5.0)
+      cinebase (~> 5.9)
       nokogiri (>= 1.11)
-    cineworld_uk (4.4.0-aarch64-linux-gnu)
-      cinebase (~> 5.6)
+    cineworld_uk (4.5.0-aarch64-linux-gnu)
+      cinebase (~> 5.9)
       nokogiri (>= 1.11)
-    cineworld_uk (4.4.0-arm64-darwin)
-      cinebase (~> 5.6)
+    cineworld_uk (4.5.0-arm64-darwin)
+      cinebase (~> 5.9)
       nokogiri (>= 1.11)
-    cineworld_uk (4.4.0-x86_64-linux-gnu)
-      cinebase (~> 5.6)
+    cineworld_uk (4.5.0-x86_64-linux-gnu)
+      cinebase (~> 5.9)
       nokogiri (>= 1.11)
     concurrent-ruby (1.3.8)
     connection_pool (3.0.2)
     crass (1.0.8)
-    curzon_uk (1.1.0)
-      cinebase (~> 5.6)
-    curzon_uk (1.1.0-aarch64-linux-gnu)
-      cinebase (~> 5.6)
-    curzon_uk (1.1.0-arm64-darwin)
-      cinebase (~> 5.6)
-    curzon_uk (1.1.0-x86_64-linux-gnu)
-      cinebase (~> 5.6)
+    curzon_uk (1.2.0)
+      cinebase (~> 5.9)
+    curzon_uk (1.2.0-aarch64-linux-gnu)
+      cinebase (~> 5.9)
+    curzon_uk (1.2.0-arm64-darwin)
+      cinebase (~> 5.9)
+    curzon_uk (1.2.0-x86_64-linux-gnu)
+      cinebase (~> 5.9)
     date (3.6.0)
     debug (1.11.1)
       irb (~> 1.10)
       reline (>= 0.3.8)
-    depot_uk (1.0.1)
-      cinebase (~> 5.8)
+    depot_uk (1.1.0)
+      cinebase (~> 5.9)
     drb (2.2.3)
     erb (6.0.7)
     erubi (1.13.1)
     et-orbi (1.4.2)
       tzinfo
-    everyman_uk (1.0.0)
-      cinebase (~> 5.6)
+    everyman_uk (1.1.0)
+      cinebase (~> 5.9)
     ffi (1.17.4-aarch64-linux-gnu)
     ffi (1.17.4-aarch64-linux-musl)
     ffi (1.17.4-arm-linux-gnu)
@@ -150,8 +150,8 @@ GEM
     fugit (1.14.0)
       et-orbi (~> 1.4)
       raabro (~> 1.4)
-    gft_uk (1.0.1)
-      cinebase (~> 5.8)
+    gft_uk (1.1.0)
+      cinebase (~> 5.9)
     globalid (1.4.0)
       activesupport (>= 6.1)
     i18n (1.15.2)
@@ -172,8 +172,8 @@ GEM
       activesupport (>= 7.0.0)
     json (3.1.0)
     language_server-protocol (3.17.0.6)
-    light_uk (1.0.1)
-      cinebase (~> 5.8)
+    light_uk (1.1.0)
+      cinebase (~> 5.9)
     lint_roller (1.1.0)
     logger (1.7.0)
     loofah (2.25.3)
@@ -187,8 +187,8 @@ GEM
       net-smtp
     marcel (1.2.1)
     matrix (0.4.3)
-    merlin_uk (1.0.1)
-      cinebase (~> 5.8)
+    merlin_uk (1.1.0)
+      cinebase (~> 5.9)
     mini_mime (1.1.5)
     minitest (6.0.6)
       drb (~> 2.0)
@@ -221,33 +221,33 @@ GEM
       racc (~> 1.4)
     nokogiri (1.19.5-x86_64-linux-musl)
       racc (~> 1.4)
-    odeon_uk (5.2.0)
-      cinebase (~> 5.6)
-    odeon_uk (5.2.0-aarch64-linux-gnu)
-      cinebase (~> 5.6)
-    odeon_uk (5.2.0-arm64-darwin)
-      cinebase (~> 5.6)
-    odeon_uk (5.2.0-x86_64-linux-gnu)
-      cinebase (~> 5.6)
-    omniplex_uk (1.0.1)
+    odeon_uk (5.3.0)
+      cinebase (~> 5.9)
+    odeon_uk (5.3.0-aarch64-linux-gnu)
+      cinebase (~> 5.9)
+    odeon_uk (5.3.0-arm64-darwin)
+      cinebase (~> 5.9)
+    odeon_uk (5.3.0-x86_64-linux-gnu)
+      cinebase (~> 5.9)
+    omniplex_uk (1.0.2)
       cinebase (~> 5.8)
     parallel (2.3.0)
     parser (3.3.12.0)
       ast (~> 2.4.1)
       racc
-    picturehouse_uk (6.1.0)
-      cinebase (~> 5.6)
-    picturehouse_uk (6.1.0-aarch64-linux-gnu)
-      cinebase (~> 5.6)
-    picturehouse_uk (6.1.0-arm64-darwin)
-      cinebase (~> 5.6)
-    picturehouse_uk (6.1.0-x86_64-linux-gnu)
-      cinebase (~> 5.6)
+    picturehouse_uk (6.3.0)
+      cinebase (~> 5.10)
+    picturehouse_uk (6.3.0-aarch64-linux-gnu)
+      cinebase (~> 5.10)
+    picturehouse_uk (6.3.0-arm64-darwin)
+      cinebase (~> 5.10)
+    picturehouse_uk (6.3.0-x86_64-linux-gnu)
+      cinebase (~> 5.10)
     pp (0.6.4)
       prettyprint
     prettyprint (0.2.1)
-    princecharles_uk (1.0.1)
-      cinebase (~> 5.8)
+    princecharles_uk (1.1.0)
+      cinebase (~> 5.9)
     prism (1.9.0)
     propshaft (1.3.2)
       actionpack (>= 7.0.0)
@@ -307,14 +307,14 @@ GEM
       prism (>= 1.6.0)
       rbs (>= 4.0.0)
       tsort
-    reel_uk (1.0.1)
-      cinebase (~> 5.8)
+    reel_uk (1.1.0)
+      cinebase (~> 5.9)
     regexp_parser (2.13.1)
     reline (0.7.0)
       io-console (~> 0.5)
     rexml (3.4.4)
-    rio_uk (1.0.1)
-      cinebase (~> 5.8)
+    rio_uk (1.1.0)
+      cinebase (~> 5.9)
     rubocop (1.92.1)
       json (>= 2.3)
       language_server-protocol (~> 3.17.0.2)
@@ -348,16 +348,16 @@ GEM
       ffi (~> 1.12)
       logger
     rubyzip (3.7.0)
-    scott_uk (1.0.1)
-      cinebase (~> 5.8)
+    scott_uk (1.1.0)
+      cinebase (~> 5.9)
     securerandom (0.4.1)
     selenium-webdriver (4.51.0)
       base64 (~> 0.2)
       logger (~> 1.4)
       rubyzip (>= 1.2.2, < 4.0)
       websocket (~> 1.0)
-    showcase_uk (1.0.0)
-      cinebase (~> 5.6)
+    showcase_uk (1.1.0)
+      cinebase (~> 5.9)
     solid_cable (4.1.0)
       actioncable (>= 7.2)
       activejob (>= 7.2)
@@ -374,8 +374,8 @@ GEM
       fugit (~> 1.11)
       railties (>= 7.1)
       thor (>= 1.3.1)
-    spektrix_uk (1.0.1)
-      cinebase (~> 5.8)
+    spektrix_uk (1.1.0)
+      cinebase (~> 5.9)
     sqlite3 (2.10.2-aarch64-linux-gnu)
     sqlite3 (2.10.2-aarch64-linux-musl)
     sqlite3 (2.10.2-arm-linux-gnu)
@@ -413,10 +413,10 @@ GEM
     unicode-emoji (4.3.0)
     uri (1.1.2)
     useragent (0.16.11)
-    vue_uk (1.1.0)
-      cinebase (~> 5.4)
-    watershed_uk (1.0.1)
-      cinebase (~> 5.8)
+    vue_uk (1.2.0)
+      cinebase (~> 5.9)
+    watershed_uk (1.1.0)
+      cinebase (~> 5.9)
       rexml (~> 3.4)
     web-console (4.3.0)
       actionview (>= 8.0.0)
@@ -427,8 +427,8 @@ GEM
       base64
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    wtw_uk (1.0.1)
-      cinebase (~> 5.8)
+    wtw_uk (1.1.0)
+      cinebase (~> 5.9)
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zeitwerk (2.8.3)
@@ -507,7 +507,7 @@ CHECKSUMS
   activestorage (8.1.4) sha256=f4956f3ec9ee63e5e0b332b57c877cb627f82b56f4cc902279310d2aa285c7a8
   activesupport (8.1.4) sha256=891dd3fe43c4fc8391934b237b1189bb1f661c932a84a840043db9d46a4e80df
   addressable (2.9.2) sha256=9117c7e7d6ee07230e75ce41fb9401ae55354dc654fcd0e862ba41d539e9a610
-  arc_uk (1.0.0) sha256=185b01d5464667c314cf32d02b326afbad1c920feb0790cdb50c3debac7115f8
+  arc_uk (1.2.0) sha256=5b3e1a393ef2c1b69051a5e4811dd410052b85d525eb693a64ac447209dc51c3
   ast (2.4.3) sha256=954615157c1d6a382bc27d690d973195e79db7f55e9765ac7c481c60bdb4d383
   base64 (0.3.0) sha256=27337aeabad6ffae05c265c450490628ef3ebd4b67be58257393227588f5a97b
   bcrypt (3.1.22) sha256=1f0072e88c2d705d94aff7f2c5cb02eb3f1ec4b8368671e19112527489f29032
@@ -518,26 +518,26 @@ CHECKSUMS
   builder (3.3.0) sha256=497918d2f9dca528fdca4b88d84e4ef4387256d984b8154e9d5d3fe5a9c8835f
   bundler-audit (0.9.3) sha256=81c8766c71e47d0d28a0f98c7eed028539f21a6ea3cd8f685eb6f42333c9b4e9
   capybara (3.40.0) sha256=42dba720578ea1ca65fd7a41d163dd368502c191804558f6e0f71b391054aeef
-  cinebase (5.9.3) sha256=059958aaecc0f48f3a8bbfaa60bf47f568ebbcdc8d82ac9526b3808f71c639fe
-  cineworld_uk (4.4.0) sha256=017b2df3f9d7a94e7a3da14cb567ded1819685461b9799fdfa939903d1d02bd7
-  cineworld_uk (4.4.0-aarch64-linux-gnu) sha256=449abbc957c8f798a36363686b7ea70a0509dbc55a4394c310df221d7b09eadf
-  cineworld_uk (4.4.0-arm64-darwin) sha256=3bbe671db59d1a78aa6f247b41b82768fcf0fbf4c477f26408d962a0b0efc193
-  cineworld_uk (4.4.0-x86_64-linux-gnu) sha256=2acf77339efa90dbaa2d026d0c7271f77a673b031024f88a2d7335fb0d3e1fc8
+  cinebase (5.10.1) sha256=df8cbe80749ac25eac7edf12122c6761e33cedacd6c0f98d39ac64fb07419937
+  cineworld_uk (4.5.0) sha256=4b42bc611e110d12baec38fb1d5c4309b9f0d02b47680cd41ab0a4a3c63d7532
+  cineworld_uk (4.5.0-aarch64-linux-gnu) sha256=9cf55ecef6ab429ce555431b662d1e9fc649796ee6b00e96365a8bab84e48ecf
+  cineworld_uk (4.5.0-arm64-darwin) sha256=07cacff100ac5f6ec33f47e5b6f66180fe190b11c9fbadb0135386427cfb70e3
+  cineworld_uk (4.5.0-x86_64-linux-gnu) sha256=999cd40194b4fc08a5a279745f195a7e9723860bc7ab3836fdfa2c00360e6296
   concurrent-ruby (1.3.8) sha256=b2f1be836e968ccc78ccfce277ea79c72a88633f22306782c16ff23fb415d1e1
   connection_pool (3.0.2) sha256=33fff5ba71a12d2aa26cb72b1db8bba2a1a01823559fb01d29eb74c286e62e0a
   crass (1.0.8) sha256=7a0145c7a2c59f8e7923b3a69ce819c444823a00a5127d805298fea13be24efe
-  curzon_uk (1.1.0) sha256=05c01e654eea8b2dea3648af2de240a6657c1c6678c49a21ffd9fde06037b6e6
-  curzon_uk (1.1.0-aarch64-linux-gnu) sha256=a8a8f93618d2c11dca70996f83ad62a27ccae85cdb1fdf6b95a40c4183bb78b9
-  curzon_uk (1.1.0-arm64-darwin) sha256=14dbe4f15eb35e6d142e8025fa0f230d3009cf981f58c9c7ab70c69a821b4fdb
-  curzon_uk (1.1.0-x86_64-linux-gnu) sha256=11110eff866986601f6ed24c506d23e27ccacbebb5dbeeb59a1e6da13d77a056
+  curzon_uk (1.2.0) sha256=355548c33baf34ed4d1144c75d4798d2fcca153d25ddaf0b52f957e84cd00aca
+  curzon_uk (1.2.0-aarch64-linux-gnu) sha256=6cb623565cc4afa8b7828759ae78afbe3942b8c12f8858b28c9b96634fcd1924
+  curzon_uk (1.2.0-arm64-darwin) sha256=419aea731cb461b4ea4dd9b8d1543489b74800d037d07337d1518739759e4eb1
+  curzon_uk (1.2.0-x86_64-linux-gnu) sha256=b9a4a596b78a51b69784252397cd43a5b63ffb2155e9b72da58f5a823965d91f
   date (3.6.0) sha256=18ac945c4e24ebd93534f8eab8c2fd8c5604b3e977105b3798d62a1e8d27b580
   debug (1.11.1) sha256=2e0b0ac6119f2207a6f8ac7d4a73ca8eb4e440f64da0a3136c30343146e952b6
-  depot_uk (1.0.1) sha256=4c319ed675e1552be7f32528fe56944ca69348b073e1c73c03050b6d2d601200
+  depot_uk (1.1.0) sha256=ecc8b5410395a99127fd39b166b947c7bed65aad3b55d19bbc49cb37a0a860e6
   drb (2.2.3) sha256=0b00d6fdb50995fe4a45dea13663493c841112e4068656854646f418fda13373
   erb (6.0.7) sha256=c5ca6dc25b0ef974a44dc8f59fe847577122483b1968a38dec305c60bf91ee92
   erubi (1.13.1) sha256=a082103b0885dbc5ecf1172fede897f9ebdb745a4b97a5e8dc63953db1ee4ad9
   et-orbi (1.4.2) sha256=bb555dae668419cb24caa2a293a170e58be6d4df1e017c51f5030bdc133cd20c
-  everyman_uk (1.0.0) sha256=8332b27a37c79abf0f1ace55436ffadb03be3d97662943bcbdecfc330c04509f
+  everyman_uk (1.1.0) sha256=19165874a7d4711f37d86efcd6a7e758f024d35c507ce8a78c61975969b24fec
   ffi (1.17.4-aarch64-linux-gnu) sha256=b208f06f91ffd8f5e1193da3cae3d2ccfc27fc36fba577baf698d26d91c080df
   ffi (1.17.4-aarch64-linux-musl) sha256=9286b7a615f2676245283aef0a0a3b475ae3aae2bb5448baace630bb77b91f39
   ffi (1.17.4-arm-linux-gnu) sha256=d6dbddf7cb77bf955411af5f187a65b8cd378cb003c15c05697f5feee1cb1564
@@ -546,7 +546,7 @@ CHECKSUMS
   ffi (1.17.4-x86_64-linux-gnu) sha256=9d3db14c2eae074b382fa9c083fe95aec6e0a1451da249eab096c34002bc752d
   ffi (1.17.4-x86_64-linux-musl) sha256=3fdf9888483de005f8ef8d1cf2d3b20d86626af206cbf780f6a6a12439a9c49e
   fugit (1.14.0) sha256=e311a9cc85a54bb67649df45060e721282a1e2c8ebad40e41874a3a7d576f37e
-  gft_uk (1.0.1) sha256=b679ef2ecf355c3e0f718db0114b5cebb394dd3e60dcb92c4779b35469350960
+  gft_uk (1.1.0) sha256=5e309a8af8a7f85dcf8b5b8cdf6b1e2b66aca9fc79090200a42da718ae25a264
   globalid (1.4.0) sha256=037f12fbf1d9d7a014d501c2d5c77356fd4ddd96d7a7991d6700bba96706f427
   i18n (1.15.2) sha256=00f9eb62412fe593b2a65a97daa75300d37abb8f7202ec748e94b6d46a9dd1b5
   image_processing (2.2.0) sha256=e0cb9892a4395ac2b7bb2fac5c6f5bc63361f2f18ed08773e21fce5b111c6974
@@ -556,14 +556,14 @@ CHECKSUMS
   jbuilder (2.15.1) sha256=2430bec28fb0cebacb5875b1009cf9d8bc3c303ccb810c4c8b062a4b51457637
   json (3.1.0) sha256=3ce7ccf8fde58960177a3a756c31f292a4c1e1dedee884547096a5b0604e3bd8
   language_server-protocol (3.17.0.6) sha256=5ef2c0c138f8267e1bc631d3328347d354f96724b0af22f2c79516120443b7f0
-  light_uk (1.0.1) sha256=8cd4ba6219bc28d4c961851399e733492159a19d90ff71a14150c56b1a0f2c56
+  light_uk (1.1.0) sha256=4dd53f6c94d9d2db20bc5c067892b618297cf6133213faf384b0a06be9123c20
   lint_roller (1.1.0) sha256=2c0c845b632a7d172cb849cc90c1bce937a28c5c8ccccb50dfd46a485003cc87
   logger (1.7.0) sha256=196edec7cc44b66cfb40f9755ce11b392f21f7967696af15d274dde7edff0203
   loofah (2.25.3) sha256=545f14eef0cc2a7de80df560530d593232b7c07e515c5c4e37532d9cb5b0185c
   mail (2.9.1) sha256=06574eca475253d6c18145dd70af80d0eb970182d55053497c5f4d797ea160e8
   marcel (1.2.1) sha256=1678e9360e32f9eafa917c80029e2f6d10b2715c66a4b87b6d0da9b9cd1f859f
   matrix (0.4.3) sha256=a0d5ab7ddcc1973ff690ab361b67f359acbb16958d1dc072b8b956a286564c5b
-  merlin_uk (1.0.1) sha256=82faff3e23f319c421f5d24361399f286021c47d9c3806238cdd857651089011
+  merlin_uk (1.1.0) sha256=91f1e284ceabe6ca2cfbf3d5bea24cc54e27d5c17b83259d03cd4abbbf01c15e
   mini_mime (1.1.5) sha256=8681b7e2e4215f2a159f9400b5816d85e9d8c6c6b491e96a12797e798f8bccef
   minitest (6.0.6) sha256=153ea36d1d987a62942382b61075745042a2b3123b1cd48f4c3675af9cc7d6f1
   minitest-mock (5.27.0) sha256=7040ed7185417a966920987eaa6eaf1be4ea1fc5b25bb03ff4703f98564a55b0
@@ -581,20 +581,20 @@ CHECKSUMS
   nokogiri (1.19.5-arm64-darwin) sha256=2d0baa8f8234c442f0190133da87c9a2a89d48ec0b5e0c986d6047255d63a2f5
   nokogiri (1.19.5-x86_64-linux-gnu) sha256=2a32516e91fd53aa32bb281a1edbbd1b9b8440a14f43b1f22035ca504ad46091
   nokogiri (1.19.5-x86_64-linux-musl) sha256=6c55a0c8ecb376ed19f248cf248841cc5bf41d94b3256a45af8da80fb1b24114
-  odeon_uk (5.2.0) sha256=9464453113e81f44c477c774115dec9cbd705b4a1225621cde6f2013d8f6628f
-  odeon_uk (5.2.0-aarch64-linux-gnu) sha256=f76ebdc4f10ed781122552c1c7e6969782432327046dbe8f8fcbfc057c4add01
-  odeon_uk (5.2.0-arm64-darwin) sha256=a396701b5fc692141ec79a37011f79a828ae64a5e12a8a5aa26b8163b945761d
-  odeon_uk (5.2.0-x86_64-linux-gnu) sha256=f8c6fb924575ac6061d93b3a52c3396fd84b5a3ce69cc32a4d49feb9ea824938
-  omniplex_uk (1.0.1) sha256=d5330fa3cdeeb4526c476f9d368346a10bf1541d06cfb7f3371adad648905d93
+  odeon_uk (5.3.0) sha256=f7f19fbba532b6718abde8c0dfa27524ea1a590564fe91282896af785d2b9b41
+  odeon_uk (5.3.0-aarch64-linux-gnu) sha256=ca30a6d5252ddeeb435637e7f8d44a3805c99b26aba2ff0259eade46743decbc
+  odeon_uk (5.3.0-arm64-darwin) sha256=5b16555dad07ed8063363f3b547f52dc6f97a11b710af541c8c43482462d174a
+  odeon_uk (5.3.0-x86_64-linux-gnu) sha256=91c044013ea48a4f8c77e7a0ae01bc294a987b5977f9820e5a50b8687b510dc2
+  omniplex_uk (1.0.2) sha256=31134b3247a139f8a0db3c5cf155b91de80aca5328fa8b4578ffa1d61372dc36
   parallel (2.3.0) sha256=f75a3e904101ce6a1ccb6b8dc800cbafd42166d83330192438dcf29395167a6f
   parser (3.3.12.0) sha256=21a6d7f755d5a24dfbdc6e6b772e4e879a52e7631a88bc5a3a134606052c9828
-  picturehouse_uk (6.1.0) sha256=88cc3ed88b68ea1140c0a8973f0f249ff4d2def9337917ffbaf26816f0041d5e
-  picturehouse_uk (6.1.0-aarch64-linux-gnu) sha256=798b2e344eeb62ebe4536c510b09f3e30d1bea1e229c7082a9c21e801304f63a
-  picturehouse_uk (6.1.0-arm64-darwin) sha256=267e4b8c6c4b57e48c606f77764ec9ab3d6a97962100741e6e67aa5a833aad5b
-  picturehouse_uk (6.1.0-x86_64-linux-gnu) sha256=9c05f55feb8d3c5e9a482299fa070a8c5397ec154ff433f83e54a29e2f384861
+  picturehouse_uk (6.3.0) sha256=8e7231e50bd27a21e5db74b77f5294590896dee07f61daee5b42825811b5058a
+  picturehouse_uk (6.3.0-aarch64-linux-gnu) sha256=435c340a6a054821614fb0f2c7a4d98a972de7d148dff3f3b04e73bb280df2e6
+  picturehouse_uk (6.3.0-arm64-darwin) sha256=afffc207a400795cc5deb17593d942e96e1ad54fa03bcc895230b43451bc1819
+  picturehouse_uk (6.3.0-x86_64-linux-gnu) sha256=b8e8ca74c86cdab76366741ba60e568750655c7e86bf5a1bbbafaf1faad1d1e1
   pp (0.6.4) sha256=dfcb0fce700c41456265922884f9fe195d7fbb0674a3578e6c0f69588e82b570
   prettyprint (0.2.1) sha256=d555d57ea6d7cf001d4774b693546a6bd88bec1e778ddffb5c60b68ceec4b7d4
-  princecharles_uk (1.0.1) sha256=5581080c8cd5aa279f42a9e8d06c7aacaa9912faa4afdb79ed24b3f72ad38f96
+  princecharles_uk (1.1.0) sha256=30e435407d0c9ecc83978d76bf8948b46b0d0c8a871b411f0683043e1f11b352
   prism (1.9.0) sha256=7b530c6a9f92c24300014919c9dcbc055bf4cdf51ec30aed099b06cd6674ef85
   propshaft (1.3.2) sha256=1d56a3e56a92c21bfc29caf07406b5386b00d4c47ddf357cf989a5a234b1389e
   public_suffix (7.0.5) sha256=1a8bb08f1bbea19228d3bed6e5ed908d1cb4f7c2726d18bd9cadf60bc676f623
@@ -613,11 +613,11 @@ CHECKSUMS
   rake (13.4.2) sha256=cb825b2bd5f1f8e91ca37bddb4b9aaf345551b4731da62949be002fa89283701
   rbs (4.2.0) sha256=51f7b886dcc05bc09e10b901daa6a81829f6adc03101d6ca9ea4aac6103e0674
   rdoc (8.1.0) sha256=befc37880a5cfd36dcb176c748b5fd5ee39dd3536a75e81824e4972ce230f60a
-  reel_uk (1.0.1) sha256=d7ea520767f56772c92edf867f2aa4f07b702c41f84710996d058ad11313ba04
+  reel_uk (1.1.0) sha256=cff1dd967d16f01b80124179de78a10dca8c7ea43b032f18024464c5ec6b91cc
   regexp_parser (2.13.1) sha256=5aedb6b7c35688f51e86eef17a15374dfd287c83f4ca644b2c5f3ec50a33b44b
   reline (0.7.0) sha256=5b012d8e55dbf9d450f12bde2cf7d15ff546ae80b3f8f3b30e570d431815583d
   rexml (3.4.4) sha256=19e0a2c3425dfbf2d4fc1189747bdb2f849b6c5e74180401b15734bc97b5d142
-  rio_uk (1.0.1) sha256=7abf2281d69dff348e0d0d439bab57e9d6f82ab13a9c389e0d456dbb2df1814a
+  rio_uk (1.1.0) sha256=1efad1f70f3d590e96c217f9d6cde6b59b9179c558f49cf09d28b180e3f580a3
   rubocop (1.92.1) sha256=a905381a5344215a79abcfe80f6c94366447e6a55347c9a525b5a24990e33f62
   rubocop-ast (1.50.0) sha256=b9ca88300da0803ee222ad20cdb30494c0a784eed06fdc35d254b06d662788db
   rubocop-performance (1.27.0) sha256=eeeb1374d062a368ee1c787b70eb0b0cc4b184cb1f8565f424760946146d61ce
@@ -626,14 +626,14 @@ CHECKSUMS
   ruby-progressbar (1.13.0) sha256=80fc9c47a9b640d6834e0dc7b3c94c9df37f08cb072b7761e4a71e22cff29b33
   ruby-vips (2.3.0) sha256=e685ec02c13969912debbd98019e50492e12989282da5f37d05f5471442f5374
   rubyzip (3.7.0) sha256=65c19294da75297a939006f3516deacc33185fbd721ff1954f7a231db6d3e121
-  scott_uk (1.0.1) sha256=d14b341ea1397e47846f63f92b107bfb723c5f19f34a06a361ee229fe0648efc
+  scott_uk (1.1.0) sha256=b0a4c13037d419fe37a5fed165a6312b904d533162c68515240d11384a5a7820
   securerandom (0.4.1) sha256=cc5193d414a4341b6e225f0cb4446aceca8e50d5e1888743fac16987638ea0b1
   selenium-webdriver (4.51.0) sha256=09edf1b7fc360e0570bac609676f804ed527fe0b2f285e03233561e29b0ec105
-  showcase_uk (1.0.0) sha256=2e82b066fb060de894466a31043087a81cb2a3c5d66fe5f333b020e805dcdb62
+  showcase_uk (1.1.0) sha256=ffde9f56d0f7507f4bcf6e98f88d813004f969c64eea024e83646f2c6019ff11
   solid_cable (4.1.0) sha256=828e3d509207b82b4f05f4e9c85f696994710679b52d511aa7f97ebd212d3226
   solid_cache (1.0.10) sha256=bc05a2fb3ac78a6f43cbb5946679cf9db67dd30d22939ededc385cb93e120d41
   solid_queue (1.7.0) sha256=6566b70b801d1c317c81bba7bcdd5677c019afac584a30374b4164002ca356d3
-  spektrix_uk (1.0.1) sha256=385286fec4b4ab6f42cce28b8c8f6ab95f1701eee7d4ec200dc13daa77a7cedd
+  spektrix_uk (1.1.0) sha256=6cba1f83e876ec2d27f458bc60c9cdddda22e40e6e2d6f358297ac93f876ad2d
   sqlite3 (2.10.2-aarch64-linux-gnu) sha256=e9aea2c2b3476fc875dd8a89313a9a2862818519c0186bfb5b56d6f57bb08d98
   sqlite3 (2.10.2-aarch64-linux-musl) sha256=4986fc40cdf21342362b72a941df28e95cfe0e644f3ad2532d948b157c39dbee
   sqlite3 (2.10.2-arm-linux-gnu) sha256=762f609ef891463226b472d3df66aea84d5466ff4376d3ccf4a059718c4ce9c9
@@ -663,13 +663,13 @@ CHECKSUMS
   unicode-emoji (4.3.0) sha256=11c02fa73290378c066bb0562cd4c87d8e1b706fbbe0059ca12746a4244de8ce
   uri (1.1.2) sha256=89292e98eabbef6248b0a0ed5e7e398e152f83f17560023a6d94a7f492b169fb
   useragent (0.16.11) sha256=700e6413ad4bb954bb63547fa098dddf7b0ebe75b40cc6f93b8d54255b173844
-  vue_uk (1.1.0) sha256=d3b136446e9140861636353ff46e07e2b2db4c30f84eb32aadff640aa255407d
-  watershed_uk (1.0.1) sha256=64f5fe7416a5cd16b65331f1503d1031c06ef3f21525aea03370294d057471a7
+  vue_uk (1.2.0) sha256=c3ca2442114822c2165d5913714699759d9995d00fa0c6d7877629485c8e65db
+  watershed_uk (1.1.0) sha256=94dc7a74e1e77d149e1ad91bc8b05302ceece8ae63772e932d7804f21c7b3767
   web-console (4.3.0) sha256=e13b71301cdfc2093f155b5aa3a622db80b4672d1f2f713119cc7ec7ac6a6da4
   websocket (1.2.11) sha256=b7e7a74e2410b5e85c25858b26b3322f29161e300935f70a0e0d3c35e0462737
   websocket-driver (0.8.2) sha256=97c556b019bf3410b4961002ac501621e9322d3f8a7bc02161a09301cc4c4146
   websocket-extensions (0.1.5) sha256=1c6ba63092cda343eb53fc657110c71c754c56484aad42578495227d717a8241
-  wtw_uk (1.0.1) sha256=33b3d4bab6baab6b64e9a510e56bc4a38a68b28af3ba23c90a602b06768ddc81
+  wtw_uk (1.1.0) sha256=c6d702fc5947196a03ab5409593375a58b7b46686e09e91113bb55555fe54a60
   xpath (3.2.0) sha256=6dfda79d91bb3b949b947ecc5919f042ef2f399b904013eb3ef6d20dd3a4082e
   zeitwerk (2.8.3) sha256=2c85125a8467ce069e20123d1e709a08955c9d29c118c25b46b7b7fafdbb92e5
 
