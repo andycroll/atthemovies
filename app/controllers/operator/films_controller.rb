@@ -23,8 +23,7 @@ module Operator
         end
         if params[:tmdb_id].present?
           raise ArgumentError, "TMDB ID must be numeric" unless params[:tmdb_id].match?(/\A\d+\z/)
-          identifier = @film.external_identifiers.find_or_initialize_by(source: "tmdb_movie")
-          identifier.update!(value: params[:tmdb_id])
+          @film = @film.link_tmdb!(params[:tmdb_id])
           @film.update!(enrichment_state: "pending")
           EnrichFilmJob.perform_later(@film)
         end

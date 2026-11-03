@@ -1,4 +1,6 @@
 class SearchTmdbJob < ApplicationJob
+  LEADING_ARTICLE = /\A(?:a|an) /
+
   def perform(film)
     title = film.name
     state = film.enrichment_state
@@ -12,14 +14,32 @@ class SearchTmdbJob < ApplicationJob
         film.tmdb_candidates.create!(tmdb_id: candidate.fetch("id").to_s, name: candidate.fetch("title"), year: candidate["release_date"].to_s.first(4).presence)
       end
       film.update!(enrichment_state: results.empty? ? "no_match" : "candidates")
-      if results.one? && FilmAlias.normalize(results.first.fetch("title")) == FilmAlias.normalize(film.name)
-        identifier = film.external_identifiers.find_or_initialize_by(source: "tmdb_movie")
-        identifier.update!(value: results.first.fetch("id").to_s)
-        EnrichFilmJob.perform_later(film)
+      match = matching_result(results, film)
+      if match
+        linked = film.link_tmdb!(match.fetch("id").to_s)
+        EnrichFilmJob.perform_later(film) if linked == film
       end
     end
   rescue HttpClient::Error, JSON::ParserError, KeyError, Timeout::Error, SocketError
     film.update!(enrichment_state: "failed")
     raise
   end
+
+  private
+    # The one result titled as the film, or else, in the film's year, the one
+    # whose title the cinema extended with a subtitle
+    def matching_result(results, film)
+      name = comparable(film.name)
+      exact = results.select { |result| result.values_at("title", "original_title").compact.any? { |title| comparable(title) == name } }
+      if exact.any?
+        exact.sole if exact.one?
+      elsif film.year
+        subtitled = results.select { |result| name.start_with?("#{comparable(result.fetch("title"))} ") && result["release_date"].to_s.start_with?(film.year.to_s) }
+        subtitled.sole if subtitled.one?
+      end
+    end
+
+    def comparable(title)
+      FilmAlias.normalize(title).sub(LEADING_ARTICLE, "")
+    end
 end
