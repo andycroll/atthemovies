@@ -47,6 +47,19 @@ class Film < ApplicationRecord
     FilmAlias.find_by!(normalized_name: normalized).film
   end
 
+  # Returns the film now linked: this one, or the one it merged into because
+  # that film already holds the TMDB ID
+  def link_tmdb!(tmdb_id)
+    holder = ExternalIdentifier.find_by(identifiable_type: "Film", source: "tmdb_movie", value: tmdb_id)&.identifiable
+    if holder && holder != self
+      merge_into!(holder)
+      holder
+    else
+      external_identifiers.find_or_initialize_by(source: "tmdb_movie").update!(value: tmdb_id)
+      self
+    end
+  end
+
   def merge_into!(target)
     raise ArgumentError, "Cannot merge a film into itself" if target == self
     transaction do

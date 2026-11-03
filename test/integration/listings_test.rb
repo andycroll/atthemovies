@@ -103,4 +103,13 @@ class ListingsTest < ActionDispatch::IntegrationTest
     get operator_films_path, params: { q: "Alien" }
     assert_select "a[href=?]", edit_operator_film_path(@film), text: "Alien"
   end
+
+  test "operators linking a TMDB film another film holds merge into that film" do
+    sign_in_as(users(:one))
+    films(:arrival).external_identifiers.create!(source: "tmdb_movie", value: "329865")
+    patch operator_film_path(@film), params: { film: { runtime: 117 }, tmdb_id: "329865" }
+    assert_redirected_to edit_operator_film_path(films(:arrival))
+    assert_not Film.exists?(@film.id)
+    assert_equal films(:arrival), Film.resolve_title!("Alien")
+  end
 end
