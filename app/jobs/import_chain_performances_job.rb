@@ -7,18 +7,20 @@ class ImportChainPerformancesJob < ApplicationJob
     chain.authenticate!
     chain.performances(id).each do |performance|
       next if performance.starting_at < Time.current
+      festival = performance.festival
       import!(cinema, name: performance.film_name, year: performance.film_year, starting_at: performance.starting_at,
         dimension: performance.dimension, variant: performance.variant.join(", ").presence || "standard",
-        booking_url: performance.booking_url)
+        booking_url: performance.booking_url, event: performance.event.present?,
+        festival: festival && "#{festival.name} #{festival.year}")
     end
   end
 
   def import!(cinema, attributes)
-    film = Film.resolve_title!(attributes.fetch(:name), year: attributes[:year])
+    film = Film.resolve_title!(attributes.fetch(:name), year: attributes[:year], event: attributes.fetch(:event, false))
     Performance.transaction do
       identity = { film: film, dimension: attributes.fetch(:dimension).downcase, starting_at: attributes.fetch(:starting_at) }
       performance = cinema.performances.find_or_initialize_by(identity)
-      performance.update!(variant: attributes.fetch(:variant), booking_url: attributes[:booking_url])
+      performance.update!(variant: attributes.fetch(:variant), booking_url: attributes[:booking_url], festival: attributes[:festival])
     end
   end
 end

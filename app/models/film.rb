@@ -30,15 +30,16 @@ class Film < ApplicationRecord
     [ name, year ].compact.join(" ").parameterize
   end
 
-  def self.resolve_title!(name, year: nil)
+  def self.resolve_title!(name, year: nil, event: false)
     normalized = FilmAlias.normalize(name)
     transaction do
       existing = FilmAlias.find_by(normalized_name: normalized)&.film
       if existing
         existing.update!(year: year) if year && existing.year.nil?
+        existing.update!(event: true) if event && !existing.event?
         return existing
       end
-      film = create!(name: name, year: year)
+      film = create!(name: name, year: year, event: event)
       film.film_aliases.create!(name: name)
       film
     end
