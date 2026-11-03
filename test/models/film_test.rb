@@ -9,6 +9,14 @@ class FilmTest < ActiveSupport::TestCase
     refute_equal film, Film.resolve_title!("Aliens")
   end
 
+  test "titles differing by accents, ampersands, apostrophes, marks or a leading The resolve together" do
+    { "André Rieu's Christmas" => "Andre Rieus Christmas", "Romeo & Juliet" => "Romeo And Juliet",
+      "The Polar Express" => "Polar Express", "THE SNOWMAN™" => "The Snowman", "Jak żyć" => "JAK ZYC" }.each do |name, variant|
+      assert_equal Film.resolve_title!(name), Film.resolve_title!(variant), variant
+    end
+    refute_equal Film.resolve_title!("Them"), Film.resolve_title!("The M")
+  end
+
   test "resolving a title records the year the cinema gives" do
     film = Film.resolve_title!("From Dusk Till Dawn", year: 1996)
     assert_equal 1996, film.year
