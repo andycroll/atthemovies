@@ -34,10 +34,14 @@ class ListingsTest < ActionDispatch::IntegrationTest
     assert_equal @film.public_id, response.parsed_body["id"]
     assert_equal({ "imdb" => "tt0078748" }, response.parsed_body["external_ids"])
     assert_equal %w[backdrop_url event external_ids id name overview performances_count poster_url runtime tagline url year], response.parsed_body.keys.sort
+    @performance.update!(festival: "Cinecity 2026")
     get "/api/cinemas/#{@cinema.public_id}/performances"
     assert_response :success
     assert_equal @film.public_id, response.parsed_body.sole["film_id"]
+    assert_equal "Cinecity 2026", response.parsed_body.sole["festival"]
     assert_equal @cinema.public_id, response.parsed_body.sole["cinema_id"]
+    get cinema_performances_path(@cinema, date: "today")
+    assert_select "p", text: /Cinecity 2026/
     get "/api/films/#{@film.public_id}/cinemas"
     assert_equal [ @cinema.public_id ], response.parsed_body.map { |cinema| cinema["id"] }
   end

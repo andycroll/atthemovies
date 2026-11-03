@@ -10,7 +10,7 @@
       <% performances.each do |performance| %>
         <div class="border border-base-300 rounded-lg px-4 py-3">
           <% if performance.booking_url.present? %><%= link_to performance.starting_at.strftime("%H:%M"), performance.booking_url, class: "font-bold text-primary link link-hover", rel: "noopener" %><% else %><span class="font-bold"><%= performance.starting_at.strftime("%H:%M") %></span><% end %>
-          <p class="text-xs text-base-content/60 mt-1"><%= performance.dimension.upcase %> · <%= performance.variant %></p>
+          <p class="text-xs text-base-content/60 mt-1"><%= performance.dimension.upcase %> · <%= performance.variant %><% if performance.festival %> · <%= performance.festival %><% end %></p>
         </div>
       <% end %>
     </div>

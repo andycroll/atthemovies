@@ -195,7 +195,11 @@ class ImportTest < ActiveJob::TestCase
       assert_equal "tyneside", id
       assert_equal [ Time.zone.today, Time.zone.today + 1.year ], [ from, to ]
       [ SpektrixUk::Performance.new(cinema_id: id, cinema_name: "Tyneside Cinema", film_name: "Nosferatu", film_year: 1922,
-        starting_at: starting_at, variant: [ "35mm", "q&a" ], booking_url: "https://tynesidecinema.co.uk/book-online/123") ]
+        starting_at: starting_at, variant: [ "35mm", "q&a" ], booking_url: "https://tynesidecinema.co.uk/book-online/123"),
+        SpektrixUk::Performance.new(cinema_id: id, cinema_name: "Tyneside Cinema", film_name: "Hamnet",
+          title: "Cinecity 2026: Hamnet", starting_at: starting_at + 1.day),
+        SpektrixUk::Performance.new(cinema_id: id, cinema_name: "Tyneside Cinema", film_name: "Hamnet",
+          title: "Relaxed Screening: Hamnet", starting_at: starting_at + 2.days) ]
     end
     SpektrixUk::Cinema.stub(:all, [ venue ]) do
       SpektrixUk::Performance.stub(:at, fetch) do
@@ -207,6 +211,11 @@ class ImportTest < ActiveJob::TestCase
     performance = cinema.performances.find_by!(starting_at: starting_at)
     assert_equal [ "35mm, q&a", 1922 ], [ performance.variant, performance.film.year ]
     assert_equal "https://tynesidecinema.co.uk/book-online/123", performance.booking_url
+    festival, relaxed = cinema.performances.where(starting_at: [ starting_at + 1.day, starting_at + 2.days ]).order(:starting_at).to_a
+    assert_equal relaxed.film, festival.film
+    assert_equal [ "Cinecity 2026", "standard" ], [ festival.festival, festival.variant ]
+    assert_equal [ nil, "relaxed" ], [ relaxed.festival, relaxed.variant ]
+    refute festival.film.event
   end
 
   test "Arc imports every advertised date from the whatson page" do
@@ -259,6 +268,7 @@ class ImportTest < ActiveJob::TestCase
     performance = cinema.performances.find_by!(starting_at: starting_at)
     assert_equal [ "arts", "2d" ], [ performance.variant, performance.dimension ]
     assert_equal "https://moviehousecoleraine.admit-one.co.uk/tickets/?perfCode=123", performance.booking_url
+    assert_equal [ "Hamlet", true ], [ performance.film.name, performance.film.event ]
   end
 
   test "Omniplex imports every advertised date" do
