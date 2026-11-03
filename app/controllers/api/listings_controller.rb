@@ -54,7 +54,7 @@ module Api
 
       def render_performances(scope)
         render json: scope.on(listing_date).includes(:cinema, :film).map { |record|
-          { cinema_id: record.cinema.public_id, film_id: record.film.public_id, starting_at: record.starting_at.iso8601, dimension: record.dimension, variant: record.variant, booking_url: record.booking_url }
+          { cinema_id: record.cinema.public_id, film_id: record.film.public_id, starting_at: record.starting_at.iso8601, dimension: record.dimension, variant: record.variant, festival: record.festival, booking_url: record.booking_url }
         }
       end
   end
