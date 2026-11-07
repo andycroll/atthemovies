@@ -21,9 +21,21 @@ version="$(cat .ruby-version)"
 if [[ ! -x "$RBENV_ROOT/versions/$version/bin/ruby" ]]; then
   build_dir="$(mktemp -d)"
   trap 'rm -rf "$build_dir"' EXIT
-  git clone --depth 1 https://github.com/rbenv/ruby-build.git "$build_dir/ruby-build"
-  "$build_dir/ruby-build/bin/ruby-build" "$version" "$RBENV_ROOT/versions/$version"
-fi
+  # Prebuilt, relocatable Ruby (the binaries mise uses) takes seconds; compiling takes ~3 minutes.
+  echo "==> Installing prebuilt Ruby $version"
+  arch="$(uname -m)"
+  [[ "$arch" == aarch64 ]] && arch=arm64
+  if curl -fsSL "https://github.com/jdx/ruby/releases/download/$version/ruby-$version.${arch}_linux.tar.gz" -o "$build_dir/ruby.tar.gz" &&
+    mkdir -p "$build_dir/ruby" && tar -xzf "$build_dir/ruby.tar.gz" -C "$build_dir/ruby" --strip-components=1 &&
+    "$build_dir/ruby/bin/ruby" -ropenssl -rpsych -e 'exit 0'; then
+    mkdir -p "$RBENV_ROOT/versions"
+    mv "$build_dir/ruby" "$RBENV_ROOT/versions/$version"
+  else
+    echo "==> Prebuilt Ruby unavailable; compiling with ruby-build"
+    git clone --depth 1 https://github.com/rbenv/ruby-build.git "$build_dir/ruby-build"
+    "$build_dir/ruby-build/bin/ruby-build" "$version" "$RBENV_ROOT/versions/$version"
+  fi
+  fi
 rbenv rehash
 marker="# atthemovies rbenv"
 if ! grep -Fqx "$marker" "$HOME/.bash_profile" 2>/dev/null; then
