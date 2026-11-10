@@ -35,7 +35,7 @@ class ListingsTest < ActionDispatch::IntegrationTest
       cinemas_path => [ "Cinemas · At The Movies", /\AFind a UK cinema/ ],
       film_path(@film, suffix: @film.suffix) => [ "Alien · At The Movies", "The crew of the Nostromo answer a distress call." ],
       film_path(films(:arrival), suffix: "arrival-2016") => [ "Arrival · At The Movies", "Upcoming showings of Arrival (2016) at UK cinemas." ],
-      cinema_path(@cinema, suffix: @cinema.suffix) => [ "Duke's at Komedia · At The Movies", "Showtimes at Duke's at Komedia, 44–47 Gardner Street, Brighton, BN1 1UN." ],
+      cinema_path(@cinema, suffix: @cinema.suffix) => [ "Duke's at Komedia · At The Movies", "Pick a day to see what's showing at Duke's at Komedia, 44–47 Gardner Street, Brighton, BN1 1UN." ],
       cinema_performances_path(@cinema, date: "2026-10-23") => [ "Showings at Duke's at Komedia · At The Movies", "Showtimes at Duke's at Komedia on Friday 23 October 2026." ]
     }.each do |path, (title, description)|
       get path
@@ -43,6 +43,9 @@ class ListingsTest < ActionDispatch::IntegrationTest
       assert_select "meta[name=description]", 1
       assert_match description, css_select("meta[name=description]").sole["content"]
     end
+    @film.update!(name: "Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb")
+    get film_path(@film, suffix: @film.suffix)
+    assert_select "title", "Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb · At The Movies"
   end
 
   test "JSON exposes public identities and conventional keys without envelopes" do
