@@ -1,4 +1,5 @@
-<% content_for :title, "#{@cinema.name} · At The Movies" %>
+<% title @cinema.name %>
+<% description "Showtimes at #{[ @cinema.name, @cinema.address.presence ].compact.join(", ")}." %>
 <%= link_to "← All cinemas", cinemas_path, class: "link link-hover text-sm" %>
 <section class="bg-base-100 rounded-box border border-base-300 p-8 my-6">
   <p class="uppercase tracking-widest text-sm text-primary mb-3"><%= @cinema.brand %></p>

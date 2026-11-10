@@ -27,6 +27,24 @@ class ListingsTest < ActionDispatch::IntegrationTest
     assert_select "nav[aria-label='Showing dates'] a", 15
   end
 
+  test "public pages describe themselves for search results" do
+    @film.update!(overview: "The crew of the Nostromo answer a distress call.")
+    {
+      root_path => [ "At The Movies", /\AWhat's showing at \d+ UK cinemas/ ],
+      films_path => [ "Films · At The Movies", /\AFilms showing at UK cinemas/ ],
+      cinemas_path => [ "Cinemas · At The Movies", /\AFind a UK cinema/ ],
+      film_path(@film, suffix: @film.suffix) => [ "Alien · At The Movies", "The crew of the Nostromo answer a distress call." ],
+      film_path(films(:arrival), suffix: "arrival-2016") => [ "Arrival · At The Movies", "Upcoming showings of Arrival (2016) at UK cinemas." ],
+      cinema_path(@cinema, suffix: @cinema.suffix) => [ "Duke's at Komedia · At The Movies", "Showtimes at Duke's at Komedia, 44–47 Gardner Street, Brighton, BN1 1UN." ],
+      cinema_performances_path(@cinema, date: "2026-10-23") => [ "Showings at Duke's at Komedia · At The Movies", "Showtimes at Duke's at Komedia on Friday 23 October 2026." ]
+    }.each do |path, (title, description)|
+      get path
+      assert_select "title", title
+      assert_select "meta[name=description]", 1
+      assert_match description, css_select("meta[name=description]").sole["content"]
+    end
+  end
+
   test "JSON exposes public identities and conventional keys without envelopes" do
     @film.external_identifiers.create!(source: "imdb_title", value: "tt0078748")
     get "/api/films/#{@film.public_id}"

@@ -1,4 +1,5 @@
-<% content_for :title, "Films · At The Movies" %>
+<% title "Films" %>
+<% description "Films showing at UK cinemas, from new releases to independent favourites, with upcoming showtimes for each." %>
 <h1 class="text-4xl font-black mb-3">What's on</h1>
 <p class="text-base-content/70 mb-6">Find a film for your next trip to the cinema.</p>
 <%= form_with url: films_path, method: :get, class: "flex flex-wrap gap-3 mb-8" do |form| %>

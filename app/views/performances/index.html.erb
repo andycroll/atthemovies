@@ -1,4 +1,5 @@
-<% content_for :title, "Showings at #{@cinema.name} · At The Movies" %>
+<% title "Showings at #{@cinema.name}" %>
+<% description "Showtimes at #{@cinema.name} on #{@date.strftime("%A %-d %B %Y")}." %>
 <%= link_to "← #{@cinema.name}", cinema_path(@cinema, suffix: @cinema.suffix), class: "link link-hover text-sm" %>
 <h1 class="text-3xl font-black mt-5 mb-3"><%= @cinema.name %></h1>
 <p class="text-lg mb-6"><%= @date.strftime("%A %-d %B %Y") %></p>
