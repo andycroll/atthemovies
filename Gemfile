@@ -87,3 +87,5 @@ gem "spektrix_uk"
 gem "vue_uk"
 gem "watershed_uk"
 gem "wtw_uk"
+
+gem "appsignal"

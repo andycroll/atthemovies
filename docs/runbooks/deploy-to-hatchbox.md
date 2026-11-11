@@ -21,7 +21,7 @@ else can be done by anyone with SSH to the box.
 | Edge | Cloudflare proxy on the `andycroll.com` zone |
 | Mail | Postmark SMTP, for password reset only |
 | Backups | None at launch, like btnbuses. Gate before curation starts: see chunk 8 |
-| Observability | Hatchbox logs and an uptime monitor on `/up`. AppSignal is a follow-up |
+| Observability | Hatchbox logs, an uptime monitor on `/up`, and AppSignal (`At The Movies`, key in credentials as `appsignal.push_api_key`) |
 
 ---
 
