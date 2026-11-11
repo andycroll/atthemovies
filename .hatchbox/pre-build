@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -e
+
+mkdir -p "$DIR/shared/storage"
+rm -rf "$RELEASE_DIR/storage"
+ln -s "$DIR/shared/storage" "$RELEASE_DIR/storage"

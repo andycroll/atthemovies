@@ -110,8 +110,16 @@ The server already exists, so this is app setup only.
 Check the server still has the **Cron** role (Servers → server → Roles).
 Hatchbox runs `db:migrate` only on Cron servers.
 
-Hatchbox symlinks `storage/` to `shared/storage/` on every deploy, so the
-SQLite files and Active Storage blobs survive. Nothing to configure.
+**Build scripts live in the repo**, not the Hatchbox UI. Hatchbox runs
+`.hatchbox/pre-build` and `.hatchbox/post-build` on every deploy:
+
+- `pre-build` points the release's `storage/` at `shared/storage/`, so the
+  SQLite files and Active Storage blobs survive deploys. Hatchbox does not
+  document doing this itself.
+- `post-build` runs `db:prepare` on the Cron server. Hatchbox's own Rails
+  build runs only `db:migrate`. A fresh app has no database files, and the
+  cache, queue and cable databases load from schema files that `db:migrate`
+  never loads.
 
 **Environment tab.** Mark `RAILS_MASTER_KEY` as secret.
 
@@ -133,14 +141,9 @@ worker, which costs memory for nothing on a box shared by four apps.
 **Why jobs in Puma.** SQLite serialises writers per file. A separate worker
 process adds no write throughput, only a second thing to restart.
 
-**Deploy Script.** Hatchbox runs `db:migrate`, not `db:prepare`. A fresh app
-has no database files, and the cache, queue and cable databases load from
-schema files that `db:migrate` never loads. Add this before migrations. It is
-idempotent.
-
-```sh
-bundle exec rails db:prepare
-```
+**Processes tab.** Hatchbox adds a `bin/jobs` process for Solid Queue apps.
+Delete it and keep only the web process. With `SOLID_QUEUE_IN_PUMA` set, a
+`bin/jobs` process is a second supervisor.
 
 **Server pre-flight.** SSH in and check:
 
@@ -193,7 +196,7 @@ only after the certificate exists.
 2. Cloudflare DNS: note any existing `movies` record and its value. The old app
    is retired, so it points at nothing useful, but keep the value for the
    record.
-3. Hatchbox app → **Domains**: add `movies.andycroll.com`.
+3. Hatchbox app → **Domains & SSL**: add `movies.andycroll.com`.
 4. Cloudflare DNS: `A movies` → server IP, **DNS only (grey)**. Replace any old
    `movies` record (A, AAAA or CNAME).
 5. Wait for `dig +short movies.andycroll.com` to return the server IP.
@@ -218,8 +221,8 @@ a year.
 
 ## Chunk 6: First deploy and verification
 
-1. **[Andy]** Hatchbox → **Deploy Latest**. Watch for `bundle install`,
-   `db:prepare`, `assets:precompile`, `db:migrate`. Hatchbox installs Ruby
+1. **[Andy]** Hatchbox → **Deploy Latest**. Watch for `pre-build`, `bundle install`,
+   `post-build` (`db:prepare`), `assets:precompile`, `db:migrate`. Hatchbox installs Ruby
    4.0.7 from `.ruby-version` on the first deploy, as for btnbuses.
 2. From your machine:
 
@@ -387,7 +390,7 @@ Follow `wbrdash/docs/runbooks/deploy-to-hatchbox.md`, chunk 6. It needs the
 - [ ] **[Andy]** `production.yml.enc` merged; `production.key` in 1Password and in Hatchbox as `RAILS_MASTER_KEY`
 - [ ] **[Andy]** Postmark domain `movies.andycroll.com` verified; token in credentials
 - [ ] **[Andy]** TMDB read access token in credentials
-- [ ] **[Andy]** Hatchbox app, env vars, `db:prepare` in Deploy Script, Cron role checked
+- [ ] **[Andy]** Hatchbox app, env vars, `bin/jobs` process removed, Cron role checked
 - [ ] Server pre-flight: glibc, x86_64/aarch64, libvips, no `BUNDLE_FORCE_RUBY_PLATFORM`
 - [ ] **[Andy]** Domain added, certificate from Let's Encrypt, record orange
 - [ ] `/up` 200; HTTP redirects to HTTPS; four SQLite files in `shared/storage`
