@@ -133,7 +133,7 @@ Minitest covers chain imports, aliases, repeat/concurrent import identity, atomi
 counters, London/BST boundaries, cleanup, metadata and image idempotency, canonical
 URLs, JSON shapes and operator authentication. GitHub Actions runs security, lint,
 test and system-test checks. Dependabot updates are grouped and cooled down.
-Non-major updates auto-merge once the checks pass; the `Protect master` ruleset
+Non-major updates auto-merge once the checks pass; the `Protect main` ruleset
 requires all five.
 
 ## Deployment

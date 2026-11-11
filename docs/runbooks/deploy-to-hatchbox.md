@@ -1,6 +1,6 @@
 # Deploying At The Movies to Hatchbox
 
-How `movies.andycroll.com` gets from `master` to the shared Hetzner box behind
+How `movies.andycroll.com` gets from `main` to the shared Hetzner box behind
 Cloudflare. It is the same stack as btnbuses, wbrdash and usingrails: one
 server, SQLite, jobs in Puma, Caddy for TLS, Postmark for mail.
 
@@ -13,7 +13,7 @@ else can be done by anyone with SSH to the box.
 | Layer | Choice |
 |---|---|
 | Server | Existing Hetzner box shared with btnbuses, usingrails and wbrdash (Ubuntu, glibc), roles Web + Cron + DB |
-| Deploys | Hatchbox: `git pull`, `bundle`, `assets:precompile`, `db:migrate`, restart. Auto-deploy on push to `master` |
+| Deploys | Hatchbox: `git pull`, `bundle`, `assets:precompile`, `db:migrate`, restart. Auto-deploy on push to `main` |
 | Proxy + TLS | Caddy (Hatchbox-managed), Let's Encrypt |
 | App server | Puma single mode, Solid Queue as a child (`SOLID_QUEUE_IN_PUMA`) |
 | Database | Four SQLite files in `storage/`, symlinked to `shared/storage/` |
@@ -102,8 +102,8 @@ The server already exists, so this is app setup only.
 1. Hatchbox → **Apps → New App**. Name: `atthemovies`. Cluster: the existing
    Hetzner server. The name sets the server paths (`~/atthemovies/`) and the
    unit (`atthemovies-server`).
-2. Repository: `andycroll/atthemovies`, branch `master`. Framework: Rails.
-3. Auto-deploy: **on**. Every merge to `master` deploys, Dependabot merges
+2. Repository: `andycroll/atthemovies`, branch `main`. Framework: Rails.
+3. Auto-deploy: **on**. Every merge to `main` deploys, Dependabot merges
    included.
 4. Don't deploy yet.
 
