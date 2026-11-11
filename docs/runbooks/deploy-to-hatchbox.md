@@ -317,12 +317,12 @@ enrichment from `config/recurring.yml` ran with no new failures.
 data comes from the importers, so a lost database is rebuilt:
 
 ```sh
-systemctl --user stop atthemovies-server
+systemctl --user stop movies-server
 cd ~/movies/shared/storage
 broken=broken-$(date -u +%Y%m%dT%H%M%SZ)
 mkdir "$broken" && mv production*.sqlite3* "$broken"/
 cd ~/movies/current && bundle exec rails db:prepare
-systemctl --user start atthemovies-server
+systemctl --user start movies-server
 curl -i https://movies.andycroll.com/up
 ```
 
