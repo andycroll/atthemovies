@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-set -e
-
-if [ "$CRON" = "true" ]; then
-  cd "$RELEASE_DIR"
-  bin/rails db:prepare
-fi

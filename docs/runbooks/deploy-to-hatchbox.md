@@ -99,9 +99,8 @@ Credentials match how the other apps hold service tokens.
 
 The server already exists, so this is app setup only.
 
-1. Hatchbox → **Apps → New App**. Name: `atthemovies`. Cluster: the existing
-   Hetzner server. The name sets the server paths (`~/atthemovies/`) and the
-   unit (`atthemovies-server`).
+1. Hatchbox → **Apps → New App**. Name: `movies`. Cluster: the existing
+   Hetzner server. The name sets the server path (`~/movies/`).
 2. Repository: `andycroll/atthemovies`, branch `main`. Framework: Rails.
 3. Auto-deploy: **on**. Every merge to `main` deploys, Dependabot merges
    included.
@@ -110,16 +109,10 @@ The server already exists, so this is app setup only.
 Check the server still has the **Cron** role (Servers → server → Roles).
 Hatchbox runs `db:migrate` only on Cron servers.
 
-**Build scripts live in the repo**, not the Hatchbox UI. Hatchbox runs
-`.hatchbox/pre-build` and `.hatchbox/post-build` on every deploy:
-
-- `pre-build` points the release's `storage/` at `shared/storage/`, so the
-  SQLite files and Active Storage blobs survive deploys. Hatchbox does not
-  document doing this itself.
-- `post-build` runs `db:prepare` on the Cron server. Hatchbox's own Rails
-  build runs only `db:migrate`. A fresh app has no database files, and the
-  cache, queue and cable databases load from schema files that `db:migrate`
-  never loads.
+No build scripts are needed. Hatchbox links `storage/` to `shared/storage/`
+on every deploy, so the SQLite files and Active Storage blobs survive, and
+its first deploy creates all four databases. Hatchbox has no Deploy Script
+field any more; scripts would go in `.hatchbox/` in the repo.
 
 **Environment tab.** Mark `RAILS_MASTER_KEY` as secret.
 
@@ -221,8 +214,8 @@ a year.
 
 ## Chunk 6: First deploy and verification
 
-1. **[Andy]** Hatchbox → **Deploy Latest**. Watch for `pre-build`, `bundle install`,
-   `post-build` (`db:prepare`), `assets:precompile`, `db:migrate`. Hatchbox installs Ruby
+1. **[Andy]** Hatchbox → **Deploy Latest**. Watch for `bundle install`,
+   `assets:precompile`, `db:migrate`. Hatchbox installs Ruby
    4.0.7 from `.ruby-version` on the first deploy, as for btnbuses.
 2. From your machine:
 
@@ -235,10 +228,10 @@ a year.
 
    ```sh
    ssh deploy@<server-ip>
-   cd ~/atthemovies/current
+   cd ~/movies/current
 
    ls -l storage                                   # symlink to ../../shared/storage
-   ls ~/atthemovies/shared/storage                 # production.sqlite3, _cache, _queue, _cable
+   ls ~/movies/shared/storage                 # production.sqlite3, _cache, _queue, _cable
 
    bundle info cineworld_uk --path                 # ends in -x86_64-linux-gnu or -aarch64-linux-gnu
    bundle exec rails runner 'p Rails.application.config.hosts'   # ["movies.andycroll.com"]
@@ -275,7 +268,7 @@ a year.
 out of shell history: read it inside the console.
 
 ```sh
-cd ~/atthemovies/current
+cd ~/movies/current
 bundle exec rails console
 ```
 
@@ -294,7 +287,7 @@ Then:
 **Run the first imports.** On the box:
 
 ```sh
-cd ~/atthemovies/current
+cd ~/movies/current
 bundle exec rails runner 'Chain.all.each { |chain| ImportChainJob.perform_later(chain.key) }'
 bundle exec rails imports:status   # counts, plus any Solid Queue failures
 ```
@@ -311,7 +304,7 @@ Check:
 - `/api/cinemas` returns JSON.
 - `/operator/films` lists ambiguous TMDB matches, if any.
 - Upload an image on one film. The blob appears under
-  `~/atthemovies/shared/storage/` and its variant renders. This proves libvips.
+  `~/movies/shared/storage/` and its variant renders. This proves libvips.
 
 **Next morning.** `bundle exec rails imports:status`: the nightly imports and
 enrichment from `config/recurring.yml` ran with no new failures.
@@ -325,10 +318,10 @@ data comes from the importers, so a lost database is rebuilt:
 
 ```sh
 systemctl --user stop atthemovies-server
-cd ~/atthemovies/shared/storage
+cd ~/movies/shared/storage
 broken=broken-$(date -u +%Y%m%dT%H%M%SZ)
 mkdir "$broken" && mv production*.sqlite3* "$broken"/
-cd ~/atthemovies/current && bundle exec rails db:prepare
+cd ~/movies/current && bundle exec rails db:prepare
 systemctl --user start atthemovies-server
 curl -i https://movies.andycroll.com/up
 ```
