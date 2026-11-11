@@ -1,4 +1,5 @@
-<% content_for :title, "#{@film.name} · At The Movies" %>
+<% title @film.name %>
+<% description @film.overview.presence || "Upcoming showings of #{@film.name}#{" (#{@film.year})" if @film.year} at UK cinemas." %>
 <%= link_to "← All films", films_path, class: "link link-hover text-sm" %>
 <section class="bg-base-100 border border-base-300 rounded-box p-6 md:p-10 my-6 flex flex-col md:flex-row gap-8">
   <% if @film.poster.attached? %><%= image_tag @film.poster.variant(:listing), alt: "#{@film.name} poster", class: "w-48 rounded-lg object-contain self-start" %><% end %>

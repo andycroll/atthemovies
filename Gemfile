@@ -64,6 +64,7 @@ group :test do
   gem "selenium-webdriver"
 end
 gem "tailwindcss-rails"
+gem "meta-tags"
 
 gem "arc_uk"
 gem "cineworld_uk"
