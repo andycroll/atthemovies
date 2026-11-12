@@ -20,7 +20,7 @@ else can be done by anyone with SSH to the box.
 | Uploads | Active Storage `local` service, also in `storage/` |
 | Edge | Cloudflare proxy on the `andycroll.com` zone |
 | Mail | Postmark SMTP, for password reset only |
-| Backups | None at launch, like btnbuses. Gate before curation starts: see chunk 8 |
+| Backups | None by design: the importers rebuild the database. See chunk 8 |
 | Observability | Hatchbox logs, an uptime monitor on `/up`, and AppSignal (`At The Movies`, key in credentials as `appsignal.push_api_key`) |
 
 ---
@@ -313,8 +313,8 @@ enrichment from `config/recurring.yml` ran with no new failures.
 
 ## Chunk 8: Backups
 
-**At launch: none, by choice.** This is the btnbuses position. On day one all
-data comes from the importers, so a lost database is rebuilt:
+**None, by design.** All data comes from the importers, so a lost database is
+rebuilt. Fixes live in the gems so a rebuild keeps them; see `AGENTS.md`.
 
 ```sh
 systemctl --user stop movies-server
@@ -328,22 +328,8 @@ curl -i https://movies.andycroll.com/up
 
 Units are user units: `systemctl --user`, no `sudo`. Then create the operator
 and run the imports again (chunk 7). Uploaded blobs left in `shared/storage/`
-no longer have database rows; that is acceptable only while nobody has
-uploaded anything.
-
-**Gate: before operators start curating.** Once operators edit films and
-cinemas, add aliases, pick TMDB matches, merge films or upload images, that
-work cannot be re-imported. Before that starts, add the wbrdash two-layer
-backup in a separate PR:
-
-- Litestream in Puma, replicating `production` and `production_queue` to R2.
-- A daily `VACUUM INTO` snapshot of the primary to a second R2 bucket, with
-  lifecycle rules for retention.
-- An off-box copy of the Active Storage blobs in `shared/storage/`. Litestream
-  covers SQLite only. usingrails has the same open follow-up.
-
-Follow `wbrdash/docs/runbooks/deploy-to-hatchbox.md`, chunk 6. It needs the
-`litestream` gem and new jobs, so it is out of scope for this runbook.
+no longer have database rows. Re-apply logged operator text from the CSV
+export (#746).
 
 ---
 
@@ -355,8 +341,7 @@ Follow `wbrdash/docs/runbooks/deploy-to-hatchbox.md`, chunk 6. It needs the
   four-database app.
 - **Bad launch.** **[Andy]** Cloudflare → set the `movies` record back to the
   value noted in chunk 5, or delete it. Nothing else depends on the domain.
-- **Bad data.** Rebuild from the importers (chunk 8). Until the backup gate is
-  done, this is the only recovery.
+- **Bad data.** Rebuild from the importers (chunk 8).
 
 ---
 
@@ -375,7 +360,6 @@ Follow `wbrdash/docs/runbooks/deploy-to-hatchbox.md`, chunk 6. It needs the
 
 - AppSignal: gem, `config/appsignal.rb`, JSON logs and check-ins, as in
   wbrdash chunk 5.
-- Backups: the gate in chunk 8.
 - `cloudflare-rails`, as above.
 
 ## Checklist
@@ -393,4 +377,3 @@ Follow `wbrdash/docs/runbooks/deploy-to-hatchbox.md`, chunk 6. It needs the
 - [ ] Image upload renders a variant
 - [ ] Next morning: recurring imports ran, no new failures
 - [ ] **[Andy]** Uptime monitor on `https://movies.andycroll.com/up`
-- [ ] Backup gate done before curation starts
