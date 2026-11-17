@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get "films/:id(/:suffix)", to: "films#show", as: :film
   get "cinemas/:cinema_id/performances(/:date)", to: "performances#index", as: :cinema_performances
   get "cinemas/:id(/:suffix)", to: "cinemas#show", as: :cinema
-  get "sitemap.xml", to: "sitemaps#show", defaults: { format: :xml }, as: :sitemap
+  get "sitemap.xml", to: "sitemaps#show", defaults: { format: :xml }, format: false, as: :sitemap
 
   namespace :operator do
     resources :cinemas, only: [ :edit, :update ]
