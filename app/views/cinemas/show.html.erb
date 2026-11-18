@@ -1,5 +1,5 @@
 <% title @cinema.name %>
-<% description "Pick a day to see what's showing at #{[ @cinema.name, @cinema.address.presence ].compact.join(", ")}." %>
+<% description "What's showing today at #{[ @cinema.name, @cinema.address.presence ].compact.join(", ")}." %>
 <%= link_to "← All cinemas", cinemas_path, class: "link link-hover text-sm" %>
 <section class="bg-base-100 rounded-box border border-base-300 p-8 my-6">
   <p class="uppercase tracking-widest text-sm text-primary mb-3"><%= @cinema.brand %></p>
@@ -8,5 +8,6 @@
   <% if @cinema.screenings_url.present? %><%= link_to "Cinema website ↗", @cinema.screenings_url, class: "btn btn-outline", rel: "noopener" %><% end %>
   <% if authenticated? %><%= link_to "Edit cinema", edit_operator_cinema_path(@cinema), class: "btn btn-ghost" %><% end %>
 </section>
-<h2 class="text-2xl font-bold mb-5">Pick a day</h2>
-<%= render "performances/dates", cinema: @cinema, selected: nil %>
+<h2 class="text-2xl font-bold mb-5">Showing today</h2>
+<%= render "performances/dates", cinema: @cinema, selected: Date.current %>
+<%= render "performances/list", performances: @performances %>

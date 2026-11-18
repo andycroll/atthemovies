@@ -1,0 +1,14 @@
+<% performances.group_by(&:film).each do |film, showings| %>
+  <section class="bg-base-100 border border-base-300 rounded-box p-6 mb-4">
+    <h2 class="text-xl font-bold mb-4"><%= link_to film.name, film_path(film, suffix: film.suffix), class: "link link-hover" %></h2>
+    <div class="flex flex-wrap gap-3">
+      <% showings.each do |performance| %>
+        <div class="border border-base-300 rounded-lg px-4 py-3">
+          <% if performance.booking_url.present? %><%= link_to performance.starting_at.strftime("%H:%M"), performance.booking_url, class: "font-bold text-primary link link-hover", rel: "noopener" %><% else %><span class="font-bold"><%= performance.starting_at.strftime("%H:%M") %></span><% end %>
+          <p class="text-xs text-base-content/60 mt-1"><%= performance.dimension.upcase %> · <%= performance.variant %><% if performance.festival %> · <%= performance.festival %><% end %></p>
+        </div>
+      <% end %>
+    </div>
+  </section>
+<% end %>
+<% if performances.empty? %><p class="bg-base-100 p-8 rounded-box border border-base-300">No showings listed for this day.</p><% end %>
