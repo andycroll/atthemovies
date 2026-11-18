@@ -33,12 +33,16 @@ class ListingsTest < ActionDispatch::IntegrationTest
     Performance.create!(film: films(:arrival), cinema: @cinema, starting_at: 1.day.from_now)
     hidden = Film.create!(name: "Hidden", public_id: "hiddenPublicToken12345678", hidden: true)
     Performance.create!(film: hidden, cinema: @cinema, starting_at: 2.hours.from_now)
+    Performance.create!(film: films(:arrival), cinema: cinemas(:london), starting_at: 2.hours.from_now)
 
     get cinema_path(@cinema, suffix: @cinema.suffix)
 
-    assert_equal [ "Alien" ], css_select("section h2 a").map(&:text)
+    assert_equal [ "Alien" ], css_select("section h3 a").map(&:text)
     assert_select "a[href=?]", "https://example.com/book/alien", text: "13:00"
     assert_no_match "11:00", response.body
+    @performance.destroy!
+    get cinema_path(@cinema, suffix: @cinema.suffix)
+    assert_select "p", "No more showings today."
   end
 
   test "public pages describe themselves for search results" do

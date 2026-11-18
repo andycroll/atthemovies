@@ -1,6 +1,6 @@
 <% performances.group_by(&:film).each do |film, showings| %>
   <section class="bg-base-100 border border-base-300 rounded-box p-6 mb-4">
-    <h2 class="text-xl font-bold mb-4"><%= link_to film.name, film_path(film, suffix: film.suffix), class: "link link-hover" %></h2>
+    <%= content_tag local_assigns.fetch(:heading, :h2), link_to(film.name, film_path(film, suffix: film.suffix), class: "link link-hover"), class: "text-xl font-bold mb-4" %>
     <div class="flex flex-wrap gap-3">
       <% showings.each do |performance| %>
         <div class="border border-base-300 rounded-lg px-4 py-3">
@@ -11,4 +11,4 @@
     </div>
   </section>
 <% end %>
-<% if performances.empty? %><p class="bg-base-100 p-8 rounded-box border border-base-300">No showings listed for this day.</p><% end %>
+<% if performances.empty? %><p class="bg-base-100 p-8 rounded-box border border-base-300"><%= local_assigns.fetch(:empty, "No showings listed for this day.") %></p><% end %>

@@ -10,4 +10,4 @@
 </section>
 <h2 class="text-2xl font-bold mb-5">Showing today</h2>
 <%= render "performances/dates", cinema: @cinema, selected: Date.current %>
-<%= render "performances/list", performances: @performances %>
+<%= render "performances/list", performances: @performances, heading: :h3, empty: "No more showings today." %>
