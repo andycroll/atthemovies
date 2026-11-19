@@ -1,6 +1,6 @@
 # At The Movies
 
-A fresh Rails 8.1.4 / Ruby 4.0.7 application for UK cinema listings. SQLite in
+A fresh Rails 8.1.4 / Ruby 4.0.10 application for UK cinema listings. SQLite in
 all environments; Solid Queue, Cache and Cable; Hotwire, Importmap, Propshaft,
 Active Storage, Tailwind and daisyUI. See [docs/rebuild-status.md](docs/rebuild-status.md) for provider checks,
 decisions and what remains before going live.
