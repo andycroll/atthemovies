@@ -28,7 +28,7 @@ class ListingsTest < ActionDispatch::IntegrationTest
   end
 
   test "cinema pages list the rest of today's showings" do
-    @performance.update!(booking_url: "https://example.com/book/alien")
+    @performance.update!(booking_url: "https://example.com/book/alien", variant: "audio_described, sing_along")
     Performance.create!(film: @film, cinema: @cinema, starting_at: 1.hour.ago)
     Performance.create!(film: films(:arrival), cinema: @cinema, starting_at: 1.day.from_now)
     hidden = Film.create!(name: "Hidden", public_id: "hiddenPublicToken12345678", hidden: true)
@@ -39,6 +39,7 @@ class ListingsTest < ActionDispatch::IntegrationTest
 
     assert_equal [ "Alien" ], css_select("section h3 a").map(&:text)
     assert_select "a[href=?]", "https://example.com/book/alien", text: "13:00"
+    assert_select "p", "2D · audio described, sing along"
     assert_no_match "11:00", response.body
     @performance.destroy!
     get cinema_path(@cinema, suffix: @cinema.suffix)
