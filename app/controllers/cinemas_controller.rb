@@ -15,6 +15,10 @@ class CinemasController < ApplicationController
   def show
     @cinema = Cinema.find_by!(public_id: params[:id])
     @canonical_url = cinema_url(@cinema, suffix: @cinema.suffix)
-    redirect_to @canonical_url, status: :moved_permanently if params[:suffix] != @cinema.suffix
+    if params[:suffix] != @cinema.suffix
+      redirect_to @canonical_url, status: :moved_permanently
+    else
+      @performances = @cinema.performances.publicly_visible.on(Date.current).includes(:film)
+    end
   end
 end

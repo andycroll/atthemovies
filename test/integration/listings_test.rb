@@ -27,6 +27,25 @@ class ListingsTest < ActionDispatch::IntegrationTest
     assert_select "nav[aria-label='Showing dates'] a", 15
   end
 
+  test "cinema pages list the rest of today's showings" do
+    @performance.update!(booking_url: "https://example.com/book/alien", variant: "audio_described, sing_along")
+    Performance.create!(film: @film, cinema: @cinema, starting_at: 1.hour.ago)
+    Performance.create!(film: films(:arrival), cinema: @cinema, starting_at: 1.day.from_now)
+    hidden = Film.create!(name: "Hidden", public_id: "hiddenPublicToken12345678", hidden: true)
+    Performance.create!(film: hidden, cinema: @cinema, starting_at: 2.hours.from_now)
+    Performance.create!(film: films(:arrival), cinema: cinemas(:london), starting_at: 2.hours.from_now)
+
+    get cinema_path(@cinema, suffix: @cinema.suffix)
+
+    assert_equal [ "Alien" ], css_select("section h3 a").map(&:text)
+    assert_select "a[href=?]", "https://example.com/book/alien", text: "13:00"
+    assert_select "p", "2D · audio described, sing along"
+    assert_no_match "11:00", response.body
+    @performance.destroy!
+    get cinema_path(@cinema, suffix: @cinema.suffix)
+    assert_select "p", "No more showings today."
+  end
+
   test "public pages describe themselves for search results" do
     @film.update!(overview: "The crew of the Nostromo answer a distress call.")
     {
@@ -35,7 +54,7 @@ class ListingsTest < ActionDispatch::IntegrationTest
       cinemas_path => [ "Cinemas · At The Movies", /\AFind a UK cinema/ ],
       film_path(@film, suffix: @film.suffix) => [ "Alien · At The Movies", "The crew of the Nostromo answer a distress call." ],
       film_path(films(:arrival), suffix: "arrival-2016") => [ "Arrival · At The Movies", "Upcoming showings of Arrival (2016) at UK cinemas." ],
-      cinema_path(@cinema, suffix: @cinema.suffix) => [ "Duke's at Komedia · At The Movies", "Pick a day to see what's showing at Duke's at Komedia, 44–47 Gardner Street, Brighton, BN1 1UN." ],
+      cinema_path(@cinema, suffix: @cinema.suffix) => [ "Duke's at Komedia · At The Movies", "What's showing today at Duke's at Komedia, 44–47 Gardner Street, Brighton, BN1 1UN." ],
       cinema_performances_path(@cinema, date: "2026-10-23") => [ "Showings at Duke's at Komedia · At The Movies", "Showtimes at Duke's at Komedia on Friday 23 October 2026." ]
     }.each do |path, (title, description)|
       get path
