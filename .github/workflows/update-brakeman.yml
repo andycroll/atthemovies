@@ -1,0 +1,131 @@
+name: Update Brakeman
+
+# bin/brakeman passes --ensure-latest, so scan_ruby fails the day a new
+# Brakeman ships, and Dependabot's weekly run and cooldown leave CI red for
+# days. This checks daily, bumps Brakeman alone, and scans with the new
+# version. A clean scan merges the bump. If the new version reports anything,
+# the PR stays open and this run fails, which emails Andy.
+#
+# Needs: Settings → Actions → General → "Allow GitHub Actions to create and
+# approve pull requests".
+
+on:
+  schedule:
+    - cron: "41 6 * * *" # daily, 06:41 UTC
+  workflow_dispatch:
+
+permissions:
+  actions: write # run CI on the PR: PRs opened with GITHUB_TOKEN don't trigger it
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: update-brakeman
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Compare locked and latest Brakeman
+        id: versions
+        run: |
+          set -euo pipefail
+          locked=$(sed -nE 's/^    brakeman \(([^)]+)\)$/\1/p' Gemfile.lock)
+          latest=$(curl -fsSL https://rubygems.org/api/v1/versions/brakeman/latest.json | jq -r .version)
+          branch="automation/brakeman-$latest"
+          echo "Locked: ${locked:-none} | Latest: $latest"
+          if [ -z "$locked" ] || [ -z "$latest" ] || [ "$latest" = null ]; then
+            echo "::error::Couldn't read the locked or latest Brakeman version."
+            exit 1
+          fi
+          {
+            echo "locked=$locked"
+            echo "latest=$latest"
+            echo "branch=$branch"
+          } >> "$GITHUB_OUTPUT"
+          if [ "$locked" = "$latest" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          elif git ls-remote --exit-code --heads origin "$branch" >/dev/null; then
+            echo "::notice::$branch already exists, so its PR is open or was closed by hand."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Set up Ruby
+        if: steps.versions.outputs.skip == 'false'
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Bump Brakeman
+        if: steps.versions.outputs.skip == 'false'
+        env:
+          LATEST: ${{ steps.versions.outputs.latest }}
+        run: |
+          set -euo pipefail
+          bundle config set --local deployment false
+          bundle config set --local frozen false
+          bundle update brakeman --conservative
+          grep -qE "^    brakeman \(${LATEST//./\\.}\)$" Gemfile.lock || {
+            echo "::error::bundle update didn't reach Brakeman $LATEST."
+            exit 1
+          }
+          git diff --stat
+
+      - name: Scan with the new Brakeman
+        id: scan
+        if: steps.versions.outputs.skip == 'false'
+        continue-on-error: true
+        run: bin/brakeman --no-pager
+
+      - name: Open pull request
+        if: steps.versions.outputs.skip == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          LOCKED: ${{ steps.versions.outputs.locked }}
+          LATEST: ${{ steps.versions.outputs.latest }}
+          BRANCH: ${{ steps.versions.outputs.branch }}
+          SCAN: ${{ steps.scan.outcome }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add Gemfile.lock
+          git commit -m "Bump brakeman from $LOCKED to $LATEST"
+          git push -u origin "$BRANCH"
+          if [ "$SCAN" = success ]; then
+            result="Brakeman $LATEST scanned clean in the update run, so this merges itself."
+          else
+            result="**Brakeman $LATEST reports something.** See the Scan step in $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID."
+          fi
+          gh pr create --base "${{ github.event.repository.default_branch }}" \
+            --title "Bump brakeman from $LOCKED to $LATEST" \
+            --body "Opened by the Update Brakeman workflow, because \`bin/brakeman --ensure-latest\` fails until Brakeman is current. $result"
+          gh workflow run ci.yml --ref "$BRANCH"
+
+      - name: Merge
+        if: steps.versions.outputs.skip == 'false' && steps.scan.outcome == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: ${{ steps.versions.outputs.branch }}
+        run: |
+          set -euo pipefail
+          # gh merges at once when nothing is required, and waits for required
+          # checks otherwise; it needs GitHub to have worked out mergeability.
+          for _ in $(seq 12); do
+            [ "$(gh pr view "$BRANCH" --json mergeStateStatus -q .mergeStateStatus)" != UNKNOWN ] && break
+            sleep 5
+          done
+          gh pr merge "$BRANCH" --auto --squash --delete-branch
+
+      - name: Flag new Brakeman findings
+        if: steps.versions.outputs.skip == 'false' && steps.scan.outcome != 'success'
+        run: |
+          echo "::error::Brakeman ${{ steps.versions.outputs.latest }} reports something. The bump PR is open and needs a look."
+          exit 1
