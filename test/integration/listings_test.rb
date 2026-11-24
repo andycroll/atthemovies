@@ -67,6 +67,15 @@ class ListingsTest < ActionDispatch::IntegrationTest
     assert_select "title", "Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb · At The Movies"
   end
 
+  test "film search results are not indexed but the films index is" do
+    get films_path, params: { q: "alien" }
+    assert_select "meta[name=robots][content=?]", "noindex, follow"
+    [ films_path, films_path(q: " ") ].each do |path|
+      get path
+      assert_select "meta[name=robots]", 0
+    end
+  end
+
   test "JSON exposes public identities and conventional keys without envelopes" do
     @film.external_identifiers.create!(source: "imdb_title", value: "tt0078748")
     get "/api/films/#{@film.public_id}"
