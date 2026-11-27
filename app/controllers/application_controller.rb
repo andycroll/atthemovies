@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
       when nil, "today" then Date.current
       when "tomorrow" then Date.tomorrow
       else
-        raise ArgumentError, "Use YYYY-MM-DD, today or tomorrow" unless params[:date].match?(/\A\d{4}-\d{2}-\d{2}\z/)
+        raise ArgumentError, "Use YYYY-MM-DD, today or tomorrow" unless params[:date].to_s.match?(/\A\d{4}-\d{2}-\d{2}\z/)
         Date.iso8601(params[:date])
       end
     end

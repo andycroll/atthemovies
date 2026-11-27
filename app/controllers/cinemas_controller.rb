@@ -4,7 +4,7 @@ class CinemasController < ApplicationController
   def index
     @cinemas = Cinema.order(:name).to_a
     if params[:near].present?
-      coordinates = params[:near].split(",").map { |value| Float(value) }
+      coordinates = params[:near].to_s.split(",").map { |value| Float(value) }
       raise ArgumentError unless coordinates.length == 2 && coordinates[0].between?(-90, 90) && coordinates[1].between?(-180, 180)
       @cinemas.sort_by! { |cinema| cinema.distance_from(*coordinates) }
     end

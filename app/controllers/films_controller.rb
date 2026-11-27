@@ -4,7 +4,7 @@ class FilmsController < ApplicationController
   def index
     @films = Film.showing.with_attached_poster
     if params[:q].present?
-      query = "%#{Film.sanitize_sql_like(params[:q].strip)}%"
+      query = "%#{Film.sanitize_sql_like(params[:q].to_s.strip)}%"
       @films = Film.visible.where("name LIKE ?", query).with_attached_poster.order(:name)
     end
   end
