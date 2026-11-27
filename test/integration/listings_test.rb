@@ -125,6 +125,7 @@ class ListingsTest < ActionDispatch::IntegrationTest
     [ [ "alien" ], { "x" => "alien" } ].each do |value|
       get films_path, params: { q: value }
       assert_response :success
+      assert_select "a[href^=?]", film_path(@film), 0
       get cinemas_path, params: { near: value }
       assert_response :bad_request
       get "/api/cinemas/#{@cinema.public_id}/performances", params: { date: value }
