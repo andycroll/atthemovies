@@ -121,6 +121,19 @@ class ListingsTest < ActionDispatch::IntegrationTest
     assert_response :bad_request
   end
 
+  test "list and hash query values get the same answers as malformed strings" do
+    [ [ "alien" ], { "x" => "alien" } ].each do |value|
+      get films_path, params: { q: value }
+      assert_response :success
+      assert_select "a[href^=?]", film_path(@film), 0
+      get cinemas_path, params: { near: value }
+      assert_response :bad_request
+      get "/api/cinemas/#{@cinema.public_id}/performances", params: { date: value }
+      assert_response :bad_request
+      assert_equal "Use YYYY-MM-DD, today or tomorrow", response.parsed_body["error"]
+    end
+  end
+
   test "unauthenticated users cannot reach operator reads or mutations" do
     get operator_films_path
     assert_redirected_to new_session_path
